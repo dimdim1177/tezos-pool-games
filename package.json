@@ -1,18 +1,15 @@
 {
-  "name": "Ligo-taquito-skeleton",
-  "version": "1.0.0",
+  "name": "tzpool",
+  "version": "0.1.0",
   "description": "",
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/repo.git"
+    "url": "git+https://github.com/dimdim1177/tzpool"
   },
   "author": "e1",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/repo/issues"
-  },
-  "homepage": "https://github.com/repo#readme",
+  "homepage": "https://github.com/dimdim1177/tzpool#readme",
   "dependencies": {
     "@taquito/signer": "^11.1.0",
     "@taquito/taquito": "^11.1.0",
