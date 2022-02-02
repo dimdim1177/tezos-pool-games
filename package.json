@@ -7,9 +7,9 @@
     "type": "git",
     "url": "git+https://github.com/dimdim1177/tzpool"
   },
-  "author": "e1",
-  "license": "ISC",
+  "author": "dimdim1177",
   "homepage": "https://github.com/dimdim1177/tzpool#readme",
+  "license": "MIT",
   "dependencies": {
     "@taquito/signer": "^11.1.0",
     "@taquito/taquito": "^11.1.0",

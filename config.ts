@@ -5,7 +5,7 @@ dotenv.config();
 
 export const config = {
   repoName: "example-core",
-  ligoVersion: "0.33.0",
+  ligoVersion: "0.35.0", // ligo version | grep -E -o "[0-9]+\.[0-9]+\.[0-9]+"
   preferredLigoFlavor: "pascaligo",
   networks: {
     sandbox: {
@@ -49,8 +49,8 @@ export const config = {
   contractsDirectory: "contracts/main",
   outputDirectory: "build",
   migrationsDir: "migrations",
-  dockerizedLigo: true,
-  ligoLocalPath: "./ligo",
+  dockerizedLigo: false,
+  ligoLocalPath: "ligo",
 };
 
 export default config;
