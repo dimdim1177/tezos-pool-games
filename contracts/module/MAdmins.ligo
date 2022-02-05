@@ -20,7 +20,7 @@ module MAdmins is {
     //RU Является ли текущий пользователь админом контракта
     [@inline] function isAdmin(const admins: t_admins): bool is block {
         const r: bool = (admins contains Tezos.sender);
-    } with r
+    } with r;
 
     //RU Текущий пользователь должен обладать правами админа контракта
     //RU
@@ -28,7 +28,7 @@ module MAdmins is {
     [@inline] function mustAdmin(const admins: t_admins): unit is block {
         if isAdmin(admins) then skip
         else failwith(c_ERR_DENIED);
-    } with unit
+    } with unit;
 
     //RU Добавление админа безусловно
     //RU
@@ -38,7 +38,7 @@ module MAdmins is {
         if admins contains addadmin then failwith(c_ERR_ALREADY)
         else skip;
         admins := Set.add(addadmin, admins);
-    } with admins
+    } with admins;
 
     //RU Удаление админа безусловно
     //RU
@@ -54,23 +54,44 @@ module MAdmins is {
         if admins contains remadmin then skip
         else failwith(c_ERR_NOTFOUND);
         admins := Set.remove(remadmin, admins);
-    } with admins
+    } with admins;
 
 #if !ENABLE_OWNER
     //RU Добавление админа с проверкой прав админа
     [@inline] function accessAdd(const addadmin: t_admin; var admins: t_admins): t_admins is block {
         mustAdmin(admins);
         forceAdd(addadmin, admins);
-    } with admins
+    } with admins;
 
     //RU Удаление админа с проверкой прав админа
     [@inline] function accessRem(const remadmin: t_admin; var admins: t_admins): t_admins is block {
         mustAdmin(admins);
         forceRem(remadmin, admins);
-    } with admins
+    } with admins;
 
 #endif // !ENABLE_OWNER
 
 }
+
+//RU Использование модуля без других модулей доступа
+
+// #Define ENABLE_ADMINS
+// #Include "module/MAdmins.ligo"
+// type t_storage record [
+//     admins: MAdmins.t_admins;
+//     ...
+// ];
+//
+// type t_entrypoint is
+// | AddAdmin of MAdmins.t_admin
+// | RemAdmin of MAdmins.t_admin
+// ...
+//
+// function main(const entrypoint: t_entrypoint; var s: t_storage): t_return is
+// case entrypoint of
+// | AddAdmin(params) -> (c_NO_OPERATIONS, block { s.admins := MAdmins.acesseAdd(params, s.admins); } with s)
+// | RemAdmin(params) -> (c_NO_OPERATIONS, block { s.admins := MAdmins.accessRem(params, s.admins); } with s)
+// ...
+
 #endif // ENABLE_ADMINS
 #endif // MADMINS_INCLUDED

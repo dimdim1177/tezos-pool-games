@@ -15,7 +15,7 @@ module MManager is {
     //RU Является ли текущий пользователь менеджером модуля
     [@inline] function isManager(const manager: t_manager): bool is block {
         const r: bool = (manager = Tezos.sender);
-    } with r
+    } with r;
 
     //RU Текущий пользователь должен обладать правами менеджера модуля
     //RU
@@ -23,7 +23,7 @@ module MManager is {
     [@inline] function mustManager(const manager: t_manager): unit is block {
         if isManager(manager) then skip
         else failwith(c_ERR_DENIED);
-    } with unit
+    } with unit;
 
     //RU Изменение менеджера безусловно
     //RU
@@ -33,7 +33,7 @@ module MManager is {
         if newmanager = manager then failwith(c_ERR_ALREADY)
         else skip;
         manager := newmanager;
-    } with manager
+    } with manager;
 
 }
 #endif // ENABLE_MANAGER

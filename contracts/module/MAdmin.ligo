@@ -15,7 +15,7 @@ module MAdmin is {
     //RU Является ли текущий пользователь админом
     [@inline] function isAdmin(const admin: t_admin): bool is block {
         const r: bool = (admin = Tezos.sender);
-    } with r
+    } with r;
 
     //RU Текущий пользователь должен обладать правами админа
     //RU
@@ -23,7 +23,7 @@ module MAdmin is {
     [@inline] function mustAdmin(const admin: t_admin): unit is block {
         if isAdmin(admin) then skip
         else failwith(c_ERR_DENIED);
-    } with unit
+    } with unit;
 
     //RU Смена админа безусловно
     //RU
@@ -33,7 +33,7 @@ module MAdmin is {
         if newadmin = admin then failwith(c_ERR_ALREADY)
         else skip;
         admin := newadmin;
-    } with admin
+    } with admin;
 
 #if !ENABLE_OWNER
     //RU Смена админа с проверкой прав админа
@@ -42,9 +42,28 @@ module MAdmin is {
     [@inline] function accessChange(const newadmin: t_admin; var admin: t_admin): t_admin is block {
         mustAdmin(admin);
         forceChange(newadmin, admin);
-    } with admin
+    } with admin;
 #endif // !ENABLE_OWNER
 
 }
+
+//RU Использование модуля без других модулей доступа
+
+// #Define ENABLE_ADMIN
+// #Include "module/MAdmin.ligo"
+// type t_storage record [
+//     admin: MAdmin.t_admin;
+//     ...
+// ];
+//
+// type t_entrypoint is
+// | ChangeAdmin of MAdmin.t_admin
+// ...
+//
+// function main(const entrypoint: t_entrypoint; var s: t_storage): t_return is
+// case entrypoint of
+// | ChangeAdmin(params) -> (c_NO_OPERATIONS, block { s.admin:= MAdmin.accessChange(params, s.admin); } with s)
+// ...
+
 #endif // ENABLE_ADMIN
 #endif // MADMIN_INCLUDED

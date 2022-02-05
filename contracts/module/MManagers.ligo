@@ -16,7 +16,7 @@ module MManagers is {
     //RU Является ли текущий пользователь менеджером модуля
     [@inline] function isManager(const managers: t_managers): bool is block {
         const r: bool = (managers contains Tezos.sender);
-    } with r
+    } with r;
 
     //RU Текущий пользователь должен обладать правами менеджера модуля
     //RU
@@ -24,7 +24,7 @@ module MManagers is {
     [@inline] function mustManager(const managers: t_managers): unit is block {
         if isManager(managers) then skip
         else failwith(c_ERR_DENIED);
-    } with unit
+    } with unit;
 
     //RU Добавление нового менеджера безусловно
     //RU
@@ -34,7 +34,7 @@ module MManagers is {
         if managers contains addmanager then failwith(c_ERR_ALREADY)
         else skip;
         managers := Set.add(addmanager, managers);
-    } with managers
+    } with managers;
 
     //RU Удаление менеджера безусловно
     //RU
@@ -44,7 +44,7 @@ module MManagers is {
         if managers contains remmanager then skip
         else failwith(c_ERR_NOTFOUND);
         managers := Set.remove(remmanager, managers);
-    } with managers
+    } with managers;
 
 }
 #endif // ENABLE_MANAGERS

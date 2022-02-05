@@ -15,7 +15,7 @@ module MOwner is {
     //RU Является ли текущий пользователь владельцем
     [@inline] function isOwner(const owner: t_owner): bool is block {
         const r: bool = (owner = Tezos.sender);
-    } with r
+    } with r;
 
     //RU Текущий пользователь должен обладать правами владельца
     //RU
@@ -23,7 +23,7 @@ module MOwner is {
     [@inline] function mustOwner(const owner: t_owner): unit is block {
         if isOwner(owner) then skip
         else failwith(c_ERR_DENIED);
-    } with unit
+    } with unit;
 
     //RU Смена владельца с проверкой прав владельца
     //RU
@@ -33,8 +33,27 @@ module MOwner is {
         if newowner = owner then failwith(c_ERR_ALREADY)
         else skip;
         owner := newowner;
-    } with owner
+    } with owner;
 
 }
+
+//RU Использование модуля без других модулей доступа
+
+// #Define ENABLE_OWNER
+// #Include "module/MOwner.ligo"
+// type t_storage record [
+//     owner: MOwner.t_owner;
+//     ...
+// ];
+//
+// type t_entrypoint is
+// | ChangeOwner of MOwner.t_owner
+// ...
+//
+// function main(const entrypoint: t_entrypoint; var s: t_storage): t_return is
+// case entrypoint of
+// | ChangeOwner(params) -> (c_NO_OPERATIONS, block { s.owner:= MOwner.accessChange(params, s.owner); } with s)
+// ...
+
 #endif // ENABLE_OWNER
 #endif // MOWNER_INCLUDED
