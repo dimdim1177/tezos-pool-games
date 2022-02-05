@@ -12,7 +12,7 @@ module MFarm is {
     const c_INTERFACEs: set(nat) = set [c_INTERFACE_CRUNCH];//RU< Все интерфейсы
 
     //RU Параметры фермы
-    type t_farm is record [
+    type t_farm is [@layout:comb] record [
         addr: address;//RU< Адрес фермы
         id: nat;//RU< ID фермы
         farmToken: MToken.t_token;//RU< Токен фермы

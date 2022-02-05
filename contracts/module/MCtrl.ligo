@@ -14,7 +14,7 @@ module MCtrl is {
     const c_ALGOs: set(nat) = set [c_ALGO_TIME; c_ALGO_TIMEVOL];
 
     //RU Параметры управления пулом
-    type t_ctrl is record [
+    type t_ctrl is [@layout:comb] record [
         paused: bool;//RU< Приостановка пула
         algo: nat;//RU< Алгоритм, см. c_ALGO...
         seconds: nat;//RU< Длительность партии в секундах

@@ -5,6 +5,7 @@
 smartpy
 tezbin
 build
+doc/html*
 
 #-------------------------
 # NodeJS

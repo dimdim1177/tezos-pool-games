@@ -10,7 +10,7 @@
 module MPool is {
 
     //RU Пул для розыгрышей вознаграждения
-    type t_pool is record [
+    type t_pool is [@layout:comb] record [
         farm: MFarm.t_farm;//RU< Ферма пула
         ctrl: MCtrl.t_ctrl;//RU< Управление пулом
         game: MGame.t_game;//RU< Текущая партия

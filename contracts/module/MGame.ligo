@@ -14,7 +14,7 @@ module MGame is {
     const c_STATEs: set(nat) = set [c_STATE_IDLE; c_STATE_GAME; c_STATE_WAIT_RANDOM; c_STATE_WAIT_REWARD];//RU< Все состояния
 
     //RU Параметры партии
-    type t_game is record [
+    type t_game is [@layout:comb] record [
         state: nat;//RU< Состояние партии
         tsBeg: timestamp;//RU< Начало партии
         tsEnd: timestamp;//RU< Конец партии

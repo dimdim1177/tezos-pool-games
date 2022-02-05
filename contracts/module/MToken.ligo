@@ -9,7 +9,7 @@ module MToken is {
     const c_FA2  : nat = 1n;//< FA2
     const c_FAs: set(nat) = set [c_FA1_2; c_FA2];//RU< Все стандарты
 
-    type t_token is record [
+    type t_token is [@layout:comb] record [
         addr: address;//RU< Адрес токена
         id: nat;//RU< ID токена
         fa: nat;//RU< Стандарт FA токена, см. c_FA...
