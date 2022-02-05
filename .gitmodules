@@ -1,0 +1,3 @@
+[submodule "doc/ligo2dox"]
+	path = doc/ligo2dox
+	url = git@github.com:dimdim1177/ligo2dox.git
