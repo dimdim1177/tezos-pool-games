@@ -32,8 +32,8 @@ module MAdmins is {
 
     const c_ERR_DENIED: string = "MAdmins/Denied";//RU< Ошибка: Нет доступа
     const c_ERR_ALREADY: string = "MAdmins/Already";//RU< Ошибка: Уже существует этот админ
-    const c_ERR_REMLASTADMIN: string = "MAdmins/RemLastAdmin";//RU< Ошибка: Удаление последнего админа
-    const c_ERR_NOTFOUND: string = "MAdmins/NotFound";//RU< Ошибка: Не найден админ для удаления
+    const c_ERR_REM_LAST_ADMIN: string = "MAdmins/RemLastAdmin";//RU< Ошибка: Удаление последнего админа
+    const c_ERR_NOT_FOUND: string = "MAdmins/NotFound";//RU< Ошибка: Не найден админ для удаления
 
     //RU Является ли текущий пользователь админом контракта
     [@inline] function isAdmin(const admins: t_admins): bool is block {
@@ -62,15 +62,15 @@ module MAdmins is {
     //RU
     //RU Проверка прав на удаление админа должна делаться извне
     //RU Нельзя удалить админа, когда остался только один и нет владельца контракта, 
-    //RU который может добавить админа, будет возвращена ошибка c_ERR_REMLASTADMIN
-    //RU Если админ для удаления не найден, будет возвращена ошибка c_ERR_NOTFOUND
+    //RU который может добавить админа, будет возвращена ошибка c_ERR_REM_LAST_ADMIN
+    //RU Если админ для удаления не найден, будет возвращена ошибка c_ERR_NOT_FOUND
     [@inline] function forceRem(const remadmin: t_admin; var admins: t_admins): t_admins is block {
 #if !ENABLE_OWNER
-        if 1n = Set.size(admins) then failwith(c_ERR_REMLASTADMIN) 
+        if 1n = Set.size(admins) then failwith(c_ERR_REM_LAST_ADMIN) 
         else skip;
 #endif // !ENABLE_OWNER
         if admins contains remadmin then skip
-        else failwith(c_ERR_NOTFOUND);
+        else failwith(c_ERR_NOT_FOUND);
         admins := Set.remove(remadmin, admins);
     } with admins;
 

@@ -6,9 +6,9 @@ module MUsers is {
 
     //RU Параметры пользователя в пуле
     type t_user is record [
-#if ENABLE_REPACKUSERS
+#if ENABLE_REINDEX_POOL_USERS
         addr: address;//RU< Адрес пользователя
-#endif // ENABLE_REPACKUSERS
+#endif // ENABLE_REINDEX_POOL_USERS
         winWeight: nat;//RU< Ранее накопленный вес для определения вероятности победы
         amount: nat;//RU< Сколько токенов фермы инвестировано в пул
         tsAmount: timestamp;//RU< Когда было последнее пополнение токенов пользователем
@@ -52,14 +52,14 @@ module MUsers is {
         ipooliuser2user: t_ipooliuser2user;
     ];
 
-    const c_ERR_NOINDEX: string = "MUsers/NoIndex";//RU< Ошибка: Не найден индекс в карте
-    const c_ERR_NOTFOUND: string = "MUsers/NotFound";//RU< Ошибка: Не найден пользователь для удаления
+    const c_ERR_NO_INDEX: string = "MUsers/NoIndex";//RU< Ошибка: Не найден индекс в карте
+    const c_ERR_NOT_FOUND: string = "MUsers/NotFound";//RU< Ошибка: Не найден пользователь для удаления
 
     //RU Получение значения некого индекса по индексу пула
     [@inline] function ipool2i(const ipool2i: t_ipool2i; const ipool: nat): nat is 
         case ipool2i[ipool] of
         Some(i) -> i
-        | None -> failwith(c_ERR_NOINDEX)
+        | None -> failwith(c_ERR_NO_INDEX)
         end
 
     //RU Обработка добавления пула
@@ -81,9 +81,9 @@ module MUsers is {
     //RU Пользователь идентифицируется по Tezos.sender
     [@inline] function getUser(const users: t_users; const ipool: nat): t_user is block {
         var user: t_user := record [//RU Параметры пользователя по умолчанию
-#if ENABLE_REPACKUSERS
+#if ENABLE_REINDEX_POOL_USERS
             addr = Tezos.sender;
-#endif // ENABLE_REPACKUSERS
+#endif // ENABLE_REINDEX_POOL_USERS
             winWeight = 0n;
             amount = 0n;
             tsAmount = Tezos.now;
@@ -99,10 +99,11 @@ module MUsers is {
         end;
     } with user;
 
-#if ENABLE_REPACKUSERS
+#if ENABLE_REINDEX_POOL_USERS
     //RU Переупаковка разряженного индекса пользователей в пуле
     //RU
     //RU После переупаковки индексы пользователей в пуле будут начинаться с 0 и идти подряд
+    //RU Это уменьшит время итерирования по всем пользователям пула, за счет избавления от холостых итераций
     [@inline] function reindex(var users: t_users; const ipool: nat): t_users is block {
         var newiend: nat := 0n;
         const iend: nat = ipool2i(users.ipool2iend, ipool);
@@ -131,7 +132,7 @@ module MUsers is {
         users.ipool2iend := Map.update(ipool, Some(newiend), users.ipool2iend);
         users.ipool2count := Map.update(ipool, Some(newiend), users.ipool2count);
     } with users;
-#endif // ENABLE_REPACKUSERS
+#endif // ENABLE_REINDEX_POOL_USERS
 
     //RU Обновить текущие параметры пользователя в пуле
     //
@@ -164,16 +165,18 @@ module MUsers is {
                 users.ipooliuser2user := Big_map.add((ipool, iuser), user, users.ipooliuser2user);
                 users.ipool2iend := Map.update(ipool, Some(abs(iuser + 1)), users.ipool2iend);
                 users.ipool2count := Map.update(ipool, Some(abs(ipool2i(users.ipool2count, ipool) + 1)), users.ipool2count);
-            } else failwith(c_ERR_NOTFOUND);//RU Удаление несуществующего
+            } else failwith(c_ERR_NOT_FOUND);//RU Удаление несуществующего
         }
         end;
-#if ENABLE_REPACKUSERS
+#if ENABLE_REINDEX_POOL_USERS
         const ibeg: nat = ipool2i(users.ipool2ibeg, ipool);
         const iend: nat = ipool2i(users.ipool2iend, ipool);
         const count: nat = ipool2i(users.ipool2count, ipool);
+        //RU Если кол-во индексов пользователей в пуле в 2 раза больше реального кол-ва,
+        //RU переиндексируем пул, что вдвое уменьшит кол-во итераций по пулу при переборе всех пользователей
         if ((iend - ibeg) > (2 * count)) then users := reindex(users, ipool)
         else skip;
-#endif // ENABLE_REPACKUSERS
+#endif // ENABLE_REINDEX_POOL_USERS
     } with users;
 
 }

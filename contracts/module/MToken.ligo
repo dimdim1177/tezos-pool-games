@@ -17,7 +17,8 @@ module MToken is {
 
     const c_ERR_UNKNOWNFA: string = "MToken/UnknownFA";//RU< Ошибка: Неизвестный стандарт FA
 
-    [@inline] function checkToken(const token: t_token): unit is block {
+    //RU Проверка подаваемых на вход контракта параметров
+    [@inline] function check(const token: t_token): unit is block {
         if c_FAs contains token.fa then skip
         else failwith(c_ERR_UNKNOWNFA);
     } with unit; 

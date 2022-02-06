@@ -26,6 +26,6 @@
     "Must be ENABLE_MANAGER or ENABLE_MANAGERS";//RU< Генерируем ошибку компиляции //EN Generate compile error
 #endif
 
-#define ENABLE_REPACKUSERS //RU< Переупаковка разряженных индексов пользователей
+#define ENABLE_REINDEX_POOL_USERS //RU< Переупаковка разряженных индексов пользователей в пулах
 
 #endif // CONFIG_INCLUDED
