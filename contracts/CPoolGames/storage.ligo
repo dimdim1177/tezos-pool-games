@@ -6,9 +6,8 @@
 #include "../module/MAdmin.ligo"
 #include "../module/MAdmins.ligo"
 #include "../module/MManager.ligo"
-#include "../module/MManagers.ligo"
-#include "../module/MPools.ligo"
-#include "../module/MUsers.ligo"
+#include "../CPoolGames/MPools.ligo"
+#include "../CPoolGames/MUsers.ligo"
 
 type t_storage is [@layout:comb] record [
 #if ENABLE_OWNER

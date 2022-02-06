@@ -5,8 +5,8 @@
 module MToken is {
 
 //RU --- Стандарты токенов //EN --- Token standards
-    const c_FA1_2: nat = 1n;//< FA1.2
-    const c_FA2  : nat = 1n;//< FA2
+    const c_FA1_2: nat = 12n;//< FA1.2
+    const c_FA2  : nat = 20n;//< FA2
     const c_FAs: set(nat) = set [c_FA1_2; c_FA2];//RU< Все стандарты
 
     type t_token is [@layout:comb] record [

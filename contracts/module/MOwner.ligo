@@ -5,6 +5,22 @@
 //RU Модуль управления владельцем контракта
 //RU
 //RU Владелец может заменить владельца на другого
+//RU Пример использование модуля без других модулей доступа
+// #Define ENABLE_OWNER
+// #Include "module/MOwner.ligo"
+// type t_storage record [
+//     owner: MOwner.t_owner;
+//     ...
+// ];
+//
+// type t_entrypoint is
+// | ChangeOwner of MOwner.t_owner
+// ...
+//
+// function main(const entrypoint: t_entrypoint; var s: t_storage): t_return is
+// case entrypoint of
+// | ChangeOwner(params) -> (c_NO_OPERATIONS, block { s.owner:= MOwner.accessChange(params, s.owner); } with s)
+// ...
 module MOwner is {
     
     type t_owner is address //RU< Владелец контракта
@@ -36,24 +52,5 @@ module MOwner is {
     } with owner;
 
 }
-
-//RU Использование модуля без других модулей доступа
-
-// #Define ENABLE_OWNER
-// #Include "module/MOwner.ligo"
-// type t_storage record [
-//     owner: MOwner.t_owner;
-//     ...
-// ];
-//
-// type t_entrypoint is
-// | ChangeOwner of MOwner.t_owner
-// ...
-//
-// function main(const entrypoint: t_entrypoint; var s: t_storage): t_return is
-// case entrypoint of
-// | ChangeOwner(params) -> (c_NO_OPERATIONS, block { s.owner:= MOwner.accessChange(params, s.owner); } with s)
-// ...
-
 #endif // ENABLE_OWNER
 #endif // MOWNER_INCLUDED

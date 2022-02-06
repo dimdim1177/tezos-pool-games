@@ -4,7 +4,23 @@
 
 //RU Модуль управления списком менеджеров модуля контракта
 //RU
-//RU Добавление/удаление нового менеджера любым админом
+//RU Изменение нового менеджера любым админом
+//RU Пример использование модуля без других модулей доступа
+// #Define ENABLE_MANAGER
+// #Include "module/MManager.ligo"
+// type t_part record [
+//     manager: MManagers.t_manager;
+//     ...
+// ];
+//
+// type t_entrypoint is
+// | ChangeManager of MManager.t_manager
+// ...
+//
+// function main(const entrypoint: t_entrypoint; var s: t_storage): t_return is
+// case entrypoint of
+// | ChangeManager(params) -> (c_NO_OPERATIONS, block { mustManager(s.part.manager); MManager.forceChange(params, s.part.manager); } with s)
+// ...
 module MManager is {
     
     type t_manager is address;//RU< Адрес менеджера

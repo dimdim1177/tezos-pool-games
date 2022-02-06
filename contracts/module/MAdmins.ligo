@@ -6,6 +6,24 @@
 //RU
 //RU Добавление нового админа любым админом, удаление любым админом любого админа, включая самого себя.
 //RU Последний админ не может удалить сам себя, чтобы в контракте остался хотя бы один админ.
+//RU Пример использование модуля без других модулей доступа
+// #Define ENABLE_ADMINS
+// #Include "module/MAdmins.ligo"
+// type t_storage record [
+//     admins: MAdmins.t_admins;
+//     ...
+// ];
+//
+// type t_entrypoint is
+// | AddAdmin of MAdmins.t_admin
+// | RemAdmin of MAdmins.t_admin
+// ...
+//
+// function main(const entrypoint: t_entrypoint; var s: t_storage): t_return is
+// case entrypoint of
+// | AddAdmin(params) -> (c_NO_OPERATIONS, block { s.admins := MAdmins.acesseAdd(params, s.admins); } with s)
+// | RemAdmin(params) -> (c_NO_OPERATIONS, block { s.admins := MAdmins.accessRem(params, s.admins); } with s)
+// ...
 module MAdmins is {
     
     type t_admin is address;//RU< Адрес админа
@@ -72,26 +90,5 @@ module MAdmins is {
 #endif // !ENABLE_OWNER
 
 }
-
-//RU Использование модуля без других модулей доступа
-
-// #Define ENABLE_ADMINS
-// #Include "module/MAdmins.ligo"
-// type t_storage record [
-//     admins: MAdmins.t_admins;
-//     ...
-// ];
-//
-// type t_entrypoint is
-// | AddAdmin of MAdmins.t_admin
-// | RemAdmin of MAdmins.t_admin
-// ...
-//
-// function main(const entrypoint: t_entrypoint; var s: t_storage): t_return is
-// case entrypoint of
-// | AddAdmin(params) -> (c_NO_OPERATIONS, block { s.admins := MAdmins.acesseAdd(params, s.admins); } with s)
-// | RemAdmin(params) -> (c_NO_OPERATIONS, block { s.admins := MAdmins.accessRem(params, s.admins); } with s)
-// ...
-
 #endif // ENABLE_ADMINS
 #endif // MADMINS_INCLUDED

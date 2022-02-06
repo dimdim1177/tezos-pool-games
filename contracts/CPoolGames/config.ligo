@@ -26,6 +26,6 @@
     "Must be ENABLE_MANAGER or ENABLE_MANAGERS";//RU< Генерируем ошибку компиляции //EN Generate compile error
 #endif
 
-//#Define ENABLE_REPACKUSERS //RU< Переупаковка разряженных индексов пользователей
+#define ENABLE_REPACKUSERS //RU< Переупаковка разряженных индексов пользователей
 
 #endif // CONFIG_INCLUDED

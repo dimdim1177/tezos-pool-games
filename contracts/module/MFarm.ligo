@@ -7,7 +7,7 @@
 module MFarm is {
 
 //RU --- Интерфейсы ферм //EN --- Farm interfaces
-    const c_INTERFACE_CRUNCH: nat = 1n;
+    const c_INTERFACE_CRUNCH: nat = 1n;//RU< Crunch
     
     const c_INTERFACEs: set(nat) = set [c_INTERFACE_CRUNCH];//RU< Все интерфейсы
 

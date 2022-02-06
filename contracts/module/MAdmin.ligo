@@ -5,6 +5,22 @@
 //RU Модуль управления админом контракта
 //RU
 //RU Админ или владелец может заменить админа на другого
+//RU Пример использование модуля без других модулей доступа
+// #Define ENABLE_ADMIN
+// #Include "module/MAdmin.ligo"
+// type t_storage record [
+//     admin: MAdmin.t_admin;
+//     ...
+// ];
+//
+// type t_entrypoint is
+// | ChangeAdmin of MAdmin.t_admin
+// ...
+//
+// function main(const entrypoint: t_entrypoint; var s: t_storage): t_return is
+// case entrypoint of
+// | ChangeAdmin(params) -> (c_NO_OPERATIONS, block { s.admin:= MAdmin.accessChange(params, s.admin); } with s)
+// ...
 module MAdmin is {
     
     type t_admin is address;//RU< Админ контракта
@@ -46,24 +62,5 @@ module MAdmin is {
 #endif // !ENABLE_OWNER
 
 }
-
-//RU Использование модуля без других модулей доступа
-
-// #Define ENABLE_ADMIN
-// #Include "module/MAdmin.ligo"
-// type t_storage record [
-//     admin: MAdmin.t_admin;
-//     ...
-// ];
-//
-// type t_entrypoint is
-// | ChangeAdmin of MAdmin.t_admin
-// ...
-//
-// function main(const entrypoint: t_entrypoint; var s: t_storage): t_return is
-// case entrypoint of
-// | ChangeAdmin(params) -> (c_NO_OPERATIONS, block { s.admin:= MAdmin.accessChange(params, s.admin); } with s)
-// ...
-
 #endif // ENABLE_ADMIN
 #endif // MADMIN_INCLUDED

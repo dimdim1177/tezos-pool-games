@@ -5,7 +5,6 @@
 #include "../module/MAdmin.ligo"
 #include "../module/MAdmins.ligo"
 #include "../module/MManager.ligo"
-#include "../module/MManagers.ligo"
 #include "storage.ligo"
 
 (*RU
@@ -77,31 +76,5 @@ function mustManager(const s: t_storage; const manager: MManager.t_manager) : un
 } with unit
 
 #endif // ENABLE_MANAGER
-
-#if ENABLE_MANAGERS
-
-function mustManager(const s: t_storage; const managers: MManagers.t_managers) : unit is block {
-#if ENABLE_OWNER
-    const isOwner: bool = MOwner.isOwner(s.owner);
-#else // ENABLE_OWNER
-    const isOwner: bool = False;
-#endif // ENABLE_OWNER
-    if isOwner then skip //RU Владелец как бы менеджер
-    else block {
-#if ENABLE_ADMIN
-        const isAdmin: bool = MAdmin.isAdmin(s.admin);
-#endif // ENABLE_ADMIN
-#if ENABLE_ADMINS
-        const isAdmin: bool = MAdmins.isAdmin(s.admins);
-#endif // ENABLE_ADMINS
-#if (!ENABLE_ADMIN) && (!ENABLE_ADMINS)
-        const isAdmin: bool = False;
-#endif // (!ENABLE_ADMIN) && (!ENABLE_ADMINS)
-        if isAdmin then skip //RU Админ как бы менеджер
-        else MManagers.mustManager(managers);
-    }
-} with unit
-
-#endif // ENABLE_MANAGERS
 
 #endif // ACCESS_INCLUDED
