@@ -1,3 +1,6 @@
 [submodule "doc/ligo2dox"]
 	path = doc/ligo2dox
 	url = git@github.com:dimdim1177/ligo2dox.git
+[submodule "doc/mlcomment"]
+	path = doc/mlcomment
+	url = git@github.com:dimdim1177/mlcomment.git
