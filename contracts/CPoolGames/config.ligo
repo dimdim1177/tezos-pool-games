@@ -28,4 +28,6 @@
 
 #define ENABLE_REINDEX_POOL_USERS //RU< Переупаковка разряженных индексов пользователей в пулах
 
+#define ENABLE_EDIT_POOL //RU< Методы для редактирования пула
+
 #endif // CONFIG_INCLUDED

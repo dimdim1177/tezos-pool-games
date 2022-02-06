@@ -4,26 +4,43 @@
 //RU Модуль управления пулом
 module MCtrl is {
 
+//RU --- Состояния пула
+
+    type t_state is nat;//RU< Состояние пула
+
     //RU Пул активен
     //RU 
     //RU Периодически разыгрывается вознаграждение для всех участников пула
-    const c_STATE_ACTIVE: nat = 0n;
+    const c_STATE_ACTIVE: t_state = 0n;
+
     //RU Пул приостановлен
     //RU 
     //RU Если партия активна, она продолжается, но следующая не будет запущена. Депозиты пользователей останутся без изменений
-    const c_STATE_PAUSED: nat = 1n;
+    const c_STATE_PAUSED: t_state = 1n;
+
     //RU Пул на удаление
     //RU 
     //RU Если партия активна, она продолжается до успешного завершения. По окончании партии (или если она уже завершена) депозиты 
     //RU пользователей будут возвращены и пул будет удален
-    const c_STATE_REMOVE: nat = 2n;
+    const c_STATE_REMOVE: t_state = 2n;
+
     //RU Пул на удаление немедленно
     //RU
     //RU Без учета состояния партии депозиты пользователей будут возвращены немедленно и пул будет удален
-    const c_STATE_REMOVENOW: nat = 3n;
+    const c_STATE_REMOVENOW: t_state = 3n;
 
-    //RU Состояния пула
-    const c_STATEs: set(nat) = set [c_STATE_ACTIVE; c_STATE_PAUSED; c_STATE_REMOVE; c_STATE_REMOVENOW];
+    //RU Все состояния при создании нового пула
+    const c_CREATE_STATEs: set(t_state) = set [c_STATE_ACTIVE; c_STATE_PAUSED];
+
+    //RU Все состояния при управлении уже существующим пулом
+    const c_STATEs: set(t_state) = set [c_STATE_ACTIVE; c_STATE_PAUSED; c_STATE_REMOVE; c_STATE_REMOVENOW];
+
+
+//RU --- Алгоритмы розыгрыша вознаграждения
+
+    type t_algo is nat;//RU< Алгоритм пула пула
+
+    //RU Кроме кода алгоритма используются дополнительные настройки minDeposit, maxDeposit, minSeconds
 
     //RU Вероятность выигрыша пропорциональна суммарному времени в игре
     //RU
@@ -35,7 +52,7 @@ module MCtrl is {
     //RU бессмысленным выход и повторный вход в партию.
     //RU Этот алгоритм более интересен пользователям с малыми депозитами, вероятность выигрыша не зависит от размера депозита, поэтому 
     //RU можно вложить мало, а выиграть много.
-    const c_ALGO_TIME:    nat = 1n;
+    const c_ALGO_TIME: t_algo = 1n;
     
     //RU Вероятность выигрыша пропорциональна сумме произведений объема на время в игре
     //RU
@@ -50,38 +67,66 @@ module MCtrl is {
     //RU бессмысленным выход и повторный вход в партию.
     //RU Этот алгоритм более интересен пользователям с большими депозитами, вероятность выигрыша зависит от размера депозита, поэтому можно
     //RU существенно увеличить вероятность выигрыша, вложив большой депозит.
-    const c_ALGO_TIMEVOL: nat = 2n;
+    const c_ALGO_TIMEVOL: t_algo = 2n;
+
+    //RU Вероятность выигрыша равновероятна
+    //RU
+    //RU Вероятность выигрыша равновероятна для всех пользователей в пуле, которые присутствуют на окончание партии. 
+    //RU Использование алгоритма без minSeconds уязвимо перед халявщиками, которые входят в пул только перед розыгрышем
+    const c_ALGO_SIMPLE: t_algo = 3n;
 
     //RU Алгоритмы определения победителя
-    const c_ALGOs: set(nat) = set [c_ALGO_TIME; c_ALGO_TIMEVOL];
+    const c_ALGOs: set(t_algo) = set [c_ALGO_TIME; c_ALGO_TIMEVOL; c_ALGO_SIMPLE];
 
     //RU Параметры для управления пулом
     type t_ctrl is [@layout:comb] record [
-        state: nat;//RU< Состояние, см. c_STATE...
-        algo: nat;//RU< Алгоритм, см. c_ALGO...
+        state: t_state;//RU< Состояние пула, см. c_STATE...
+        algo: t_algo;//RU< Алгоритм пула, см. c_ALGO...
         seconds: nat;//RU< Длительность партии в секундах
 
         //RU Минимальный депозит для пула
         //RU
         //RU Пул с алгоритмом c_ALGO_TIME не учитывает размер депозита для розыгрыша вознагражедения. Этот параметр позволит избежать
         //RU копеечных депозитов
+        //RU 0 - нет ограничения
         minDeposit: nat;
 
-        //RU Максимальный депозит для пула
+        //RU Максимальный депозит для пула (только для алгоритма c_ALGO_TIMEVOL)
         //RU
         //RU Пул с алгоритмом c_ALGO_TIMEVOL может позволить владельцу большого депозита войти в последний момент и с большой вероятностью 
         //RU забрать вознаграждения. Чтобы ограничить размеры депозитов в пуле разумными рамками и дать пользователям сопоставимые шансы
         //RU этот параметр вместе с minDeposit позволит получить честный розыгрыш.
+        //RU 0 - нет ограничения. В алгоритмах кроме c_ALGO_TIMEVOL параметр игнорируется
         maxDeposit: nat;
+
+        //RU Минимальное время (в секундах) нахождения в пуле для участия в розыгрыше
+        //RU
+        //RU Параметр не влияет на внесение депозита, пользователь может вносить депозит в любой момент, если проходит по другим ограничениям, 
+        //RU он сможет участвовать в следующих розыгрышах
+        //RU 0 - нет ограничения. Максимальное значение - длительность партии
+        minSeconds: nat;
     ];
 
     const c_ERR_UNKNOWN_STATE: string = "MCtrl/UnknownState";//RU< Ошибка: Неизвестное состояние
+    const c_ERR_INVALID_STATE: string = "MCtrl/InvalidState";//RU< Ошибка: Недопустимое состояние
     const c_ERR_UNKNOWN_ALGO: string = "MCtrl/UnknownAlgo";//RU< Ошибка: Неизвестный алгоритм
+
+    //RU Проверка состояния пула
+    [@inline] function checkState(const state: nat): unit is block {
+        if c_STATEs contains state then skip
+        else failwith(c_ERR_UNKNOWN_STATE);
+    } with unit;
+
+    //RU Проверка состояния на допустимость при создании пула
+    [@inline] function checkCreateState(const state: nat): unit is block {
+        if c_CREATE_STATEs contains state then skip
+        else failwith(c_ERR_INVALID_STATE);
+    } with unit;
 
     //RU Проверка подаваемых на вход контракта параметров
     [@inline] function check(const ctrl: t_ctrl): unit is block {
-        if c_STATEs contains ctrl.state then skip
-        else failwith(c_ERR_UNKNOWN_STATE);
+        checkState(ctrl.state);
+        checkCreateState(ctrl.state);
         if c_ALGOs contains ctrl.algo then skip
         else failwith(c_ERR_UNKNOWN_ALGO);
     } with unit; 

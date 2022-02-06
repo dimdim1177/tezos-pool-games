@@ -4,14 +4,17 @@
 //RU Модуль списка пользователей, инвестировавших в пул для розыгрышей вознаграждений
 module MUsers is {
 
+    type t_weight is nat;//RU< Вес для определения вероятности победы
+    type t_balance is nat;//RU< Кол-во токенов
+
     //RU Параметры пользователя в пуле
     type t_user is record [
 #if ENABLE_REINDEX_POOL_USERS
         addr: address;//RU< Адрес пользователя
 #endif // ENABLE_REINDEX_POOL_USERS
-        winWeight: nat;//RU< Ранее накопленный вес для определения вероятности победы
-        amount: nat;//RU< Сколько токенов фермы инвестировано в пул
-        tsAmount: timestamp;//RU< Когда было последнее пополнение токенов пользователем
+        weight: t_weight;//RU< Ранее накопленный вес для определения вероятности победы
+        balance: t_balance;//RU< Сколько токенов фермы инвестировано в пул
+        tsBalance: timestamp;//RU< Когда было последнее пополнение токенов пользователем
     ];
 
     type t_ipool is nat;//RU< Индекс пула
@@ -84,9 +87,9 @@ module MUsers is {
 #if ENABLE_REINDEX_POOL_USERS
             addr = Tezos.sender;
 #endif // ENABLE_REINDEX_POOL_USERS
-            winWeight = 0n;
-            amount = 0n;
-            tsAmount = Tezos.now;
+            weight = 0n;
+            balance = 0n;
+            tsBalance = Tezos.now;
         ];
         case users.ipooladdr2iuser[(ipool, Tezos.sender)] of
         | Some(iuser) -> { 
@@ -121,7 +124,7 @@ module MUsers is {
                         users.ipooliuser2user := Big_map.add((ipool, newiend), user, users.ipooliuser2user);
                         //RU Удаляем параметры под текущим индексом
                         users.ipooliuser2user := Big_map.remove((ipool, iuser), users.ipooliuser2user);
-                        newiend := abs(newiend + 1);
+                        newiend := newiend + 1n;
                     } else skip
                 }
                 | None -> skip //RU Индекс пуст
@@ -136,11 +139,11 @@ module MUsers is {
 
     //RU Обновить текущие параметры пользователя в пуле
     //
-    //RU Пользователь идентифицируется по Tezos.sender
+    //RU Пользователь идентифицируется по Tezos.sender. При нулевом сохраняемом балансе пользователь удаляется из пула
     [@inline] function setUser(var users: t_users; const ipool: nat; const user: t_user): t_users is block {
         case users.ipooladdr2iuser[(ipool, Tezos.sender)] of
         Some(iuser) -> {
-            if user.amount > 0n then users.ipooliuser2user[(ipool, iuser)] := user //RU Обновление существующего
+            if user.balance > 0n then users.ipooliuser2user[(ipool, iuser)] := user //RU Обновление существующего
             else block {//RU Удаление существующего
                 users.ipooladdr2iuser := Big_map.remove((ipool, Tezos.sender), users.ipooladdr2iuser);//RU Удаляем индекс по адресу
                 users.ipooliuser2user := Big_map.remove((ipool, iuser), users.ipooliuser2user);//RU Удаляем данные по индексу
@@ -151,7 +154,7 @@ module MUsers is {
                     var iend: nat := ipool2i(users.ipool2iend, ipool);
                     while ((ibeg < iend) and 
                         (not Big_map.mem((ipool, ibeg), users.ipooliuser2user))) block {
-                        ibeg := abs(ibeg + 1);
+                        ibeg := ibeg + 1n;
                     };
                     users.ipool2ibeg := Map.update(ipool, Some(ibeg), users.ipool2ibeg);
                 } else skip;
@@ -159,12 +162,12 @@ module MUsers is {
             }
         }
         | None -> {
-            if user.amount > 0n then block {//RU Добавление нового
+            if user.balance > 0n then block {//RU Добавление нового
                 const iuser: nat = ipool2i(users.ipool2iend, ipool);
                 users.ipooladdr2iuser := Big_map.add((ipool, Tezos.sender), iuser, users.ipooladdr2iuser);
                 users.ipooliuser2user := Big_map.add((ipool, iuser), user, users.ipooliuser2user);
-                users.ipool2iend := Map.update(ipool, Some(abs(iuser + 1)), users.ipool2iend);
-                users.ipool2count := Map.update(ipool, Some(abs(ipool2i(users.ipool2count, ipool) + 1)), users.ipool2count);
+                users.ipool2iend := Map.update(ipool, Some(iuser + 1n), users.ipool2iend);
+                users.ipool2count := Map.update(ipool, Some(ipool2i(users.ipool2count, ipool) + 1n), users.ipool2count);
             } else failwith(c_ERR_NOT_FOUND);//RU Удаление несуществующего
         }
         end;
