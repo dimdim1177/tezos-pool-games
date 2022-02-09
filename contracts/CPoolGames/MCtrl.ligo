@@ -20,7 +20,7 @@ module MCtrl is {
 
     //RU Пул на удаление
     //RU 
-    //RU Если партия активна, она продолжается до успешного завершения. По окончании партии (или если она уже завершена) депозиты 
+    //RU Если партия активна, она продолжается до завершения. По окончании партии (или если она уже завершена) депозиты 
     //RU пользователей будут возвращены и пул будет удален
     const c_STATE_REMOVE: t_state = 2n;
 
@@ -82,7 +82,7 @@ module MCtrl is {
     type t_ctrl is [@layout:comb] record [
         state: t_state;//RU< Состояние пула, см. c_STATE...
         algo: t_algo;//RU< Алгоритм пула, см. c_ALGO...
-        seconds: nat;//RU< Длительность партии в секундах
+        gameSeconds: nat;//RU< Длительность партии в секундах
 
         //RU Минимальный депозит для пула
         //RU
@@ -110,26 +110,25 @@ module MCtrl is {
     const c_ERR_UNKNOWN_STATE: string = "MCtrl/UnknownState";//RU< Ошибка: Неизвестное состояние
     const c_ERR_INVALID_STATE: string = "MCtrl/InvalidState";//RU< Ошибка: Недопустимое состояние
     const c_ERR_UNKNOWN_ALGO: string = "MCtrl/UnknownAlgo";//RU< Ошибка: Неизвестный алгоритм
-
-    //RU Проверка состояния пула
-    [@inline] function checkState(const state: nat): unit is block {
-        if c_STATEs contains state then skip
-        else failwith(c_ERR_UNKNOWN_STATE);
-    } with unit;
-
-    //RU Проверка состояния на допустимость при создании пула
-    [@inline] function checkCreateState(const state: nat): unit is block {
-        if c_CREATE_STATEs contains state then skip
-        else failwith(c_ERR_INVALID_STATE);
-    } with unit;
+    const c_ERR_INVALID_SECONDS: string = "MCtrl/InvalidSeconds";//RU< Ошибка: Недопустимое кол-во секунд
 
     //RU Проверка подаваемых на вход контракта параметров
-    [@inline] function check(const ctrl: t_ctrl): unit is block {
-        checkState(ctrl.state);
-        checkCreateState(ctrl.state);
+    [@inline] function check(const ctrl: t_ctrl; const create: bool): unit is block {
+        if c_STATEs contains ctrl.state then skip
+        else failwith(c_ERR_UNKNOWN_STATE);
+        if create then block {
+            if c_CREATE_STATEs contains ctrl.state then skip
+            else failwith(c_ERR_INVALID_STATE);
+        } else skip;
         if c_ALGOs contains ctrl.algo then skip
         else failwith(c_ERR_UNKNOWN_ALGO);
-    } with unit; 
+        if ctrl.gameSeconds < c_MIN_GAME_SECONDS then failwith(c_ERR_INVALID_SECONDS)
+        else block {
+            if ctrl.gameSeconds > c_MAX_GAME_SECONDS then failwith(c_ERR_INVALID_SECONDS)
+            else skip;
+        };
+
+    } with unit;
 
 }
 #endif // MCTRL_INCLUDED

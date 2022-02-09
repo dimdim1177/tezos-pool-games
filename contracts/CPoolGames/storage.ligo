@@ -21,6 +21,9 @@ type t_storage is [@layout:comb] record [
 #endif // ENABLE_ADMINS
     pools: MPools.t_pools;//RU< Пулы для розыгрышей
     users: MUsers.t_users;//RU< Участники всех пулов
-]
+];
+
+//RU Тип результата отработки контракта
+type t_return is t_operations * t_storage;
 
 #endif // STORAGE_INCLUDED

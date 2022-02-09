@@ -21,5 +21,14 @@ module MGame is {
         tsBeg: timestamp;//RU< Начало партии
         tsEnd: timestamp;//RU< Конец партии
     ];
+
+    //RU Запись игры в состоянии IDLE
+    [@inline] function idleGame(const _u: unit): t_game is block {
+        const game: t_game = record [
+            state = c_STATE_IDLE;
+            tsBeg = Tezos.now;
+            tsEnd = Tezos.now;
+        ];
+    } with game;
 }
 #endif // MGAME_INCLUDED

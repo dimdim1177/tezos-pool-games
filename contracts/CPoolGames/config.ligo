@@ -18,16 +18,12 @@
     "Must be ENABLE_OWNER or ENABLE_ADMIN or ENABLE_ADMINS";//RU< Генерируем ошибку компиляции //EN Generate compile error
 #endif
 
-//#Define ENABLE_MANAGER //RU< У контракта есть менеджеры для управления его частями //EN< Contract has managers for control parts
-#define ENABLE_MANAGERS //RU< У контракта есть наборы менеджеров для управления его частями //EN< Contract has sets of managers for control parts
-
-//RU Необходимы либо ENABLE_MANAGER, либо ENABLE_MANAGERS
-#if (ENABLE_MANAGER) && (ENABLE_MANAGERS)
-    "Must be ENABLE_MANAGER or ENABLE_MANAGERS";//RU< Генерируем ошибку компиляции //EN Generate compile error
-#endif
-
 #define ENABLE_REINDEX_POOL_USERS //RU< Переупаковка разряженных индексов пользователей в пулах
+#define ENABLE_POOL_EDIT //RU< Методы для редактирования созданного пула
+#define ENABLE_POOL_FORCE //RU< Принудительные методы для пула
+//TODO #Define ENABLE_POOL_STAT //RU< Статистика работы пула
 
-#define ENABLE_EDIT_POOL //RU< Методы для редактирования пула
+const c_MIN_GAME_SECONDS: nat = 10n * 60n;//RU< Минимальное кол-во секунд для партии
+const c_MAX_GAME_SECONDS: nat = 10n * 86400n;//RU< Максимальное кол-во секунд для партии
 
 #endif // CONFIG_INCLUDED

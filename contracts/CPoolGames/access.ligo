@@ -17,6 +17,16 @@
 
 #if ENABLE_ADMIN //RU Есть набор админов контракта
 
+function isAdmin(const s: t_storage): bool is block {
+#if ENABLE_OWNER
+    var isAdmin: bool := MOwner.isOwner(s.owner);
+#else // ENABLE_OWNER
+    var isAdmin: bool := False;
+#endif // ENABLE_OWNER
+    if isAdmin then skip //RU Владелец как бы админ
+    else isAdmin := MAdmin.isAdmin(s.admin);
+} with isAdmin;
+
 function mustAdmin(const s: t_storage): unit is block {
 #if ENABLE_OWNER
     const isOwner: bool = MOwner.isOwner(s.owner);
@@ -25,15 +35,26 @@ function mustAdmin(const s: t_storage): unit is block {
 #endif // ENABLE_OWNER
     if isOwner then skip //RU Владелец как бы админ
     else MAdmin.mustAdmin(s.admin);
-} with unit
+} with unit;
 
 #else // ENABLE_ADMIN
 
-[@inline] function mustAdmin(const s: t_storage): unit is block { MOwner.mustOwner(s.owner); } with unit
+[@inline] function isAdmin(const s: t_storage): bool is block { const isAdmin: bool = MOwner.isOwner(s.owner); } with isAdmin;
+[@inline] function mustAdmin(const s: t_storage): unit is block { MOwner.mustOwner(s.owner); } with unit;
 
 #endif // ENABLE_ADMIN
 
 #if ENABLE_ADMINS //RU Есть набор админов контракта
+
+function isAdmin(const s: t_storage): bool is block {
+#if ENABLE_OWNER
+    var isAdmin: bool := MOwner.isOwner(s.owner);
+#else // ENABLE_OWNER
+    var isAdmin: bool := False;
+#endif // ENABLE_OWNER
+    if isAdmin then skip //RU Владелец как бы админ
+    else isAdmin:= MAdmins.isAdmin(s.admins);
+} with isAdmin;
 
 function mustAdmin(const s: t_storage): unit is block {
 #if ENABLE_OWNER
@@ -43,38 +64,13 @@ function mustAdmin(const s: t_storage): unit is block {
 #endif // ENABLE_OWNER
     if isOwner then skip //RU Владелец как бы админ
     else MAdmins.mustAdmin(s.admins);
-} with unit
+} with unit;
 
 #else // ENABLE_ADMINS
 
-[@inline] function mustAdmin(const s: t_storage): unit is block { MOwner.mustOwner(s.owner); } with unit
+[@inline] function isAdmin(const s: t_storage): bool is block { const isAdmin: bool = MOwner.isOwner(s.owner); } with isAdmin;
+[@inline] function mustAdmin(const s: t_storage): unit is block { MOwner.mustOwner(s.owner); } with unit;
 
 #endif // ENABLE_ADMINS
-
-#if ENABLE_MANAGER
-
-function mustManager(const s: t_storage; const manager: MManager.t_manager) : unit is block {
-#if ENABLE_OWNER
-    const isOwner: bool = MOwner.isOwner(s.owner);
-#else // ENABLE_OWNER
-    const isOwner: bool = False;
-#endif // ENABLE_OWNER
-    if isOwner then skip //RU Владелец как бы менеджер
-    else block {
-#if ENABLE_ADMIN
-        const isAdmin: bool = MAdmin.isAdmin(s.admin);
-#endif // ENABLE_ADMIN
-#if ENABLE_ADMINS
-        const isAdmin: bool = MAdmins.isAdmin(s.admins);
-#endif // ENABLE_ADMINS
-#if (!ENABLE_ADMIN) && (!ENABLE_ADMINS)
-        const isAdmin: bool = False;
-#endif // (!ENABLE_ADMIN) && (!ENABLE_ADMINS)
-        if isAdmin then skip //RU Админ как бы менеджер
-        else MManager.mustManager(manager);
-    }
-} with unit
-
-#endif // ENABLE_MANAGER
 
 #endif // ACCESS_INCLUDED

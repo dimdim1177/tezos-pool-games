@@ -19,7 +19,11 @@
 //
 // function main(const entrypoint: t_entrypoint; var s: t_storage): t_return is
 // case entrypoint of
-// | ChangeManager(params) -> (c_NO_OPERATIONS, block { mustManager(s.part.manager); MManager.forceChange(params, s.part.manager); } with s)
+// | ChangeManager(params) -> (c_NO_OPERATIONS, block {
+//      if isAdmin(...) then skip
+//      else MManager.mustManager(s.part.manager);
+//      MManager.forceChange(params, s.part.manager);
+// } with s)
 // ...
 module MManager is {
     
