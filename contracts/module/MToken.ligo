@@ -1,6 +1,9 @@
 #if !MTOKEN_INCLUDED
 #define MTOKEN_INCLUDED
 
+#include "MFA12.ligo"
+#include "MFA2.ligo"
+
 //RU Модуль токена
 module MToken is {
 
