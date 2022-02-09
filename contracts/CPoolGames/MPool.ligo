@@ -37,6 +37,7 @@ module MPool is {
         pool.ctrl.state := state;//TODO
     } with pool;
 
+#if ENABLE_POOL_EDIT
     [@inline] function edit(var pool: t_pool; const optctrl: option(MCtrl.t_ctrl);
             const optfarm: option(MFarm.t_farm); const optrandom: option(MRandom.t_random)): t_pool is block {
         case optctrl of
@@ -61,6 +62,7 @@ module MPool is {
         | None -> skip
         end;
     } with pool;
+#endif // ENABLE_POOL_EDIT
 
 //RU --- Для пользователей пулов
 
@@ -92,5 +94,8 @@ module MPool is {
         skip;//TODO
     } with pool;
 
+    [@inline] function isActive(const pool: t_pool): bool is block {
+        const r: bool = (pool.ctrl.state = MCtrl.c_STATE_ACTIVE);
+    } with r;
 }
 #endif // MPOOL_INCLUDED

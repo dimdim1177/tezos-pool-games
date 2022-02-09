@@ -27,13 +27,13 @@ module MCtrl is {
     //RU Пул на удаление немедленно
     //RU
     //RU Без учета состояния партии депозиты пользователей будут возвращены немедленно и пул будет удален
-    const c_STATE_REMOVENOW: t_state = 3n;
+    const c_STATE_FORCE_REMOVE: t_state = 3n;
 
     //RU Все состояния при создании нового пула
     const c_CREATE_STATEs: set(t_state) = set [c_STATE_ACTIVE; c_STATE_PAUSED];
 
     //RU Все состояния при управлении уже существующим пулом
-    const c_STATEs: set(t_state) = set [c_STATE_ACTIVE; c_STATE_PAUSED; c_STATE_REMOVE; c_STATE_REMOVENOW];
+    const c_STATEs: set(t_state) = set [c_STATE_ACTIVE; c_STATE_PAUSED; c_STATE_REMOVE; c_STATE_FORCE_REMOVE];
 
 
 //RU --- Алгоритмы розыгрыша вознаграждения
@@ -111,6 +111,8 @@ module MCtrl is {
     const c_ERR_INVALID_STATE: string = "MCtrl/InvalidState";//RU< Ошибка: Недопустимое состояние
     const c_ERR_UNKNOWN_ALGO: string = "MCtrl/UnknownAlgo";//RU< Ошибка: Неизвестный алгоритм
     const c_ERR_INVALID_SECONDS: string = "MCtrl/InvalidSeconds";//RU< Ошибка: Недопустимое кол-во секунд
+    const c_ERR_INVALID_MIN_SECONDS: string = "MCtrl/InvalidMinSeconds";//RU< Ошибка: Недопустимое минимальное кол-во секунд
+    const c_ERR_INVALID_MIN_DEPOSIT: string = "MCtrl/InvalidMinDeposit";//RU< Ошибка: Минимальный депозит больше максимального
 
     //RU Проверка подаваемых на вход контракта параметров
     [@inline] function check(const ctrl: t_ctrl; const create: bool): unit is block {
@@ -127,7 +129,11 @@ module MCtrl is {
             if ctrl.gameSeconds > c_MAX_GAME_SECONDS then failwith(c_ERR_INVALID_SECONDS)
             else skip;
         };
-
+        if ctrl.minSeconds > ctrl.gameSeconds then failwith(c_ERR_INVALID_MIN_SECONDS)
+        else skip;
+        if (ctrl.minDeposit > 0n) and (ctrl.maxDeposit > 0n)
+            and (ctrl.minDeposit > ctrl.maxDeposit) then failwith(c_ERR_INVALID_MIN_DEPOSIT)
+        else skip;
     } with unit;
 
 }

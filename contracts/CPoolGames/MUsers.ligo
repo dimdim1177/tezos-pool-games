@@ -12,6 +12,7 @@ module MUsers is {
     type t_user is record [
         balance: MFarm.t_amount;//RU< Сколько токенов фермы инвестировано в пул этим пользователем
         tsBalance: timestamp;//RU< Когда было последнее пополнение токенов пользователем
+        tsBeg: timestamp;//RU< Когда пользователь вошел в партию
         weight: t_weight;//RU< Ранее накопленный вес для определения вероятности победы
 #if ENABLE_REINDEX_POOL_USERS
         addr: address;//RU< Адрес пользователя
@@ -85,12 +86,13 @@ module MUsers is {
     //RU Пользователь идентифицируется по Tezos.sender
     [@inline] function getUser(const users: t_users; const ipool: nat): t_user is block {
         var user: t_user := record [//RU Параметры пользователя по умолчанию
+            balance = 0n;
+            tsBalance = Tezos.now;
+            tsBeg = Tezos.now;
+            weight = 0n;
 #if ENABLE_REINDEX_POOL_USERS
             addr = Tezos.sender;
 #endif // ENABLE_REINDEX_POOL_USERS
-            weight = 0n;
-            balance = 0n;
-            tsBalance = Tezos.now;
         ];
         case users.ipooladdr2iuser[(ipool, Tezos.sender)] of
         | Some(iuser) -> { 
@@ -104,15 +106,18 @@ module MUsers is {
     } with user;
 
 #if ENABLE_REINDEX_POOL_USERS
-    //RU Переупаковка разряженного индекса пользователей в пуле
+    //RU Переупаковка разряженного индекса пользователей в пуле, если необходимо
     //RU
     //RU После переупаковки индексы пользователей в пуле будут начинаться с 0 и идти подряд
     //RU Это уменьшит время итерирования по всем пользователям пула, за счет избавления от холостых итераций
-    [@inline] function reindex(var users: t_users; const ipool: nat): t_users is block {
-        var newiend: nat := 0n;
+    [@inline] function reindexIfNeed(var users: t_users; const ipool: nat): t_users is block {
+        const ibeg: nat = ipool2i(users.ipool2ibeg, ipool);
         const iend: nat = ipool2i(users.ipool2iend, ipool);
-        if (iend > 0n) then block {//RU Возможно есть пользователи в пуле
-            const ibeg: nat = ipool2i(users.ipool2ibeg, ipool);//RU Начальный индекс
+        const count: nat = ipool2i(users.ipool2count, ipool);
+        //RU Если кол-во индексов пользователей в пуле в 2 раза больше реального кол-ва,
+        //RU переиндексируем пул, что вдвое уменьшит кол-во итераций по пулу при переборе всех пользователей
+        if ((iend - ibeg) > (2 * count)) then block {
+            var newiend: nat := 0n;
             const imax: int = iend - 1;//RU Конечный индекс
             for i := int(ibeg) to imax block {
                 const iuser: nat = abs(i);
@@ -130,11 +135,11 @@ module MUsers is {
                 }
                 | None -> skip //RU Индекс пуст
                 end;
-            }
+            };
+            users.ipool2ibeg := Big_map.update(ipool, Some(0n), users.ipool2ibeg);
+            users.ipool2iend := Big_map.update(ipool, Some(newiend), users.ipool2iend);
+            users.ipool2count := Big_map.update(ipool, Some(newiend), users.ipool2count);
         } else skip;
-        users.ipool2ibeg := Big_map.update(ipool, Some(0n), users.ipool2ibeg);
-        users.ipool2iend := Big_map.update(ipool, Some(newiend), users.ipool2iend);
-        users.ipool2count := Big_map.update(ipool, Some(newiend), users.ipool2count);
     } with users;
 #endif // ENABLE_REINDEX_POOL_USERS
 
@@ -149,9 +154,10 @@ module MUsers is {
                 users.ipooladdr2iuser := Big_map.remove((ipool, Tezos.sender), users.ipooladdr2iuser);//RU Удаляем индекс по адресу
                 users.ipooliuser2user := Big_map.remove((ipool, iuser), users.ipooliuser2user);//RU Удаляем данные по индексу
                 const count: nat = ipool2i(users.ipool2count, ipool);//RU Текущее кол-во пользователей в пуле
-                users.ipool2count := Map.update(ipool, Some(abs(count - 1)), users.ipool2count);//RU Уменьшаем кол-во
-                var ibeg: nat := ipool2i(users.ipool2ibeg, ipool);
+                users.ipool2count := Big_map.update(ipool, Some(abs(count - 1)), users.ipool2count);//RU Уменьшаем кол-во
+                const ibeg: nat = ipool2i(users.ipool2ibeg, ipool);
                 if iuser = ibeg then block {//RU Нужно найти новое начало индексов
+                    var ibeg := iuser + 1n;
                     const iend: nat = ipool2i(users.ipool2iend, ipool);
                     while ((ibeg < iend) and 
                         (not Big_map.mem((ipool, ibeg), users.ipooliuser2user))) block {
@@ -173,13 +179,7 @@ module MUsers is {
         }
         end;
 #if ENABLE_REINDEX_POOL_USERS
-        const ibeg: nat = ipool2i(users.ipool2ibeg, ipool);
-        const iend: nat = ipool2i(users.ipool2iend, ipool);
-        const count: nat = ipool2i(users.ipool2count, ipool);
-        //RU Если кол-во индексов пользователей в пуле в 2 раза больше реального кол-ва,
-        //RU переиндексируем пул, что вдвое уменьшит кол-во итераций по пулу при переборе всех пользователей
-        if ((iend - ibeg) > (2 * count)) then users := reindex(users, ipool)
-        else skip;
+        users := reindexIfNeed(users, ipool);//RU Переиндексируем пользователей в пуле, если необходимо
 #endif // ENABLE_REINDEX_POOL_USERS
     } with users;
 

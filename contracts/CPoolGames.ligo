@@ -58,29 +58,49 @@ case entrypoint of
 #endif // ENABLE_ADMINS
 
 //RU --- Управление пулами
-| CreatePool(params) -> (c_NO_OPERATIONS, block { mustAdmin(s); s.pools := MPools.createPool(s.pools, params.0, params.1, params.2); } with s)
-| PausePool(params) -> (c_NO_OPERATIONS, block { mustAdmin(s); s.pools := MPools.pausePool(s.pools, params); } with s)
-| PlayPool(params) -> (c_NO_OPERATIONS, block { mustAdmin(s); s.pools := MPools.playPool(s.pools, params); } with s)
-| RemovePool(params) -> (c_NO_OPERATIONS, block { mustAdmin(s); s.pools := MPools.removePool(s.pools, params); } with s)
+| CreatePool(params) -> (c_NO_OPERATIONS, block { mustAdmin(s); s.rpools := MPools.createPool(s.rpools, params.0, params.1, params.2); } with s)
+| PausePool(params) -> (c_NO_OPERATIONS, block { mustAdmin(s); s.rpools := MPools.pausePool(s.rpools, params); } with s)
+| PlayPool(params) -> (c_NO_OPERATIONS, block { mustAdmin(s); s.rpools := MPools.playPool(s.rpools, params); } with s)
+| RemovePool(params) -> (c_NO_OPERATIONS, block { mustAdmin(s); s.rpools := MPools.removePool(s.rpools, params); } with s)
 #if ENABLE_POOL_FORCE
-| ForceRemovePool(params) -> (c_NO_OPERATIONS, block { mustAdmin(s); s.pools := MPools.forceRemovePool(s.pools, params); } with s)
+| ForceRemovePool(params) -> (c_NO_OPERATIONS, block { mustAdmin(s); s.rpools := MPools.forceRemovePool(s.rpools, params); } with s)
 #endif // ENABLE_POOL_FORCE
 #if ENABLE_POOL_EDIT
-| EditPool(params) -> (c_NO_OPERATIONS, block { mustAdmin(s); s.pools := MPools.editPool(s.pools, params.0, params.1, params.2, params.3); } with s)
+| EditPool(params) -> (c_NO_OPERATIONS, block { mustAdmin(s); s.rpools := MPools.editPool(s.rpools, params.0, params.1, params.2, params.3); } with s)
 #if ENABLE_POOL_FORCE
-| ForceEditPool(params) -> (c_NO_OPERATIONS, block { mustAdmin(s); s.pools := MPools.editPool(s.pools, params.0, params.1, params.2, params.3); } with s)//TODO force
+| ForceEditPool(params) -> (c_NO_OPERATIONS, block { mustAdmin(s); s.rpools := MPools.editPool(s.rpools, params.0, params.1, params.2, params.3); } with s)//TODO force
 #endif // ENABLE_POOL_FORCE
 #endif // ENABLE_POOL_EDIT
 
 //RU --- Для пользователей пулов
-| Deposit(params) -> (c_NO_OPERATIONS, block { s.pools := MPools.deposit(s.pools, params.0, params.1); } with s)
-| Withdraw(params) -> (c_NO_OPERATIONS, block { s.pools := MPools.withdraw(s.pools, params.0, params.1); } with s)
-| WithdrawAll(params) -> (c_NO_OPERATIONS, block { s.pools := MPools.withdraw(s.pools, params, 0n); } with s)
+| Deposit(params) -> (c_NO_OPERATIONS, block { s.rpools := MPools.deposit(s.rpools, params.0, params.1); } with s)
+| Withdraw(params) -> (c_NO_OPERATIONS, block { s.rpools := MPools.withdraw(s.rpools, params.0, params.1); } with s)
+| WithdrawAll(params) -> (c_NO_OPERATIONS, block { s.rpools := MPools.withdraw(s.rpools, params, 0n); } with s)
 
 //RU --- От провайдера случайных чисел
-| OnRandom(params) -> (c_NO_OPERATIONS, block { s.pools := MPools.onRandom(s.pools, params.0, params.1); } with s)
+| OnRandom(params) -> (c_NO_OPERATIONS, block { s.rpools := MPools.onRandom(s.rpools, params.0, params.1); } with s)
 
 //RU --- От фермы
-| OnReward(params) -> (c_NO_OPERATIONS, block { s.pools := MPools.onReward(s.pools, params.0, params.1); } with s)
+| OnReward(params) -> (c_NO_OPERATIONS, block { s.rpools := MPools.onReward(s.rpools, params.0, params.1); } with s)
+end;
 
-end
+//RU Получение ID последнего созданного этим адином пула
+[@view] function viewLastIPool(const _: unit; const s: t_storage): int is block {
+    mustAdmin(s);
+    const ilast: int = MPools.viewLastIPool(s.rpools);
+} with ilast;
+
+//RU Получение списка всех пулов админом
+[@view] function viewPools(const _: unit; const s: t_storage): MPools.t_pools is block {
+    mustAdmin(s);
+    const pools: MPools.t_pools = MPools.viewPools(s.rpools, False);
+} with pools;
+[@view] function viewPool(const ipool: MPools.t_ipool; const s: t_storage): MPools.t_pool is block {
+    mustAdmin(s);
+    const pool: MPools.t_pool = MPools.viewPool(s.rpools, ipool, False);
+} with pool;
+
+//RU Получение списка всех активных пулов любым пользователем
+[@view] function viewActivePools(const _: unit; const s: t_storage): MPools.t_pools is MPools.viewPools(s.rpools, True);
+//RU Получение активного пула любым пользователем
+[@view] function viewActivePool(const ipool: MPools.t_ipool; const s: t_storage): MPools.t_pool is MPools.viewPool(s.rpools, ipool, True);
