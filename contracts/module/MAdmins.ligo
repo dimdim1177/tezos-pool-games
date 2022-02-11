@@ -91,4 +91,4 @@ module MAdmins is {
 
 }
 #endif // ENABLE_ADMINS
-#endif // MADMINS_INCLUDED
+#endif // !MADMINS_INCLUDED

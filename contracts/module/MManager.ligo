@@ -57,4 +57,4 @@ module MManager is {
 
 }
 #endif // ENABLE_MANAGER
-#endif // MMANAGER_INCLUDED
+#endif // !MMANAGER_INCLUDED

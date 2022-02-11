@@ -63,4 +63,4 @@ module MAdmin is {
 
 }
 #endif // ENABLE_ADMIN
-#endif // MADMIN_INCLUDED
+#endif // !MADMIN_INCLUDED

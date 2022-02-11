@@ -1,5 +1,5 @@
-#if !FA2_INCLUDED
-#define FA2_INCLUDED
+#if !MFA2_INCLUDED
+#define MFA2_INCLUDED
 
 //RU Типы и методы для FA2
 module MFA2 is {
@@ -108,4 +108,4 @@ module MFA2 is {
         end
 
 }
-#endif // FA2_INCLUDED
+#endif // !MFA2_INCLUDED

@@ -73,4 +73,4 @@ function mustAdmin(const s: t_storage): unit is block {
 
 #endif // ENABLE_ADMINS
 
-#endif // ACCESS_INCLUDED
+#endif // !ACCESS_INCLUDED

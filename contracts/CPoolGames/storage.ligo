@@ -26,4 +26,4 @@ type t_storage is [@layout:comb] record [
 //RU Тип результата отработки контракта
 type t_return is t_operations * t_storage;
 
-#endif // STORAGE_INCLUDED
+#endif // !STORAGE_INCLUDED

@@ -1,8 +1,8 @@
-#if !FA12_INCLUDED
-#define FA12_INCLUDED
+#if !MFA1_2_INCLUDED
+#define MFA1_2_INCLUDED
 
 //RU Типы и методы для FA1.2
-module MFA12 is {
+module MFA1_2 is {
     
     //RU Входные параметры для метода transfer
     type t_transfer_params is michelson_pair(address, "from", michelson_pair(address, "to", nat, "value"), "");
@@ -31,9 +31,9 @@ module MFA12 is {
     //RU Контракт с точкой входа approve
     type t_approve_contract is contract(t_approve);
 
-    const c_ERR_NOT_FOUND_TRANSFER: string = "MFA12/NotFoundTransfer";//RU< Ошибка: Не найден метод transfer токена
-    const c_ERR_NOT_FOUND_BALANCE: string = "MFA12/NotFoundBalance";//RU< Ошибка: Не найден метод balance токена
-    const c_ERR_NOT_FOUND_APPROVE: string = "MFA12/NotFoundApprove";//RU< Ошибка: Не найден метод approve токена
+    const c_ERR_NOT_FOUND_TRANSFER: string = "MFA1_2/NotFoundTransfer";//RU< Ошибка: Не найден метод transfer токена
+    const c_ERR_NOT_FOUND_BALANCE: string = "MFA1_2/NotFoundBalance";//RU< Ошибка: Не найден метод balance токена
+    const c_ERR_NOT_FOUND_APPROVE: string = "MFA1_2/NotFoundApprove";//RU< Ошибка: Не найден метод approve токена
 
     //RU Получить точку входа transfer токена
     function getTransferEntrypoint(const addr: address): t_transfer_contract is
@@ -57,4 +57,4 @@ module MFA12 is {
         end
 
 }
-#endif // FA12_INCLUDED
+#endif // !MFA1_2_INCLUDED

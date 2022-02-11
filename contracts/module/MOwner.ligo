@@ -53,4 +53,4 @@ module MOwner is {
 
 }
 #endif // ENABLE_OWNER
-#endif // MOWNER_INCLUDED
+#endif // !MOWNER_INCLUDED

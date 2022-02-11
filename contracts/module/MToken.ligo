@@ -1,13 +1,11 @@
 #if !MTOKEN_INCLUDED
 #define MTOKEN_INCLUDED
 
-#include "MFA12.ligo"
+#include "MFA1_2.ligo"
 #include "MFA2.ligo"
 
 //RU Модуль токена
 module MToken is {
-
-    type t_id is nat;//RU< Идентификатор токена
 
 //RU --- Стандарты токенов //EN --- Token standards
     const c_FA1_2: nat = 12n;//< FA1.2
@@ -16,7 +14,7 @@ module MToken is {
 
     type t_token is [@layout:comb] record [
         addr: address;//RU< Адрес токена
-        id: t_id;//RU< ID токена
+        token_id: MFA2.t_token_id;//RU< ID токена
         fa: nat;//RU< Стандарт FA токена, см. c_FA...
     ];
 
@@ -26,6 +24,12 @@ module MToken is {
     [@inline] function check(const token: t_token): unit is block {
         if c_FAs contains token.fa then skip
         else failwith(c_ERR_UNKNOWN_FA);
+        if c_FA1_2 = token.fa then block {
+            const _:MFA1_2.t_transfer_contract = MFA1_2.getTransferEntrypoint(token.addr);//RU Проверяем наличие метода transfer для FA1.2
+        } else skip;
+        if c_FA2 = token.fa then block {
+            const _:MFA2.t_transfer_contract = MFA2.getTransferEntrypoint(token.addr);//RU Проверяем наличие метода transfer для FA2
+        } else skip;
     } with unit;
 }
-#endif // MTOKEN_INCLUDED
+#endif // !MTOKEN_INCLUDED

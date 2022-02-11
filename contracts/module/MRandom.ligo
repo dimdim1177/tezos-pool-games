@@ -16,4 +16,4 @@ module MRandom is {
         end
     } with unit; 
 }
-#endif // MRANDOM_INCLUDED
+#endif // !MRANDOM_INCLUDED

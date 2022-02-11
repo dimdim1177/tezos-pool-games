@@ -5,6 +5,7 @@
 module MGame is {
 
     type t_state is nat;//RU< Состояние партии
+    type t_weight is nat;//RU< Вес для определения вероятности победы
 
 //RU --- Состояния партии
 //EN --- States of game
@@ -20,6 +21,7 @@ module MGame is {
         state: t_state;//RU< Состояние партии
         tsBeg: timestamp;//RU< Начало партии
         tsEnd: timestamp;//RU< Конец партии
+        weight: t_weight;//RU< Суммарный вес всех участников партии
     ];
 
     //RU Запись игры в состоянии IDLE
@@ -30,5 +32,6 @@ module MGame is {
             tsEnd = Tezos.now;
         ];
     } with game;
+
 }
-#endif // MGAME_INCLUDED
+#endif // !MGAME_INCLUDED

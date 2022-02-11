@@ -1,6 +1,7 @@
 #if !MPOOLS_INCLUDED
 #define MPOOLS_INCLUDED
 
+#include "../include/consts.ligo"
 #include "MPool.ligo"
 #include "MUsers.ligo"
 
@@ -66,9 +67,8 @@ module MPools is {
 
     //RU Получить ID последнего созданного админом пула
     //RU
-    //RU Обоснованно полагаем, что с одного адреса не создаются пула в несколько потоков, поэтомум этот view позволяет получить
-    //RU ID только что созданного админов нового пула.
-    //RU Если нет созданных админов пулов, будет возвращено -1
+    //RU Обоснованно полагаем, что с одного адреса не создаются пулы в несколько потоков, поэтому этот метод позволяет получить
+    //RU ID только что созданного админов нового пула. Если нет созданных админов пулов, будет возвращено -1
     [@inline] function viewLastIPool(const rpools: t_rpools): int is
         case rpools.addr2ilast[Tezos.sender] of
         Some(ilast) -> int(ilast)
@@ -104,21 +104,25 @@ module MPools is {
     } with rpools;
 
     //RU Удаление пула сейчас //EN Remove pool now
-    function forceRemovePool(var rpools: t_rpools; const ipool: t_ipool): t_rpools is block {
+    function forceRemovePool(var rpools: t_rpools; const ipool: t_ipool): t_operations * t_rpools is block {
+        var operations: t_operations := list [];
         rpools := setState(rpools, ipool, MCtrl.c_STATE_FORCE_REMOVE);//RU Все необходимые операции по удалению пула сейчас
         rpools.pools := Big_map.remove(ipool, rpools.pools);
-    } with rpools;
+    } with (operations, rpools);
 
     //RU Удаление пула (по окончании партии) //EN Remove pool (after game)
-    [@inline] function removePool(var rpools: t_rpools; const ipool: t_ipool): t_rpools is block {
+    [@inline] function removePool(var rpools: t_rpools; const ipool: t_ipool): t_operations * t_rpools is block {
+        var operations: t_operations := list [];
         var pool: t_pool := getPool(rpools, ipool);
         if (MGame.c_STATE_IDLE = pool.game.state) or (0n = pool.balance) then block {//RU Партия завершена или пул пуст, можно удалить сейчас
-            rpools := forceRemovePool(rpools, ipool);
+            const r: t_operations * t_rpools = forceRemovePool(rpools, ipool);
+            operations := r.0;
+            rpools := r.1;
         } else block {
             var pool: t_pool := MPool.setState(pool, MCtrl.c_STATE_REMOVE);//RU Только меняем состояние, реальное удаление по завершению партии
             rpools := setPool(rpools, ipool, pool);
         };
-    } with rpools;
+    } with (operations, rpools);
 
 #if ENABLE_POOL_EDIT
     //RU Редактирование пула (приостановленого) //EN Edit pool (paused)
@@ -136,38 +140,43 @@ module MPools is {
     //RU @param damount Кол-во токенов для инвестирования в пул
     //EN Deposit to pool
     //RU @param damount Amount of tokens for invest to pool
-    [@inline] function deposit(var rpools: t_rpools; const ipool: t_ipool; const damount: MFarm.t_amount): t_rpools is block {
+    [@inline] function deposit(var rpools: t_rpools; const ipool: t_ipool; const damount: MFarm.t_amount): t_operations * t_rpools is block {
+        var operations: t_operations := list [];
         var pool: t_pool := getPool(rpools, ipool);
         pool := MPool.deposit(pool, damount);
         rpools := setPool(rpools, ipool, pool);
-    } with rpools;
+    } with (operations, rpools);
 
     //RU Извлечение из пула
     //RU
     //RU 0n == wamount - извлечение всего депозита из пула
     //EN Withdraw from pool
-    //RU
-    //RU 0n == wamount - withdraw all deposit from pool
-    [@inline] function withdraw(var rpools: t_rpools; const ipool: t_ipool; const wamount: MFarm.t_amount): t_rpools is block {
+    //EN
+    //EN 0n == wamount - withdraw all deposit from pool
+    [@inline] function withdraw(var rpools: t_rpools; const ipool: t_ipool; const wamount: MFarm.t_amount): t_operations * t_rpools is block {
+        var operations: t_operations := list [];
         var pool: t_pool := getPool(rpools, ipool);
         pool := MPool.withdraw(pool, wamount);
         rpools := setPool(rpools, ipool, pool);
-    } with rpools;
+    } with (operations, rpools);
 
 //RU --- От провайдера случайных чисел
 
-    [@inline] function onRandom(var rpools: t_rpools; const ipool: t_ipool; const random: nat): t_rpools is block {
+    [@inline] function onRandom(var rpools: t_rpools; const ipool: t_ipool; const random: nat): t_operations * t_rpools is block {
+        var operations: t_operations := list [];
         var pool: t_pool := getPool(rpools, ipool);
         pool := MPool.onRandom(pool, random);
         rpools := setPool(rpools, ipool, pool);
-    } with rpools;
+    } with (operations, rpools);
 
 //RU --- От фермы
 
-    [@inline] function onReward(var rpools: t_rpools; const ipool: t_ipool; const reward: nat): t_rpools is block {
+    [@inline] function onReward(var rpools: t_rpools; const ipool: t_ipool; const reward: nat): t_operations * t_rpools is block {
+        var operations: t_operations := list [];
         var pool: t_pool := getPool(rpools, ipool);
         pool := MPool.onReward(pool, reward);
         rpools := setPool(rpools, ipool, pool);
-    } with rpools;
+    } with (operations, rpools);
+
 }
-#endif // MPOOLS_INCLUDED
+#endif // !MPOOLS_INCLUDED

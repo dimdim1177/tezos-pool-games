@@ -109,7 +109,7 @@ module MUsers is {
     //RU Переупаковка разряженного индекса пользователей в пуле, если необходимо
     //RU
     //RU После переупаковки индексы пользователей в пуле будут начинаться с 0 и идти подряд
-    //RU Это уменьшит время итерирования по всем пользователям пула, за счет избавления от холостых итераций
+    //RU Это уменьшит кол-во операций для итерирования по всем пользователям пула, за счет избавления от холостых итераций
     [@inline] function reindexIfNeed(var users: t_users; const ipool: nat): t_users is block {
         const ibeg: nat = ipool2i(users.ipool2ibeg, ipool);
         const iend: nat = ipool2i(users.ipool2iend, ipool);
@@ -184,4 +184,4 @@ module MUsers is {
     } with users;
 
 }
-#endif // MUSERS_INCLUDED
+#endif // !MUSERS_INCLUDED

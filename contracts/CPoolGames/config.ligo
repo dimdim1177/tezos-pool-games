@@ -26,4 +26,4 @@
 const c_MIN_GAME_SECONDS: nat = 10n * 60n;//RU< Минимальное кол-во секунд для партии
 const c_MAX_GAME_SECONDS: nat = 10n * 86400n;//RU< Максимальное кол-во секунд для партии
 
-#endif // CONFIG_INCLUDED
+#endif // !CONFIG_INCLUDED

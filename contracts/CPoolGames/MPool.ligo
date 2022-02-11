@@ -19,8 +19,8 @@ module MPool is {
         game: MGame.t_game;//RU< Текущая партия розыгрыша вознаграждения
         balance: MFarm.t_amount;//RU< Сколько токенов фермы инвестировано в пул в настоящий момент
 #if ENABLE_POOL_STAT
-        paid: MFarm.t_amount;//RU< Сколько токенов вознаграждения было выплачено пулом за все партии
-        games: nat;//RU< Сколько партий уже проведено в этом пуле
+        paidRewards: MFarm.t_amount;//RU< Сколько токенов вознаграждения было выплачено пулом за все партии
+        gamesComplete: nat;//RU< Сколько партий уже проведено в этом пуле
 #endif // ENABLE_POOL_STAT
     ];
 
@@ -97,5 +97,6 @@ module MPool is {
     [@inline] function isActive(const pool: t_pool): bool is block {
         const r: bool = (pool.ctrl.state = MCtrl.c_STATE_ACTIVE);
     } with r;
+
 }
-#endif // MPOOL_INCLUDED
+#endif // !MPOOL_INCLUDED
