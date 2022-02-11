@@ -64,8 +64,8 @@ module MFarm is {
 
     //RU Проверка параметров фермы на валидность
     [@inline] function check(const farm: t_farm): unit is block {
-        MToken.check(farm.farmToken);
-        MToken.check(farm.rewardToken);
+        MToken.check(farm.farmToken, False);
+        MToken.check(farm.rewardToken, False);
         if c_INTERFACEs contains farm.interface then skip
         else failwith(c_ERR_UNKNOWN_INTERFACE);
     } with unit;

@@ -2,18 +2,16 @@
 #define MUSERS_INCLUDED
 
 #include "../module/MFarm.ligo"
+#include "MPoolGame.ligo"
 
 //RU Модуль списка пользователей, инвестировавших в пулы для розыгрышей вознаграждений
 module MUsers is {
-
-    type t_weight is nat;//RU< Вес для определения вероятности победы
 
     //RU Параметры пользователя в пуле
     type t_user is record [
         balance: MFarm.t_amount;//RU< Сколько токенов фермы инвестировано в пул этим пользователем
         tsBalance: timestamp;//RU< Когда было последнее пополнение токенов пользователем
-        tsBeg: timestamp;//RU< Когда пользователь вошел в партию
-        weight: t_weight;//RU< Ранее накопленный вес для определения вероятности победы
+        weight: MPoolGame.t_weight;//RU< Вес для определения вероятности победы в текущей партии
 #if ENABLE_REINDEX_POOL_USERS
         addr: address;//RU< Адрес пользователя
 #endif // ENABLE_REINDEX_POOL_USERS
@@ -88,7 +86,6 @@ module MUsers is {
         var user: t_user := record [//RU Параметры пользователя по умолчанию
             balance = 0n;
             tsBalance = Tezos.now;
-            tsBeg = Tezos.now;
             weight = 0n;
 #if ENABLE_REINDEX_POOL_USERS
             addr = Tezos.sender;
