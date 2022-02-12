@@ -20,9 +20,6 @@ type t_entrypoint is
 | PausePool of t_ipool //RU< Приостановка пула //EN< Pause pool
 | PlayPool of t_ipool //RU< Запуск пула (после паузы) //EN< Play pool (after pause)
 | RemovePool of t_ipool //RU< Удаление пула (по окончании партии) //EN< Remove pool (after game)
-#if ENABLE_POOL_FORCE
-| ForceRemovePool of t_ipool //RU< Принудительное удаление пула сейчас //EN< Force remove pool now
-#endif // ENABLE_POOL_FORCE
 #if ENABLE_POOL_EDIT
 | EditPool of t_ipool * option(t_opts) * option(t_farm) * option(t_random) * (*burn*)option(t_token) //RU< Редактирование пула (приостановленого) //EN< Edit pool (paused)
 #if ENABLE_POOL_FORCE
@@ -58,12 +55,9 @@ case entrypoint of
 
 //RU --- Управление пулами
 | CreatePool(params) -> (cNO_OPERATIONS, block { mustAdmin(s); s := MPools.createPool(s, params.0, params.1, params.2, params.3); } with s)
-| PausePool(params) -> block { mustAdmin(s); const r: t_return = MPools.pausePool(s, params); } with r
-| PlayPool(params) -> block { mustAdmin(s); const r: t_return = MPools.playPool(s, params); } with r
-| RemovePool(params) -> block { mustAdmin(s); const r: t_return = MPools.removePool(s, params); } with r
-#if ENABLE_POOL_FORCE
-| ForceRemovePool(params) -> block { mustAdmin(s); const r: t_return = MPools.forceRemovePool(s, params); } with r
-#endif // ENABLE_POOL_FORCE
+| PausePool(params) -> (cNO_OPERATIONS, block { mustAdmin(s); s := MPools.pausePool(s, params); } with s)
+| PlayPool(params) -> (cNO_OPERATIONS, block { mustAdmin(s); s := MPools.playPool(s, params); } with s)
+| RemovePool(params) -> (cNO_OPERATIONS, block { mustAdmin(s); s := MPools.removePool(s, params); } with s)
 #if ENABLE_POOL_EDIT
 | EditPool(params) -> (cNO_OPERATIONS, block { mustAdmin(s); s := MPools.editPool(s, params.0, params.1, params.2, params.3, params.4); } with s)
 #if ENABLE_POOL_FORCE

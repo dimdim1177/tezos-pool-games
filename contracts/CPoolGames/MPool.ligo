@@ -60,10 +60,9 @@ module MPool is {
 
 //RU --- Управление пулом
 
-    function setState(const s: t_storage; const _ipool: t_ipool; var pool: t_pool; const state: t_pool_state): t_return * t_pool is block {
+    function setState(var pool: t_pool; const state: t_pool_state): t_pool is block {
         pool.opts.state := state;
-        //TODO
-    } with ((cNO_OPERATIONS, s), pool);
+    } with pool;
 
 #if ENABLE_POOL_EDIT
     function edit(var pool: t_pool; const optopts: option(t_opts); const optfarm: option(t_farm); 

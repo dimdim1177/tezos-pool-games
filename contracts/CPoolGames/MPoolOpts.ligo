@@ -18,14 +18,9 @@ module MPoolOpts is {
 
     //RU Пул на удаление
     //RU 
-    //RU Если партия активна, она продолжается до завершения. По окончании партии (или если она уже завершена) депозиты 
-    //RU пользователей будут возвращены и пул будет удален
+    //RU Если партия активна, она продолжается до завершения. По окончании партии, когда пользователи заберут все депозиты,
+    //RU пул будет удален. Если пул уже пуст, он будет удален немедленно
     [@inline] const cSTATE_REMOVE: t_pool_state = 2n;
-
-    //RU Пул на удаление немедленно (псевдосостояние - по сути команда)
-    //RU
-    //RU Без учета состояния партии депозиты пользователей будут возвращены немедленно и пул будет удален
-    [@inline] const cSTATE_FORCE_REMOVE: t_pool_state = 3n;
 
     //RU Допустимые состояния при создании нового пула
     //RU
@@ -34,8 +29,8 @@ module MPoolOpts is {
 
     //RU Все состояния при управлении уже существующим пулом
     //RU
-    //RU \see cSTATE_ACTIVE, cSTATE_PAUSE, cSTATE_REMOVE, cSTATE_FORCE_REMOVE
-    const cSTATEs: set(t_pool_state) = set [cSTATE_ACTIVE; cSTATE_PAUSE; cSTATE_REMOVE; cSTATE_FORCE_REMOVE];
+    //RU \see cSTATE_ACTIVE, cSTATE_PAUSE, cSTATE_REMOVE
+    const cSTATEs: set(t_pool_state) = set [cSTATE_ACTIVE; cSTATE_PAUSE; cSTATE_REMOVE];
 
 //RU --- Алгоритмы розыгрыша вознаграждения
 

@@ -130,13 +130,9 @@ type t_pool is [@layout:comb] record [
 type t_ipool is t_i;//RU< Индекс пула
 type t_pools is big_map(t_ipool, t_pool);//RU< Пулы по их ID
 
-type t_ipools is set(t_ipool);//RU< Набор ID всех пулов
-type t_packed_ipools is bytes;//RU< Упакованный набор ID всех пулов
-
 //RU Пулы и сопутствующая информация
 type t_rpools is [@layout:comb] record [
     inext: t_ipool;//RU< ID следующего пула
-    packed_ipools: t_packed_ipools;//RU< Упакованный набор ID всех пулов
     pools: t_pools;//RU< Собственно пулы
     addr2ilast: big_map(address, t_ipool);//RU< Последний идентификатор пула по адресу админа
 ];

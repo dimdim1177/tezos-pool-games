@@ -9,26 +9,6 @@ module MPools is {
     const cERR_UNPACK: string = "MPools/Unpack";//RU< Ошибка: Сбой распаковки
     const cERR_NOT_FOUND: string = "MPools/NotFound";//RU< Ошибка: Не найден пользователь для удаления
 
-    //RU Получить набор ID всех пулов
-    //RU
-    //RU При ошибке распаковки будет возвращена ошибка cERR_UNPACK
-    function getIPools(const s: t_storage): t_ipools is block {
-        var ipools: t_ipools := set [];
-        const packed_ipools: t_packed_ipools = s.rpools.packed_ipools;
-        if 0n = Bytes.length(packed_ipools) then skip //RU Пока не сохраняли упакованный набор
-        else block {
-            case (Bytes.unpack(packed_ipools): option(t_ipools)) of //RU Распоковка набор
-            Some(uipools) -> ipools := uipools
-            | None -> failwith(cERR_UNPACK)
-            end;
-        };
-    } with ipools;
-
-    //RU Записать набор ID всех пулов
-    [@inline] function setIPools(var s: t_storage; const ipools: t_ipools): t_storage is block {
-        s.rpools.packed_ipools := Bytes.pack(ipools);
-    } with s;
-
     //RU Получить пул по индексу
     //RU
     //RU Если пул не найден, будет возвращена ошибка cERR_NOT_FOUND
@@ -39,25 +19,18 @@ module MPools is {
         end;
 
     //RU Обновить пул по индексу
-    function setPool(var s: t_storage; const ipool: t_ipool; const pool: t_pool): t_storage is block {
-        if MPoolOpts.cSTATE_FORCE_REMOVE = pool.opts.state then block {//RU Пул на удаление сейчас
-            s.rpools.pools := Big_map.remove(ipool, s.rpools.pools);
-            var ipools: t_ipools := getIPools(s);
-            ipools := Set.remove(ipool, ipools);
-            s := setIPools(s, ipools);
-        } else block {//RU Обновить пул
-            s.rpools.pools := Big_map.update(ipool, Some(pool), s.rpools.pools);
-        };
+    [@inline] function setPool(var s: t_storage; const ipool: t_ipool; const pool: t_pool): t_storage is block {
+        s.rpools.pools[ipool] := pool;
     } with s;
 
     //RU Задать состояние пула
     //RU
     //RU Если убрать inline компилятор падает
-    function setState(const s: t_storage; const ipool: t_ipool; const state: t_pool_state): t_return is block {
-        const pool: t_pool = getPool(s, ipool);
-        const r_pool: t_return * t_pool = MPool.setState(s, ipool, pool, state);
-        const rs: t_storage = setPool(r_pool.0.1, ipool, r_pool.1);
-    } with (r_pool.0.0, rs);
+    function setState(var s: t_storage; const ipool: t_ipool; const state: t_pool_state): t_storage is block {
+        var pool: t_pool := getPool(s, ipool);
+        pool := MPool.setState(pool, state);
+        s := setPool(s, ipool, pool);
+    } with s;
 
 //RU --- Управление пулами
 
@@ -71,31 +44,21 @@ module MPools is {
         rpools.pools := Big_map.add(ipool, pool, rpools.pools);
         rpools.addr2ilast := Big_map.update(Tezos.sender, Some(ipool), rpools.addr2ilast);//RU Обновляем последний индекс по адресу создателя пула
         s.rpools := rpools;
-        var ipools: t_ipools := getIPools(s);
-        ipools := Set.add(ipool, ipools);
-        s := setIPools(s, ipools);
     } with s;
 
     //RU Приостановка пула //EN Pause pool
-    function pausePool(const s: t_storage; const ipool: t_ipool): t_return is setState(s, ipool, MPoolOpts.cSTATE_PAUSE);
+    function pausePool(const s: t_storage; const ipool: t_ipool): t_storage is setState(s, ipool, MPoolOpts.cSTATE_PAUSE);
 
     //RU Запуск пула (после паузы) //EN Play pool (after pause)
-    function playPool(const s: t_storage; const ipool: t_ipool): t_return is setState(s, ipool, MPoolOpts.cSTATE_ACTIVE);
+    function playPool(const s: t_storage; const ipool: t_ipool): t_storage is setState(s, ipool, MPoolOpts.cSTATE_ACTIVE);
 
     //RU Удаление пула (по окончании партии) //EN Remove pool (after game)
-    function removePool(const s: t_storage; const ipool: t_ipool): t_return is block {
+    function removePool(var s: t_storage; const ipool: t_ipool): t_storage is block {
         const pool: t_pool = getPool(s, ipool);
-        var state: t_pool_state := MPoolOpts.cSTATE_REMOVE;
-        if (0n = pool.game.balance) or (not MPool.isActive(pool)) then block {//RU Пул пуст или партии приостановлены, можно удалить сейчас
-            state := MPoolOpts.cSTATE_FORCE_REMOVE;
-        } else skip;
-        const r: t_return = setState(s, ipool, state);
-    } with r;
-
-#if ENABLE_POOL_FORCE
-    //RU Принудительное удаление пула сейчас //EN Force remove pool now
-    function forceRemovePool(const s: t_storage; const ipool: t_ipool): t_return is setState(s, ipool, MPoolOpts.cSTATE_FORCE_REMOVE);
-#endif // ENABLE_POOL_FORCE
+        if 0n = pool.game.balance then block {//RU Пул уже пуст, можно удалить прямо сейчас
+            s.rpools.pools := Big_map.remove(ipool, s.rpools.pools);
+        } else s := setState(s, ipool, MPoolOpts.cSTATE_REMOVE);
+    } with s;
 
 #if ENABLE_POOL_EDIT
     //RU Редактирование пула (приостановленого) //EN Edit pool (paused)
