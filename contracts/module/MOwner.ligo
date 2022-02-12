@@ -19,34 +19,32 @@
 //
 // function main(const entrypoint: t_entrypoint; var s: t_storage): t_return is
 // case entrypoint of
-// | ChangeOwner(params) -> (c_NO_OPERATIONS, block { s.owner:= MOwner.accessChange(params, s.owner); } with s)
+// | ChangeOwner(params) -> ((nil: list(operation)), block { s.owner:= MOwner.accessChange(params, s.owner); } with s)
 // ...
 module MOwner is {
     
     type t_owner is address //RU< Владелец контракта
 
-    const c_ERR_DENIED: string = "MOwner/Denied";//RU< Ошибка: Нет доступа
-    const c_ERR_ALREADY: string = "MOwner/Already";//RU< Ошибка: Уже задан
+    const cERR_DENIED: string = "MOwner/Denied";//RU< Ошибка: Нет доступа
+    const cERR_ALREADY: string = "MOwner/Already";//RU< Ошибка: Уже задан
 
     //RU Является ли текущий пользователь владельцем
-    [@inline] function isOwner(const owner: t_owner): bool is block {
-        const r: bool = (owner = Tezos.sender);
-    } with r;
+    [@inline] function isOwner(const owner: t_owner): bool is owner = Tezos.sender;
 
     //RU Текущий пользователь должен обладать правами владельца
     //RU
-    //RU Если пользователь не владелец, будет возвращена ошибка c_ERR_DENIED
-    [@inline] function mustOwner(const owner: t_owner): unit is block {
+    //RU Если пользователь не владелец, будет возвращена ошибка cERR_DENIED
+    function mustOwner(const owner: t_owner): unit is block {
         if isOwner(owner) then skip
-        else failwith(c_ERR_DENIED);
+        else failwith(cERR_DENIED);
     } with unit;
 
     //RU Смена владельца с проверкой прав владельца
     //RU
-    //RU Если владелец уже установлен, будет возвращена ошибка c_ERR_ALREADY
-    [@inline] function accessChange(const newowner: t_owner; var owner: t_owner): t_owner is block {
+    //RU Если владелец уже установлен, будет возвращена ошибка cERR_ALREADY
+    function accessChange(const newowner: t_owner; var owner: t_owner): t_owner is block {
         mustOwner(owner);
-        if newowner = owner then failwith(c_ERR_ALREADY)
+        if newowner = owner then failwith(cERR_ALREADY)
         else skip;
         owner := newowner;
     } with owner;

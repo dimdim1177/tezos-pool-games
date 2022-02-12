@@ -31,29 +31,29 @@ module MFA1_2 is {
     //RU Контракт с точкой входа approve
     type t_approve_contract is contract(t_approve);
 
-    const c_ERR_NOT_FOUND_TRANSFER: string = "MFA1_2/NotFoundTransfer";//RU< Ошибка: Не найден метод transfer токена
-    const c_ERR_NOT_FOUND_BALANCE: string = "MFA1_2/NotFoundBalance";//RU< Ошибка: Не найден метод balance токена
-    const c_ERR_NOT_FOUND_APPROVE: string = "MFA1_2/NotFoundApprove";//RU< Ошибка: Не найден метод approve токена
+    const cERR_NOT_FOUND_TRANSFER: string = "MFA1_2/NotFoundTransfer";//RU< Ошибка: Не найден метод transfer токена
+    const cERR_NOT_FOUND_BALANCE: string = "MFA1_2/NotFoundBalance";//RU< Ошибка: Не найден метод balance токена
+    const cERR_NOT_FOUND_APPROVE: string = "MFA1_2/NotFoundApprove";//RU< Ошибка: Не найден метод approve токена
 
     //RU Получить точку входа transfer токена
     function getTransferEntrypoint(const addr: address): t_transfer_contract is
         case (Tezos.get_entrypoint_opt("%transfer", addr): option(t_transfer_contract)) of
         Some(transfer_contract) -> transfer_contract
-        | None -> (failwith(c_ERR_NOT_FOUND_TRANSFER): t_transfer_contract)
+        | None -> (failwith(cERR_NOT_FOUND_TRANSFER): t_transfer_contract)
         end
 
     //RU Получить точку входа balance токена
     function getBalanceEntrypoint(const addr: address): t_balance_contract is
         case (Tezos.get_entrypoint_opt("%getBalance", addr): option(t_balance_contract)) of
         Some(balance_contract) -> balance_contract
-        | None -> (failwith(c_ERR_NOT_FOUND_BALANCE): t_balance_contract)
+        | None -> (failwith(cERR_NOT_FOUND_BALANCE): t_balance_contract)
         end
 
     //RU Получить точку входа approve токена
     function getApproveEntrypoint(const addr: address): t_approve_contract is
         case (Tezos.get_entrypoint_opt("%approve", addr): option(t_approve_contract)) of
         Some(approve_contract) -> approve_contract
-        | None -> (failwith(c_ERR_NOT_FOUND_APPROVE): t_approve_contract)
+        | None -> (failwith(cERR_NOT_FOUND_APPROVE): t_approve_contract)
         end
 
 }

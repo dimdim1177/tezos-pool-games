@@ -4,7 +4,6 @@
 #include "../module/MOwner.ligo"
 #include "../module/MAdmin.ligo"
 #include "../module/MAdmins.ligo"
-#include "../module/MManager.ligo"
 #include "storage.ligo"
 
 (*RU
@@ -39,8 +38,8 @@ function mustAdmin(const s: t_storage): unit is block {
 
 #else // ENABLE_ADMIN
 
-[@inline] function isAdmin(const s: t_storage): bool is block { const isAdmin: bool = MOwner.isOwner(s.owner); } with isAdmin;
-[@inline] function mustAdmin(const s: t_storage): unit is block { MOwner.mustOwner(s.owner); } with unit;
+[@inline] function isAdmin(const s: t_storage): bool is MOwner.isOwner(s.owner);
+[@inline] function mustAdmin(const s: t_storage): unit is MOwner.mustOwner(s.owner);
 
 #endif // ENABLE_ADMIN
 
@@ -68,8 +67,8 @@ function mustAdmin(const s: t_storage): unit is block {
 
 #else // ENABLE_ADMINS
 
-[@inline] function isAdmin(const s: t_storage): bool is block { const isAdmin: bool = MOwner.isOwner(s.owner); } with isAdmin;
-[@inline] function mustAdmin(const s: t_storage): unit is block { MOwner.mustOwner(s.owner); } with unit;
+[@inline] function isAdmin(const s: t_storage): bool is MOwner.isOwner(s.owner);
+[@inline] function mustAdmin(const s: t_storage): unit is MOwner.mustOwner(s.owner);
 
 #endif // ENABLE_ADMINS
 

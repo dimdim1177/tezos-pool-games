@@ -82,29 +82,29 @@ module MFA2 is {
     //RU Контракт с точкой входа update_operators
     type t_operators_contract is contract(t_operators);
 
-    const c_ERR_NOT_FOUND_TRANSFER: string = "MFA2/NotFoundTransfer";//RU< Ошибка: Не найден метод transfer токена
-    const c_ERR_NOT_FOUND_BALANCEOF: string = "MFA2/NotFoundBalanceOf";//RU< Ошибка: Не найден метод balance_of токена
-    const c_ERR_NOT_FOUND_OPERATORS: string = "MFA2/NotFoundUpdateOperators";//RU< Ошибка: Не найден метод update_operators токена
+    const cERR_NOT_FOUND_TRANSFER: string = "MFA2/NotFoundTransfer";//RU< Ошибка: Не найден метод transfer токена
+    const cERR_NOT_FOUND_BALANCEOF: string = "MFA2/NotFoundBalanceOf";//RU< Ошибка: Не найден метод balance_of токена
+    const cERR_NOT_FOUND_OPERATORS: string = "MFA2/NotFoundUpdateOperators";//RU< Ошибка: Не найден метод update_operators токена
 
     //RU Получить точку входа transfer токена
     function getTransferEntrypoint(const addr: address): t_transfer_contract is
         case (Tezos.get_entrypoint_opt("%transfer", addr): option(t_transfer_contract)) of
         Some(transfer_contract) -> transfer_contract
-        | None -> (failwith(c_ERR_NOT_FOUND_TRANSFER): t_transfer_contract)
+        | None -> (failwith(cERR_NOT_FOUND_TRANSFER): t_transfer_contract)
         end
 
     //RU Получить точку входа balance_of токена
     function getBalanceEntrypoint(const addr: address): t_balance_contract is
         case (Tezos.get_entrypoint_opt("%balance_of", addr): option(t_balance_contract)) of
         Some(balance_contract) -> balance_contract
-        | None -> (failwith(c_ERR_NOT_FOUND_BALANCEOF): t_balance_contract)
+        | None -> (failwith(cERR_NOT_FOUND_BALANCEOF): t_balance_contract)
         end
 
     //RU Получить точку входа update_operators токена
     function getOperatorsEntrypoint(const addr: address): t_operators_contract is
         case (Tezos.get_entrypoint_opt("%update_operators", addr): option(t_operators_contract)) of
         Some(operators_contract) -> operators_contract
-        | None -> (failwith(c_ERR_NOT_FOUND_OPERATORS): t_operators_contract)
+        | None -> (failwith(cERR_NOT_FOUND_OPERATORS): t_operators_contract)
         end
 
 }

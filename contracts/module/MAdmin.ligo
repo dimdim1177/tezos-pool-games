@@ -19,34 +19,32 @@
 //
 // function main(const entrypoint: t_entrypoint; var s: t_storage): t_return is
 // case entrypoint of
-// | ChangeAdmin(params) -> (c_NO_OPERATIONS, block { s.admin:= MAdmin.accessChange(params, s.admin); } with s)
+// | ChangeAdmin(params) -> ((nil: list(operation)), block { s.admin:= MAdmin.accessChange(params, s.admin); } with s)
 // ...
 module MAdmin is {
     
     type t_admin is address;//RU< Админ контракта
 
-    const c_ERR_DENIED: string = "MAdmin/Denied";//RU< Ошибка: Нет доступа
-    const c_ERR_ALREADY: string = "MAdmin/Already";//RU< Ошибка: Уже задан
+    const cERR_DENIED: string = "MAdmin/Denied";//RU< Ошибка: Нет доступа
+    const cERR_ALREADY: string = "MAdmin/Already";//RU< Ошибка: Уже задан
 
     //RU Является ли текущий пользователь админом
-    [@inline] function isAdmin(const admin: t_admin): bool is block {
-        const r: bool = (admin = Tezos.sender);
-    } with r;
+    [@inline] function isAdmin(const admin: t_admin): bool is (admin = Tezos.sender);
 
     //RU Текущий пользователь должен обладать правами админа
     //RU
-    //RU Если пользователь не админ, будет возвращена ошибка c_ERR_DENIED
-    [@inline] function mustAdmin(const admin: t_admin): unit is block {
+    //RU Если пользователь не админ, будет возвращена ошибка cERR_DENIED
+    function mustAdmin(const admin: t_admin): unit is block {
         if isAdmin(admin) then skip
-        else failwith(c_ERR_DENIED);
+        else failwith(cERR_DENIED);
     } with unit;
 
     //RU Смена админа безусловно
     //RU
     //RU Проверка прав на изменение админа должна делаться извне
-    //RU Если админ уже установлен, будет возвращена ошибка c_ERR_ALREADY
-    [@inline] function forceChange(const newadmin: t_admin; var admin: t_admin): t_admin is block {
-        if newadmin = admin then failwith(c_ERR_ALREADY)
+    //RU Если админ уже установлен, будет возвращена ошибка cERR_ALREADY
+    function forceChange(const newadmin: t_admin; var admin: t_admin): t_admin is block {
+        if newadmin = admin then failwith(cERR_ALREADY)
         else skip;
         admin := newadmin;
     } with admin;
@@ -54,8 +52,8 @@ module MAdmin is {
 #if !ENABLE_OWNER
     //RU Смена админа с проверкой прав админа
     //RU
-    //RU Если владелец уже установлен, будет возвращена ошибка c_ERR_ALREADY
-    [@inline] function accessChange(const newadmin: t_admin; var admin: t_admin): t_admin is block {
+    //RU Если владелец уже установлен, будет возвращена ошибка cERR_ALREADY
+    function accessChange(const newadmin: t_admin; var admin: t_admin): t_admin is block {
         mustAdmin(admin);
         forceChange(newadmin, admin);
     } with admin;

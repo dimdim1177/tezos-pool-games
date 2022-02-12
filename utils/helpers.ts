@@ -150,13 +150,13 @@ export function destructObj(obj: any) {
 export async function setupLambdasToStorage(
   lambdas_comp: { prim: string; args: { [key: string]: string | number }[] }[]
 ) {
-  const lambda_func_storage = new MichelsonMap<string, BytesString>();
+  const lambda_funcstorage = new MichelsonMap<string, BytesString>();
   for (const lambda of lambdas_comp) {
     const key: BigNumber = new BigNumber(lambda.args[1].int);
     const bytes: BytesString = lambda.args[0].bytes as BytesString;
-    lambda_func_storage.set(key.toString(), bytes);
+    lambda_funcstorage.set(key.toString(), bytes);
   }
-  return lambda_func_storage;
+  return lambda_funcstorage;
 }
 
 export async function setFunctionBatchCompilled(

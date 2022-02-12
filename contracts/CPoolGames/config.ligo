@@ -18,12 +18,12 @@
     "Must be ENABLE_OWNER or ENABLE_ADMIN or ENABLE_ADMINS";//RU< Генерируем ошибку компиляции //EN Generate compile error
 #endif
 
-#define ENABLE_REINDEX_POOL_USERS //RU< Переупаковка разряженных индексов пользователей в пулах
+#define ENABLE_REINDEX_USERS //RU< Переупаковка разряженных индексов пользователей в пулах
 #define ENABLE_POOL_EDIT //RU< Методы для редактирования созданного пула
 #define ENABLE_POOL_FORCE //RU< Принудительные методы для пула
 #define ENABLE_POOL_STAT //RU< Статистика работы пула
 
-const c_MIN_GAME_SECONDS: nat = 10n * 60n;//RU< Минимальное кол-во секунд для партии
-const c_MAX_GAME_SECONDS: nat = 10n * 86400n;//RU< Максимальное кол-во секунд для партии
+const cMIN_GAME_SECONDS: nat = 10n * 60n;//RU< Минимальное кол-во секунд для партии
+const cMAX_GAME_SECONDS: nat = 10n * 86400n;//RU< Максимальное кол-во секунд для партии
 
 #endif // !CONFIG_INCLUDED

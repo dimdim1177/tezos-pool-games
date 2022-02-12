@@ -1,9 +1,7 @@
 #if !MPOOL_INCLUDED
 #define MPOOL_INCLUDED
 
-#include "../module/MToken.ligo"
-#include "../module/MFarm.ligo"
-#include "../module/MRandom.ligo"
+#include "storage.ligo"
 #include "MPoolOpts.ligo"
 #include "MPoolStat.ligo"
 #include "MPoolGame.ligo"
@@ -12,44 +10,38 @@
 //RU Модуль пула ликвидности с периодическими розыгрышами вознаграждений
 module MPool is {
 
-    //RU Индекс пользователя внутри пула
-    type t_iuser is nat;
+    const cERR_MUST_BURN: string = "MPool/MustBurn";//RU< Ошибка: Обязателен токен для сжигания
+    const cERR_INACTIVE: string = "MPool/Inactive";//RU< Ошибка: Пул неактивен
 
-    //RU Информация о пуле, выдаваемая при запросе всем пользователям
-    type t_pool_info is [@layout:comb] record [
-        opts: MPoolOpts.t_opts;//RU< Настройки пула
-        farm: MFarm.t_farm;//RU< Ферма для пула
-        game: MPoolGame.t_game;//RU< Текущая партия розыгрыша вознаграждения
-#if ENABLE_POOL_STAT
-        stat: MPoolStat.t_stat;//RU< Статистика пула
-#endif // ENABLE_POOL_STAT
-    ];
-
-    //RU Пул (возвращается при запросе информации о пуле админом)
-    type t_pool is [@layout:comb] record [
-        info: t_pool_info;//RU< Основная информация о пуле, предоставляется любым пользователям
-        random: MRandom.t_random;//RU< Источник случайных чисел для розыгрышей
-        burn: MToken.t_token;///RU< Токен для сжигания всего, что выше процента выигрыша
-        ibeg: t_iuser;//RU< Начальный индекс пользователей в пуле
-        inext: t_iuser;//RU< Следующий за максимальным индекс пользователей в пуле
-    ];
+    //RU Активен ли пул
+    //RU
+    //RU Технически пока партия не приостановлена пул активен, он доступен для просмотра, для внесения
+    //RU депозитов и т.п.
+    [@inline] function isActive(const pool: t_pool): bool is block {
+        const r: bool = (pool.info.game.state =/= MPoolGame.cSTATE_PAUSE);
+    } with r;
 
     //RU Создание нового пула
-    function create(const opts: MPoolOpts.t_opts; const farm: MFarm.t_farm; 
-            const random: MRandom.t_random; const optburn: option(MToken.t_token)): t_pool is block {
+    function create(const opts: t_opts; const farm: t_farm; 
+            const random: t_random; const burn: option(t_token)): t_pool is block {
     //RU Проверяем все входные параметры
         MPoolOpts.check(opts, True);
         MFarm.check(farm);
         MRandom.check(random);
-        const burn: MToken.t_token = MToken.opt2token(optburn);
-        MToken.check(burn, MPoolOpts.maybeNoBurn(opts));
-    
+        case burn of
+        Some(b) -> MToken.check(b)
+        | None -> block {
+            if MPoolOpts.maybeNoBurn(opts) then skip
+            else failwith(cERR_MUST_BURN);
+        }
+        end;
+
     // RU И если все корректно, формируем начальные данные пула
-        var gameState: MPoolGame.t_game_state := MPoolGame.c_STATE_ACTIVE;
+        var gameState: t_game_state := MPoolGame.cSTATE_ACTIVE;
         var gameSeconds: nat := opts.gameSeconds;
-        if MPoolOpts.c_STATE_ACTIVE = opts.state then skip
+        if MPoolOpts.cSTATE_ACTIVE = opts.state then skip
         else block {//RU Создание пула в приостановленном состоянии
-            gameState := MPoolGame.c_STATE_PAUSE;
+            gameState := MPoolGame.cSTATE_PAUSE;
             gameSeconds := 0n;
         };
         const pool: t_pool = record [
@@ -70,14 +62,15 @@ module MPool is {
 
 //RU --- Управление пулом
 
-    function setState(var pool: t_pool; const state: MPoolOpts.t_pool_state): t_pool is block {
-        pool.info.opts.state := state;//TODO
-    } with pool;
+    function setState(const s: t_storage; const _ipool: t_ipool; var pool: t_pool; const state: t_pool_state): t_return * t_pool is block {
+        pool.info.opts.state := state;
+        //TODO
+    } with (((nil: list(operation)), s), pool);
 
 #if ENABLE_POOL_EDIT
-    function edit(var pool: t_pool; const optctrl: option(MPoolOpts.t_opts); const optfarm: option(MFarm.t_farm); 
-            const optrandom: option(MRandom.t_random); const optburn: option(MToken.t_token)): t_pool is block {
-        case optctrl of
+    function edit(var pool: t_pool; const optopts: option(t_opts); const optfarm: option(t_farm); 
+            const optrandom: option(t_random); const burn: option(t_token)): t_pool is block {
+        case optopts of
         Some(opts) -> block {
             MPoolOpts.check(opts, False);
             pool.info.opts := opts;
@@ -98,22 +91,43 @@ module MPool is {
         }
         | None -> skip
         end;
-        case optburn of
-        Some(burn) -> block {
-            MToken.check(burn, 100n = pool.info.opts.winPercent);
-            pool.burn := burn;
+        case burn of
+        Some(b) -> MToken.check(b)
+        | None -> block {
+            if MPoolOpts.maybeNoBurn(pool.info.opts) then skip
+            else failwith(cERR_MUST_BURN);
         }
-        | None -> skip
         end;
+        pool.burn := burn;
     } with pool;
 #endif // ENABLE_POOL_EDIT
 
+(*
+    //RU Начать следующую партию
+    function nextGame(const ipool: t_ipool; var pool: t_pool; var users: t_users): t_pool * t_users is block {
+#if ENABLE_REINDEX_USERS
+        //RU Если кол-во индексов пользователей в пуле в 2 раза больше реального кол-ва,
+        //RU переиндексируем пул, что вдвое уменьшит кол-во итераций по пулу при переборе всех пользователей
+        if ((pool.inext - pool.ibeg) > (2 * pool.info.game.count)) then block {
+            const r: t_users * t_iuser * t_iuser = MUsers.reindex(users, ipool, pool.ibeg, pool.inext);
+            users := r.0;
+            pool.ibeg := r.1;
+            pool.inext := r.2;
+        } else skip;
+#endif // ENABLE_REINDEX_USERS
+    } with (pool, users);
+*)
+
 //RU --- Для пользователей пулов
 
-    function deposit(var pool: t_pool; const damount: MFarm.t_amount): t_pool is block {
+    function deposit(var s: t_storage; const _ipool: t_ipool; var pool: t_pool; const damount: t_amount): t_return * t_pool is block {
+        var operations: t_operations := list [];
+        if isActive(pool) then skip
+        else failwith(cERR_INACTIVE);
+
         MFarm.deposit(pool.info.farm, damount);
         skip;//TODO
-    } with pool;
+    } with ((operations, s), pool);
 
     //RU Извлечение из пула
     //RU
@@ -121,26 +135,23 @@ module MPool is {
     //EN Withdraw from pool
     //EN
     //EN 0n == wamount - withdraw all deposit from pool
-    function withdraw(var pool: t_pool; const wamount: MFarm.t_amount): t_pool is block {
+    function withdraw(var s: t_storage; const _ipool: t_ipool; var pool: t_pool; const wamount: t_amount): t_return * t_pool is block {
+        var operations: t_operations := list [];
         MFarm.withdraw(pool.info.farm, wamount);
         skip;//TODO
-    } with pool;
+    } with ((operations, s), pool);
 
 //RU --- От провайдера случайных чисел
 
-    function onRandom(var pool: t_pool; const _random: nat): t_pool is block {
+    function onRandom(const _ipool: t_ipool; var pool: t_pool; const _random: nat): t_pool is block {
         skip;//TODO
     } with pool;
 
 //RU --- От фермы
 
-    function onReward(var pool: t_pool; const _reward: nat): t_pool is block {
+    function onReward(const _ipool: t_ipool; var pool: t_pool; const _reward: nat): t_pool is block {
         skip;//TODO
     } with pool;
-
-    [@inline] function isActive(const pool: t_pool): bool is block {
-        const r: bool = (pool.info.opts.state = MPoolOpts.c_STATE_ACTIVE);
-    } with r;
 
 }
 #endif // !MPOOL_INCLUDED
