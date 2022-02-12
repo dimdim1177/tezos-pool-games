@@ -18,7 +18,7 @@ module MPool is {
     //RU Технически пока партия не приостановлена пул активен, он доступен для просмотра, для внесения
     //RU депозитов и т.п.
     [@inline] function isActive(const pool: t_pool): bool is block {
-        const r: bool = (pool.info.game.state =/= MPoolGame.cSTATE_PAUSE);
+        const r: bool = (pool.game.state =/= MPoolGame.cSTATE_PAUSE);
     } with r;
 
     //RU Создание нового пула
@@ -45,27 +45,25 @@ module MPool is {
             gameSeconds := 0n;
         };
         const pool: t_pool = record [
-            info = record [
-                opts = opts;
-                farm = farm;
-                game = MPoolGame.create(gameState, int(gameSeconds));
-#if ENABLE_POOL_STAT
-                stat = MPoolStat.create(unit);
-#endif // ENABLE_POOL_STAT
-            ];
+            opts = opts;
+            farm = farm;
+            game = MPoolGame.create(gameState, int(gameSeconds));
             random = random;
             burn = burn;
             ibeg = 0n;
             inext = 0n;//RU Начинаем индексацию пользователей с нуля
+#if ENABLE_POOL_STAT
+            stat = MPoolStat.create(unit);
+#endif // ENABLE_POOL_STAT
         ];
     } with pool;
 
 //RU --- Управление пулом
 
     function setState(const s: t_storage; const _ipool: t_ipool; var pool: t_pool; const state: t_pool_state): t_return * t_pool is block {
-        pool.info.opts.state := state;
+        pool.opts.state := state;
         //TODO
-    } with (((nil: list(operation)), s), pool);
+    } with ((cNO_OPERATIONS, s), pool);
 
 #if ENABLE_POOL_EDIT
     function edit(var pool: t_pool; const optopts: option(t_opts); const optfarm: option(t_farm); 
@@ -73,14 +71,14 @@ module MPool is {
         case optopts of
         Some(opts) -> block {
             MPoolOpts.check(opts, False);
-            pool.info.opts := opts;
+            pool.opts := opts;
         }
         | None -> skip
         end;
         case optfarm of
         Some(farm) -> block {
             MFarm.check(farm);
-            pool.info.farm := farm;
+            pool.farm := farm;
         }
         | None -> skip
         end;
@@ -94,7 +92,7 @@ module MPool is {
         case burn of
         Some(b) -> MToken.check(b)
         | None -> block {
-            if MPoolOpts.maybeNoBurn(pool.info.opts) then skip
+            if MPoolOpts.maybeNoBurn(pool.opts) then skip
             else failwith(cERR_MUST_BURN);
         }
         end;
@@ -108,7 +106,7 @@ module MPool is {
 #if ENABLE_REINDEX_USERS
         //RU Если кол-во индексов пользователей в пуле в 2 раза больше реального кол-ва,
         //RU переиндексируем пул, что вдвое уменьшит кол-во итераций по пулу при переборе всех пользователей
-        if ((pool.inext - pool.ibeg) > (2 * pool.info.game.count)) then block {
+        if ((pool.inext - pool.ibeg) > (2 * pool.game.count)) then block {
             const r: t_users * t_iuser * t_iuser = MUsers.reindex(users, ipool, pool.ibeg, pool.inext);
             users := r.0;
             pool.ibeg := r.1;
@@ -125,7 +123,7 @@ module MPool is {
         if isActive(pool) then skip
         else failwith(cERR_INACTIVE);
 
-        MFarm.deposit(pool.info.farm, damount);
+        MFarm.deposit(pool.farm, damount);
         skip;//TODO
     } with ((operations, s), pool);
 
@@ -137,7 +135,7 @@ module MPool is {
     //EN 0n == wamount - withdraw all deposit from pool
     function withdraw(var s: t_storage; const _ipool: t_ipool; var pool: t_pool; const wamount: t_amount): t_return * t_pool is block {
         var operations: t_operations := list [];
-        MFarm.withdraw(pool.info.farm, wamount);
+        MFarm.withdraw(pool.farm, wamount);
         skip;//TODO
     } with ((operations, s), pool);
 

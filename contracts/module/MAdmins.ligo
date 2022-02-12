@@ -21,8 +21,8 @@
 //
 // function main(const entrypoint: t_entrypoint; var s: t_storage): t_return is
 // case entrypoint of
-// | AddAdmin(params) -> ((nil: list(operation)), block { s.admins := MAdmins.accessAdd(params, s.admins); } with s)
-// | RemAdmin(params) -> ((nil: list(operation)), block { s.admins := MAdmins.accessRem(params, s.admins); } with s)
+// | AddAdmin(params) -> (cNO_OPERATIONS, block { s.admins := MAdmins.accessAdd(params, s.admins); } with s)
+// | RemAdmin(params) -> (cNO_OPERATIONS, block { s.admins := MAdmins.accessRem(params, s.admins); } with s)
 // ...
 module MAdmins is {
     

@@ -19,7 +19,7 @@
 //
 // function main(const entrypoint: t_entrypoint; var s: t_storage): t_return is
 // case entrypoint of
-// | ChangeAdmin(params) -> ((nil: list(operation)), block { s.admin:= MAdmin.accessChange(params, s.admin); } with s)
+// | ChangeAdmin(params) -> (cNO_OPERATIONS, block { s.admin:= MAdmin.accessChange(params, s.admin); } with s)
 // ...
 module MAdmin is {
     

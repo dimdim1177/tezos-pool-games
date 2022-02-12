@@ -14,6 +14,7 @@
 *)
 
 type t_operations is list(operation);//RU< Список операций //EN< List of operations
+[@inline] const cNO_OPERATIONS: t_operations = nil;//RU< Пустой список операций //EN< Empty list of operations
 
 //RU Тип для индексов
 type t_i is nat;
@@ -22,6 +23,6 @@ type t_i is nat;
 // \see cABSENT
 type t_ii is int;
 
-const cABSENT: t_ii = -1;//RU Элемент отсутствует
+[@inline] const cABSENT: t_ii = -1;//RU Элемент отсутствует
 
 #endif // !CONSTS_INCLUDED

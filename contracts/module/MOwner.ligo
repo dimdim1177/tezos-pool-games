@@ -19,7 +19,7 @@
 //
 // function main(const entrypoint: t_entrypoint; var s: t_storage): t_return is
 // case entrypoint of
-// | ChangeOwner(params) -> ((nil: list(operation)), block { s.owner:= MOwner.accessChange(params, s.owner); } with s)
+// | ChangeOwner(params) -> (cNO_OPERATIONS, block { s.owner:= MOwner.accessChange(params, s.owner); } with s)
 // ...
 module MOwner is {
     

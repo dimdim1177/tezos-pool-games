@@ -46,18 +46,18 @@ function main(const entrypoint: t_entrypoint; var s: t_storage): t_return is
 case entrypoint of
 //RU --- Управление доступами
 #if ENABLE_OWNER //RU Есть владелец контракта
-| ChangeOwner(params) -> ((nil: list(operation)), block { s.owner:= MOwner.accessChange(params, s.owner); } with s)
+| ChangeOwner(params) -> (cNO_OPERATIONS, block { s.owner:= MOwner.accessChange(params, s.owner); } with s)
 #endif // ENABLE_OWNER
 #if ENABLE_ADMIN //RU Есть админ контракта
-| ChangeAdmin(params) -> ((nil: list(operation)), block { mustAdmin(s); s.admin := params; } with s)
+| ChangeAdmin(params) -> (cNO_OPERATIONS, block { mustAdmin(s); s.admin := params; } with s)
 #endif // ENABLE_ADMIN
 #if ENABLE_ADMINS //RU Есть набор админов контракта
-| AddAdmin(params) -> ((nil: list(operation)), block { mustAdmin(s); s.admins := MAdmins.forceAdd(params, s.admins); } with s)
-| RemAdmin(params) -> ((nil: list(operation)), block { mustAdmin(s); s.admins := MAdmins.forceRem(params, s.admins); } with s)
+| AddAdmin(params) -> (cNO_OPERATIONS, block { mustAdmin(s); s.admins := MAdmins.forceAdd(params, s.admins); } with s)
+| RemAdmin(params) -> (cNO_OPERATIONS, block { mustAdmin(s); s.admins := MAdmins.forceRem(params, s.admins); } with s)
 #endif // ENABLE_ADMINS
 
 //RU --- Управление пулами
-| CreatePool(params) -> ((nil: list(operation)), block { mustAdmin(s); s := MPools.createPool(s, params.0, params.1, params.2, params.3); } with s)
+| CreatePool(params) -> (cNO_OPERATIONS, block { mustAdmin(s); s := MPools.createPool(s, params.0, params.1, params.2, params.3); } with s)
 | PausePool(params) -> block { mustAdmin(s); const r: t_return = MPools.pausePool(s, params); } with r
 | PlayPool(params) -> block { mustAdmin(s); const r: t_return = MPools.playPool(s, params); } with r
 | RemovePool(params) -> block { mustAdmin(s); const r: t_return = MPools.removePool(s, params); } with r
@@ -65,9 +65,9 @@ case entrypoint of
 | ForceRemovePool(params) -> block { mustAdmin(s); const r: t_return = MPools.forceRemovePool(s, params); } with r
 #endif // ENABLE_POOL_FORCE
 #if ENABLE_POOL_EDIT
-| EditPool(params) -> ((nil: list(operation)), block { mustAdmin(s); s := MPools.editPool(s, params.0, params.1, params.2, params.3, params.4); } with s)
+| EditPool(params) -> (cNO_OPERATIONS, block { mustAdmin(s); s := MPools.editPool(s, params.0, params.1, params.2, params.3, params.4); } with s)
 #if ENABLE_POOL_FORCE
-| ForceEditPool(params) -> ((nil: list(operation)), block { mustAdmin(s); s := MPools.editPool(s, params.0, params.1, params.2, params.3, params.4); } with s)//TODO force
+| ForceEditPool(params) -> (cNO_OPERATIONS, block { mustAdmin(s); s := MPools.editPool(s, params.0, params.1, params.2, params.3, params.4); } with s)//TODO force
 #endif // ENABLE_POOL_FORCE
 #endif // ENABLE_POOL_EDIT
 
@@ -83,7 +83,7 @@ case entrypoint of
 | OnReward(params) -> MPools.onReward(s, params.0, params.1)
 end;
 
-//RU Получение ID последнего созданного этим адином пула
+//RU Получение ID последнего созданного этим админом пула
 //RU
 //RU Обоснованно полагаем, что с одного адреса не создаются пулы в несколько потоков, поэтому этот метод позволяет получить
 //RU ID только что созданного админов нового пула. Если нет созданных админов пулов, будет возвращено -1
@@ -92,18 +92,7 @@ end;
     const ilast: int = MPools.viewLastIPool(s);
 } with ilast;
 
-//RU Получение списка всех пулов в любом состоянии админом
-[@view] function viewPoolsFullInfo(const _: unit; const s: t_storage): t_pools_fullinfo is block {
-    mustAdmin(s);
-    const pools_fullinfo: t_pools_fullinfo = MPools.viewPoolsFullInfo(s);
-} with pools_fullinfo;
-//RU Получение пула в любом состоянии по его ID админом
-[@view] function viewPoolFullInfo(const ipool: t_ipool; const s: t_storage): t_pool is block {
-    mustAdmin(s);
-    const pool: t_pool = MPools.viewPoolFullInfo(s, ipool);
-} with pool;
-
-//RU Получение списка всех активных пулов любым пользователем
-[@view] function viewActivePoolsInfo(const _: unit; const s: t_storage): t_pools_info is MPools.viewPoolsInfo(s);
+#if ENABLE_POOL_VIEW
 //RU Получение активного пула по его ID любым пользователем
-[@view] function viewActivePoolInfo(const ipool: t_ipool; const s: t_storage): t_pool_info is MPools.viewPoolInfo(s, ipool);
+[@view] function viewPoolInfo(const ipool: t_ipool; const s: t_storage): t_pool_info is MPools.viewPoolInfo(s, ipool);
+#endif // ENABLE_POOL_VIEW

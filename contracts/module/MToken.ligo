@@ -8,9 +8,9 @@
 module MToken is {
 
 //RU --- Стандарты токенов //EN --- Token standards
-    const cXTZ   : nat = 1n;//RU< Нативный токен XTZ
-    const cFA1_2 : nat = 12n;//< FA1.2
-    const cFA2   : nat = 20n;//< FA2
+    [@inline] const cXTZ   : nat = 1n;//RU< Нативный токен XTZ
+    [@inline] const cFA1_2 : nat = 12n;//< FA1.2
+    [@inline] const cFA2   : nat = 20n;//< FA2
     const cFAs: set(nat) = set [cXTZ; cFA1_2; cFA2];//RU< Все стандарты
 
     type t_token is [@layout:comb] record [

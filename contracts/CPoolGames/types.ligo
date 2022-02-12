@@ -36,11 +36,11 @@ type t_algo is nat;//RU< Алгоритм розыгрышей пула
 //RU Параметры для управления пулом
 type t_opts is [@layout:comb] record [
     //RU Состояние пула
-    // \see cSTATEs
+    // \see MPoolOpts.cSTATEs
     state: t_pool_state;
 
     //RU Алгоритм пула
-    // \see cALGOs
+    // \see MPoolOpts.cALGOs
     algo: t_algo;
 
     //RU Длительность партии в секундах
@@ -75,7 +75,7 @@ type t_opts is [@layout:comb] record [
     //RU Процент от вознаграждения для выигрыша
     //RU
     //RU В интервале [1; 100], все остальное сжигается в burnToken
-    // \see MPool::burnToken
+    // \see t_pool.burnToken
     winPercent: nat;
 ];
 
@@ -96,6 +96,15 @@ type t_game is [@layout:comb] record [
     weight: t_weight;//RU< Суммарный вес всех участников партии
 ];
 
+//RU Информация о пуле, выдаваемая при запросе всем пользователям
+type t_pool_info is [@layout:comb] record [
+    opts: t_opts;//RU< Настройки пула
+    farm: t_farm;//RU< Ферма для пула
+    game: t_game;//RU< Текущая партия розыгрыша вознаграждения
+];
+
+type t_iuser is t_i;//RU< Индекс пользователя внутри пула
+
 #if ENABLE_POOL_STAT
 //RU Статистика пула
 type t_stat is [@layout:comb] record [
@@ -104,25 +113,18 @@ type t_stat is [@layout:comb] record [
 ];
 #endif // ENABLE_POOL_STAT
 
-//RU Информация о пуле, выдаваемая при запросе всем пользователям
-type t_pool_info is [@layout:comb] record [
+//RU Пул (возвращается при запросе информации о пуле админом)
+type t_pool is [@layout:comb] record [
     opts: t_opts;//RU< Настройки пула
     farm: t_farm;//RU< Ферма для пула
     game: t_game;//RU< Текущая партия розыгрыша вознаграждения
-#if ENABLE_POOL_STAT
-    stat: t_stat;//RU< Статистика пула
-#endif // ENABLE_POOL_STAT
-];
-
-type t_iuser is t_i;//RU< Индекс пользователя внутри пула
-
-//RU Пул (возвращается при запросе информации о пуле админом)
-type t_pool is [@layout:comb] record [
-    info: t_pool_info;//RU< Основная информация о пуле, предоставляется любым пользователям
     random: t_random;//RU< Источник случайных чисел для розыгрышей
     burn: option(t_token);///RU< Токен для сжигания всего, что выше процента выигрыша
     ibeg: t_iuser;//RU< Начальный индекс пользователей в пуле
     inext: t_iuser;//RU< Следующий за максимальным индекс пользователей в пуле
+#if ENABLE_POOL_STAT
+    stat: t_stat;//RU< Статистика пула
+#endif // ENABLE_POOL_STAT
 ];
 
 type t_ipool is t_i;//RU< Индекс пула
@@ -138,9 +140,6 @@ type t_rpools is [@layout:comb] record [
     pools: t_pools;//RU< Собственно пулы
     addr2ilast: big_map(address, t_ipool);//RU< Последний идентификатор пула по адресу админа
 ];
-
-type t_pools_fullinfo is map(t_ipool, t_pool);//RU< Полная информация о пулах по их ID для админов
-type t_pools_info is map(t_ipool, t_pool_info);//RU< Информация о пулах (только активных) по их ID
 
 //RU Параметры пользователя в пуле
 type t_user is [@layout:comb] record [

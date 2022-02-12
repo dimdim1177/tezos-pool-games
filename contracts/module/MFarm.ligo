@@ -18,7 +18,7 @@ module MFarm is {
     //RU Отзыв депозита из фермы - withdraw(farmId, farmTokenAmount)
     //RU Вознаграждение - harvest(farmId)
     // mainnet https://tzkt.io/KT1KnuE87q1EKjPozJ5sRAjQA24FPsP57CE3/entrypoints
-    const cINTERFACE_CRUNCHY: nat = 1n;
+    [@inline] const cINTERFACE_CRUNCHY: nat = 1n;
 
     //RU Quipuswap farm
     //RU
@@ -28,7 +28,7 @@ module MFarm is {
     //RU Вознаграждение - harvest(farmId, rewards_receiver address)
     // https://github.com/madfish-solutions/quipuswap-farming
     // QUIPU https://tzkt.io/KT193D4vozYnhGJQVtw7CoxxqphqUEEwK6Vb/entrypoints
-    const cINTERFACE_QUIPU: nat = 3n;
+    [@inline] const cINTERFACE_QUIPU: nat = 3n;
 
     //RU Youves
     //RU
@@ -37,7 +37,7 @@ module MFarm is {
     //RU Отзыв депозита из фермы - withdraw()
     //RU Вознаграждение - ???claim()
     // mainnet https://tzkt.io/KT1TFPn4ZTzmXDzikScBrWnHkoqTA7MBt9Gi/entrypoints
-    //TODO const cINTERFACE_YOUVES: nat = 3n;
+    //TODO [@inline] const cINTERFACE_YOUVES: nat = 3n;
 
     //RU PAUL
     //RU
@@ -47,7 +47,7 @@ module MFarm is {
     //RU Вознаграждение - ???
     // https://github.com/degentech/aliensfarm
     // mainnet https://tzkt.io/KT1DMCGGiHT2dgjjXHG7qh1C1maFchrLNphx/entrypoints
-    //TODO const cINTERFACE_PAUL: nat = 4n;
+    //TODO [@inline] const cINTERFACE_PAUL: nat = 4n;
 
     //RU Все интерфейсы ферм
     const cINTERFACEs: set(nat) = set [cINTERFACE_CRUNCHY; cINTERFACE_QUIPU];

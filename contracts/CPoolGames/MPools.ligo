@@ -40,7 +40,7 @@ module MPools is {
 
     //RU Обновить пул по индексу
     function setPool(var s: t_storage; const ipool: t_ipool; const pool: t_pool): t_storage is block {
-        if MPoolOpts.cSTATE_FORCE_REMOVE = pool.info.opts.state then block {//RU Пул на удаление сейчас
+        if MPoolOpts.cSTATE_FORCE_REMOVE = pool.opts.state then block {//RU Пул на удаление сейчас
             s.rpools.pools := Big_map.remove(ipool, s.rpools.pools);
             var ipools: t_ipools := getIPools(s);
             ipools := Set.remove(ipool, ipools);
@@ -82,18 +82,20 @@ module MPools is {
     //RU Запуск пула (после паузы) //EN Play pool (after pause)
     function playPool(const s: t_storage; const ipool: t_ipool): t_return is setState(s, ipool, MPoolOpts.cSTATE_ACTIVE);
 
-    //RU Удаление пула сейчас //EN Remove pool now
-    function forceRemovePool(const s: t_storage; const ipool: t_ipool): t_return is setState(s, ipool, MPoolOpts.cSTATE_FORCE_REMOVE);
-
     //RU Удаление пула (по окончании партии) //EN Remove pool (after game)
     function removePool(const s: t_storage; const ipool: t_ipool): t_return is block {
         const pool: t_pool = getPool(s, ipool);
         var state: t_pool_state := MPoolOpts.cSTATE_REMOVE;
-        if (MPoolGame.cSTATE_PAUSE = pool.info.game.state) or (0n = pool.info.game.balance) then block {//RU Партия завершена или пул пуст, можно удалить сейчас
+        if (0n = pool.game.balance) or (not MPool.isActive(pool)) then block {//RU Пул пуст или партии приостановлены, можно удалить сейчас
             state := MPoolOpts.cSTATE_FORCE_REMOVE;
         } else skip;
         const r: t_return = setState(s, ipool, state);
     } with r;
+
+#if ENABLE_POOL_FORCE
+    //RU Принудительное удаление пула сейчас //EN Force remove pool now
+    function forceRemovePool(const s: t_storage; const ipool: t_ipool): t_return is setState(s, ipool, MPoolOpts.cSTATE_FORCE_REMOVE);
+#endif // ENABLE_POOL_FORCE
 
 #if ENABLE_POOL_EDIT
     //RU Редактирование пула (приостановленого) //EN Edit pool (paused)
@@ -159,41 +161,21 @@ module MPools is {
         | None -> -1
         end
 
-    //RU Получение карты с информацией о пулах (только активных)
-    function viewPoolsFullInfo(const s: t_storage): t_pools_fullinfo is block {
-        function folded(var pools_fullinfo: t_pools_fullinfo; const ipool: t_ipool): t_pools_fullinfo is block {
-            const pool: t_pool = getPool(s, ipool);
-            pools_fullinfo := Map.add(ipool, pool, pools_fullinfo);
-        } with pools_fullinfo;
-        var pools_fullinfo: t_pools_fullinfo := map [];
-        const ipools: t_ipools = getIPools(s); 
-        pools_fullinfo := Set.fold(folded, ipools, pools_fullinfo);
-    } with pools_fullinfo;
-
-    //RU Получение пула (админом)
-    function viewPoolFullInfo(const s: t_storage; const ipool: t_ipool): t_pool is getPool(s, ipool);
-
 //RU --- Чтение данных любыми пользователями (Views)
 
-    //RU Получение карты с информацией о пулах (только активных)
-    function viewPoolsInfo(const s: t_storage): t_pools_info is block {
-        function folded(var pools_info: t_pools_info; const ipool: t_ipool): t_pools_info is block {
-            const pool: t_pool = getPool(s, ipool);
-            if MPool.isActive(pool) then pools_info := Map.add(ipool, pool.info, pools_info)
-            else skip;
-        } with pools_info;
-        var pools_info: t_pools_info := map [];
-        const ipools: t_ipools = getIPools(s); 
-        pools_info := Set.fold(folded, ipools, pools_info);
-    } with pools_info;
-
+#if ENABLE_POOL_VIEW
     //RU Получение пула (только активного)
     function viewPoolInfo(const s: t_storage; const ipool: t_ipool): t_pool_info is block {
         const pool: t_pool = getPool(s, ipool);
         if MPool.isActive(pool) then skip
         else failwith(cERR_NOT_FOUND);
-        const pool_info: t_pool_info = pool.info;
+        const pool_info: t_pool_info = record [
+            opts = pool.opts;
+            farm = pool.farm;
+            game = pool.game;
+        ];
     } with pool_info;
+#endif // ENABLE_POOL_VIEW
 
 }
 #endif // !MPOOLS_INCLUDED

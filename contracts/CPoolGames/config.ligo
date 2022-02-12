@@ -22,6 +22,7 @@
 #define ENABLE_POOL_EDIT //RU< Методы для редактирования созданного пула
 #define ENABLE_POOL_FORCE //RU< Принудительные методы для пула
 #define ENABLE_POOL_STAT //RU< Статистика работы пула
+#define ENABLE_POOL_VIEW //RU< View для просмотра основной информации пула по его ID из других контрактов
 
 const cMIN_GAME_SECONDS: nat = 10n * 60n;//RU< Минимальное кол-во секунд для партии
 const cMAX_GAME_SECONDS: nat = 10n * 86400n;//RU< Максимальное кол-во секунд для партии

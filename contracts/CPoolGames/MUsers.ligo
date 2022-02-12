@@ -11,7 +11,7 @@ module MUsers is {
     //RU
     //RU Пользователь идентифицируется по Tezos.sender
     function getUser(const users: t_users; const ipool: t_i): t_ii * t_user is block {
-        var ii: t_ii := -1;
+        var ii: t_ii := cABSENT;
         var user: t_user := record [//RU Параметры пользователя по умолчанию
             balance = 0n;
             tsBalance = Tezos.now;
@@ -37,7 +37,7 @@ module MUsers is {
     //RU
     //RU После переупаковки индексы пользователей в пуле будут начинаться с 0 и идти подряд
     //RU Это уменьшит кол-во операций для итерирования по всем пользователям пула, за счет избавления от холостых итераций
-    function reindex(var users: t_users; const ipool: t_i; var ibeg: t_i; var inext: t_i): t_users * t_i * t_i is block {
+    function reindex(var users: t_users; const ipool: t_ipool; var ibeg: t_iuser; var inext: t_iuser): t_users * t_iuser * t_iuser is block {
         const imax: int = inext - 1;//RU Конечный индекс
         inext := 0n;
         for i := int(ibeg) to imax block {
@@ -47,9 +47,9 @@ module MUsers is {
             | Some(user) -> {//RU Существующий индекс - переиндексируем
                 if inext < iuser then block {//RU Если индекс пользователя изменился
                     //RU Новый индекс по адресу
-                    users.ipooladdr2iuser := Big_map.update((ipool, user.addr), Some(inext), users.ipooladdr2iuser);
+                    users.ipooladdr2iuser[(ipool, user.addr)] := inext;
                     //RU Вставляем параметры пользователя под новым индексом
-                    users.ipooliuser2user := Big_map.add((ipool, inext), user, users.ipooliuser2user);
+                    users.ipooliuser2user[(ipool, inext)] := user;
                     //RU Удаляем параметры под текущим индексом
                     users.ipooliuser2user := Big_map.remove(ipooliuser, users.ipooliuser2user);
                 } else skip;
@@ -64,7 +64,7 @@ module MUsers is {
     //RU Обновить текущие параметры пользователя в пуле
     //RU
     //RU Пользователь идентифицируется по Tezos.sender. При нулевом сохраняемом балансе пользователь удаляется
-    function setUser(var users: t_users; const ipool: t_i; const iuser: t_i; const user: t_user): t_users is block {
+    function setUser(var users: t_users; const ipool: t_ipool; const iuser: t_iuser; const user: t_user): t_users is block {
         const ipooliuser: t_ipooliuser = (ipool, iuser);
         if user.balance > 0n then users.ipooliuser2user[ipooliuser] := user //RU Обновление существующего
         else block {//RU Удаление
