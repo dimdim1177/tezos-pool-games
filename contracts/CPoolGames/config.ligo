@@ -19,8 +19,7 @@
 #endif
 
 #define ENABLE_REINDEX_USERS //RU< Переупаковка разряженных индексов пользователей в пулах
-#define ENABLE_POOL_EDIT //RU< Методы для редактирования созданного пула
-#define ENABLE_POOL_FORCE //RU< Принудительные методы для пула
+#define ENABLE_POOL_EDIT //RU< Метод для редактирования созданного пула
 #define ENABLE_POOL_STAT //RU< Статистика работы пула
 #define ENABLE_POOL_VIEW //RU< View для просмотра основной информации пула по его ID из других контрактов
 

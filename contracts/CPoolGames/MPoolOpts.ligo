@@ -13,13 +13,14 @@ module MPoolOpts is {
 
     //RU Пул приостановлен
     //RU 
-    //RU Если партия активна, она продолжается до завершения, но следующая не будет запущена. Депозиты пользователей останутся без изменений
+    //RU Если партия активна, она продолжается до завершения, но следующая не будет запущена.
     [@inline] const cSTATE_PAUSE: t_pool_state = 1n;
 
     //RU Пул на удаление
-    //RU 
-    //RU Если партия активна, она продолжается до завершения. По окончании партии, когда пользователи заберут все депозиты,
-    //RU пул будет удален. Если пул уже пуст, он будет удален немедленно
+    //RU
+    //RU Если партия активна, она продолжается до завершения. По окончании партии, когда пользователи
+    //RU заберут все депозиты, пул будет удален во время списания последнего депозита.
+    //RU Если же пул уже пуст на момент вызова, он будет удален немедленно
     [@inline] const cSTATE_REMOVE: t_pool_state = 2n;
 
     //RU Допустимые состояния при создании нового пула
@@ -80,7 +81,7 @@ module MPoolOpts is {
     const cERR_INVALID_SECONDS: string = "MPoolOpts/InvalidSeconds";//RU< Ошибка: Недопустимое кол-во секунд
     const cERR_INVALID_MIN_SECONDS: string = "MPoolOpts/InvalidMinSeconds";//RU< Ошибка: Недопустимое минимальное кол-во секунд
     const cERR_INVALID_MAX_DEPOSIT: string = "MPoolOpts/InvalidMaxDeposit";//RU< Ошибка: Максимальный депозит меньше минимального
-    const cERR_INVALID_WIN_PERCENT: string = "MPoolOpts/InvalidWinPercent";//RU< Ошибка: Недопустимый процент выигрыша
+    const cERR_INVALID_PERCENT: string = "MPoolOpts/InvalidPercent";//RU< Ошибка: Сумма процентов победителя+сжигания+комиссии не равна 100
 
     //RU Проверка параметров пула на валидность
     function check(const opts: t_opts; const creating: bool): unit is block {
@@ -102,14 +103,14 @@ module MPoolOpts is {
         if (cALGO_TIMEVOL = opts.algo) and (opts.maxDeposit > 0n)
             and (opts.minDeposit > opts.maxDeposit) then failwith(cERR_INVALID_MAX_DEPOSIT)
         else skip;
-        if (opts.winPercent < 1n) or (opts.winPercent > 100n) then failwith(cERR_INVALID_WIN_PERCENT)
+        if 100n =/= (opts.winPercent + opts.burnPercent + opts.feePercent) then failwith(cERR_INVALID_PERCENT)
         else skip;
     } with unit;
 
     //RU Может ли пул не иметь токена для сжигания
     //RU
-    //RU Если 100% выигрыша отдается победителю, токен для сжигания не нужен
-    [@inline] function maybeNoBurn(const opts: t_opts): bool is (100n = opts.winPercent);
+    //RU Если процент сжигания 0, то токен для сжигания не нужен
+    [@inline] function maybeNoBurn(const opts: t_opts): bool is (0n = opts.burnPercent);
 
 }
 #endif // !MCTRL_INCLUDED

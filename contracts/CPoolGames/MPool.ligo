@@ -118,12 +118,9 @@ module MPool is {
 //RU --- Для пользователей пулов
 
     function deposit(var s: t_storage; const _ipool: t_ipool; var pool: t_pool; const damount: t_amount): t_return * t_pool is block {
-        var operations: t_operations := list [];
         if isActive(pool) then skip
         else failwith(cERR_INACTIVE);
-
-        MFarm.deposit(pool.farm, damount);
-        skip;//TODO
+        const operations = MFarm.deposit(pool.farm, damount);
     } with ((operations, s), pool);
 
     //RU Извлечение из пула
@@ -133,9 +130,7 @@ module MPool is {
     //EN
     //EN 0n == wamount - withdraw all deposit from pool
     function withdraw(var s: t_storage; const _ipool: t_ipool; var pool: t_pool; const wamount: t_amount): t_return * t_pool is block {
-        var operations: t_operations := list [];
-        MFarm.withdraw(pool.farm, wamount);
-        skip;//TODO
+        const operations = MFarm.withdraw(pool.farm, wamount);
     } with ((operations, s), pool);
 
 //RU --- От провайдера случайных чисел

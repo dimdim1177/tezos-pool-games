@@ -24,7 +24,7 @@ type t_admin is MAdmin.t_admin;
 type t_admin is MAdmins.t_admin;
 type t_admins is MAdmins.t_admins;
 #endif // ENABLE_ADMINS
-type t_amount is MFarm.t_amount;
+type t_amount is MToken.t_amount;
 type t_farm is MFarm.t_farm;
 type t_random is MRandom.t_random;
 type t_token is MToken.t_token;
@@ -74,9 +74,23 @@ type t_opts is [@layout:comb] record [
 
     //RU Процент от вознаграждения для выигрыша
     //RU
-    //RU В интервале [1; 100], все остальное сжигается в burnToken
-    // \see t_pool.burnToken
+    //RU В интервале [0; 100], в сумме с другими процентами должно быть 100.
+    // \see burnPercent, feePercent
     winPercent: nat;
+
+    //RU Процент от вознаграждения для сжигания
+    //RU
+    //RU В интервале [0; 100], в сумме с другими процентами должно быть 100.
+    // \see winPercent, feePercent, t_pool.burnToken
+    burnPercent: nat;
+
+    //RU Процент комиссии за розыгрыш
+    //RU
+    //RU В интервале [0; 100], в сумме с другими процентами должно быть 100.
+    //RU Для осуществления розыгрыша админ контракта должен вызвать контракт после завершения партии, запросить случайное число
+    //RU у оракула и осуществить розыгрыш, что потребует затрат на выполнение.
+    // \see winPercent, burnPercent
+    feePercent: nat;
 ];
 
 type t_game_state is nat;//RU< Состояние партии

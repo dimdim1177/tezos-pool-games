@@ -7,31 +7,31 @@
 //RU Модуль для работы с токенами разных стандартов
 module MToken is {
 
-//RU --- Стандарты токенов //EN --- Token standards
-    [@inline] const cXTZ   : nat = 1n;//RU< Нативный токен XTZ
-    [@inline] const cFA1_2 : nat = 12n;//< FA1.2
-    [@inline] const cFA2   : nat = 20n;//< FA2
-    const cFAs: set(nat) = set [cXTZ; cFA1_2; cFA2];//RU< Все стандарты
+    type t_amount is nat;//RU< Кол-во токенов (или mutez, если это XTZ токен)
+
+    //RU Стандарты токенов FA2, FA1.2 //EN Token standards FA2, FA1.2
+    type t_fa is FA2 | FA1_2;
 
     type t_token is [@layout:comb] record [
         addr: address;//RU< Адрес токена
         token_id: MFA2.t_token_id;//RU< ID токена
-        fa: nat;//RU< Стандарт FA токена, см. cFA...
+        fa: t_fa;//RU Стандарты токенов //EN Token standards
     ];
-
-    const cERR_UNKNOWN_FA: string = "MToken/UnknownFA";//RU< Ошибка: Неизвестный стандарт FA
 
     //RU Проверка параметров токена на валидность
     function check(const token: t_token): unit is block {
-        if cFAs contains token.fa then skip
-        else failwith(cERR_UNKNOWN_FA);
-        if cFA1_2 = token.fa then block {
-            const _:MFA1_2.t_transfer_contract = MFA1_2.getTransferEntrypoint(token.addr);//RU Проверяем наличие метода transfer для FA1.2
-        } else skip;
-        if cFA2 = token.fa then block {
-            const _:MFA2.t_transfer_contract = MFA2.getTransferEntrypoint(token.addr);//RU Проверяем наличие метода transfer для FA2
-        } else skip;
+        case token.fa of
+        | FA2 -> MFA2.check(token.addr) //RU Проверяем наличие метода transfer для FA2
+        | FA1_2 -> MFA1_2.check(token.addr) //RU Проверяем наличие метода transfer для FA1.2
+        end;
     } with unit;
+
+    //RU Перевод токенов
+    function transfer(const token: t_token; const src: address; const dst: address; const tamount: t_amount): operation is
+        case token.fa of
+        | FA2 -> MFA2.transfer(token.addr, token.token_id, src, dst, tamount)
+        | FA1_2 -> MFA1_2.transfer(token.addr, src, dst, tamount)
+        end;
 
 }
 #endif // !MTOKEN_INCLUDED

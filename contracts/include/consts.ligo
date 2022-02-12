@@ -25,4 +25,6 @@ type t_ii is int;
 
 [@inline] const cABSENT: t_ii = -1;//RU Элемент отсутствует
 
+[@inline] const cNO_KEY_HASH: key_hash = ("tz1ZZZZZZZZZZZZZZZZZZZZZZZZZZZZNkiRg" : key_hash);//RU Заглушка для key_hash
+
 #endif // !CONSTS_INCLUDED

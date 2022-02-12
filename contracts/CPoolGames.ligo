@@ -22,9 +22,6 @@ type t_entrypoint is
 | RemovePool of t_ipool //RU< Удаление пула (по окончании партии) //EN< Remove pool (after game)
 #if ENABLE_POOL_EDIT
 | EditPool of t_ipool * option(t_opts) * option(t_farm) * option(t_random) * (*burn*)option(t_token) //RU< Редактирование пула (приостановленого) //EN< Edit pool (paused)
-#if ENABLE_POOL_FORCE
-| ForceEditPool of t_ipool * option(t_opts) * option(t_farm) * option(t_random) * (*burn*)option(t_token) //RU< Принудительное редактирование пула //EN< Force edit pool
-#endif // ENABLE_POOL_FORCE
 #endif // ENABLE_POOL_EDIT
 
 //RU --- Для пользователей пулов
@@ -60,9 +57,6 @@ case entrypoint of
 | RemovePool(params) -> (cNO_OPERATIONS, block { mustAdmin(s); s := MPools.removePool(s, params); } with s)
 #if ENABLE_POOL_EDIT
 | EditPool(params) -> (cNO_OPERATIONS, block { mustAdmin(s); s := MPools.editPool(s, params.0, params.1, params.2, params.3, params.4); } with s)
-#if ENABLE_POOL_FORCE
-| ForceEditPool(params) -> (cNO_OPERATIONS, block { mustAdmin(s); s := MPools.editPool(s, params.0, params.1, params.2, params.3, params.4); } with s)//TODO force
-#endif // ENABLE_POOL_FORCE
 #endif // ENABLE_POOL_EDIT
 
 //RU --- Для пользователей пулов
