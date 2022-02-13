@@ -112,5 +112,10 @@ module MPoolOpts is {
     //RU Если процент сжигания 0, то токен для сжигания не нужен
     [@inline] function maybeNoBurn(const opts: t_opts): bool is (0n = opts.burnPercent);
 
+    //RU Может ли пул не иметь адреса для комиссии
+    //RU
+    //RU Если процент вознаграждения 0, то адрес для комиссии не нужен
+    [@inline] function maybeNoFeeAddr(const opts: t_opts): bool is (0n = opts.feePercent);
+
 }
 #endif // !MCTRL_INCLUDED

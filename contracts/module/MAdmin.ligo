@@ -1,12 +1,10 @@
 #if !MADMIN_INCLUDED
 #define MADMIN_INCLUDED
-#if ENABLE_ADMIN
 
 //RU Модуль управления админом контракта
 //RU
 //RU Админ или владелец может заменить админа на другого
 //RU Пример использование модуля без других модулей доступа
-// #Define ENABLE_ADMIN
 // #Include "module/MAdmin.ligo"
 // type t_storage record [
 //     admin: MAdmin.t_admin;
@@ -60,5 +58,4 @@ module MAdmin is {
 #endif // !ENABLE_OWNER
 
 }
-#endif // ENABLE_ADMIN
 #endif // !MADMIN_INCLUDED

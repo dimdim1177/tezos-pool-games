@@ -1,12 +1,10 @@
 #if !MMANAGER_INCLUDED
 #define MMANAGER_INCLUDED
-#if ENABLE_MANAGER
 
 //RU Модуль управления списком менеджеров модуля контракта
 //RU
 //RU Изменение нового менеджера любым админом
 //RU Пример использование модуля без других модулей доступа
-// #Define ENABLE_MANAGER
 // #Include "module/MManager.ligo"
 // type t_part record [
 //     manager: MManagers.t_manager;
@@ -54,5 +52,4 @@ module MManager is {
     } with manager;
 
 }
-#endif // ENABLE_MANAGER
 #endif // !MMANAGER_INCLUDED

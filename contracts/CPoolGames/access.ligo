@@ -20,7 +20,7 @@ function isAdmin(const s: t_storage): bool is block {
     var isAdmin: bool := MOwner.isOwner(s.owner);
 #else // ENABLE_OWNER
     var isAdmin: bool := False;
-#endif // ENABLE_OWNER
+#endif // else ENABLE_OWNER
     if isAdmin then skip //RU Владелец как бы админ
     else isAdmin := MAdmin.isAdmin(s.admin);
 } with isAdmin;
@@ -30,17 +30,12 @@ function mustAdmin(const s: t_storage): unit is block {
     const isOwner: bool = MOwner.isOwner(s.owner);
 #else // ENABLE_OWNER
     const isOwner: bool = False;
-#endif // ENABLE_OWNER
+#endif // else ENABLE_OWNER
     if isOwner then skip //RU Владелец как бы админ
     else MAdmin.mustAdmin(s.admin);
 } with unit;
 
-#else // ENABLE_ADMIN
-
-[@inline] function isAdmin(const s: t_storage): bool is MOwner.isOwner(s.owner);
-[@inline] function mustAdmin(const s: t_storage): unit is MOwner.mustOwner(s.owner);
-
-#endif // ENABLE_ADMIN
+#endif // else ENABLE_ADMIN
 
 #if ENABLE_ADMINS //RU Есть набор админов контракта
 
@@ -49,7 +44,7 @@ function isAdmin(const s: t_storage): bool is block {
     var isAdmin: bool := MOwner.isOwner(s.owner);
 #else // ENABLE_OWNER
     var isAdmin: bool := False;
-#endif // ENABLE_OWNER
+#endif // else ENABLE_OWNER
     if isAdmin then skip //RU Владелец как бы админ
     else isAdmin:= MAdmins.isAdmin(s.admins);
 } with isAdmin;
@@ -59,16 +54,18 @@ function mustAdmin(const s: t_storage): unit is block {
     const isOwner: bool = MOwner.isOwner(s.owner);
 #else // ENABLE_OWNER
     const isOwner: bool = False;
-#endif // ENABLE_OWNER
+#endif // else ENABLE_OWNER
     if isOwner then skip //RU Владелец как бы админ
     else MAdmins.mustAdmin(s.admins);
 } with unit;
 
-#else // ENABLE_ADMINS
+#endif // else ENABLE_ADMINS
+
+#if (!ENABLE_ADMIN) && (!ENABLE_ADMINS)
 
 [@inline] function isAdmin(const s: t_storage): bool is MOwner.isOwner(s.owner);
 [@inline] function mustAdmin(const s: t_storage): unit is MOwner.mustOwner(s.owner);
 
-#endif // ENABLE_ADMINS
+#endif // (!ENABLE_ADMIN) && (!ENABLE_ADMINS)
 
 #endif // !ACCESS_INCLUDED

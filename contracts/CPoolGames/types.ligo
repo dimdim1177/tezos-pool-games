@@ -9,6 +9,7 @@
 #include "../module/MFarm.ligo"
 #include "../module/MRandom.ligo"
 #include "../module/MToken.ligo"
+#include "../module/MManager.ligo"
 
 //RU Типы для хранилища контракта
 //EN Types for contract storage
@@ -131,14 +132,27 @@ type t_stat is [@layout:comb] record [
 type t_pool is [@layout:comb] record [
     opts: t_opts;//RU< Настройки пула
     farm: t_farm;//RU< Ферма для пула
-    game: t_game;//RU< Текущая партия розыгрыша вознаграждения
     random: t_random;//RU< Источник случайных чисел для розыгрышей
-    burn: option(t_token);///RU< Токен для сжигания всего, что выше процента выигрыша
+    burn: option(t_token);//RU< Токен для сжигания всего, что выше процента выигрыша
+    feeaddr: option(address);//RU< Адрес, для перечисления комиссии пула
+    game: t_game;//RU< Текущая партия розыгрыша вознаграждения
     ibeg: t_iuser;//RU< Начальный индекс пользователей в пуле
     inext: t_iuser;//RU< Следующий за максимальным индекс пользователей в пуле
+#if ENABLE_POOL_MANAGER
+    manager: address;//RU< Менеджер пула (админ только данного пула)
+#endif // ENABLE_POOL_MANAGER
 #if ENABLE_POOL_STAT
     stat: t_stat;//RU< Статистика пула
 #endif // ENABLE_POOL_STAT
+];
+
+//RU Данные для создания пула
+type t_pool_create is [@layout:comb] record [
+    opts: t_opts;//RU< Настройки пула
+    farm: t_farm;//RU< Ферма для пула
+    random: t_random;//RU< Источник случайных чисел для розыгрышей
+    burn: option(t_token);//RU< Токен для сжигания всего, что выше процента выигрыша
+    feeaddr: option(address);//RU< Адрес, для перечисления комиссии пула
 ];
 
 type t_ipool is t_i;//RU< Индекс пула
@@ -148,7 +162,9 @@ type t_pools is big_map(t_ipool, t_pool);//RU< Пулы по их ID
 type t_rpools is [@layout:comb] record [
     inext: t_ipool;//RU< ID следующего пула
     pools: t_pools;//RU< Собственно пулы
+#if ENABLE_POOL_LASTIPOOL_VIEW
     addr2ilast: big_map(address, t_ipool);//RU< Последний идентификатор пула по адресу админа
+#endif // ENABLE_POOL_LASTIPOOL_VIEW
 ];
 
 //RU Параметры пользователя в пуле

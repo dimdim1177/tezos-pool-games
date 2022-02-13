@@ -1,12 +1,10 @@
 #if !MOWNER_INCLUDED
 #define MOWNER_INCLUDED
-#if ENABLE_OWNER
 
 //RU Модуль управления владельцем контракта
 //RU
 //RU Владелец может заменить владельца на другого
 //RU Пример использование модуля без других модулей доступа
-// #Define ENABLE_OWNER
 // #Include "module/MOwner.ligo"
 // type t_storage record [
 //     owner: MOwner.t_owner;
@@ -50,5 +48,4 @@ module MOwner is {
     } with owner;
 
 }
-#endif // ENABLE_OWNER
 #endif // !MOWNER_INCLUDED

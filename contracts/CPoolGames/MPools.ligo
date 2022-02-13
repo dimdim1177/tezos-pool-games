@@ -28,6 +28,7 @@ module MPools is {
     //RU Если убрать inline компилятор падает
     function setState(var s: t_storage; const ipool: t_ipool; const state: t_pool_state): t_storage is block {
         var pool: t_pool := getPool(s, ipool);
+        MPool.mustManager(s, pool);//RU Проверка доступа к пулу
         pool := MPool.setState(pool, state);
         s := setPool(s, ipool, pool);
     } with s;
@@ -35,14 +36,16 @@ module MPools is {
 //RU --- Управление пулами
 
     //RU Создание нового пула //EN Create new pool
-    function createPool(var s: t_storage; const opts: t_opts; const farm: t_farm; 
-            const random: t_random; const optburn: option(t_token)): t_storage is block {
-        const pool: t_pool = MPool.create(opts, farm, random, optburn);
+    function createPool(var s: t_storage; const opts: t_opts; const farm: t_farm; const random: t_random;
+            const burn: option(t_token); const feeaddr: option(address)): t_storage is block {
+        const pool: t_pool = MPool.create(opts, farm, random, burn, feeaddr);
         var rpools: t_rpools := s.rpools;
         const ipool: t_ipool = rpools.inext;//RU Индекс нового пула
         rpools.inext := ipool + 1n;
         rpools.pools := Big_map.add(ipool, pool, rpools.pools);
+#if ENABLE_POOL_LASTIPOOL_VIEW
         rpools.addr2ilast := Big_map.update(Tezos.sender, Some(ipool), rpools.addr2ilast);//RU Обновляем последний индекс по адресу создателя пула
+#endif // ENABLE_POOL_LASTIPOOL_VIEW
         s.rpools := rpools;
     } with s;
 
@@ -55,20 +58,32 @@ module MPools is {
     //RU Удаление пула (по окончании партии) //EN Remove pool (after game)
     function removePool(var s: t_storage; const ipool: t_ipool): t_storage is block {
         const pool: t_pool = getPool(s, ipool);
+        MPool.mustManager(s, pool);//RU Проверка доступа к пулу
         if 0n = pool.game.balance then block {//RU Пул уже пуст, можно удалить прямо сейчас
             s.rpools.pools := Big_map.remove(ipool, s.rpools.pools);
         } else s := setState(s, ipool, MPoolOpts.cSTATE_REMOVE);
     } with s;
 
-#if ENABLE_POOL_EDIT
     //RU Редактирование пула (приостановленого) //EN Edit pool (paused)
-    function editPool(var s: t_storage; const ipool: t_ipool; const optopts: option(t_opts); 
-            const optfarm: option(t_farm); const optrandom: option(t_random); const optburn: option(t_token)): t_storage is block {
+    function editPool(var s: t_storage; const ipool: t_ipool;
+            const optopts: option(t_opts); 
+            const optfarm: option(t_farm);
+            const optrandom: option(t_random);
+            const optburn: option(t_token);
+            const optfeeaddr: option(address)): t_storage is block {
         var pool: t_pool := getPool(s, ipool);
-        pool := MPool.edit(pool, optopts, optfarm, optrandom, optburn);
+        MPool.mustManager(s, pool);//RU Проверка доступа к пулу
+        pool := MPool.edit(pool, optopts, optfarm, optrandom, optburn, optfeeaddr);
         s := setPool(s, ipool, pool);
     } with s;
-#endif // ENABLE_POOL_EDIT
+
+    //RU Смена менеджера пула
+    function changeManager(var s: t_storage; const ipool: t_ipool; const newmanager: address): t_storage is block {
+        var pool: t_pool := getPool(s, ipool);
+        MPool.mustManager(s, pool);//RU Проверка доступа к пулу
+        pool := MPool.forceChangeManager(pool, newmanager);
+        s := setPool(s, ipool, pool);
+    } with s;
 
 //RU --- Для пользователей пулов
 
@@ -78,6 +93,7 @@ module MPools is {
     //RU @param damount Amount of tokens for invest to pool
     function deposit(var s: t_storage; const ipool: t_ipool; const damount: t_amount): t_return is block {
         const pool: t_pool = getPool(s, ipool);
+        
         const r_pool: t_return * t_pool = MPool.deposit(s, ipool, pool, damount);
         s := setPool(r_pool.0.1, ipool, r_pool.1);
     } with (r_pool.0.0, s);
@@ -112,8 +128,9 @@ module MPools is {
         s := setPool(s, ipool, pool);
     } with (operations, s);
 
-//RU --- Чтение данных админами (Views)
+//RU --- Чтение данных (Views)
 
+#if ENABLE_POOL_LASTIPOOL_VIEW
     //RU Получить ID последнего созданного админом пула
     //RU
     //RU Обоснованно полагаем, что с одного адреса не создаются пулы в несколько потоков, поэтому этот метод позволяет получить
@@ -123,6 +140,7 @@ module MPools is {
         Some(ilast) -> int(ilast)
         | None -> -1
         end
+#endif // ENABLE_POOL_LASTIPOOL_VIEW
 
 //RU --- Чтение данных любыми пользователями (Views)
 

@@ -1,13 +1,11 @@
 #if !MADMINS_INCLUDED
 #define MADMINS_INCLUDED
-#if ENABLE_ADMINS
 
 //RU Модуль управления админами контракта
 //RU
 //RU Добавление нового админа любым админом, удаление любым админом любого админа, включая самого себя.
 //RU Последний админ не может удалить сам себя, чтобы в контракте остался хотя бы один админ.
 //RU Пример использование модуля без других модулей доступа
-// #Define ENABLE_ADMINS
 // #Include "module/MAdmins.ligo"
 // type t_storage record [
 //     admins: MAdmins.t_admins;
@@ -88,5 +86,4 @@ module MAdmins is {
 #endif // !ENABLE_OWNER
 
 }
-#endif // ENABLE_ADMINS
 #endif // !MADMINS_INCLUDED

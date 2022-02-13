@@ -11,6 +11,7 @@
 module MPool is {
 
     const cERR_MUST_BURN: string = "MPool/MustBurn";//RU< Ошибка: Обязателен токен для сжигания
+    const cERR_MUST_FEEADDR: string = "MPool/MustFeeAddr";//RU< Ошибка: Обязателен адрес для комиссии
     const cERR_INACTIVE: string = "MPool/Inactive";//RU< Ошибка: Пул неактивен
 
     //RU Активен ли пул
@@ -21,9 +22,32 @@ module MPool is {
         const r: bool = (pool.game.state =/= MPoolGame.cSTATE_PAUSE);
     } with r;
 
+    //RU Проверка доступа к пулу
+    function mustManager(const s: t_storage; const pool: t_pool):unit is block {
+#if ENABLE_POOL_AS_SERVICE
+        MManager.mustManager(pool.manager);//RU Если пул-как-сервис, им управляет менеджер пула
+#else // ENABLE_POOL_AS_SERVICE
+
+#if ENABLE_POOL_MANAGER
+        if isAdmin(s) then skip
+        else MManager.mustManager(pool.manager);
+#else // ENABLE_POOL_MANAGER
+        mustAdmin(s);
+#endif // else ENABLE_POOL_MANAGER
+
+#endif // else ENABLE_POOL_AS_SERVICE
+    } with unit;
+
+#if ENABLE_POOL_MANAGER
+    //RU Безусловная смена менеджера пула (без проверки доступа)
+    function forceChangeManager(var pool: t_pool; const newmanager: address): t_pool is block {
+        pool.manager := newmanager;
+    } with pool;
+#endif // ENABLE_POOL_MANAGER
+
     //RU Создание нового пула
-    function create(const opts: t_opts; const farm: t_farm; 
-            const random: t_random; const burn: option(t_token)): t_pool is block {
+    function create(const opts: t_opts; const farm: t_farm; const random: t_random; 
+            const burn: option(t_token); const feeaddr: option(address)): t_pool is block {
     //RU Проверяем все входные параметры
         MPoolOpts.check(opts, True);
         MFarm.check(farm);
@@ -47,11 +71,15 @@ module MPool is {
         const pool: t_pool = record [
             opts = opts;
             farm = farm;
-            game = MPoolGame.create(gameState, int(gameSeconds));
             random = random;
             burn = burn;
+            feeaddr = feeaddr;
+            game = MPoolGame.create(gameState, int(gameSeconds));
             ibeg = 0n;
             inext = 0n;//RU Начинаем индексацию пользователей с нуля
+#if ENABLE_POOL_MANAGER
+            manager = Tezos.sender;//RU Менеджер пула - его создатель
+#endif // ENABLE_POOL_MANAGER
 #if ENABLE_POOL_STAT
             stat = MPoolStat.create(unit);
 #endif // ENABLE_POOL_STAT
@@ -64,9 +92,12 @@ module MPool is {
         pool.opts.state := state;
     } with pool;
 
-#if ENABLE_POOL_EDIT
-    function edit(var pool: t_pool; const optopts: option(t_opts); const optfarm: option(t_farm); 
-            const optrandom: option(t_random); const burn: option(t_token)): t_pool is block {
+    function edit(var pool: t_pool; 
+            const optopts: option(t_opts);
+            const optfarm: option(t_farm); 
+            const optrandom: option(t_random);
+            const optburn: option(t_token);
+            const optfeeaddr: option(address)): t_pool is block {
         case optopts of
         Some(opts) -> block {
             MPoolOpts.check(opts, False);
@@ -88,16 +119,23 @@ module MPool is {
         }
         | None -> skip
         end;
-        case burn of
-        Some(b) -> MToken.check(b)
+        case optburn of
+        Some(burn) -> MToken.check(burn)
         | None -> block {
             if MPoolOpts.maybeNoBurn(pool.opts) then skip
             else failwith(cERR_MUST_BURN);
         }
         end;
-        pool.burn := burn;
+        pool.burn := optburn;
+        case optfeeaddr of
+        Some(_feeaddr) -> skip
+        | None -> block {
+            if MPoolOpts.maybeNoFeeAddr(pool.opts) then skip
+            else failwith(cERR_MUST_FEEADDR);
+        }
+        end;
+        pool.feeaddr := optfeeaddr;
     } with pool;
-#endif // ENABLE_POOL_EDIT
 
 (*
     //RU Начать следующую партию
