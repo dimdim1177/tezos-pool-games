@@ -65,7 +65,7 @@
 //RU Если выключено, однократно включается approve MAXAMOUNT|add_operator и более не вызывается
 #define ENABLE_TRANSFER_SECURITY
 
-const cMIN_GAME_SECONDS: nat = 10n * 60n;//RU< Минимальное кол-во секунд для партии
-const cMAX_GAME_SECONDS: nat = 10n * 86400n;//RU< Максимальное кол-во секунд для партии
+[@inline] const cMIN_GAME_SECONDS: nat = 10n * 60n;//RU< Минимальное кол-во секунд для партии
+[@inline] const cMAX_GAME_SECONDS: nat = 10n * 86400n;//RU< Максимальное кол-во секунд для партии
 
 #endif // !CONFIG_INCLUDED

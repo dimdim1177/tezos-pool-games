@@ -45,16 +45,22 @@ module MFA2 is {
         balance: nat;
     ];
 
+    //RU Тип колбека на запрос баланса
+    type t_balance_callback is contract(list(t_balance_response));
+
     //RU Запросы баланса и колбек для возврата ответов
     type t_balance_requests is [@layout:comb] record [
         //RU Запросы баланса //EN Requests of balance
         requests: list(t_balance_request);
         //RU Колбек с ответами на запросы //EN Callback for balance responces
-        callback: contract(list(t_balance_response));
+        callback: t_balance_callback;
     ];
 
+    //RU Прототип метода balance
+    type t_balance is FA2Balance of t_balance_requests;
+
     //RU Контракт с точкой входа balance_of
-    type t_balance_contract is contract(t_balance_requests);
+    type t_balance_contract is contract(t_balance);
 
     //RU Один оператор
     type t_operator is [@layout:comb] record [
@@ -67,9 +73,7 @@ module MFA2 is {
     ];
 
     //RU Прототипы операторов
-    type t_operators_case is
-    | Add_operator of t_operator
-    | Remove_operator of t_operator
+    type t_operators_case is Add_operator of t_operator | Remove_operator of t_operator;
 
     //RU Прототип метода update_operators
     type t_operators is FA2Operators of list(t_operators_case)
@@ -101,7 +105,7 @@ module MFA2 is {
                     ]
                 ]
             ]
-        ])
+        ]);
 
     //RU Операция перевода токенов
     function transfer(const token: address; const token_id: t_token_id; const src: address; const dst: address; const tamount: nat): operation is
@@ -116,18 +120,77 @@ module MFA2 is {
         case (Tezos.get_entrypoint_opt("%balance_of", addr): option(t_balance_contract)) of
         Some(balance_contract) -> balance_contract
         | None -> (failwith(cERR_NOT_FOUND_BALANCEOF): t_balance_contract)
-        end
+        end;
+
+    //RU Параметры для запроса баланса токенов
+    function balanceParams(const token_id: t_token_id; const owner: address; const callback: t_balance_callback): t_balance is
+        FA2Balance(record [
+            requests = list [
+                record [
+                    owner = owner;
+                    token_id = token_id;
+                ]
+            ];
+            callback = callback;
+        ]);
+
+    //RU Запрос баланса токенов
+    function balanceOf(const token: address; const token_id: t_token_id; const owner: address; const callback: t_balance_callback): operation is
+        Tezos.transaction(
+            balanceParams(token_id, owner, callback),
+            0mutez,
+            balanceEntrypoint(token)
+        );
 
     //RU Получить точку входа update_operators токена
     function operatorsEntrypoint(const addr: address): t_operators_contract is
         case (Tezos.get_entrypoint_opt("%update_operators", addr): option(t_operators_contract)) of
         Some(operators_contract) -> operators_contract
         | None -> (failwith(cERR_NOT_FOUND_OPERATORS): t_operators_contract)
-        end
+        end;
+
+    //RU Параметры для одобрения распоряжения токенами
+    function approveParams(const token_id: t_token_id; const operator: address): t_operators is
+        FA2Operators(list [
+            Add_operator(record [
+                owner = Tezos.self_address;
+                operator = operator;
+                token_id = token_id;
+            ])
+        ]);
+
+    //RU Операция одобрения распоряжения токенами
+    function approve(const token: address; const token_id: t_token_id; const operator: address): operation is
+        Tezos.transaction(
+            approveParams(token_id, operator),
+            0mutez,
+            operatorsEntrypoint(token)
+        );
+
+    //RU Параметры для запрета распоряжения токенами
+    function declineParams(const token_id: t_token_id; const operator: address): t_operators is
+        FA2Operators(list [
+            Remove_operator(record [
+                owner = Tezos.self_address;
+                operator = operator;
+                token_id = token_id;
+            ])
+        ]);
+
+    //RU Операция запрета распоряжения токенами
+    function decline(const token: address; const token_id: t_token_id; const operator: address): operation is
+        Tezos.transaction(
+            declineParams(token_id, operator),
+            0mutez,
+            operatorsEntrypoint(token)
+        );
+
 
     //RU Проверка на соответствие стандарту FA2
     function check(const addr: address): unit is block {
         const _: t_transfer_contract = transferEntrypoint(addr);//RU Проверяем наличие метода transfer для FA2
+        const _: t_balance_contract = balanceEntrypoint(addr);//RU Проверяем наличие метода balance для FA2
+        const _: t_operators_contract = operatorsEntrypoint(addr);//RU Проверяем наличие метода update_operators для FA2
     } with unit;
 
 }

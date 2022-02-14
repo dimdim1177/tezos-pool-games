@@ -36,9 +36,8 @@ module MPools is {
 //RU --- Управление пулами
 
     //RU Создание нового пула //EN Create new pool
-    function createPool(var s: t_storage; const opts: t_opts; const farm: t_farm; const random: t_random;
-            const burn: option(t_token); const feeaddr: option(address)): t_storage is block {
-        const pool: t_pool = MPool.create(opts, farm, random, burn, feeaddr);
+    function poolCreate(var s: t_storage; const pool_create: t_pool_create): t_storage is block {
+        const pool: t_pool = MPool.create(pool_create);
         var rpools: t_rpools := s.rpools;
         const ipool: t_ipool = rpools.inext;//RU Индекс нового пула
         rpools.inext := ipool + 1n;
@@ -50,13 +49,13 @@ module MPools is {
     } with s;
 
     //RU Приостановка пула //EN Pause pool
-    function pausePool(const s: t_storage; const ipool: t_ipool): t_storage is setState(s, ipool, MPoolOpts.cSTATE_PAUSE);
+    function poolPause(const s: t_storage; const ipool: t_ipool): t_storage is setState(s, ipool, MPoolOpts.cSTATE_PAUSE);
 
     //RU Запуск пула (после паузы) //EN Play pool (after pause)
-    function playPool(const s: t_storage; const ipool: t_ipool): t_storage is setState(s, ipool, MPoolOpts.cSTATE_ACTIVE);
+    function poolPlay(const s: t_storage; const ipool: t_ipool): t_storage is setState(s, ipool, MPoolOpts.cSTATE_ACTIVE);
 
     //RU Удаление пула (по окончании партии) //EN Remove pool (after game)
-    function removePool(var s: t_storage; const ipool: t_ipool): t_storage is block {
+    function poolRemove(var s: t_storage; const ipool: t_ipool): t_storage is block {
         const pool: t_pool = getPool(s, ipool);
         MPool.mustManager(s, pool);//RU Проверка доступа к пулу
         if 0n = pool.game.balance then block {//RU Пул уже пуст, можно удалить прямо сейчас
@@ -65,25 +64,26 @@ module MPools is {
     } with s;
 
     //RU Редактирование пула (приостановленого) //EN Edit pool (paused)
-    function editPool(var s: t_storage; const ipool: t_ipool;
-            const optopts: option(t_opts); 
-            const optfarm: option(t_farm);
-            const optrandom: option(t_random);
-            const optburn: option(t_token);
-            const optfeeaddr: option(address)): t_storage is block {
+    function poolEdit(var s: t_storage; const ipool: t_ipool; const pool_edit: t_pool_edit): t_storage is block {
         var pool: t_pool := getPool(s, ipool);
         MPool.mustManager(s, pool);//RU Проверка доступа к пулу
-        pool := MPool.edit(pool, optopts, optfarm, optrandom, optburn, optfeeaddr);
+        pool := MPool.edit(pool, pool_edit);
         s := setPool(s, ipool, pool);
     } with s;
 
     //RU Смена менеджера пула
-    function changeManager(var s: t_storage; const ipool: t_ipool; const newmanager: address): t_storage is block {
+    function poolChangeManager(var s: t_storage; const ipool: t_ipool; const newmanager: address): t_storage is block {
         var pool: t_pool := getPool(s, ipool);
         MPool.mustManager(s, pool);//RU Проверка доступа к пулу
         pool := MPool.forceChangeManager(pool, newmanager);
         s := setPool(s, ipool, pool);
     } with s;
+
+    //RU Удаление пула (по окончании партии) //EN Remove pool (after game)
+    function poolGameTime(var s: t_storage; const ipool: t_ipool): t_return is block {
+        const pool: t_pool = getPool(s, ipool);
+        s := setPool(s, ipool, pool);
+    } with (cNO_OPERATIONS, s);
 
 //RU --- Для пользователей пулов
 
@@ -110,21 +110,27 @@ module MPools is {
         s := setPool(r_pool.0.1, ipool, r_pool.1);
     } with (r_pool.0.0, s);
 
-//RU --- От провайдера случайных чисел
-
+    //RU Колбек провайдера случайных чисел
     function onRandom(var s: t_storage; const ipool: t_ipool; const random: nat): t_return is block {
         var operations: t_operations := list [];
         var pool: t_pool := getPool(s, ipool);
-        pool := MPool.onRandom(ipool, pool, random);
+        pool := MPool.onRandom(pool, random);
         s := setPool(s, ipool, pool);
     } with (operations, s);
 
-//RU --- От фермы
-
-    function onReward(var s: t_storage; const ipool: t_ipool; const reward: nat): t_return is block {
+    //RU Колбек самого себя после запроса вознаграждения с фермы 
+    function afterReward(var s: t_storage; const ipool: t_ipool): t_return is block {
         var operations: t_operations := list [];
         var pool: t_pool := getPool(s, ipool);
-        pool := MPool.onReward(ipool, pool, reward);
+        pool := MPool.afterReward(pool);
+        s := setPool(s, ipool, pool);
+    } with (operations, s);
+
+    //RU Колбек самого себя после обмена токенов вознаграждения на токены для сжигания
+    function afterChangeReward(var s: t_storage; const ipool: t_ipool): t_return is block {
+        var operations: t_operations := list [];
+        var pool: t_pool := getPool(s, ipool);
+        pool := MPool.afterChangeReward(pool);
         s := setPool(s, ipool, pool);
     } with (operations, s);
 

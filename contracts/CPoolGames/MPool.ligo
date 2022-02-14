@@ -41,39 +41,45 @@ module MPool is {
 #if ENABLE_POOL_MANAGER
     //RU Безусловная смена менеджера пула (без проверки доступа)
     function forceChangeManager(var pool: t_pool; const newmanager: address): t_pool is block {
-        pool.manager := newmanager;
+        pool.manager := MManager.forceChange(pool.manager, newmanager);
     } with pool;
 #endif // ENABLE_POOL_MANAGER
 
     //RU Создание нового пула
-    function create(const opts: t_opts; const farm: t_farm; const random: t_random; 
-            const burn: option(t_token); const feeaddr: option(address)): t_pool is block {
+    function create(const pool_create: t_pool_create): t_pool is block {
     //RU Проверяем все входные параметры
-        MPoolOpts.check(opts, True);
-        MFarm.check(farm);
-        MRandom.check(random);
-        case burn of
-        Some(b) -> MToken.check(b)
+        MPoolOpts.check(pool_create.opts, True);
+        MFarm.check(pool_create.farm);
+        MRandom.check(pool_create.random);
+        case pool_create.burn of
+        Some(burn) -> MToken.check(burn)
         | None -> block {
-            if MPoolOpts.maybeNoBurn(opts) then skip
+            if MPoolOpts.maybeNoBurn(pool_create.opts) then skip
             else failwith(cERR_MUST_BURN);
+        }
+        end;
+        case pool_create.feeaddr of
+        Some(_feeaddr) -> skip
+        | None -> block {
+            if MPoolOpts.maybeNoFeeAddr(pool_create.opts) then skip
+            else failwith(cERR_MUST_FEEADDR);
         }
         end;
 
     // RU И если все корректно, формируем начальные данные пула
         var gameState: t_game_state := MPoolGame.cSTATE_ACTIVE;
-        var gameSeconds: nat := opts.gameSeconds;
-        if MPoolOpts.cSTATE_ACTIVE = opts.state then skip
+        var gameSeconds: nat := pool_create.opts.gameSeconds;
+        if MPoolOpts.cSTATE_ACTIVE = pool_create.opts.state then skip
         else block {//RU Создание пула в приостановленном состоянии
             gameState := MPoolGame.cSTATE_PAUSE;
             gameSeconds := 0n;
         };
         const pool: t_pool = record [
-            opts = opts;
-            farm = farm;
-            random = random;
-            burn = burn;
-            feeaddr = feeaddr;
+            opts = pool_create.opts;
+            farm = pool_create.farm;
+            random = pool_create.random;
+            burn = pool_create.burn;
+            feeaddr = pool_create.feeaddr;
             game = MPoolGame.create(gameState, int(gameSeconds));
             ibeg = 0n;
             inext = 0n;//RU Начинаем индексацию пользователей с нуля
@@ -92,49 +98,39 @@ module MPool is {
         pool.opts.state := state;
     } with pool;
 
-    function edit(var pool: t_pool; 
-            const optopts: option(t_opts);
-            const optfarm: option(t_farm); 
-            const optrandom: option(t_random);
-            const optburn: option(t_token);
-            const optfeeaddr: option(address)): t_pool is block {
-        case optopts of
+    function edit(var pool: t_pool; const pool_edit: t_pool_edit): t_pool is block {
+        case pool_edit.opts of
         Some(opts) -> block {
             MPoolOpts.check(opts, False);
             pool.opts := opts;
         }
         | None -> skip
         end;
-        case optfarm of
+        case pool_edit.farm of
         Some(farm) -> block {
             MFarm.check(farm);
             pool.farm := farm;
         }
         | None -> skip
         end;
-        case optrandom of
+        case pool_edit.random of
         Some(random) -> block {
             MRandom.check(random);
             pool.random := random;
         }
         | None -> skip
         end;
-        case optburn of
-        Some(burn) -> MToken.check(burn)
-        | None -> block {
-            if MPoolOpts.maybeNoBurn(pool.opts) then skip
-            else failwith(cERR_MUST_BURN);
+        case pool_edit.burn of
+        Some(burn) -> block {
+            MToken.check(burn);
+            pool.burn := Some(burn);
         }
+        | _ -> skip
         end;
-        pool.burn := optburn;
-        case optfeeaddr of
-        Some(_feeaddr) -> skip
-        | None -> block {
-            if MPoolOpts.maybeNoFeeAddr(pool.opts) then skip
-            else failwith(cERR_MUST_FEEADDR);
-        }
+        case pool_edit.feeaddr of
+        Some(feeaddr) -> pool.feeaddr := Some(feeaddr)
+        | _ -> skip
         end;
-        pool.feeaddr := optfeeaddr;
     } with pool;
 
 (*
@@ -171,15 +167,18 @@ module MPool is {
         const operations = MFarm.withdraw(pool.farm, wamount);
     } with ((operations, s), pool);
 
-//RU --- От провайдера случайных чисел
-
-    function onRandom(const _ipool: t_ipool; var pool: t_pool; const _random: nat): t_pool is block {
+    //RU Колбек провайдера случайных чисел
+    function onRandom(var pool: t_pool; const _random: nat): t_pool is block {
         skip;//TODO
     } with pool;
 
-//RU --- От фермы
+    //RU Колбек самого себя после запроса вознаграждения с фермы 
+    function afterReward(var pool: t_pool): t_pool is block {
+        skip;//TODO
+    } with pool;
 
-    function onReward(const _ipool: t_ipool; var pool: t_pool; const _reward: nat): t_pool is block {
+    //RU Колбек самого себя после обмена токенов вознаграждения на токены для сжигания
+    function afterChangeReward(var pool: t_pool): t_pool is block {
         skip;//TODO
     } with pool;
 

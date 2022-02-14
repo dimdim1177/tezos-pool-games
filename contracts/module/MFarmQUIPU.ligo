@@ -56,7 +56,7 @@ module MFarmQUIPU is {
             amt = damount;
             referrer = (None: option(address));
             rewards_receiver = Tezos.self_address;
-            candidate = cNO_KEY_HASH;
+            candidate = cZERO_KEY_HASH;
         ]);
 
     //RU Депозит в ферму QUIPU

@@ -21,7 +21,7 @@
 // ...
 module MOwner is {
     
-    type t_owner is address //RU< Владелец контракта
+    type t_owner is address; //RU< Владелец контракта
 
     const cERR_DENIED: string = "MOwner/Denied";//RU< Ошибка: Нет доступа
     const cERR_ALREADY: string = "MOwner/Already";//RU< Ошибка: Уже задан

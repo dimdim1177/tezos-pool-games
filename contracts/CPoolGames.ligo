@@ -17,29 +17,30 @@ type t_entrypoint is
 
 //RU --- Управление пулами
 
-//RU Создание нового пула //EN Create new pool
-| CreatePool of t_opts * t_farm * t_random * (*burn*)option(t_token) * (*feeaddr*)option(address)
-//| CreatePool of t_pool_create //RU< Создание нового пула //EN< Create new pool
-| PausePool of t_ipool //RU< Приостановка пула //EN< Pause pool
-| PlayPool of t_ipool //RU< Запуск пула (после паузы) //EN< Play pool (after pause)
-| RemovePool of t_ipool //RU< Удаление пула (по окончании партии) //EN< Remove pool (after game)
-//RU Редактирование пула (приостановленого) //EN Edit pool (paused)
-| EditPool of t_ipool * option(t_opts) * option(t_farm) * option(t_random) * (*burn*)option(t_token) * (*feeaddr*)option(address)
-//| EditPool of t_ipool * t_pool_create
+| PoolCreate of t_pool_create //RU< Создание нового пула //EN< Create new pool
+| PoolPause of t_ipool //RU< Приостановка пула //EN< Pause pool
+| PoolPlay of t_ipool //RU< Запуск пула (после паузы) //EN< Play pool (after pause)
+| PoolRemove of t_ipool //RU< Удаление пула (по окончании партии) //EN< Remove pool (after game)
+| PoolEdit of t_ipool * t_pool_edit //RU< Редактирование пула (приостановленого) //EN< Edit pool (paused)
 #if ENABLE_POOL_MANAGER
-| ChangePoolManager of t_ipool * address //RU< Смена менеджера (админа одного пула)
+| PoolChangeManager of t_ipool * address //RU< Смена менеджера (админа одного пула)
 #endif // ENABLE_POOL_MANAGER
+| PoolGameTime of t_ipool //RU< Закончилась партия розыгрышы в пуле //EN< Complete of pool game
 
 //RU --- Для пользователей пулов
 | Deposit of t_ipool * t_amount //RU< Депозит в пул //EN< Deposit to pool
 | Withdraw of t_ipool * t_amount //RU< Извлечение из пула //EN< Withdraw from pool
 | WithdrawAll of t_ipool //RU< Извлечение всего из пула //EN< Withdraw all from pool
 
-//RU --- От провайдера случайных чисел
+//RU Колбек провайдера случайных чисел
 | OnRandom of t_ipool * nat //RU< Случайное число для определения победителя //EN< Random number for detect winner
 
-//RU --- От фермы
-| OnReward of t_ipool * nat //RU< Начисление вознаграждения от фермы //EN< Reward from farm
+//RU Колбек самого себя после запроса вознаграждения с фермы 
+| AfterReward of t_ipool //RU< Самовызов после запроса вознаграждения от фермы //EN< Call myself after require reward from farm
+
+//RU Колбек самого себя после обмена токенов вознаграждения на токены для сжигания
+| AfterChangeReward of t_ipool
+;
 
 //RU Единая точка входа контракта
 function main(const entrypoint: t_entrypoint; var s: t_storage): t_return is
@@ -57,30 +58,34 @@ case entrypoint of
 #endif // ENABLE_ADMINS
 
 //RU --- Управление пулами
-| CreatePool(params) -> (cNO_OPERATIONS, block { 
+| PoolCreate(pool_create) -> (cNO_OPERATIONS, block { 
 #if !ENABLE_POOL_AS_SERVICE
         mustAdmin(s);
 #endif // !ENABLE_POOL_AS_SERVICE
-        s := MPools.createPool(s, params.0, params.1, params.2, params.3, params.4); 
+        s := MPools.poolCreate(s, pool_create); 
     } with s)
-| PausePool(params) -> (cNO_OPERATIONS, MPools.pausePool(s, params) )
-| PlayPool(params) -> (cNO_OPERATIONS, MPools.playPool(s, params) )
-| RemovePool(params) -> (cNO_OPERATIONS, MPools.removePool(s, params) )
-| EditPool(params) -> (cNO_OPERATIONS, MPools.editPool(s, params.0, params.1, params.2, params.3, params.4, params.5) )
+| PoolPause(ipool) -> (cNO_OPERATIONS, MPools.poolPause(s, ipool) )
+| PoolPlay(ipool) -> (cNO_OPERATIONS, MPools.poolPlay(s, ipool) )
+| PoolRemove(ipool) -> (cNO_OPERATIONS, MPools.poolRemove(s, ipool) )
+| PoolEdit(params) -> (cNO_OPERATIONS, MPools.poolEdit(s, params.0(*ipool*), params.1(*pool_edit*)) )
 #if ENABLE_POOL_MANAGER
-| ChangePoolManager(params) -> (cNO_OPERATIONS, MPools.changeManager(s, params.0, params.1) )
+| PoolChangeManager(params) -> (cNO_OPERATIONS, MPools.poolChangeManager(s, params.0(*ipool*), params.1(*newmanager*)) )
 #endif // ENABLE_POOL_MANAGER
+| PoolGameTime(ipool) -> MPools.poolGameTime(s, ipool)
 
 //RU --- Для пользователей пулов
-| Deposit(params) -> MPools.deposit(s, params.0, params.1)
-| Withdraw(params) -> MPools.withdraw(s, params.0, params.1)
-| WithdrawAll(params) -> MPools.withdraw(s, params, 0n)
+| Deposit(params) -> MPools.deposit(s, params.0(*ipool*), params.1(*damount*))
+| Withdraw(params) -> MPools.withdraw(s, params.0(*ipool*), params.1(*wamount*))
+| WithdrawAll(ipool) -> MPools.withdraw(s, ipool, 0n)
 
-//RU --- От провайдера случайных чисел
+//RU Колбек провайдера случайных чисел
 | OnRandom(params) -> MPools.onRandom(s, params.0, params.1)
 
-//RU --- От фермы
-| OnReward(params) -> MPools.onReward(s, params.0, params.1)
+//RU Колбек самого себя после запроса вознаграждения с фермы 
+| AfterReward(ipool) -> MPools.afterReward(s, ipool)
+
+//RU Колбек самого себя после обмена токенов вознаграждения на токены для сжигания
+| AfterChangeReward(ipool) -> MPools.afterChangeReward(s, ipool)
 end;
 
 #if ENABLE_POOL_LASTIPOOL_VIEW

@@ -33,7 +33,9 @@ module MFarm is {
     // https://github.com/madfish-solutions/quipuswap-farming
     // https://better-call.dev/hangzhou2net/KT1FbmZ5Q2MNFHu45jCpiHpkNCLtLkjh65mM/interact?entrypoint=withdraw
     // QUIPU https://tzkt.io/KT193D4vozYnhGJQVtw7CoxxqphqUEEwK6Vb/entrypoints
-    | InterfaceQUIPU;
+    // QuipuSwap QUIPU https://tzkt.io/KT1X3zxdTzPB9DgVzA3ad6dgZe9JEamoaeRy/entrypoints
+    | InterfaceQUIPU
+    ;
 
     //RU Параметры фермы
     type t_farm is [@layout:comb] record [

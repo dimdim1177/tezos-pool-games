@@ -7,7 +7,7 @@
     M - Модуль
     t_ - Тип
     c[_A-Z0-9]+ - Константа
-    cERR_[_A-Z0-9]+ - Константа с кодом ошибки
+    cERR_[_A-Z0-9]+ - Константа с кодом ошибки для failwith
 
     //#Define - если будет define, компилятор падает при повторном включении файла
     //#Include - если будет include, компилятор падает при повторном включении файла
@@ -25,7 +25,7 @@ type t_ii is int;
 
 [@inline] const cABSENT: t_ii = -1;//RU Элемент отсутствует
 
-[@inline] const cNO_ADDRESS: address = ("tz1ZZZZZZZZZZZZZZZZZZZZZZZZZZZZNkiRg" : address);//RU Заглушка для address
-[@inline] const cNO_KEY_HASH: key_hash = ("tz1ZZZZZZZZZZZZZZZZZZZZZZZZZZZZNkiRg" : key_hash);//RU Заглушка для key_hash
+const cZERO_ADDRESS: address = ("tz1ZZZZZZZZZZZZZZZZZZZZZZZZZZZZNkiRg" : address);//RU Нулевой address
+const cZERO_KEY_HASH: key_hash = ("tz1ZZZZZZZZZZZZZZZZZZZZZZZZZZZZNkiRg" : key_hash);//RU Заглушка для key_hash
 
 #endif // !CONSTS_INCLUDED

@@ -6,8 +6,11 @@ module MFA1_2 is {
     
     //RU Входные параметры для метода transfer
     type t_transfer_params is [@layout:comb] record [
+        //RU Откуда переводим
         src: address;
+        //RU Куда переводим
         dst: address;
+        //RU Сколько переводим
         tamount: nat;
     ];
 
@@ -17,10 +20,15 @@ module MFA1_2 is {
     //RU Контракт с точкой входа transfer
     type t_transfer_contract is contract(t_transfer);
 
+    //RU Тип колбека для получения баланса
+    type t_balance_callback is contract(nat);
+
     //RU Входные параметры для метода balance
     type t_balance_params is [@layout:comb] record [
+        //RU Чей баланс запрашиваем
         owner: address;
-        c: contract(nat);
+        //RU Колбек с балансом
+        callback: t_balance_callback;
     ];
 
     //RU Прототип метода balance
@@ -50,7 +58,7 @@ module MFA1_2 is {
         case (Tezos.get_entrypoint_opt("%transfer", addr): option(t_transfer_contract)) of
         Some(transfer_contract) -> transfer_contract
         | None -> (failwith(cERR_NOT_FOUND_TRANSFER): t_transfer_contract)
-        end
+        end;
 
     //RU Параметры для перевода токенов
     function transferParams(const src: address; const dst: address; const tamount: nat): t_transfer is
@@ -73,14 +81,52 @@ module MFA1_2 is {
         case (Tezos.get_entrypoint_opt("%getBalance", addr): option(t_balance_contract)) of
         Some(balance_contract) -> balance_contract
         | None -> (failwith(cERR_NOT_FOUND_BALANCE): t_balance_contract)
-        end
+        end;
+
+    //RU Параметры для запроса баланса
+    function balanceParams(const owner: address; const callback: t_balance_callback): t_balance is
+        FA12Balance(record [
+            owner = owner;
+            callback = callback;
+        ]);
+
+    //RU Операция перевода токенов
+    function balanceOf(const token: address; const owner: address; const callback: t_balance_callback): operation is
+        Tezos.transaction(
+            balanceParams(owner, callback),
+            0mutez,
+            balanceEntrypoint(token)
+        );
 
     //RU Получить точку входа approve токена
     function approveEntrypoint(const addr: address): t_approve_contract is
         case (Tezos.get_entrypoint_opt("%approve", addr): option(t_approve_contract)) of
         Some(approve_contract) -> approve_contract
         | None -> (failwith(cERR_NOT_FOUND_APPROVE): t_approve_contract)
-        end
+        end;
+
+    //RU Параметры для одобрения распоряжения токенами
+    function approveParams(const operator: address; const tamount: nat): t_approve is
+        FA12Approve(record [
+            spender = operator;
+            value = tamount;
+        ]);
+
+    //RU Операция одобрения распоряжения токенами
+    function approve(const token: address; const operator: address; const tamount: nat): operation is
+        Tezos.transaction(
+            approveParams(operator, tamount),
+            0mutez,
+            approveEntrypoint(token)
+        );
+
+    //RU Операция запрета распоряжения токенами
+    function decline(const token: address; const operator: address): operation is
+        Tezos.transaction(
+            approveParams(operator, 0n),
+            0mutez,
+            approveEntrypoint(token)
+        );
 
     //RU Проверка на соответствие стандарту FA1.2
     function check(const addr: address): unit is block {

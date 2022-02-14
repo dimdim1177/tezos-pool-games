@@ -155,6 +155,15 @@ type t_pool_create is [@layout:comb] record [
     feeaddr: option(address);//RU< Адрес, для перечисления комиссии пула
 ];
 
+//RU Данные для редактирования пула
+type t_pool_edit is [@layout:comb] record [
+    opts: option(t_opts);//RU< Настройки пула
+    farm: option(t_farm);//RU< Ферма для пула
+    random: option(t_random);//RU< Источник случайных чисел для розыгрышей
+    burn: option(t_token);//RU< Токен для сжигания всего, что выше процента выигрыша
+    feeaddr: option(address);//RU< Адрес, для перечисления комиссии пула
+];
+
 type t_ipool is t_i;//RU< Индекс пула
 type t_pools is big_map(t_ipool, t_pool);//RU< Пулы по их ID
 
