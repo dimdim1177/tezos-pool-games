@@ -30,6 +30,8 @@ type t_amount is MToken.t_amount;
 type t_farm is MFarm.t_farm;
 type t_random_source is MRandom.t_random_source;
 type t_random is MRandom.t_random;
+type t_ts_iobj is MRandom.t_ts_iobj;
+type t_iobj_random is MRandom.t_iobj_random;
 type t_token is MToken.t_token;
 type t_swap is MQuipuswap.t_swap;
 

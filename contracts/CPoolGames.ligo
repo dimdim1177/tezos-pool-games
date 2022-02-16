@@ -33,7 +33,7 @@ type t_entrypoint is
 | WithdrawAll of t_ipool //RU< Извлечение всего из пула //EN< Withdraw all from pool
 
 //RU Колбек провайдера случайных чисел
-| OnRandom of t_ipool * nat //RU< Случайное число для определения победителя //EN< Random number for detect winner
+| OnRandom of t_iobj_random //RU< Случайное число для определения победителя //EN< Random number for detect winner
 
 //RU Колбек самого себя после запроса вознаграждения с фермы 
 | AfterReward of t_ipool //RU< Самовызов после запроса вознаграждения от фермы //EN< Call myself after require reward from farm
