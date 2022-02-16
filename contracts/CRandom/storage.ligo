@@ -13,9 +13,7 @@ type t_storage is [@layout:comb] record [
 #if ENABLE_ADMINS
     admins: t_admins;//RU< Набор админов контракта
 #endif // ENABLE_ADMINS
-    inext: t_ipool;//RU< ID следующего пула
-    pools: t_pools;//RU< Собственно пулы
-    users: t_ipooladdr2user;//RU< Пользователи пулов
+    futures: t_futures;//RU< Заказы на колбеки в будущем
 ];
 
 //RU Тип результата отработки контракта

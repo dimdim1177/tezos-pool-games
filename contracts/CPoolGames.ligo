@@ -92,3 +92,8 @@ end;
 //RU Получение основных настроек пула по его ID любым пользователем
 [@view] function viewPoolInfo(const ipool: t_ipool; const s: t_storage): t_pool_info is MPools.viewPoolInfo(s, ipool);
 #endif // ENABLE_POOL_VIEW
+
+#if ENABLE_BALANCE_VIEW
+//RU Получение балнса пользователя в пуле
+[@view] function viewBalance(const ipool: t_ipool; const s: t_storage): nat is MPools.viewBalance(s, ipool);
+#endif // ENABLE_BALANCE_VIEW

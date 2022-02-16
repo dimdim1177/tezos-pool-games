@@ -21,8 +21,7 @@ module MPoolOpts is {
         };
         if opts.minSeconds > opts.gameSeconds then failwith(cERR_INVALID_MIN_SECONDS)
         else skip;
-        if (AlgoTimeVol = opts.algo) and (opts.maxDeposit > 0n)
-            and (opts.minDeposit > opts.maxDeposit) then failwith(cERR_INVALID_MAX_DEPOSIT)
+        if (opts.maxDeposit > 0n) and (opts.minDeposit > opts.maxDeposit) then failwith(cERR_INVALID_MAX_DEPOSIT)
         else skip;
         if 100n =/= (opts.winPercent + opts.burnPercent + opts.feePercent) then failwith(cERR_INVALID_PERCENT)
         else skip;

@@ -28,9 +28,10 @@ type t_admins is MAdmins.t_admins;
 #endif // ENABLE_ADMINS
 type t_amount is MToken.t_amount;
 type t_farm is MFarm.t_farm;
+type t_random_source is MRandom.t_random_source;
 type t_random is MRandom.t_random;
 type t_token is MToken.t_token;
-type t_token_swap is MQuipuswap.t_token_swap;
+type t_swap is MQuipuswap.t_swap;
 
 //RU Состояние пула
 type t_pool_state is
@@ -117,12 +118,12 @@ type t_opts is [@layout:comb] record [
     //RU 0 - нет ограничения
     minDeposit: nat;
 
-    //RU Максимальный депозит для пула (только для алгоритма cALGO_TIMEVOL)
+    //RU Максимальный депозит для пула
     //RU
-    //RU Пул с алгоритмом cALGO_TIMEVOL может позволить владельцу большого депозита войти в последний момент и с большой вероятностью 
+    //RU Пул с алгоритмом AlgoTimeVol может позволить владельцу огромного депозита войти в последний момент и с большой вероятностью 
     //RU забрать вознаграждения. Чтобы ограничить размеры депозитов в пуле разумными рамками и дать пользователям сопоставимые шансы
     //RU этот параметр вместе с minDeposit позволит получить честный розыгрыш.
-    //RU 0 - нет ограничения. В алгоритмах кроме cALGO_TIMEVOL параметр игнорируется
+    //RU 0 - нет ограничения
     maxDeposit: nat;
 
     //RU Процент от вознаграждения для выигрыша
@@ -172,13 +173,6 @@ type t_game is [@layout:comb] record [
     winWeight: t_weight;//RU< Вес победителя при проходе по всем пользователям в порядке возрастания их индексов
 ];
 
-//RU Информация о пуле, выдаваемая при запросе всем пользователям
-type t_pool_info is [@layout:comb] record [
-    opts: t_opts;//RU< Настройки пула
-    farm: t_farm;//RU< Ферма для пула
-    game: t_game;//RU< Текущая партия розыгрыша вознаграждения
-];
-
 type t_iuser is t_i;//RU< Индекс пользователя внутри пула
 
 #if ENABLE_POOL_STAT
@@ -193,14 +187,13 @@ type t_stat is [@layout:comb] record [
 type t_pool is [@layout:comb] record [
     opts: t_opts;//RU< Настройки пула
     farm: t_farm;//RU< Ферма для пула
-    random: t_random;//RU< Источник случайных чисел для розыгрышей
-    swapfarm: option(t_token_swap);//RU Адрес контракта Quipuswap для обмена токенов фермы через tez
-    swapburn: option(t_token_swap);//RU Адрес контракта Quipuswap для обмена токенов для сжигания через tez
+    randomSource: t_random_source;//RU< Источник случайных чисел для розыгрышей
     burn: option(t_token);//RU< Токен для сжигания всего, что выше процента выигрыша
+    swapfarm: option(t_swap);//RU Обменник Quipuswap для обмена токенов фермы через tez
+    swapburn: option(t_swap);//RU Обменник Quipuswap для обмена токенов для сжигания через tez
     feeaddr: option(address);//RU< Адрес, для перечисления комиссии пула
     game: t_game;//RU< Текущая партия розыгрыша вознаграждения
-    ibeg: t_iuser;//RU< Начальный индекс пользователей в пуле
-    inext: t_iuser;//RU< Следующий за максимальным индекс пользователей в пуле
+    randomFuture: bool;//RU< Делался ли запрос на колбек со случайным числом по окончании партии
 #if ENABLE_POOL_MANAGER
     manager: address;//RU< Менеджер пула (админ только данного пула)
 #endif // ENABLE_POOL_MANAGER
@@ -213,61 +206,53 @@ type t_pool is [@layout:comb] record [
 type t_pool_create is [@layout:comb] record [
     opts: t_opts;//RU< Настройки пула
     farm: t_farm;//RU< Ферма для пула
-    random: t_random;//RU< Источник случайных чисел для розыгрышей
-    swapfarm: option(t_token_swap);//RU Адрес контракта Quipuswap для обмена токенов фермы через tez
-    swapburn: option(t_token_swap);//RU Адрес контракта Quipuswap для обмена токенов для сжигания через tez
+    randomSource: t_random_source;//RU< Источник случайных чисел для розыгрышей
     burn: option(t_token);//RU< Токен для сжигания
+    swapfarm: option(t_swap);//RU Обменник Quipuswap для обмена токенов фермы через tez
+    swapburn: option(t_swap);//RU Обменник Quipuswap для обмена токенов для сжигания через tez
     feeaddr: option(address);//RU< Адрес, для перечисления комиссии пула
 ];
 
 //RU Данные для редактирования пула
 type t_pool_edit is [@layout:comb] record [
     opts: option(t_opts);//RU< Настройки пула
-    random: option(t_random);//RU< Источник случайных чисел для розыгрышей
-    swapfarm: option(t_token_swap);//RU Адрес контракта Quipuswap для обмена токенов фермы через tez
-    swapburn: option(t_token_swap);//RU Адрес контракта Quipuswap для обмена токенов для сжигания через tez
+    randomSource: option(t_random_source);//RU< Источник случайных чисел для розыгрышей
     burn: option(t_token);//RU< Токен для сжигания
+    swapfarm: option(t_swap);//RU Обменник Quipuswap для обмена токенов фермы через tez
+    swapburn: option(t_swap);//RU Обменник Quipuswap для обмена токенов для сжигания через tez
     feeaddr: option(address);//RU< Адрес, для перечисления комиссии пула
 ];
 
 type t_ipool is t_i;//RU< Индекс пула
 type t_pools is big_map(t_ipool, t_pool);//RU< Пулы по их ID
 
-//RU Пулы и сопутствующая информация
-type t_rpools is [@layout:comb] record [
-    inext: t_ipool;//RU< ID следующего пула
-    pools: t_pools;//RU< Собственно пулы
-];
-
 //RU Параметры пользователя в пуле
 type t_user is [@layout:comb] record [
     balance: t_amount;//RU< Сколько токенов фермы инвестировано в пул этим пользователем
-    tsBalance: timestamp;//RU< Когда было последнее пополнение токенов пользователем
-    weight: t_weight;//RU< Вес для определения вероятности победы в текущей партии
-#if ENABLE_REINDEX_USERS
-    addr: address;//RU< Адрес пользователя
-#endif // ENABLE_REINDEX_USERS
+    tsBalance: timestamp;//RU< Когда было последнее пополнение/списание токенов пользователем
+    
+    //RU Дополнительный вес пользователя только при tsBalance > game.tsBeg
+    //RU
+    //RU При пополнениях/списания во время партии это может изменять вес пользователя в розыгрыше, например, AlgoTimeVol
+    //RU Эта переменная сохраняет накопленный пользователем вес от начала партии game.tsBeg до tsBalance и в следующей
+    //RU партии (tsBalance < game.tsBeg) игнорируется!
+    // \see AlgoTimeVol
+    addWeight: t_weight;
 ];
 
 //RU Ключ для поиска индекса пользователя по индексу пула и адресу
 type t_ipooladdr is t_ipool * address;
 
 //RU Индекса в пуле по номеру пула и адресу пользователя
-type t_ipooladdr2iuser is big_map(t_ipooladdr, t_iuser);
+type t_ipooladdr2user is big_map(t_ipooladdr, t_user);
 
-//RU Комбинация индекса пула и индекса пользователя в нем
-type t_ipooliuser is t_ipool * t_iuser;
-
-//RU Параметры пользователя по индексу пула и индекса пользователя в нем
-type t_ipooliuser2user is big_map(t_ipooliuser, t_user);
-
-//RU Пользователи пулов
-type t_users is [@layout:comb] record [
-    //RU Индекса в пуле по номеру пула и адресу пользователя
-    ipooladdr2iuser: t_ipooladdr2iuser;
-
-    //RU Параметры пользователя по индексу пула и индекса пользователя в нем
-    ipooliuser2user: t_ipooliuser2user;
+#if ENABLE_POOL_VIEW
+//RU Информация о пуле, выдаваемая при запросе информации о пуле
+type t_pool_info is [@layout:comb] record [
+    opts: t_opts;//RU< Настройки пула
+    farm: t_farm;//RU< Ферма для пула
+    game: t_game;//RU< Текущая партия розыгрыша вознаграждения
 ];
+#endif // ENABLE_POOL_VIEW
 
 #endif // !TYPES_INCLUDED

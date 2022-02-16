@@ -5,7 +5,6 @@
 #include "MPoolOpts.ligo"
 #include "MPoolStat.ligo"
 #include "MPoolGame.ligo"
-#include "MUsers.ligo"
 
 //RU Модуль пула ликвидности с периодическими розыгрышами вознаграждений
 module MPool is {
@@ -14,7 +13,8 @@ module MPool is {
     const cERR_MUST_SWAPBURN: string = "MPool/MustSwapBurn";//RU< Ошибка: Обязателен адрес контракта для обмена токена для сжигания
     const cERR_MUST_BURN: string = "MPool/MustBurn";//RU< Ошибка: Обязателен токен для сжигания
     const cERR_MUST_FEEADDR: string = "MPool/MustFeeAddr";//RU< Ошибка: Обязателен адрес для комиссии
-    const cERR_INACTIVE: string = "MPool/Inactive";//RU< Ошибка: Пул неактивен
+    const cERR_DEPOSIT_INACTIVE: string = "MPool/DepositInactive";//RU< Ошибка: Пул неактивен, внесение депозитов приостановлено
+    const cERR_EDIT_ACTIVE: string = "MPool/EditActive";//RU< Ошибка: Пул активен, редактирование возможно только приостановленного пула
 
     //RU Активен ли пул
     //RU
@@ -47,33 +47,30 @@ module MPool is {
     } with pool;
 #endif // ENABLE_POOL_MANAGER
 
+    //RU Проверка настроек для сжигания
+    function checkBurn(const burn: option(t_token); const swapfarm: option(t_swap); const swapburn: option(t_swap)): unit is block {
+        case burn of
+        Some(burn) -> MToken.check(burn)
+        | None -> failwith(cERR_MUST_BURN)
+        end;
+        case swapfarm of
+        Some(swapfarm) -> MQuipuswap.check(swapfarm)
+        | None -> failwith(cERR_MUST_SWAPFARM)
+        end;
+        case swapburn of
+        Some(swapburn) -> MQuipuswap.check(swapburn)
+        | None -> failwith(cERR_MUST_SWAPBURN)
+        end;
+    } with unit;
+
     //RU Создание нового пула
     function create(const pool_create: t_pool_create): t_pool is block {
     //RU Проверяем все входные параметры
         MPoolOpts.check(pool_create.opts, True);
         MFarm.check(pool_create.farm);
-        MRandom.check(pool_create.random);
-        case pool_create.swapfarm of
-        Some(swapfarm) -> MQuipuswap.check(swapfarm)
-        | None -> block {
-            if MPoolOpts.maybeNoBurn(pool_create.opts) then skip
-            else failwith(cERR_MUST_SWAPFARM);
-        }
-        end;
-        case pool_create.swapburn of
-        Some(swapburn) -> MQuipuswap.check(swapburn)
-        | None -> block {
-            if MPoolOpts.maybeNoBurn(pool_create.opts) then skip
-            else failwith(cERR_MUST_SWAPBURN);
-        }
-        end;
-        case pool_create.burn of
-        Some(burn) -> MToken.check(burn)
-        | None -> block {
-            if MPoolOpts.maybeNoBurn(pool_create.opts) then skip
-            else failwith(cERR_MUST_BURN);
-        }
-        end;
+        MRandom.check(pool_create.randomSource);
+        //RU Проверяем настройки для сжигания только если они необходимы
+        if MPoolOpts.maybeNoBurn(pool_create.opts) then skip else checkBurn(pool_create.burn, pool_create.swapfarm, pool_create.swapburn);
         case pool_create.feeaddr of
         Some(_feeaddr) -> skip
         | None -> block {
@@ -93,14 +90,13 @@ module MPool is {
         const pool: t_pool = record [
             opts = pool_create.opts;
             farm = pool_create.farm;
-            random = pool_create.random;
+            randomSource = pool_create.randomSource;
             swapfarm = pool_create.swapfarm;
             swapburn = pool_create.swapburn;
             burn = pool_create.burn;
             feeaddr = pool_create.feeaddr;
-            game = MPoolGame.create(gameState, int(gameSeconds));
-            ibeg = 0n;
-            inext = 0n;//RU Начинаем индексацию пользователей с нуля
+            game = MPoolGame.create(gameState, gameSeconds);
+            randomFuture = False;
 #if ENABLE_POOL_MANAGER
             manager = Tezos.sender;//RU Менеджер пула - его создатель
 #endif // ENABLE_POOL_MANAGER
@@ -117,6 +113,8 @@ module MPool is {
     } with pool;
 
     function edit(var pool: t_pool; const pool_edit: t_pool_edit): t_pool is block {
+        if isActive(pool) then failwith(cERR_EDIT_ACTIVE);
+        else skip;
         case pool_edit.opts of
         Some(opts) -> block {
             MPoolOpts.check(opts, False);
@@ -124,14 +122,18 @@ module MPool is {
         }
         | None -> skip
         end;
-        case pool_edit.random of
-        Some(random) -> block {
-            MRandom.check(random);
-            pool.random := random;
+        case pool_edit.randomSource of
+        Some(randomSource) -> block {
+            MRandom.check(randomSource);
+            pool.randomSource := randomSource;
         }
         | None -> skip
         end;
         //RU Настройки для сжигания просто пишем, проверим потом
+        case pool_edit.burn of
+        Some(burn) -> pool.burn := Some(burn)
+        | None -> skip
+        end;
         case pool_edit.swapfarm of
         Some(swapfarm) -> pool.swapfarm := Some(swapfarm)
         | None -> skip
@@ -140,52 +142,19 @@ module MPool is {
         Some(swapburn) -> pool.swapburn := Some(swapburn)
         | None -> skip
         end;
-        case pool_edit.burn of
-        Some(burn) -> pool.burn := Some(burn)
-        | None -> skip
-        end;
-        if MPoolOpts.maybeNoBurn(pool.opts) then skip
-        else block {//RU Если необходимы настройки для сжигания - проверяем их
-            case pool.swapfarm of
-            Some(swapfarm) -> MQuipuswap.check(swapfarm)
-            | None -> failwith(cERR_MUST_SWAPFARM)
-            end;
-            case pool.swapburn of
-            Some(swapburn) -> MQuipuswap.check(swapburn)
-            | None -> failwith(cERR_MUST_SWAPBURN)
-            end;
-            case pool.burn of
-            Some(burn) -> MToken.check(burn)
-            | None -> failwith(cERR_MUST_BURN)
-            end;
-        };
+        //RU Проверяем настройки для сжигания только если они необходимы
+        if MPoolOpts.maybeNoBurn(pool.opts) then skip else checkBurn(pool.burn, pool.swapfarm, pool.swapburn);
         case pool_edit.feeaddr of
         Some(feeaddr) -> pool.feeaddr := Some(feeaddr)
         | _ -> skip
         end;
     } with pool;
 
-(*
-    //RU Начать следующую партию
-    function nextGame(const ipool: t_ipool; var pool: t_pool; var users: t_users): t_pool * t_users is block {
-#if ENABLE_REINDEX_USERS
-        //RU Если кол-во индексов пользователей в пуле в 2 раза больше реального кол-ва,
-        //RU переиндексируем пул, что вдвое уменьшит кол-во итераций по пулу при переборе всех пользователей
-        if ((pool.inext - pool.ibeg) > (2 * pool.game.count)) then block {
-            const r: t_users * t_iuser * t_iuser = MUsers.reindex(users, ipool, pool.ibeg, pool.inext);
-            users := r.0;
-            pool.ibeg := r.1;
-            pool.inext := r.2;
-        } else skip;
-#endif // ENABLE_REINDEX_USERS
-    } with (pool, users);
-*)
-
 //RU --- Для пользователей пулов
 
     function deposit(var s: t_storage; const _ipool: t_ipool; var pool: t_pool; const damount: t_amount): t_return * t_pool is block {
         if isActive(pool) then skip
-        else failwith(cERR_INACTIVE);
+        else failwith(cERR_DEPOSIT_INACTIVE);
         const operations = MFarm.deposit(pool.farm, damount);
     } with ((operations, s), pool);
 

@@ -53,14 +53,14 @@
     "Compile error: Must be ENABLE_POOL_MANAGER, when ENABLE_POOL_AS_SERVICE";
 #endif
 
-//RU Переупаковка разряженных индексов пользователей в пулах
-#define ENABLE_REINDEX_USERS
-
 //RU По возможности максимально защищенный перевод токенов
 //RU
 //RU Если включено, при переводе токенов сначала делается approve AMOUNT|add_operator, после перевода approve 0|remove_operator.
 //RU Если выключено, однократно включается approve MAXAMOUNT|add_operator и более не вызывается
 #define ENABLE_TRANSFER_SECURITY
+
+//RU Сгенерировать view для баланса пользователя в пуле
+#define ENABLE_BALANCE_VIEW
 
 [@inline] const cMIN_GAME_SECONDS: nat = 10n * 60n;//RU< Минимальное кол-во секунд для партии
 [@inline] const cMAX_GAME_SECONDS: nat = 10n * 86400n;//RU< Максимальное кол-во секунд для партии
