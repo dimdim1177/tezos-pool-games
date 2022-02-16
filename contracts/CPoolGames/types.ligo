@@ -6,10 +6,11 @@
 #include "../module/MOwner.ligo"
 #include "../module/MAdmin.ligo"
 #include "../module/MAdmins.ligo"
+#include "../module/MManager.ligo"
 #include "../module/MFarm.ligo"
 #include "../module/MRandom.ligo"
 #include "../module/MToken.ligo"
-#include "../module/MManager.ligo"
+#include "../module/MQuipuswap.ligo"
 
 //RU Типы для хранилища контракта
 //EN Types for contract storage
@@ -29,6 +30,7 @@ type t_amount is MToken.t_amount;
 type t_farm is MFarm.t_farm;
 type t_random is MRandom.t_random;
 type t_token is MToken.t_token;
+type t_token_swap is MQuipuswap.t_token_swap;
 
 //RU Состояние пула
 type t_pool_state is
@@ -192,6 +194,8 @@ type t_pool is [@layout:comb] record [
     opts: t_opts;//RU< Настройки пула
     farm: t_farm;//RU< Ферма для пула
     random: t_random;//RU< Источник случайных чисел для розыгрышей
+    swapfarm: option(t_token_swap);//RU Адрес контракта Quipuswap для обмена токенов фермы через tez
+    swapburn: option(t_token_swap);//RU Адрес контракта Quipuswap для обмена токенов для сжигания через tez
     burn: option(t_token);//RU< Токен для сжигания всего, что выше процента выигрыша
     feeaddr: option(address);//RU< Адрес, для перечисления комиссии пула
     game: t_game;//RU< Текущая партия розыгрыша вознаграждения
@@ -210,6 +214,8 @@ type t_pool_create is [@layout:comb] record [
     opts: t_opts;//RU< Настройки пула
     farm: t_farm;//RU< Ферма для пула
     random: t_random;//RU< Источник случайных чисел для розыгрышей
+    swapfarm: option(t_token_swap);//RU Адрес контракта Quipuswap для обмена токенов фермы через tez
+    swapburn: option(t_token_swap);//RU Адрес контракта Quipuswap для обмена токенов для сжигания через tez
     burn: option(t_token);//RU< Токен для сжигания
     feeaddr: option(address);//RU< Адрес, для перечисления комиссии пула
 ];
@@ -218,6 +224,8 @@ type t_pool_create is [@layout:comb] record [
 type t_pool_edit is [@layout:comb] record [
     opts: option(t_opts);//RU< Настройки пула
     random: option(t_random);//RU< Источник случайных чисел для розыгрышей
+    swapfarm: option(t_token_swap);//RU Адрес контракта Quipuswap для обмена токенов фермы через tez
+    swapburn: option(t_token_swap);//RU Адрес контракта Quipuswap для обмена токенов для сжигания через tez
     burn: option(t_token);//RU< Токен для сжигания
     feeaddr: option(address);//RU< Адрес, для перечисления комиссии пула
 ];

@@ -10,6 +10,8 @@
 //RU Модуль пула ликвидности с периодическими розыгрышами вознаграждений
 module MPool is {
 
+    const cERR_MUST_SWAPFARM: string = "MPool/MustSwapFarm";//RU< Ошибка: Обязателен адрес контракта для обмена токена фермы
+    const cERR_MUST_SWAPBURN: string = "MPool/MustSwapBurn";//RU< Ошибка: Обязателен адрес контракта для обмена токена для сжигания
     const cERR_MUST_BURN: string = "MPool/MustBurn";//RU< Ошибка: Обязателен токен для сжигания
     const cERR_MUST_FEEADDR: string = "MPool/MustFeeAddr";//RU< Ошибка: Обязателен адрес для комиссии
     const cERR_INACTIVE: string = "MPool/Inactive";//RU< Ошибка: Пул неактивен
@@ -51,6 +53,20 @@ module MPool is {
         MPoolOpts.check(pool_create.opts, True);
         MFarm.check(pool_create.farm);
         MRandom.check(pool_create.random);
+        case pool_create.swapfarm of
+        Some(swapfarm) -> MQuipuswap.check(swapfarm)
+        | None -> block {
+            if MPoolOpts.maybeNoBurn(pool_create.opts) then skip
+            else failwith(cERR_MUST_SWAPFARM);
+        }
+        end;
+        case pool_create.swapburn of
+        Some(swapburn) -> MQuipuswap.check(swapburn)
+        | None -> block {
+            if MPoolOpts.maybeNoBurn(pool_create.opts) then skip
+            else failwith(cERR_MUST_SWAPBURN);
+        }
+        end;
         case pool_create.burn of
         Some(burn) -> MToken.check(burn)
         | None -> block {
@@ -78,6 +94,8 @@ module MPool is {
             opts = pool_create.opts;
             farm = pool_create.farm;
             random = pool_create.random;
+            swapfarm = pool_create.swapfarm;
+            swapburn = pool_create.swapburn;
             burn = pool_create.burn;
             feeaddr = pool_create.feeaddr;
             game = MPoolGame.create(gameState, int(gameSeconds));
@@ -113,13 +131,34 @@ module MPool is {
         }
         | None -> skip
         end;
-        case pool_edit.burn of
-        Some(burn) -> block {
-            MToken.check(burn);
-            pool.burn := Some(burn);
-        }
-        | _ -> skip
+        //RU Настройки для сжигания просто пишем, проверим потом
+        case pool_edit.swapfarm of
+        Some(swapfarm) -> pool.swapfarm := Some(swapfarm)
+        | None -> skip
         end;
+        case pool_edit.swapburn of
+        Some(swapburn) -> pool.swapburn := Some(swapburn)
+        | None -> skip
+        end;
+        case pool_edit.burn of
+        Some(burn) -> pool.burn := Some(burn)
+        | None -> skip
+        end;
+        if MPoolOpts.maybeNoBurn(pool.opts) then skip
+        else block {//RU Если необходимы настройки для сжигания - проверяем их
+            case pool.swapfarm of
+            Some(swapfarm) -> MQuipuswap.check(swapfarm)
+            | None -> failwith(cERR_MUST_SWAPFARM)
+            end;
+            case pool.swapburn of
+            Some(swapburn) -> MQuipuswap.check(swapburn)
+            | None -> failwith(cERR_MUST_SWAPBURN)
+            end;
+            case pool.burn of
+            Some(burn) -> MToken.check(burn)
+            | None -> failwith(cERR_MUST_BURN)
+            end;
+        };
         case pool_edit.feeaddr of
         Some(feeaddr) -> pool.feeaddr := Some(feeaddr)
         | _ -> skip
