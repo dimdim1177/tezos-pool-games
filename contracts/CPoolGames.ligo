@@ -17,15 +17,15 @@ type t_entrypoint is
 
 //RU --- Управление пулами
 
-| PoolCreate of t_pool_create //RU< Создание нового пула //EN< Create new pool
-| PoolPause of t_ipool //RU< Приостановка пула //EN< Pause pool
-| PoolPlay of t_ipool //RU< Запуск пула (после паузы) //EN< Play pool (after pause)
-| PoolRemove of t_ipool //RU< Удаление пула (по окончании партии) //EN< Remove pool (after game)
-| PoolEdit of t_ipool * t_pool_edit //RU< Редактирование пула (приостановленого) //EN< Edit pool (paused)
+| CreatePool of t_pool_create //RU< Создание нового пула //EN< Create new pool
+| PausePool of t_ipool //RU< Приостановка пула //EN< Pause pool
+| StartPool of t_ipool //RU< Запуск пула (после паузы) //EN< Play pool (after pause)
+| RemovePool of t_ipool //RU< Удаление пула (по окончании партии) //EN< Remove pool (after game)
+| EditPool of t_ipool * t_pool_edit //RU< Редактирование пула (приостановленого) //EN< Edit pool (paused)
 #if ENABLE_POOL_MANAGER
-| PoolChangeManager of t_ipool * address //RU< Смена менеджера (админа одного пула)
+| ChangePoolManager of t_ipool * address //RU< Смена менеджера (админа одного пула)
 #endif // ENABLE_POOL_MANAGER
-| PoolGameTime of t_ipool //RU< Закончилась партия розыгрышы в пуле //EN< Complete of pool game
+| SetPoolWinner of t_ipool //RU< Закончилась партия розыгрышы в пуле //EN< Complete of pool game
 
 //RU --- Для пользователей пулов
 | Deposit of t_ipool * t_amount //RU< Депозит в пул //EN< Deposit to pool
@@ -58,20 +58,20 @@ case entrypoint of
 #endif // ENABLE_ADMINS
 
 //RU --- Управление пулами
-| PoolCreate(pool_create) -> (cNO_OPERATIONS, block { 
+| CreatePool(pool_create) -> (cNO_OPERATIONS, block {
 #if !ENABLE_POOL_AS_SERVICE
         mustAdmin(s);
 #endif // !ENABLE_POOL_AS_SERVICE
-        s := MPools.poolCreate(s, pool_create); 
+        s := MPools.createPool(s, pool_create);
     } with s)
-| PoolPause(ipool) -> (cNO_OPERATIONS, MPools.poolPause(s, ipool) )
-| PoolPlay(ipool) -> (cNO_OPERATIONS, MPools.poolPlay(s, ipool) )
-| PoolRemove(ipool) -> (cNO_OPERATIONS, MPools.poolRemove(s, ipool) )
-| PoolEdit(params) -> (cNO_OPERATIONS, MPools.poolEdit(s, params.0(*ipool*), params.1(*pool_edit*)) )
+| PausePool(ipool) -> (cNO_OPERATIONS, MPools.pausePool(s, ipool) )
+| StartPool(ipool) -> (cNO_OPERATIONS, MPools.startPool(s, ipool) )
+| RemovePool(ipool) -> (cNO_OPERATIONS, MPools.removePool(s, ipool) )
+| EditPool(params) -> (cNO_OPERATIONS, MPools.editPool(s, params.0(*ipool*), params.1(*pool_edit*)) )
 #if ENABLE_POOL_MANAGER
-| PoolChangeManager(params) -> (cNO_OPERATIONS, MPools.poolChangeManager(s, params.0(*ipool*), params.1(*newmanager*)) )
+| ChangePoolManager(params) -> (cNO_OPERATIONS, MPools.changePoolManager(s, params.0(*ipool*), params.1(*newmanager*)) )
 #endif // ENABLE_POOL_MANAGER
-| PoolGameTime(ipool) -> MPools.poolGameTime(s, ipool)
+| SetPoolWinner(ipool) -> MPools.setPoolWinner(s, ipool)
 
 //RU --- Для пользователей пулов
 | Deposit(params) -> MPools.deposit(s, params.0(*ipool*), params.1(*damount*))
@@ -88,18 +88,7 @@ case entrypoint of
 | AfterChangeReward(ipool) -> MPools.afterChangeReward(s, ipool)
 end;
 
-#if ENABLE_POOL_LASTIPOOL_VIEW
-//RU Получение ID последнего созданного этим админом пула
-//RU
-//RU Обоснованно полагаем, что с одного адреса не создаются пулы в несколько потоков, поэтому этот метод позволяет получить
-//RU ID только что созданного админом нового пула. Если нет созданных админом пулов, будет возвращено -1
-[@view] function viewLastIPool(const _: unit; const s: t_storage): int is block {
-    mustAdmin(s);
-    const ilast: int = MPools.viewLastIPool(s);
-} with ilast;
-#endif // ENABLE_POOL_LASTIPOOL_VIEW
-
 #if ENABLE_POOL_VIEW
-//RU Получение активного пула по его ID любым пользователем
+//RU Получение основных настроек пула по его ID любым пользователем
 [@view] function viewPoolInfo(const ipool: t_ipool; const s: t_storage): t_pool_info is MPools.viewPoolInfo(s, ipool);
 #endif // ENABLE_POOL_VIEW

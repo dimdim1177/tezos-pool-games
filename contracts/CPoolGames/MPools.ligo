@@ -26,7 +26,7 @@ module MPools is {
     //RU Задать состояние пула
     //RU
     //RU Если убрать inline компилятор падает
-    function setState(var s: t_storage; const ipool: t_ipool; const state: t_pool_state): t_storage is block {
+    function setPoolState(var s: t_storage; const ipool: t_ipool; const state: t_pool_state): t_storage is block {
         var pool: t_pool := getPool(s, ipool);
         MPool.mustManager(s, pool);//RU Проверка доступа к пулу
         pool := MPool.setState(pool, state);
@@ -36,51 +36,50 @@ module MPools is {
 //RU --- Управление пулами
 
     //RU Создание нового пула //EN Create new pool
-    function poolCreate(var s: t_storage; const pool_create: t_pool_create): t_storage is block {
+    function createPool(var s: t_storage; const pool_create: t_pool_create): t_storage is block {
         const pool: t_pool = MPool.create(pool_create);
         var rpools: t_rpools := s.rpools;
         const ipool: t_ipool = rpools.inext;//RU Индекс нового пула
         rpools.inext := ipool + 1n;
         rpools.pools := Big_map.add(ipool, pool, rpools.pools);
-#if ENABLE_POOL_LASTIPOOL_VIEW
-        rpools.addr2ilast := Big_map.update(Tezos.sender, Some(ipool), rpools.addr2ilast);//RU Обновляем последний индекс по адресу создателя пула
-#endif // ENABLE_POOL_LASTIPOOL_VIEW
         s.rpools := rpools;
     } with s;
 
     //RU Приостановка пула //EN Pause pool
-    function poolPause(const s: t_storage; const ipool: t_ipool): t_storage is setState(s, ipool, MPoolOpts.cSTATE_PAUSE);
+    function pausePool(const s: t_storage; const ipool: t_ipool): t_storage is setPoolState(s, ipool, PoolStatePause);
 
     //RU Запуск пула (после паузы) //EN Play pool (after pause)
-    function poolPlay(const s: t_storage; const ipool: t_ipool): t_storage is setState(s, ipool, MPoolOpts.cSTATE_ACTIVE);
+    function startPool(const s: t_storage; const ipool: t_ipool): t_storage is setPoolState(s, ipool, PoolStateActive);
 
     //RU Удаление пула (по окончании партии) //EN Remove pool (after game)
-    function poolRemove(var s: t_storage; const ipool: t_ipool): t_storage is block {
+    function removePool(var s: t_storage; const ipool: t_ipool): t_storage is block {
         const pool: t_pool = getPool(s, ipool);
         MPool.mustManager(s, pool);//RU Проверка доступа к пулу
         if 0n = pool.game.balance then block {//RU Пул уже пуст, можно удалить прямо сейчас
             s.rpools.pools := Big_map.remove(ipool, s.rpools.pools);
-        } else s := setState(s, ipool, MPoolOpts.cSTATE_REMOVE);
+        } else s := setPoolState(s, ipool, PoolStateRemove);
     } with s;
 
     //RU Редактирование пула (приостановленого) //EN Edit pool (paused)
-    function poolEdit(var s: t_storage; const ipool: t_ipool; const pool_edit: t_pool_edit): t_storage is block {
+    function editPool(var s: t_storage; const ipool: t_ipool; const pool_edit: t_pool_edit): t_storage is block {
         var pool: t_pool := getPool(s, ipool);
         MPool.mustManager(s, pool);//RU Проверка доступа к пулу
         pool := MPool.edit(pool, pool_edit);
         s := setPool(s, ipool, pool);
     } with s;
 
+#if ENABLE_POOL_MANAGER
     //RU Смена менеджера пула
-    function poolChangeManager(var s: t_storage; const ipool: t_ipool; const newmanager: address): t_storage is block {
+    function changePoolManager(var s: t_storage; const ipool: t_ipool; const newmanager: address): t_storage is block {
         var pool: t_pool := getPool(s, ipool);
         MPool.mustManager(s, pool);//RU Проверка доступа к пулу
         pool := MPool.forceChangeManager(pool, newmanager);
         s := setPool(s, ipool, pool);
     } with s;
+#endif // ENABLE_POOL_MANAGER
 
     //RU Удаление пула (по окончании партии) //EN Remove pool (after game)
-    function poolGameTime(var s: t_storage; const ipool: t_ipool): t_return is block {
+    function setPoolWinner(var s: t_storage; const ipool: t_ipool): t_return is block {
         const pool: t_pool = getPool(s, ipool);
         s := setPool(s, ipool, pool);
     } with (cNO_OPERATIONS, s);
@@ -133,20 +132,6 @@ module MPools is {
         pool := MPool.afterChangeReward(pool);
         s := setPool(s, ipool, pool);
     } with (operations, s);
-
-//RU --- Чтение данных (Views)
-
-#if ENABLE_POOL_LASTIPOOL_VIEW
-    //RU Получить ID последнего созданного админом пула
-    //RU
-    //RU Обоснованно полагаем, что с одного адреса не создаются пулы в несколько потоков, поэтому этот метод позволяет получить
-    //RU ID только что созданного админов нового пула. Если нет созданных админов пулов, будет возвращено -1
-    function viewLastIPool(const s: t_storage): int is
-        case s.rpools.addr2ilast[Tezos.sender] of
-        Some(ilast) -> int(ilast)
-        | None -> -1
-        end
-#endif // ENABLE_POOL_LASTIPOOL_VIEW
 
 //RU --- Чтение данных любыми пользователями (Views)
 

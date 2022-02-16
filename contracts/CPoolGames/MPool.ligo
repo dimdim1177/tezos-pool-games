@@ -19,7 +19,7 @@ module MPool is {
     //RU Технически пока партия не приостановлена пул активен, он доступен для просмотра, для внесения
     //RU депозитов и т.п.
     [@inline] function isActive(const pool: t_pool): bool is block {
-        const r: bool = (pool.game.state =/= MPoolGame.cSTATE_PAUSE);
+        const r: bool = (pool.game.state =/= GameStatePause);
     } with r;
 
     //RU Проверка доступа к пулу
@@ -67,11 +67,11 @@ module MPool is {
         end;
 
     // RU И если все корректно, формируем начальные данные пула
-        var gameState: t_game_state := MPoolGame.cSTATE_ACTIVE;
+        var gameState: t_game_state := GameStateActive;
         var gameSeconds: nat := pool_create.opts.gameSeconds;
-        if MPoolOpts.cSTATE_ACTIVE = pool_create.opts.state then skip
+        if PoolStateActive = pool_create.opts.state then skip
         else block {//RU Создание пула в приостановленном состоянии
-            gameState := MPoolGame.cSTATE_PAUSE;
+            gameState := GameStatePause;
             gameSeconds := 0n;
         };
         const pool: t_pool = record [
@@ -103,13 +103,6 @@ module MPool is {
         Some(opts) -> block {
             MPoolOpts.check(opts, False);
             pool.opts := opts;
-        }
-        | None -> skip
-        end;
-        case pool_edit.farm of
-        Some(farm) -> block {
-            MFarm.check(farm);
-            pool.farm := farm;
         }
         | None -> skip
         end;
