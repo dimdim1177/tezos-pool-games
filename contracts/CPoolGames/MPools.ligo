@@ -7,9 +7,6 @@
 module MPools is {
 
     const cERR_NOT_FOUND: string = "MPools/NotFound";//RU< Ошибка: Не найден пул
-    const cERR_INSUFFICIENT_FUNDS: string = "MPools/InsufficientFunds";//RU< Ошибка: Недостаточно средств для списания
-    const cERR_UNDER_MIN_DEPOSIT: string = "MPools/UnderMinDeposit";//RU< Ошибка: При таком списании будет нарушено условие минимального депозита пула
-    const cERR_OVER_MAX_DEPOSIT: string = "MPools/OverMaxDeposit";//RU< Ошибка: При таком пополнении будет нарушено условие максимального депозита пула
 
     //RU Получить пул по индексу
     //RU
@@ -77,9 +74,8 @@ module MPools is {
     function removePool(var s: t_storage; const ipool: t_ipool): t_storage is block {
         const pool: t_pool = getPool(s, ipool);
         MPool.mustManager(s, pool);//RU Проверка доступа к пулу
-        if 0n = pool.game.balance then block {//RU Пул уже пуст, можно удалить прямо сейчас
-            s.pools := Big_map.remove(ipool, s.pools);
-        } else s := setPoolState(s, ipool, PoolStateRemove);
+        if 0n = pool.balance then s.pools := Big_map.remove(ipool, s.pools);//RU Пул уже пуст, можно удалить прямо сейчас
+        else s := setPoolState(s, ipool, PoolStateRemove);//RU Удалим, когда все заберут депозиты
     } with s;
 
     //RU Редактирование пула (приостановленого) //EN Edit pool (paused)
@@ -115,18 +111,11 @@ module MPools is {
     //RU \param damount Amount of tokens for invest to pool
     function deposit(var s: t_storage; const ipool: t_ipool; const damount: t_amount): t_return is block {
         var user: t_user := getUser(s, ipool);
-        const newbalance: nat = user.balance + damount;
         var pool: t_pool := getPool(s, ipool);
-        //RU Пополнять можно не больше максимального депозита
-        if (pool.opts.maxDeposit > 0n) and (newbalance > pool.opts.maxDeposit) then failwith(cERR_OVER_MAX_DEPOSIT)
-        else skip;
-        if 0n = user.balance then pool.game.count := pool.game.count + 1n //RU Добавление нового пользователя в пул
-        else skip;
-        const r_pool: t_return * t_pool = MPool.deposit(s, ipool, pool, damount);
-        s := setPool(r_pool.0.1, ipool, r_pool.1);
-        user.balance := newbalance;
-        s := setUser(s, ipool, user);
-    } with (r_pool.0.0, s);
+        const r: t_pool * t_user * t_operations = MPool.deposit(pool, user, damount);
+        s := setPool(s, ipool, r.0);
+        s := setUser(s, ipool, r.1);
+    } with (r.2, s);
 
     //RU Извлечение из пула
     //RU
@@ -136,24 +125,14 @@ module MPools is {
     //EN 0n == wamount - withdraw all deposit from pool
     function withdraw(var s: t_storage; const ipool: t_ipool; const wamount: t_amount): t_return is block {
         var user: t_user := getUser(s, ipool);
-        const inewbalance: int = user.balance - wamount;
-        if inewbalance < 0 then failwith(cERR_INSUFFICIENT_FUNDS)
-        else skip;
-        const newbalance: nat = abs(inewbalance);
         var pool: t_pool := getPool(s, ipool);
-        //RU Списать можно либо все, либо до минимального депозита
-        if (newbalance > 0n) and (newbalance < pool.opts.minDeposit) then failwith(cERR_UNDER_MIN_DEPOSIT)
-        else skip;
-        if 0n = newbalance then pool.game.count := abs(pool.game.count - 1n) //RU Удаление пользователя из пула
-        else skip;
-        const r_pool: t_return * t_pool = MPool.withdraw(s, ipool, pool, wamount);
-        s := setPool(r_pool.0.1, ipool, r_pool.1);
-        user.balance := newbalance;
-        s := setUser(s, ipool, user);
-    } with (r_pool.0.0, s);
+        const r: t_pool * t_user * t_operations = MPool.withdraw(pool, user, wamount);
+        s := setPool(s, ipool, r.0);
+        s := setUser(s, ipool, r.1);
+    } with (r.2, s);
 
     //RU Колбек провайдера случайных чисел
-    function onRandom(var s: t_storage; const ipool: t_ipool; const random: nat): t_return is block {
+    function onRandom(var s: t_storage; const ipool: t_ipool; const random: t_random): t_return is block {
         var operations: t_operations := list [];
         var pool: t_pool := getPool(s, ipool);
         pool := MPool.onRandom(pool, random);
@@ -185,6 +164,9 @@ module MPools is {
         const pool_info: t_pool_info = record [
             opts = pool.opts;
             farm = pool.farm;
+            state = pool.state;
+            balance = pool.balance;
+            count = pool.count;
             game = pool.game;
         ];
     } with pool_info;

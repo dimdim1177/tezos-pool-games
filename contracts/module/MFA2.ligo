@@ -187,10 +187,10 @@ module MFA2 is {
 
 
     //RU Проверка на соответствие стандарту FA2
-    function check(const addr: address): unit is block {
-        const _: t_transfer_contract = transferEntrypoint(addr);//RU Проверяем наличие метода transfer для FA2
-        const _: t_balance_contract = balanceEntrypoint(addr);//RU Проверяем наличие метода balance для FA2
-        const _: t_operators_contract = operatorsEntrypoint(addr);//RU Проверяем наличие метода update_operators для FA2
+    function check(const token: address): unit is block {
+        const _: t_transfer_contract = transferEntrypoint(token);//RU Проверяем наличие метода transfer для FA2
+        const _: t_balance_contract = balanceEntrypoint(token);//RU Проверяем наличие метода balance_of для FA2
+        const _: t_operators_contract = operatorsEntrypoint(token);//RU Проверяем наличие метода update_operators для FA2
     } with unit;
 
 }

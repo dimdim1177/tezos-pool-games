@@ -4,16 +4,13 @@
 //RU Модуль управления пулом
 module MPoolOpts is {
 
-    const cERR_INVALID_STATE: string = "MPoolOpts/InvalidState";//RU< Ошибка: Недопустимое состояние
     const cERR_INVALID_SECONDS: string = "MPoolOpts/InvalidSeconds";//RU< Ошибка: Недопустимое кол-во секунд
     const cERR_INVALID_MIN_SECONDS: string = "MPoolOpts/InvalidMinSeconds";//RU< Ошибка: Недопустимое минимальное кол-во секунд
     const cERR_INVALID_MAX_DEPOSIT: string = "MPoolOpts/InvalidMaxDeposit";//RU< Ошибка: Максимальный депозит меньше минимального
     const cERR_INVALID_PERCENT: string = "MPoolOpts/InvalidPercent";//RU< Ошибка: Сумма процентов победителя+сжигания+комиссии не равна 100
 
     //RU Проверка параметров пула на валидность
-    function check(const opts: t_opts; const creating: bool): unit is block {
-        if (creating) and (PoolStateRemove = opts.state) then failwith(cERR_INVALID_STATE);
-        else skip;
+    function check(const opts: t_opts): unit is block {
         if opts.gameSeconds < cMIN_GAME_SECONDS then failwith(cERR_INVALID_SECONDS)
         else block {
             if opts.gameSeconds > cMAX_GAME_SECONDS then failwith(cERR_INVALID_SECONDS)

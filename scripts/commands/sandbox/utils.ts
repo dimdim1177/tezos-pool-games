@@ -9,31 +9,6 @@ import {
 } from "./types";
 
 export const flextesaProtocols: FlextesaTezosProtocols = {
-  [TezosProtocols.CARTHAGE]: {
-    hash: "PsCARTHAGazKbHtnKfLzQg3kms52kSRpgnDY982a9oYsSXRLQEb",
-    prefix: "006-PsCARTHA",
-    kind: "Carthage",
-  },
-  [TezosProtocols.DELPHI]: {
-    hash: "PsDELPH1Kxsxt8f9eWbxQeRxkjfbxoqM52jvs5Y5fBxWWh4ifpo",
-    prefix: "007-PsDELPH1",
-    kind: "Delphi",
-  },
-  [TezosProtocols.EDO]: {
-    hash: "PtEdo2ZkT9oKpimTah6x2embF25oss54njMuPzkJTEi5RqfdZFA",
-    prefix: "008-PtEdoTez",
-    kind: "Edo",
-  },
-  [TezosProtocols.FLORENCE]: {
-    hash: "PsFLorenaUUuikDWvMDr6fGBRG8kt3e3D3fHoXK1j1BFRxeSH4i",
-    prefix: "009-PsFLoren",
-    kind: "Florence",
-  },
-  [TezosProtocols.GRANADA]: {
-    hash: "PtGRANADsDU8R9daYKAgWnQYAJ64omN1o3KMGVCykShA97vQbvV",
-    prefix: "010-PtGRANAD",
-    kind: "Granada",
-  },
   [TezosProtocols.HANGZHOU]: {
     hash: "PtHangz2aRngywmSRGGvrcTyMbbdpWdpFKuS4uMWxg2RaH9i1qx",
     prefix: "011-PtHangz2",

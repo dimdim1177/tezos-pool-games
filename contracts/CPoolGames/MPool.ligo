@@ -9,12 +9,16 @@
 //RU Модуль пула ликвидности с периодическими розыгрышами вознаграждений
 module MPool is {
 
+    const cERR_INVALID_STATE: string = "MPool/InvalidState";//RU< Ошибка: Недопустимое состояние
     const cERR_MUST_SWAPFARM: string = "MPool/MustSwapFarm";//RU< Ошибка: Обязателен адрес контракта для обмена токена фермы
     const cERR_MUST_SWAPBURN: string = "MPool/MustSwapBurn";//RU< Ошибка: Обязателен адрес контракта для обмена токена для сжигания
     const cERR_MUST_BURN: string = "MPool/MustBurn";//RU< Ошибка: Обязателен токен для сжигания
     const cERR_MUST_FEEADDR: string = "MPool/MustFeeAddr";//RU< Ошибка: Обязателен адрес для комиссии
     const cERR_DEPOSIT_INACTIVE: string = "MPool/DepositInactive";//RU< Ошибка: Пул неактивен, внесение депозитов приостановлено
     const cERR_EDIT_ACTIVE: string = "MPool/EditActive";//RU< Ошибка: Пул активен, редактирование возможно только приостановленного пула
+    const cERR_OVER_MAX_DEPOSIT: string = "MPool/OverMaxDeposit";//RU< Ошибка: При таком пополнении будет нарушено условие максимального депозита пула
+    const cERR_INSUFFICIENT_FUNDS: string = "MPool/InsufficientFunds";//RU< Ошибка: Недостаточно средств для списания
+    const cERR_UNDER_MIN_DEPOSIT: string = "MPool/UnderMinDeposit";//RU< Ошибка: При таком списании будет нарушено условие минимального депозита пула
 
     //RU Активен ли пул
     //RU
@@ -66,11 +70,14 @@ module MPool is {
     //RU Создание нового пула
     function create(const pool_create: t_pool_create): t_pool is block {
     //RU Проверяем все входные параметры
-        MPoolOpts.check(pool_create.opts, True);
+        if PoolStateRemove = pool_create.state then failwith(cERR_INVALID_STATE);
+        else skip;
+        MPoolOpts.check(pool_create.opts);
         MFarm.check(pool_create.farm);
         MRandom.check(pool_create.randomSource);
         //RU Проверяем настройки для сжигания только если они необходимы
-        if MPoolOpts.maybeNoBurn(pool_create.opts) then skip else checkBurn(pool_create.burn, pool_create.swapfarm, pool_create.swapburn);
+        if MPoolOpts.maybeNoBurn(pool_create.opts) then skip
+        else checkBurn(pool_create.burn, pool_create.swapfarm, pool_create.swapburn);
         case pool_create.feeaddr of
         Some(_feeaddr) -> skip
         | None -> block {
@@ -82,7 +89,7 @@ module MPool is {
     // RU И если все корректно, формируем начальные данные пула
         var gameState: t_game_state := GameStateActive;
         var gameSeconds: nat := pool_create.opts.gameSeconds;
-        if PoolStateActive = pool_create.opts.state then skip
+        if PoolStateActive = pool_create.state then skip
         else block {//RU Создание пула в приостановленном состоянии
             gameState := GameStatePause;
             gameSeconds := 0n;
@@ -95,6 +102,9 @@ module MPool is {
             swapburn = pool_create.swapburn;
             burn = pool_create.burn;
             feeaddr = pool_create.feeaddr;
+            state = pool_create.state;
+            balance = 1n;
+            count = 0n;
             game = MPoolGame.create(gameState, gameSeconds);
             randomFuture = False;
 #if ENABLE_POOL_MANAGER
@@ -108,8 +118,8 @@ module MPool is {
 
 //RU --- Управление пулом
 
-    function setState(var pool: t_pool; const state: t_pool_state): t_pool is block {
-        pool.opts.state := state;
+    [@inline] function setState(var pool: t_pool; const state: t_pool_state): t_pool is block {
+        pool.state := state;
     } with pool;
 
     function edit(var pool: t_pool; const pool_edit: t_pool_edit): t_pool is block {
@@ -117,7 +127,7 @@ module MPool is {
         else skip;
         case pool_edit.opts of
         Some(opts) -> block {
-            MPoolOpts.check(opts, False);
+            MPoolOpts.check(opts);
             pool.opts := opts;
         }
         | None -> skip
@@ -129,7 +139,7 @@ module MPool is {
         }
         | None -> skip
         end;
-        //RU Настройки для сжигания просто пишем, проверим потом
+        //RU Настройки для сжигания просто пишем, если поданы, проверим потом
         case pool_edit.burn of
         Some(burn) -> pool.burn := Some(burn)
         | None -> skip
@@ -143,7 +153,8 @@ module MPool is {
         | None -> skip
         end;
         //RU Проверяем настройки для сжигания только если они необходимы
-        if MPoolOpts.maybeNoBurn(pool.opts) then skip else checkBurn(pool.burn, pool.swapfarm, pool.swapburn);
+        if MPoolOpts.maybeNoBurn(pool.opts) then skip
+        else checkBurn(pool.burn, pool.swapfarm, pool.swapburn);
         case pool_edit.feeaddr of
         Some(feeaddr) -> pool.feeaddr := Some(feeaddr)
         | _ -> skip
@@ -152,11 +163,48 @@ module MPool is {
 
 //RU --- Для пользователей пулов
 
-    function deposit(var s: t_storage; const _ipool: t_ipool; var pool: t_pool; const damount: t_amount): t_return * t_pool is block {
-        if isActive(pool) then skip
-        else failwith(cERR_DEPOSIT_INACTIVE);
+    function startGame(var pool: t_pool): t_pool is block {
+        pool.game.count := pool.count;
+        pool.game.state := GameStateActive;
+        pool.game.tsBeg := Tezos.now;
+        const gameSeconds: nat = pool.opts.gameSeconds;
+        pool.game.tsEnd := Tezos.now + int(gameSeconds);
+        case pool.opts.algo of //RU Вес заполняем так, как будто все пользователи пробудут всю партию
+        | AlgoTime -> pool.game.weight := pool.count * gameSeconds
+        | AlgoTimeVol -> pool.game.weight := pool.balance * gameSeconds
+        | AlgoEqual -> pool.game.weight := pool.count
+        end;
+        pool.game.winWeight := 0n;
+    } with pool;
+
+    function checkGameComplete(var pool: t_pool): t_pool is block {
+        if (GameStateActive = pool.game.state) and (Tezos.now >= pool.game.tsEnd) then block { //RU Если партия активна и время вышло
+            //RU Партия закончена, время розыгрыша
+            if pool.game.count > 1n then pool.game.state := GameStateWaitRandom //RU Больше 1 участника, нужно случайное число для розыгрыша
+            else block {
+                if 1n = pool.game.count then block {//RU Единственный участник
+                    pool.game.winWeight := pool.game.weight; //RU Попадем в него по суммарному весу
+                    pool.game.state := GameStateWaitWinner;
+                } else block {//RU Нет участников
+                    if PoolStateActive = pool.state then pool := startGame(pool) //RU Пул активен, запускаем новую партию
+                    else pool.game.state := GameStatePause;//RU Пул приотсановлен или на удаление, приостанавливаем партии
+                }
+            }
+        } else skip;
+    } with pool;
+
+    function deposit(var pool: t_pool; var user: t_user; const damount: t_amount): t_pool * t_user * t_operations is block {
+        pool := checkGameComplete(pool);//RU Обработка окончания розыгрыша по времени
+        if isActive(pool) then skip else failwith(cERR_DEPOSIT_INACTIVE);
+        const newbalance: nat = user.balance + damount;
+        //RU Пополнять можно не больше максимального депозита
+        if (pool.opts.maxDeposit > 0n) and (newbalance > pool.opts.maxDeposit) then failwith(cERR_OVER_MAX_DEPOSIT)
+        else skip;
+        if 0n = user.balance then pool.game.count := pool.game.count + 1n //RU Добавление нового пользователя в пул
+        else skip;
+        user.balance := newbalance;
         const operations = MFarm.deposit(pool.farm, damount);
-    } with ((operations, s), pool);
+    } with (pool, user, operations);
 
     //RU Извлечение из пула
     //RU
@@ -164,12 +212,25 @@ module MPool is {
     //EN Withdraw from pool
     //EN
     //EN 0n == wamount - withdraw all deposit from pool
-    function withdraw(var s: t_storage; const _ipool: t_ipool; var pool: t_pool; const wamount: t_amount): t_return * t_pool is block {
+    function withdraw(var pool: t_pool; var user: t_user; var wamount: t_amount): t_pool * t_user * t_operations is block {
+        pool := checkGameComplete(pool);//RU Обработка окончания розыгрыша по времени
+        if 0n = wamount then wamount := user.balance //RU Списание всего баланса
+        else skip;
+        const inewbalance: int = user.balance - wamount;
+        if inewbalance < 0 then failwith(cERR_INSUFFICIENT_FUNDS)
+        else skip;
+        const newbalance: nat = abs(inewbalance);
+        //RU Списать можно либо все, либо до минимального депозита
+        if (newbalance > 0n) and (newbalance < pool.opts.minDeposit) then failwith(cERR_UNDER_MIN_DEPOSIT)
+        else skip;
+        if 0n = newbalance then pool.game.count := abs(pool.game.count - 1n) //RU Удаление пользователя из пула
+        else skip;
+        user.balance := newbalance;
         const operations = MFarm.withdraw(pool.farm, wamount);
-    } with ((operations, s), pool);
+    } with (pool, user, operations);
 
     //RU Колбек провайдера случайных чисел
-    function onRandom(var pool: t_pool; const _random: nat): t_pool is block {
+    function onRandom(var pool: t_pool; const _random: t_random): t_pool is block {
         skip;//TODO
     } with pool;
 
