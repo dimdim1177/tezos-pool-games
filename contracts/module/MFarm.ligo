@@ -59,15 +59,27 @@ module MFarm is {
     //RU Инвестирование токенов фермы в ферму пользователем через контракта
     //RU
     //RU Токены фермы от пользователя Tezos.sender перечисляются сначала контракту, а затем в ферму
-    function deposit(const farm: t_farm; const damount: t_amount): t_operations is block {
-
-    //RU Добавляем транзакции в обратном порядке, потому что они вставляются в начало списка
+    function deposit(const farm: t_farm; const damount: t_amount; const doapprove: bool): t_operations is block {
+        //RU Добавляем транзакции в обратном порядке, потому что они вставляются в начало списка
         var operations: t_operations := list [];
+#if ENABLE_TRANSFER_SECURITY
+        //RU Запрещаем перевод токенов ферме с контракта
+        operations := MToken.decline(farm.farmToken, farm.addr) # operations;
+#endif // ENABLE_TRANSFER_SECURITY
         //RU Вызываем метод депозита в ферму
         case farm.interface of
         | InterfaceCrunchy -> operations := MFarmCrunchy.deposit(farm.addr, farm.id, damount) # operations
         | InterfaceQUIPU -> operations := MFarmQUIPU.deposit(farm.addr, farm.id, damount) # operations
         end;
+#if ENABLE_TRANSFER_SECURITY
+        //RU Разрешаем перевод токенов ферме с контракта
+        if (doapprove) then operations := MToken.approve(farm.farmToken, farm.addr, damount) # operations
+        else skip;
+#else // ENABLE_TRANSFER_SECURITY
+        //RU Разрешаем безлимитный перевод токенов ферме с контракта
+        if (doapprove) then operations := MToken.approve(farm.farmToken, farm.addr, 1000000000000n) # operations
+        else skip;
+#endif // else ENABLE_TRANSFER_SECURITY
         //RU Переводим токены с контракта на адрес фермы
         operations := MToken.transfer(farm.farmToken, Tezos.self_address, farm.addr, damount) # operations;
         //RU Переводим токены пользователя на адрес контракта
@@ -78,16 +90,15 @@ module MFarm is {
     //RU
     //RU Токены фермы перечисляются сначала контракту, а затем пользователю по адресу Tezos.sender
     function withdraw(const farm: t_farm; const wamount: t_amount): t_operations is block {
+        //RU Добавляем транзакции в обратном порядке, потому что они вставляются в начало списка
         var operations: t_operations := list [];
-        //RU Вызываем метод извлечения депозита из фермы
+        //RU Переводим токены с контракта на адрес пользователя
+        operations := MToken.transfer(farm.farmToken, Tezos.self_address, Tezos.sender, wamount) # operations;
+        //RU Вызываем извлечение депозита из фермы
         case farm.interface of
         | InterfaceCrunchy -> operations := MFarmCrunchy.withdraw(farm.addr, farm.id, wamount) # operations
         | InterfaceQUIPU -> operations := MFarmQUIPU.withdraw(farm.addr, farm.id, wamount) # operations
         end;
-        //RU Переводим токены с адреса фермы на контракт
-        operations := MToken.transfer(farm.farmToken, farm.addr, Tezos.self_address, wamount) # operations;
-        //RU Переводим токены с контракта на адрес пользователя
-        operations := MToken.transfer(farm.farmToken, Tezos.self_address, Tezos.sender, wamount) # operations;
     } with operations;
 
     //RU Запрос вознаграждения из фермы

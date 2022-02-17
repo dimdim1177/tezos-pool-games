@@ -45,7 +45,7 @@ module MPool is {
     } with unit;
 
 #if ENABLE_POOL_MANAGER
-    //RU Безусловная смена менеджера пула (без проверки доступа)
+    //RU Безусловная смена менеджера пула (проверка доступа должна быть сделана извне)
     function forceChangeManager(var pool: t_pool; const newmanager: address): t_pool is block {
         pool.manager := MManager.forceChange(pool.manager, newmanager);
     } with pool;
@@ -69,7 +69,7 @@ module MPool is {
 
     //RU Создание нового пула
     function create(const pool_create: t_pool_create): t_pool is block {
-    //RU Проверяем все входные параметры
+        //RU Проверяем все входные параметры
         if PoolStateRemove = pool_create.state then failwith(cERR_INVALID_STATE);
         else skip;
         MPoolOpts.check(pool_create.opts);
@@ -163,47 +163,21 @@ module MPool is {
 
 //RU --- Для пользователей пулов
 
-    function startGame(var pool: t_pool): t_pool is block {
-        pool.game.count := pool.count;
-        pool.game.state := GameStateActive;
-        pool.game.tsBeg := Tezos.now;
-        const gameSeconds: nat = pool.opts.gameSeconds;
-        pool.game.tsEnd := Tezos.now + int(gameSeconds);
-        case pool.opts.algo of //RU Вес заполняем так, как будто все пользователи пробудут всю партию
-        | AlgoTime -> pool.game.weight := pool.count * gameSeconds
-        | AlgoTimeVol -> pool.game.weight := pool.balance * gameSeconds
-        | AlgoEqual -> pool.game.weight := pool.count
-        end;
-        pool.game.winWeight := 0n;
-    } with pool;
-
-    function checkGameComplete(var pool: t_pool): t_pool is block {
-        if (GameStateActive = pool.game.state) and (Tezos.now >= pool.game.tsEnd) then block { //RU Если партия активна и время вышло
-            //RU Партия закончена, время розыгрыша
-            if pool.game.count > 1n then pool.game.state := GameStateWaitRandom //RU Больше 1 участника, нужно случайное число для розыгрыша
-            else block {
-                if 1n = pool.game.count then block {//RU Единственный участник
-                    pool.game.winWeight := pool.game.weight; //RU Попадем в него по суммарному весу
-                    pool.game.state := GameStateWaitWinner;
-                } else block {//RU Нет участников
-                    if PoolStateActive = pool.state then pool := startGame(pool) //RU Пул активен, запускаем новую партию
-                    else pool.game.state := GameStatePause;//RU Пул приотсановлен или на удаление, приостанавливаем партии
-                }
-            }
-        } else skip;
-    } with pool;
-
-    function deposit(var pool: t_pool; var user: t_user; const damount: t_amount): t_pool * t_user * t_operations is block {
-        pool := checkGameComplete(pool);//RU Обработка окончания розыгрыша по времени
+    function deposit(const ipool: t_ipool; var pool: t_pool; var user: t_user; const damount: t_amount; const doapprove: bool): t_pool * t_user * t_operations is block {
+        pool := MPoolGame.checkGameComplete(pool);//RU Обработка окончания розыгрыша по времени
         if isActive(pool) then skip else failwith(cERR_DEPOSIT_INACTIVE);
         const newbalance: nat = user.balance + damount;
         //RU Пополнять можно не больше максимального депозита
         if (pool.opts.maxDeposit > 0n) and (newbalance > pool.opts.maxDeposit) then failwith(cERR_OVER_MAX_DEPOSIT)
         else skip;
-        if 0n = user.balance then pool.game.count := pool.game.count + 1n //RU Добавление нового пользователя в пул
+        if 0n = user.balance then pool.count := pool.count + 1n //RU Добавление нового пользователя в пул
         else skip;
         user.balance := newbalance;
-        const operations = MFarm.deposit(pool.farm, damount);
+        var operations: t_operations := MFarm.deposit(pool.farm, damount, doapprove);//RU Перечисляем депозит в ферму
+        if GameStateActivating = pool.game.state then block {//RU Нужно запустить партию
+            const r: t_pool * t_operations = MPoolGame.activateGame(ipool, pool, operations);
+            pool := r.0; operations := r.1;
+        } else skip;
     } with (pool, user, operations);
 
     //RU Извлечение из пула
@@ -212,8 +186,8 @@ module MPool is {
     //EN Withdraw from pool
     //EN
     //EN 0n == wamount - withdraw all deposit from pool
-    function withdraw(var pool: t_pool; var user: t_user; var wamount: t_amount): t_pool * t_user * t_operations is block {
-        pool := checkGameComplete(pool);//RU Обработка окончания розыгрыша по времени
+    function withdraw(const ipool: t_ipool; var pool: t_pool; var user: t_user; var wamount: t_amount): t_pool * t_user * t_operations is block {
+        pool := MPoolGame.checkGameComplete(pool);//RU Обработка окончания розыгрыша по времени
         if 0n = wamount then wamount := user.balance //RU Списание всего баланса
         else skip;
         const inewbalance: int = user.balance - wamount;
@@ -223,24 +197,28 @@ module MPool is {
         //RU Списать можно либо все, либо до минимального депозита
         if (newbalance > 0n) and (newbalance < pool.opts.minDeposit) then failwith(cERR_UNDER_MIN_DEPOSIT)
         else skip;
-        if 0n = newbalance then pool.game.count := abs(pool.game.count - 1n) //RU Удаление пользователя из пула
+        if 0n = newbalance then pool.count := abs(pool.count - 1n) //RU Удаление пользователя из пула
         else skip;
         user.balance := newbalance;
-        const operations = MFarm.withdraw(pool.farm, wamount);
+        var operations: t_operations := MFarm.withdraw(pool.farm, wamount);//RU Извлекаем депозит из фермы
+        if GameStateActivating = pool.game.state then block {//RU Нужно запустить партию
+            const r: t_pool * t_operations = MPoolGame.activateGame(ipool, pool, operations);
+            pool := r.0; operations := r.1;
+        } else skip;
     } with (pool, user, operations);
 
     //RU Колбек провайдера случайных чисел
-    function onRandom(var pool: t_pool; const _random: t_random): t_pool is block {
+    function onRandom(const _ipool: t_ipool; var pool: t_pool; const _random: t_random): t_pool is block {
         skip;//TODO
     } with pool;
 
     //RU Колбек самого себя после запроса вознаграждения с фермы 
-    function afterReward(var pool: t_pool): t_pool is block {
+    function afterReward(const _ipool: t_ipool; var pool: t_pool): t_pool is block {
         skip;//TODO
     } with pool;
 
     //RU Колбек самого себя после обмена токенов вознаграждения на токены для сжигания
-    function afterChangeReward(var pool: t_pool): t_pool is block {
+    function afterChangeReward(const _ipool: t_ipool; var pool: t_pool): t_pool is block {
         skip;//TODO
     } with pool;
 

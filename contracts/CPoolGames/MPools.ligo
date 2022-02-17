@@ -110,9 +110,17 @@ module MPools is {
     //EN Deposit to pool
     //RU \param damount Amount of tokens for invest to pool
     function deposit(var s: t_storage; const ipool: t_ipool; const damount: t_amount): t_return is block {
-        var user: t_user := getUser(s, ipool);
         var pool: t_pool := getPool(s, ipool);
-        const r: t_pool * t_user * t_operations = MPool.deposit(pool, user, damount);
+        var user: t_user := getUser(s, ipool);
+#if ENABLE_TRANSFER_SECURITY
+        const doapprove: bool = True;
+#else // ENABLE_TRANSFER_SECURITY
+        const doapprove: bool = not Big_map.mem(pool.farm.addr);
+#endif // else ENABLE_TRANSFER_SECURITY
+        const r: t_pool * t_user * t_operations = MPool.deposit(ipool, pool, user, damount, doapprove);
+#if !ENABLE_TRANSFER_SECURITY
+        s.approved[pool.farm.addr] := True;
+#endif // !ENABLE_TRANSFER_SECURITY
         s := setPool(s, ipool, r.0);
         s := setUser(s, ipool, r.1);
     } with (r.2, s);
@@ -124,41 +132,43 @@ module MPools is {
     //EN
     //EN 0n == wamount - withdraw all deposit from pool
     function withdraw(var s: t_storage; const ipool: t_ipool; const wamount: t_amount): t_return is block {
-        var user: t_user := getUser(s, ipool);
         var pool: t_pool := getPool(s, ipool);
-        const r: t_pool * t_user * t_operations = MPool.withdraw(pool, user, wamount);
-        s := setPool(s, ipool, r.0);
+        var user: t_user := getUser(s, ipool);
+        const r: t_pool * t_user * t_operations = MPool.withdraw(ipool, pool, user, wamount);
+        if (0n = pool.balance) and (PoolStateRemove = pool.state) then //RU Пул на удаление, забрали последний депозит
+            s.pools := Big_map.remove(ipool, s.pools);//RU Удаляем пул
+        else s := setPool(s, ipool, r.0);
         s := setUser(s, ipool, r.1);
     } with (r.2, s);
 
     //RU Колбек провайдера случайных чисел
     function onRandom(var s: t_storage; const ipool: t_ipool; const random: t_random): t_return is block {
-        var operations: t_operations := list [];
         var pool: t_pool := getPool(s, ipool);
-        pool := MPool.onRandom(pool, random);
+        pool := MPool.onRandom(ipool, pool, random);
         s := setPool(s, ipool, pool);
+        var operations: t_operations := cNO_OPERATIONS;
     } with (operations, s);
 
     //RU Колбек самого себя после запроса вознаграждения с фермы 
     function afterReward(var s: t_storage; const ipool: t_ipool): t_return is block {
-        var operations: t_operations := list [];
         var pool: t_pool := getPool(s, ipool);
-        pool := MPool.afterReward(pool);
+        pool := MPool.afterReward(ipool, pool);
         s := setPool(s, ipool, pool);
+        var operations: t_operations := cNO_OPERATIONS;
     } with (operations, s);
 
     //RU Колбек самого себя после обмена токенов вознаграждения на токены для сжигания
     function afterChangeReward(var s: t_storage; const ipool: t_ipool): t_return is block {
-        var operations: t_operations := list [];
         var pool: t_pool := getPool(s, ipool);
-        pool := MPool.afterChangeReward(pool);
+        pool := MPool.afterChangeReward(ipool, pool);
         s := setPool(s, ipool, pool);
+        var operations: t_operations := cNO_OPERATIONS;
     } with (operations, s);
 
 //RU --- Чтение данных любыми пользователями (Views)
 
 #if ENABLE_POOL_VIEW
-    //RU Получение пула
+    //RU Получение основной информации о пуле
     function viewPoolInfo(const s: t_storage; const ipool: t_ipool): t_pool_info is block {
         const pool: t_pool = getPool(s, ipool);
         const pool_info: t_pool_info = record [

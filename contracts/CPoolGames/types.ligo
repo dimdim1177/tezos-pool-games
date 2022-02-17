@@ -147,6 +147,7 @@ type t_opts is [@layout:comb] record [
 //RU Состояния партии
 //EN States of game
 type t_game_state is
+| GameStateActivating //RU< Идет запуск партии (внутреннее состояние)
 | GameStateActive //RU< Идет партия
 | GameStateWaitRandom//RU< Партия закончена по времени, но пока ожидаем случайное число для определения победителя
 | GameStateWaitWinner//RU< Партия закончена, случайное число получено, ожидаем определения победителя внешним кодом
@@ -160,11 +161,6 @@ type t_weight is nat;
 
 //RU Параметры партии
 type t_game is [@layout:comb] record [
-    //RU Кол-во пользователей в партии
-    //RU
-    //RU Оно не всегда совпадает с кол-вом пользователей в пуле, например, при входе пользователя в пул
-    //RU вне интервала minSeconds
-    count: nat;
     state: t_game_state;//RU< Состояние партии
     tsBeg: timestamp;//RU< Начало партии
     tsEnd: timestamp;//RU< Конец партии

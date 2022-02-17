@@ -16,6 +16,12 @@ type t_storage is [@layout:comb] record [
     inext: t_ipool;//RU< ID следующего пула
     pools: t_pools;//RU< Собственно пулы
     users: t_ipooladdr2user;//RU< Пользователи пулов
+#if !ENABLE_TRANSFER_SECURITY
+    //RU Адреса, которым уже одобрили использование токенов контракта
+    //RU
+    //RU Для уменьшения кол-ва операций, одобряем ферме использование токенов контракта только один раз
+    approved: big_map(address, unit);
+#endif // !ENABLE_TRANSFER_SECURITY
 ];
 
 //RU Тип результата отработки контракта

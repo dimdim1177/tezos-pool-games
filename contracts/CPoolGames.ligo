@@ -42,6 +42,13 @@ type t_entrypoint is
 | AfterChangeReward of t_ipool
 ;
 
+const cERR_AFTER_DENIED: string = "After/Denied";//RU Метод должен вызываться только самим контрактом
+
+function mustAfter(const _: unit): unit is block {
+    if Tezos.sender = Tezos.self_address then skip
+    else failwith(cERR_AFTER_DENIED);
+} with unit;
+
 //RU Единая точка входа контракта
 function main(const entrypoint: t_entrypoint; var s: t_storage): t_return is
 case entrypoint of
@@ -82,10 +89,10 @@ case entrypoint of
 | OnRandom(params) -> MPools.onRandom(s, params.0, params.1)
 
 //RU Колбек самого себя после запроса вознаграждения с фермы 
-| AfterReward(ipool) -> MPools.afterReward(s, ipool)
+| AfterReward(ipool) -> block { mustAfter(unit); const r: t_return = MPools.afterReward(s, ipool); } with r
 
 //RU Колбек самого себя после обмена токенов вознаграждения на токены для сжигания
-| AfterChangeReward(ipool) -> MPools.afterChangeReward(s, ipool)
+| AfterChangeReward(ipool) -> block { mustAfter(unit); const r: t_return = MPools.afterChangeReward(s, ipool); } with r
 end;
 
 #if ENABLE_POOL_VIEW
