@@ -115,11 +115,11 @@ module MPools is {
 #if ENABLE_TRANSFER_SECURITY
         const doapprove: bool = True;
 #else // ENABLE_TRANSFER_SECURITY
-        const doapprove: bool = not Big_map.mem(pool.farm.addr);
+        const doapprove: bool = (not Big_map.mem(pool.farm.addr, s.approved));
 #endif // else ENABLE_TRANSFER_SECURITY
         const r: t_pool * t_user * t_operations = MPool.deposit(ipool, pool, user, damount, doapprove);
 #if !ENABLE_TRANSFER_SECURITY
-        s.approved[pool.farm.addr] := True;
+        s.approved[pool.farm.addr] := unit;
 #endif // !ENABLE_TRANSFER_SECURITY
         s := setPool(s, ipool, r.0);
         s := setUser(s, ipool, r.1);

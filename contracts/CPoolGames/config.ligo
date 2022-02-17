@@ -56,8 +56,8 @@
 //RU По возможности максимально защищенный перевод токенов
 //RU
 //RU Если включено, при переводе токенов сначала делается approve AMOUNT|add_operator, после перевода approve 0|remove_operator.
-//RU Если выключено, однократно включается approve MAXAMOUNT|add_operator и более не вызывается
-#define ENABLE_TRANSFER_SECURITY
+//RU Если выключено, однократно включается approve MAXAMOUNT|add_operator и более не отзывается
+//#Define ENABLE_TRANSFER_SECURITY
 
 //RU Сгенерировать view для баланса пользователя в пуле
 #define ENABLE_BALANCE_VIEW
