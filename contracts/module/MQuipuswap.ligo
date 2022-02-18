@@ -7,16 +7,16 @@ module MQuipuswap is {
     type t_swap is address;//RU< Обменник одного токена на tez
 
     //RU Прототип метода tezToTokenPayment
-    type t_tez2token is Tez2Token of nat * address;
+    type t_tez2token_method is Tez2Token of nat * address;
 
     //RU Контракт с точкой входа tezToTokenPayment
-    type t_tez2token_contract is contract(t_tez2token);
+    type t_tez2token_contract is contract(t_tez2token_method);
 
     //RU Прототип метода tokenToTezPayment
-    type t_token2tez is Token2Tez of nat * nat * address;
+    type t_token2tez_method is Token2Tez of nat * nat * address;
 
     //RU Контракт с точкой входа tokenToTezPayment
-    type t_token2tez_contract is contract(t_token2tez);
+    type t_token2tez_contract is contract(t_token2tez_method);
 
     const cERR_NOT_FOUND_TEZ2TOKEN: string = "MRandom/NotFoundTez2Token";//RU< Ошибка: Не найден метод tezToTokenPayment
     const cERR_NOT_FOUND_TOKEN2TEZ: string = "MRandom/NotFoundToken2Tez";//RU< Ошибка: Не найден метод tokenToTezPayment
@@ -29,7 +29,7 @@ module MQuipuswap is {
         end;
 
     //RU Параметры для обмена tezToTokenPayment
-    function tez2tokenParams(const min_out: nat; const receiver: address): t_tez2token is
+    function tez2tokenParams(const min_out: nat; const receiver: address): t_tez2token_method is
         Tez2Token(min_out, receiver);
 
     //RU Операция создания запроса tezToTokenPayment
@@ -48,7 +48,7 @@ module MQuipuswap is {
         end;
 
     //RU Параметры для обмена tokenToTezPayment
-    function token2tezParams(const tamount: nat; const min_out: nat; const receiver: address): t_token2tez is
+    function token2tezParams(const tamount: nat; const min_out: nat; const receiver: address): t_token2tez_method is
         Token2Tez(tamount, min_out, receiver);
 
     //RU Операция создания запроса tokenToTezPayment

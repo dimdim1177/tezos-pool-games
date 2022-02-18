@@ -15,13 +15,16 @@ module MFA1_2 is {
     ];
 
     //RU Прототип метода transfer
-    type t_transfer is FA12Transfer of t_transfer_params;
+    type t_transfer_method is FA12Transfer of t_transfer_params;
 
     //RU Контракт с точкой входа transfer
-    type t_transfer_contract is contract(t_transfer);
+    type t_transfer_contract is contract(t_transfer_method);
+
+    //RU Параметры колбека баланса
+    type t_balance_callback_params is nat;
 
     //RU Тип колбека для получения баланса
-    type t_balance_callback is contract(nat);
+    type t_balance_callback is contract(t_balance_callback_params);
 
     //RU Входные параметры для метода balance
     type t_balance_params is [@layout:comb] record [
@@ -32,10 +35,10 @@ module MFA1_2 is {
     ];
 
     //RU Прототип метода balance
-    type t_balance is FA12Balance of t_balance_params;
+    type t_balance_method is FA12Balance of t_balance_params;
 
     //RU Контракт с точкой входа balance
-    type t_balance_contract is contract(t_balance);
+    type t_balance_contract is contract(t_balance_method);
 
     //RU Входные параметры для метода approve
     type t_approve_params is [@layout:comb] record [
@@ -44,10 +47,10 @@ module MFA1_2 is {
     ];
 
     //RU Прототип метода approve
-    type t_approve is FA12Approve of t_approve_params;
+    type t_approve_method is FA12Approve of t_approve_params;
 
     //RU Контракт с точкой входа approve
-    type t_approve_contract is contract(t_approve);
+    type t_approve_contract is contract(t_approve_method);
 
     const cERR_NOT_FOUND_TRANSFER: string = "MFA1_2/NotFoundTransfer";//RU< Ошибка: Не найден метод transfer токена
     const cERR_NOT_FOUND_BALANCE: string = "MFA1_2/NotFoundBalance";//RU< Ошибка: Не найден метод balance токена
@@ -61,7 +64,7 @@ module MFA1_2 is {
         end;
 
     //RU Параметры для перевода токенов
-    function transferParams(const src: address; const dst: address; const tamount: nat): t_transfer is
+    function transferParams(const src: address; const dst: address; const tamount: nat): t_transfer_method is
         FA12Transfer(record [
             src = src;
             dst = dst;
@@ -84,7 +87,7 @@ module MFA1_2 is {
         end;
 
     //RU Параметры для запроса баланса
-    function balanceParams(const owner: address; const callback: t_balance_callback): t_balance is
+    function balanceParams(const owner: address; const callback: t_balance_callback): t_balance_method is
         FA12Balance(record [
             owner = owner;
             callback = callback;
@@ -106,7 +109,7 @@ module MFA1_2 is {
         end;
 
     //RU Параметры для одобрения распоряжения токенами
-    function approveParams(const operator: address; const tamount: nat): t_approve is
+    function approveParams(const operator: address; const tamount: nat): t_approve_method is
         FA12Approve(record [
             spender = operator;
             value = tamount;

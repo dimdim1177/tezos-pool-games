@@ -24,21 +24,27 @@ type t_entrypoint is
 #if ENABLE_POOL_MANAGER
 | ChangePoolManager of t_ipool * address //RU< Смена менеджера (админа одного пула)
 #endif // ENABLE_POOL_MANAGER
-| SetPoolWinner of t_ipool //RU< Закончилась партия розыгрышы в пуле //EN< Complete of pool game
+| GetRandom of t_ipool //RU< Получить случайное число из источника //EN< Get random number from source
+| SetPoolWinner of t_ipool //RU< Установить победителя пула //EN< Set pool winner
 
 //RU --- Для пользователей пулов
 | Deposit of t_ipool * t_amount //RU< Депозит в пул //EN< Deposit to pool
 | Withdraw of t_ipool * t_amount //RU< Извлечение из пула //EN< Withdraw from pool
 | WithdrawAll of t_ipool //RU< Извлечение всего из пула //EN< Withdraw all from pool
 
-//RU Колбек провайдера случайных чисел
-| OnRandom of t_iobj_random //RU< Случайное число для определения победителя //EN< Random number for detect winner
+//RU Колбек со случайным числом для определения победителя //EN Callback with random number for detect winner
+| OnRandom of t_iobj_random
+//RU Колбек с балансом токена FA1.2 //EN Колбек с балансом токена FA1.2
+| OnBalanseFA1_2 of MFA1_2.t_balance_callback_params
+//RU Колбек с балансом токена FA2 //EN Колбек с балансом токена FA2
+| OnBalanseFA2 of MFA2.t_balance_callback_params
 
 //RU Колбек самого себя после запроса вознаграждения с фермы 
 | AfterReward of t_ipool //RU< Самовызов после запроса вознаграждения от фермы //EN< Call myself after require reward from farm
-
 //RU Колбек самого себя после обмена токенов вознаграждения на токены для сжигания
-| AfterChangeReward of t_ipool
+| AfterReward2Tez of t_ipool
+//RU Колбек самого себя после обмена tez на токены для сжигания
+| AfterTez2Burn of t_ipool
 ;
 
 const cERR_AFTER_DENIED: string = "After/Denied";//RU Метод должен вызываться только самим контрактом
@@ -78,6 +84,7 @@ case entrypoint of
 #if ENABLE_POOL_MANAGER
 | ChangePoolManager(params) -> (cNO_OPERATIONS, MPools.changePoolManager(s, params.0(*ipool*), params.1(*newmanager*)) )
 #endif // ENABLE_POOL_MANAGER
+| GetRandom(ipool) -> MPools.getRandom(s, ipool)
 | SetPoolWinner(ipool) -> MPools.setPoolWinner(s, ipool)
 
 //RU --- Для пользователей пулов
@@ -85,14 +92,21 @@ case entrypoint of
 | Withdraw(params) -> MPools.withdraw(s, params.0(*ipool*), params.1(*wamount*))
 | WithdrawAll(ipool) -> MPools.withdraw(s, ipool, 0n)
 
-//RU Колбек провайдера случайных чисел
+//RU Колбек со случайным числом для определения победителя //EN Callback with random number for detect winner
 | OnRandom(params) -> MPools.onRandom(s, params.0, params.1)
+
+//RU Колбек с балансом токена FA1.2 //EN Колбек с балансом токена FA1.2
+| OnBalanseFA1_2(params) -> MPools.onBalanceFA1_2(s, params)
+//RU Колбек с балансом токена FA2 //EN Колбек с балансом токена FA2
+| OnBalanseFA2(params) -> MPools.onBalanceFA2(s, params)
 
 //RU Колбек самого себя после запроса вознаграждения с фермы 
 | AfterReward(ipool) -> block { mustAfter(unit); const r: t_return = MPools.afterReward(s, ipool); } with r
 
-//RU Колбек самого себя после обмена токенов вознаграждения на токены для сжигания
-| AfterChangeReward(ipool) -> block { mustAfter(unit); const r: t_return = MPools.afterChangeReward(s, ipool); } with r
+//RU Колбек самого себя после обмена токенов вознаграждения на tez
+| AfterReward2Tez(ipool) -> block { mustAfter(unit); const r: t_return = MPools.afterReward2Tez(s, ipool); } with r
+//RU Колбек самого себя после обмена tez на токены для сжигания
+| AfterTez2Burn(ipool) -> block { mustAfter(unit); const r: t_return = MPools.afterTez2Burn(s, ipool); } with r
 end;
 
 #if ENABLE_POOL_VIEW

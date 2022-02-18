@@ -21,8 +21,8 @@ module MFarmQUIPU is {
         rewards_receiver: address;
         candidate: key_hash;
     ];
-    type t_deposit is QUIPUDeposit of t_deposit_params;//RU Прототип метода deposit фермы QUIPU
-    type t_deposit_contract is contract(t_deposit);//RU Контракт с точкой входа deposit в формате фермы QUIPU
+    type t_deposit_method is QUIPUDeposit of t_deposit_params;//RU Прототип метода deposit фермы QUIPU
+    type t_deposit_contract is contract(t_deposit_method);//RU Контракт с точкой входа deposit в формате фермы QUIPU
 
     //RU Параметры для извлечения депозита в ферму QUIPU
     type t_withdraw_params is [@layout:comb] record [
@@ -31,16 +31,16 @@ module MFarmQUIPU is {
         receiver: address;
         rewards_receiver: address;
     ];
-    type t_withdraw is QUIPUWithdraw of t_withdraw_params;//RU Прототип метода withdraw фермы QUIPU
-    type t_withdraw_contract is contract(t_withdraw);//RU Контракт с точкой входа withdraw в формате фермы QUIPU
+    type t_withdraw_method is QUIPUWithdraw of t_withdraw_params;//RU Прототип метода withdraw фермы QUIPU
+    type t_withdraw_contract is contract(t_withdraw_method);//RU Контракт с точкой входа withdraw в формате фермы QUIPU
 
     //RU Параметры получения вознаграждения из фермы QUIPU
     type t_harvest_params is [@layout:comb] record [
         fid: t_farm_id;//RU< ID фермы QUIPU
         rewards_receiver: address;
     ];
-    type t_harvest is QUIPUHarvest of t_harvest_params;//RU Прототип метода harvest фермы QUIPU
-    type t_harvest_contract is contract(t_harvest);//RU Контракт с точкой входа harvest в формате фермы QUIPU
+    type t_harvest_method is QUIPUHarvest of t_harvest_params;//RU Прототип метода harvest фермы QUIPU
+    type t_harvest_contract is contract(t_harvest_method);//RU Контракт с точкой входа harvest в формате фермы QUIPU
 
     //RU Получить точку входа deposit фермы с интерфейсом QUIPU
     function depositEntrypoint(const addr: address): t_deposit_contract is
@@ -50,7 +50,7 @@ module MFarmQUIPU is {
         end
 
     //RU Параметры для метода deposit QUIPU
-    function depositParams(const farm_id: t_farm_id; const damount: t_amount): t_deposit is
+    function depositParams(const farm_id: t_farm_id; const damount: t_amount): t_deposit_method is
         QUIPUDeposit(record [
             fid = farm_id;
             amt = damount;
@@ -75,7 +75,7 @@ module MFarmQUIPU is {
         end
 
     //RU Параметры для метода deposit QUIPU
-    function withdrawParams(const farm_id: t_farm_id; const wamount: t_amount): t_withdraw is
+    function withdrawParams(const farm_id: t_farm_id; const wamount: t_amount): t_withdraw_method is
         QUIPUWithdraw(record [
             fid = farm_id;
             amt = wamount;
@@ -99,7 +99,7 @@ module MFarmQUIPU is {
         end
 
     //RU Параметры для метода harvest QUIPU
-    function harvestParams(const farm_id: t_farm_id): t_harvest is
+    function harvestParams(const farm_id: t_farm_id): t_harvest_method is
         QUIPUHarvest(record [
             fid = farm_id;
             rewards_receiver = Tezos.self_address;

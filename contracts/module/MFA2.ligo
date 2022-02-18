@@ -21,13 +21,13 @@ module MFA2 is {
     ];
 
     //RU Список перечислений с разных адресов
-    type t_transfer_list is list(t_transfer_src2dsts);
+    type t_transfer_params is list(t_transfer_src2dsts);
 
     //RU Прототип метода transfer
-    type t_transfer is FA2Transfer of t_transfer_list;
+    type t_transfer_method is FA2Transfer of t_transfer_params;
 
     //RU Контракт с точкой входа transfer
-    type t_transfer_contract is contract(t_transfer);
+    type t_transfer_contract is contract(t_transfer_method);
 
     //RU Запрос баланса
     type t_balance_request is [@layout:comb] record [
@@ -45,11 +45,14 @@ module MFA2 is {
         balance: nat;
     ];
 
+    //RU Параметры колбека баланса
+    type t_balance_callback_params is list(t_balance_response);
+
     //RU Тип колбека на запрос баланса
-    type t_balance_callback is contract(list(t_balance_response));
+    type t_balance_callback is contract(t_balance_callback_params);
 
     //RU Запросы баланса и колбек для возврата ответов
-    type t_balance_requests is [@layout:comb] record [
+    type t_balance_params is [@layout:comb] record [
         //RU Запросы баланса //EN Requests of balance
         requests: list(t_balance_request);
         //RU Колбек с ответами на запросы //EN Callback for balance responces
@@ -57,10 +60,10 @@ module MFA2 is {
     ];
 
     //RU Прототип метода balance
-    type t_balance is FA2Balance of t_balance_requests;
+    type t_balance_method is FA2Balance of t_balance_params;
 
     //RU Контракт с точкой входа balance_of
-    type t_balance_contract is contract(t_balance);
+    type t_balance_contract is contract(t_balance_method);
 
     //RU Один оператор
     type t_operator is [@layout:comb] record [
@@ -75,11 +78,14 @@ module MFA2 is {
     //RU Прототипы операторов
     type t_operators_case is Add_operator of t_operator | Remove_operator of t_operator;
 
+    //RU Параметры метода update_operators
+    type t_operators_params is list(t_operators_case);
+
     //RU Прототип метода update_operators
-    type t_operators is FA2Operators of list(t_operators_case)
+    type t_operators_method is FA2Operators of t_operators_params;
 
     //RU Контракт с точкой входа update_operators
-    type t_operators_contract is contract(t_operators);
+    type t_operators_contract is contract(t_operators_method);
 
     const cERR_NOT_FOUND_TRANSFER: string = "MFA2/NotFoundTransfer";//RU< Ошибка: Не найден метод transfer токена
     const cERR_NOT_FOUND_BALANCEOF: string = "MFA2/NotFoundBalanceOf";//RU< Ошибка: Не найден метод balance_of токена
@@ -93,7 +99,7 @@ module MFA2 is {
         end
 
     //RU Параметры для перевода токенов
-    function transferParams(const token_id: t_token_id; const src: address; const dst: address; const tamount: nat): t_transfer is
+    function transferParams(const token_id: t_token_id; const src: address; const dst: address; const tamount: nat): t_transfer_method is
         FA2Transfer(list [
             record [
                 src = src;
@@ -123,7 +129,7 @@ module MFA2 is {
         end;
 
     //RU Параметры для запроса баланса токенов
-    function balanceParams(const token_id: t_token_id; const owner: address; const callback: t_balance_callback): t_balance is
+    function balanceParams(const token_id: t_token_id; const owner: address; const callback: t_balance_callback): t_balance_method is
         FA2Balance(record [
             requests = list [
                 record [
@@ -150,7 +156,7 @@ module MFA2 is {
         end;
 
     //RU Параметры для одобрения распоряжения токенами
-    function approveParams(const token_id: t_token_id; const operator: address): t_operators is
+    function approveParams(const token_id: t_token_id; const operator: address): t_operators_method is
         FA2Operators(list [
             Add_operator(record [
                 owner = Tezos.self_address;
@@ -168,7 +174,7 @@ module MFA2 is {
         );
 
     //RU Параметры для запрета распоряжения токенами
-    function declineParams(const token_id: t_token_id; const operator: address): t_operators is
+    function declineParams(const token_id: t_token_id; const operator: address): t_operators_method is
         FA2Operators(list [
             Remove_operator(record [
                 owner = Tezos.self_address;

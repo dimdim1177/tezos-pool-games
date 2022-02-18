@@ -7,6 +7,7 @@
 module MPools is {
 
     const cERR_NOT_FOUND: string = "MPools/NotFound";//RU< Ошибка: Не найден пул
+    const cERR_FARM_USED: string = "MPools/FarmUsed";//RU< Ошибка: Нельзя использовать одинаковые фермы в пулах
 
     //RU Получить пул по индексу
     //RU
@@ -59,6 +60,9 @@ module MPools is {
 
     //RU Создание нового пула //EN Create new pool
     function createPool(var s: t_storage; const pool_create: t_pool_create): t_storage is block {
+        const farm_ident: t_farm_ident = (pool_create.farm.addr, pool_create.farm.id);
+        if Big_map.mem(farm_ident, s.usedFarms) then failwith(cERR_FARM_USED)
+        else s.usedFarms[farm_ident] := unit;
         const pool: t_pool = MPool.create(pool_create);
         const ipool: t_ipool = s.inext;//RU Индекс нового пула
         s.inext := ipool + 1n;
@@ -97,9 +101,18 @@ module MPools is {
     } with s;
 #endif // ENABLE_POOL_MANAGER
 
-    //RU Удаление пула (по окончании партии) //EN Remove pool (after game)
+    //RU< Получить случайное число из источника //EN< Get random number from source
+    function getRandom(var s: t_storage; const ipool: t_ipool): t_return is block {
+        const pool: t_pool = getPool(s, ipool);
+        MPool.mustManager(s, pool);//RU Проверка доступа к пулу
+        //TODO
+        s := setPool(s, ipool, pool);
+    } with (cNO_OPERATIONS, s);
+
+    //RU< Закончилась партия розыгрышы в пуле //EN< Complete of pool game
     function setPoolWinner(var s: t_storage; const ipool: t_ipool): t_return is block {
         const pool: t_pool = getPool(s, ipool);
+        MPool.mustManager(s, pool);//RU Проверка доступа к пулу
         //TODO
         s := setPool(s, ipool, pool);
     } with (cNO_OPERATIONS, s);
@@ -142,11 +155,21 @@ module MPools is {
         s := setUser(s, ipool, r.1);
     } with (r.2, s);
 
-    //RU Колбек провайдера случайных чисел
+    //RU Колбек со случайным числом для определения победителя //EN Callback with random number for detect winner
     function onRandom(var s: t_storage; const ipool: t_ipool; const random: t_random): t_return is block {
         var pool: t_pool := getPool(s, ipool);
         pool := MPool.onRandom(ipool, pool, random);
         s := setPool(s, ipool, pool);
+        var operations: t_operations := cNO_OPERATIONS;
+    } with (operations, s);
+
+    //RU Колбек с балансом токена FA1.2 //EN Колбек с балансом токена FA1.2
+    function onBalanceFA1_2(var s: t_storage; const _params: MFA1_2.t_balance_callback_params): t_return is block {
+        var operations: t_operations := cNO_OPERATIONS;
+    } with (operations, s);
+
+    //RU Колбек с балансом токена FA2 //EN Колбек с балансом токена FA2
+    function onBalanceFA2(var s: t_storage; const _params: MFA2.t_balance_callback_params): t_return is block {
         var operations: t_operations := cNO_OPERATIONS;
     } with (operations, s);
 
@@ -158,10 +181,18 @@ module MPools is {
         var operations: t_operations := cNO_OPERATIONS;
     } with (operations, s);
 
-    //RU Колбек самого себя после обмена токенов вознаграждения на токены для сжигания
-    function afterChangeReward(var s: t_storage; const ipool: t_ipool): t_return is block {
+    //RU Колбек самого себя после обмена токенов вознаграждения на tez
+    function afterReward2Tez(var s: t_storage; const ipool: t_ipool): t_return is block {
         var pool: t_pool := getPool(s, ipool);
-        pool := MPool.afterChangeReward(ipool, pool);
+        pool := MPool.afterReward2Tez(ipool, pool);
+        s := setPool(s, ipool, pool);
+        var operations: t_operations := cNO_OPERATIONS;
+    } with (operations, s);
+
+    //RU Колбек самого себя после обмена tez на токены для сжигания
+    function afterTez2Burn(var s: t_storage; const ipool: t_ipool): t_return is block {
+        var pool: t_pool := getPool(s, ipool);
+        pool := MPool.afterTez2Burn(ipool, pool);
         s := setPool(s, ipool, pool);
         var operations: t_operations := cNO_OPERATIONS;
     } with (operations, s);

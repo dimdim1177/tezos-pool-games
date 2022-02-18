@@ -255,8 +255,13 @@ module MPool is {
         skip;//TODO
     } with pool;
 
-    //RU Колбек самого себя после обмена токенов вознаграждения на токены для сжигания
-    function afterChangeReward(const _ipool: t_ipool; var pool: t_pool): t_pool is block {
+    //RU Колбек самого себя после обмена токенов вознаграждения на tez
+    function afterReward2Tez(const _ipool: t_ipool; var pool: t_pool): t_pool is block {
+        skip;//TODO
+    } with pool;
+
+    //RU Колбек самого себя после обмена tez на токены для сжигания
+    function afterTez2Burn(const _ipool: t_ipool; var pool: t_pool): t_pool is block {
         skip;//TODO
     } with pool;
 

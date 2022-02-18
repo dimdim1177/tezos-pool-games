@@ -18,20 +18,20 @@ module MFarmCrunchy is {
         farm_id: t_farm_id;
         damount: t_amount;
     ];
-    type t_deposit is CrunchyDeposit of t_deposit_params;//RU Прототип метода deposit фермы Crunchy
-    type t_deposit_contract is contract(t_deposit);//RU Контракт с точкой входа deposit в формате фермы Crunchy
+    type t_deposit_method is CrunchyDeposit of t_deposit_params;//RU Прототип метода deposit фермы Crunchy
+    type t_deposit_contract is contract(t_deposit_method);//RU Контракт с точкой входа deposit в формате фермы Crunchy
 
     //RU< Параметры для извлечения депозита из фермы Crunchy
     type t_withdraw_params is [@layout:comb] record [
         farm_id: t_farm_id;
         wamount: t_amount;
     ];
-    type t_withdraw is CrunchyWithdraw of t_withdraw_params;//RU Прототип метода withdraw фермы Crunchy
-    type t_withdraw_contract is contract(t_withdraw);//RU Контракт с точкой входа withdraw в формате фермы Crunchy
+    type t_withdraw_method is CrunchyWithdraw of t_withdraw_params;//RU Прототип метода withdraw фермы Crunchy
+    type t_withdraw_contract is contract(t_withdraw_method);//RU Контракт с точкой входа withdraw в формате фермы Crunchy
 
     type t_harvest_params is t_farm_id;//RU< Параметры получения вознаграждения из фермы Crunchy
-    type t_harvest is CrunchyHarvest of t_harvest_params;//RU Прототип метода harvest фермы Crunchy
-    type t_harvest_contract is contract(t_harvest);//RU Контракт с точкой входа harvest в формате фермы Crunchy
+    type t_harvest_method is CrunchyHarvest of t_harvest_params;//RU Прототип метода harvest фермы Crunchy
+    type t_harvest_contract is contract(t_harvest_method);//RU Контракт с точкой входа harvest в формате фермы Crunchy
 
     //RU Получить точку входа deposit фермы с интерфейсом Crunchy
     function depositEntrypoint(const addr: address): t_deposit_contract is
@@ -41,7 +41,7 @@ module MFarmCrunchy is {
         end
 
     //RU Параметры для метода deposit Crunchy
-    function depositParams(const farm_id: t_farm_id; const damount: t_amount): t_deposit is
+    function depositParams(const farm_id: t_farm_id; const damount: t_amount): t_deposit_method is
         CrunchyDeposit(record [
             farm_id = farm_id;
             damount = damount;
@@ -63,7 +63,7 @@ module MFarmCrunchy is {
         end
 
     //RU Параметры для метода withdraw Crunchy
-    function withdrawParams(const farm_id: t_farm_id; const wamount: t_amount): t_withdraw is
+    function withdrawParams(const farm_id: t_farm_id; const wamount: t_amount): t_withdraw_method is
         CrunchyWithdraw(record [
             farm_id = farm_id;
             wamount = wamount;
@@ -85,7 +85,7 @@ module MFarmCrunchy is {
         end
 
     //RU Параметры для метода harvest Crunchy
-    function harvestParams(const farm_id: t_farm_id): t_harvest is CrunchyHarvest(farm_id);
+    function harvestParams(const farm_id: t_farm_id): t_harvest_method is CrunchyHarvest(farm_id);
 
     //RU Получение вознаграждения из фермы Crunchy
     function harvest(const addr: address; const farm_id: t_farm_id): operation is

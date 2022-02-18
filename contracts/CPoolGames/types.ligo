@@ -228,7 +228,10 @@ type t_pools is big_map(t_ipool, t_pool);//RU< Пулы по их ID
 
 //RU Параметры пользователя в пуле
 type t_user is [@layout:comb] record [
-    tsPool: timestamp;//RU< Когда пользователь вступил в пул
+    //RU Когда пользователь вступил в пул
+    //RU
+    //RU Для алгоритма AlgoTime вес равен tsEnd - (максимум из tsPool и tsBeg)
+    tsPool: timestamp;
     balance: t_amount;//RU< Сколько токенов фермы инвестировано в пул этим пользователем
     tsBalance: timestamp;//RU< Когда было последнее изменение баланса пользователя
     
@@ -258,5 +261,10 @@ type t_pool_info is [@layout:comb] record [
     game: t_game;//RU< Текущая партия розыгрыша вознаграждения
 ];
 #endif // ENABLE_POOL_VIEW
+
+//RU Идентификация фермы
+type t_farm_ident is address * nat;
+//RU Использованные фермы
+type t_farms is big_map(t_farm_ident, unit);
 
 #endif // !TYPES_INCLUDED
