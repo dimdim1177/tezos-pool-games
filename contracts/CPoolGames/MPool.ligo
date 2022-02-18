@@ -118,10 +118,12 @@ module MPool is {
 
 //RU --- Управление пулом
 
+    //RU Изменение состояние пула
     [@inline] function setState(var pool: t_pool; const state: t_pool_state): t_pool is block {
         pool.state := state;
     } with pool;
 
+    //RU Редактирование параметров пула
     function edit(var pool: t_pool; const pool_edit: t_pool_edit): t_pool is block {
         if isActive(pool) then failwith(cERR_EDIT_ACTIVE);
         else skip;
@@ -163,21 +165,43 @@ module MPool is {
 
 //RU --- Для пользователей пулов
 
+    //RU Запуск новой партии, если необходимо
+    function activateIfNeed(const ipool: t_ipool; var pool: t_pool; var operations: t_operations): t_pool * t_operations is block {
+        pool := MPoolGame.activateIfNeed(pool);
+        //RU Если розыгрыш активен, участников больше одного и еще не заказывали случайное число
+        if (GameStateActive = pool.game.state) and (pool.count > 1n) and (not pool.randomFuture) then block {
+            operations := MRandom.create(pool.randomSource, pool.game.tsEnd, ipool) # operations;//RU Заказываем случайное число
+            pool.randomFuture := True;//RU Случайное число заказано
+        } else skip;
+    } with (pool, operations);
+
     function deposit(const ipool: t_ipool; var pool: t_pool; var user: t_user; const damount: t_amount; const doapprove: bool): t_pool * t_user * t_operations is block {
-        pool := MPoolGame.checkGameComplete(pool);//RU Обработка окончания розыгрыша по времени
+    //RU --- Проверки ограничений
         if isActive(pool) then skip else failwith(cERR_DEPOSIT_INACTIVE);
         const newbalance: nat = user.balance + damount;
         //RU Пополнять можно не больше максимального депозита
         if (pool.opts.maxDeposit > 0n) and (newbalance > pool.opts.maxDeposit) then failwith(cERR_OVER_MAX_DEPOSIT)
         else skip;
+
+        pool := MPoolGame.checkEnd(pool);//RU Обработка окончания розыгрыша по времени
+
+    //RU --- Корректируем веса для розыгрыша по внесенному депозиту
+        const pool_user: t_pool * t_user  = MPoolGame.onDeposit(pool, user, damount);
+        pool := pool_user.0; user := pool_user.1;
+
+    //RU --- Фиксируем балансы
         if 0n = user.balance then pool.count := pool.count + 1n //RU Добавление нового пользователя в пул
         else skip;
-        user.balance := newbalance;
-        var operations: t_operations := MFarm.deposit(pool.farm, damount, doapprove);//RU Перечисляем депозит в ферму
-        if GameStateActivating = pool.game.state then block {//RU Нужно запустить партию
-            const r: t_pool * t_operations = MPoolGame.activateGame(ipool, pool, operations);
-            pool := r.0; operations := r.1;
-        } else skip;
+        pool.balance := pool.balance + damount;//RU Новый баланс пула
+        user.balance := newbalance;//RU Новый баланс пользователя
+        user.tsBalance := Tezos.now;//RU Когда он был изменен
+
+        const farmOperations: t_operations = MFarm.deposit(pool.farm, damount, doapprove);//RU Перечисляем депозит в ферму
+
+    //RU Активируем новый розыгрыш, если необходимо
+        const pool_operations: t_pool * t_operations = activateIfNeed(ipool, pool, farmOperations);
+        pool := pool_operations.0;
+        const operations: t_operations = pool_operations.1;
     } with (pool, user, operations);
 
     //RU Извлечение из пула
@@ -187,24 +211,38 @@ module MPool is {
     //EN
     //EN 0n == wamount - withdraw all deposit from pool
     function withdraw(const ipool: t_ipool; var pool: t_pool; var user: t_user; var wamount: t_amount): t_pool * t_user * t_operations is block {
-        pool := MPoolGame.checkGameComplete(pool);//RU Обработка окончания розыгрыша по времени
-        if 0n = wamount then wamount := user.balance //RU Списание всего баланса
-        else skip;
+        //RU При wamount=0 списание всего баланса
+        if 0n = wamount then wamount := user.balance else skip;
+
+    //RU --- Проверки ограничений
         const inewbalance: int = user.balance - wamount;
         if inewbalance < 0 then failwith(cERR_INSUFFICIENT_FUNDS)
-        else skip;
+        else block {
+            //RU Списать можно либо все, либо до минимального депозита
+            if (inewbalance > 0) and (inewbalance < int(pool.opts.minDeposit)) then failwith(cERR_UNDER_MIN_DEPOSIT)
+            else skip;
+        };
+
+        pool := MPoolGame.checkEnd(pool);//RU Обработка окончания розыгрыша по времени
+
+    //RU --- Корректируем веса для розыгрыша по извлеченному депозиту
+        const pool_user: t_pool * t_user  = MPoolGame.onWithdraw(pool, user, wamount);
+        pool := pool_user.0; user := pool_user.1;
+
+    //RU --- Фиксируем балансы
         const newbalance: nat = abs(inewbalance);
-        //RU Списать можно либо все, либо до минимального депозита
-        if (newbalance > 0n) and (newbalance < pool.opts.minDeposit) then failwith(cERR_UNDER_MIN_DEPOSIT)
-        else skip;
         if 0n = newbalance then pool.count := abs(pool.count - 1n) //RU Удаление пользователя из пула
         else skip;
+        pool.balance := abs(pool.balance - wamount);
         user.balance := newbalance;
-        var operations: t_operations := MFarm.withdraw(pool.farm, wamount);//RU Извлекаем депозит из фермы
-        if GameStateActivating = pool.game.state then block {//RU Нужно запустить партию
-            const r: t_pool * t_operations = MPoolGame.activateGame(ipool, pool, operations);
-            pool := r.0; operations := r.1;
-        } else skip;
+        user.tsBalance := Tezos.now;
+
+        const farmOperations: t_operations = MFarm.withdraw(pool.farm, wamount);//RU Извлекаем депозит из фермы
+
+    //RU Активируем новый розыгрыш, если необходимо
+        const pool_operations: t_pool * t_operations = activateIfNeed(ipool, pool, farmOperations);
+        pool := pool_operations.0;
+        const operations: t_operations = pool_operations.1;
     } with (pool, user, operations);
 
     //RU Колбек провайдера случайных чисел

@@ -29,6 +29,7 @@ module MPools is {
         case s.users[(ipool, Tezos.sender)] of
         | Some(user) -> user
         | None -> record [//RU Параметры пользователя по умолчанию
+            tsPool = Tezos.now;
             balance = 0n;
             tsBalance = Tezos.now;
             addWeight = 0n;

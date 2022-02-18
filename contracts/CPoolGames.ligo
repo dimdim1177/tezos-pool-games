@@ -16,7 +16,6 @@ type t_entrypoint is
 #endif // ENABLE_ADMINS
 
 //RU --- Управление пулами
-
 | CreatePool of t_pool_create //RU< Создание нового пула //EN< Create new pool
 | PausePool of t_ipool //RU< Приостановка пула //EN< Pause pool
 | StartPool of t_ipool //RU< Запуск пула (после паузы) //EN< Play pool (after pause)
@@ -44,6 +43,7 @@ type t_entrypoint is
 
 const cERR_AFTER_DENIED: string = "After/Denied";//RU Метод должен вызываться только самим контрактом
 
+//RU Проверка на самовызов
 function mustAfter(const _: unit): unit is block {
     if Tezos.sender = Tezos.self_address then skip
     else failwith(cERR_AFTER_DENIED);
@@ -101,6 +101,13 @@ end;
 #endif // ENABLE_POOL_VIEW
 
 #if ENABLE_BALANCE_VIEW
-//RU Получение балнса пользователя в пуле
+//RU Получение баланса пользователя в пуле
 [@view] function viewBalance(const ipool: t_ipool; const s: t_storage): nat is MPools.viewBalance(s, ipool);
 #endif // ENABLE_BALANCE_VIEW
+
+//RU Недоработки, идеи для развития проекта (TODO)
+//RU - подтверждение победителя другими участниками пула (кроме победителя) за небольшое вознаграждение из выигрыша первым N подтвердившим
+//RU - выбор участниками токена или XTZ, в котором они хотят получить выигрыш и автоконвертация выигрыша в нужный конкретному пользователю токен
+//RU - по флагу, установленному пользователем, автоинвестирование выигранных токенов в тот же пул через автоконвертацию
+//RU - получение и вывод менеджерами пула вознаграждения с момента приостановки партий и до извлечения пользователями всех депозитов
+//RU - старт розыгрыша при внесении первого депозита в пул
