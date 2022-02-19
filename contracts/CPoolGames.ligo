@@ -24,8 +24,9 @@ type t_entrypoint is
 #if ENABLE_POOL_MANAGER
 | ChangePoolManager of t_ipool * address //RU< Смена менеджера (админа одного пула)
 #endif // ENABLE_POOL_MANAGER
-| GetRandom of t_ipool //RU< Получить случайное число из источника //EN< Get random number from source
-| SetPoolWinner of t_ipool //RU< Установить победителя пула //EN< Set pool winner
+| SetPoolGameComplete of t_ipool //RU< Пометить партию завершившейся по времени //EN< Mark pool game complete by time
+| GetPoolRandom of t_ipool //RU< Получить случайное число из источника //EN< Get random number from source
+| SetPoolWinner of t_ipool * address //RU< Установить победителя партии //EN< Set pool game winner
 
 //RU --- Для пользователей пулов
 | Deposit of t_ipool * t_amount //RU< Депозит в пул //EN< Deposit to pool
@@ -84,8 +85,9 @@ case entrypoint of
 #if ENABLE_POOL_MANAGER
 | ChangePoolManager(params) -> (cNO_OPERATIONS, MPools.changePoolManager(s, params.0(*ipool*), params.1(*newmanager*)) )
 #endif // ENABLE_POOL_MANAGER
-| GetRandom(ipool) -> MPools.getRandom(s, ipool)
-| SetPoolWinner(ipool) -> MPools.setPoolWinner(s, ipool)
+| SetPoolGameComplete(ipool) -> MPools.setPoolGameComplete(s, ipool)
+| GetPoolRandom(ipool) -> MPools.getPoolRandom(s, ipool)
+| SetPoolWinner(params) -> MPools.setPoolWinner(s, params.0(*ipool*), params.1(*winner*))
 
 //RU --- Для пользователей пулов
 | Deposit(params) -> MPools.deposit(s, params.0(*ipool*), params.1(*damount*))

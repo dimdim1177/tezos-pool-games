@@ -20,7 +20,7 @@ module MPoolOpts is {
         else skip;
         if (opts.maxDeposit > 0n) and (opts.minDeposit > opts.maxDeposit) then failwith(cERR_INVALID_MAX_DEPOSIT)
         else skip;
-        if 100n =/= (opts.winPercent + opts.burnPercent + opts.feePercent) then failwith(cERR_INVALID_PERCENT)
+        if (0n = opts.winPercent) or (100n =/= (opts.winPercent + opts.burnPercent + opts.feePercent)) then failwith(cERR_INVALID_PERCENT)
         else skip;
     } with unit;
 

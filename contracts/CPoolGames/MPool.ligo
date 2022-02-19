@@ -5,6 +5,7 @@
 #include "MPoolOpts.ligo"
 #include "MPoolStat.ligo"
 #include "MPoolGame.ligo"
+#include "MCallback.ligo"
 
 //RU Модуль пула ликвидности с периодическими розыгрышами вознаграждений
 module MPool is {
@@ -107,6 +108,7 @@ module MPool is {
             count = 0n;
             game = MPoolGame.create(gameState, gameSeconds);
             randomFuture = False;
+            rewardBalance = 0n;
 #if ENABLE_POOL_MANAGER
             manager = Tezos.sender;//RU Менеджер пула - его создатель
 #endif // ENABLE_POOL_MANAGER
@@ -163,17 +165,43 @@ module MPool is {
         end;
     } with pool;
 
-//RU --- Для пользователей пулов
-
     //RU Запуск новой партии, если необходимо
-    function activateIfNeed(const ipool: t_ipool; var pool: t_pool; var operations: t_operations): t_pool * t_operations is block {
-        pool := MPoolGame.activateIfNeed(pool);
+    function requestRandomIfNeed(const ipool: t_ipool; var pool: t_pool; var operations: t_operations): t_pool * t_operations is block {
         //RU Если розыгрыш активен, участников больше одного и еще не заказывали случайное число
         if (GameStateActive = pool.game.state) and (pool.count > 1n) and (not pool.randomFuture) then block {
             operations := MRandom.create(pool.randomSource, pool.game.tsEnd, ipool) # operations;//RU Заказываем случайное число
             pool.randomFuture := True;//RU Случайное число заказано
         } else skip;
     } with (pool, operations);
+
+    //RU Запуск новой партии, если необходимо
+    function activate(const ipool: t_ipool; var pool: t_pool; var operations: t_operations): t_pool * t_operations is block {
+        pool := MPoolGame.activate(pool);
+        const r: t_pool * t_operations = requestRandomIfNeed(ipool, pool, operations);
+    } with (r.0, r.1);
+
+    //RU< Пометить партию завершившейся по времени //EN< Mark pool game complete by time
+    function setGameComplete(const ipool: t_ipool; var pool: t_pool): t_pool * t_operations is block {
+        pool := MPoolGame.checkComplete(pool);//RU Обработка окончания розыгрыша по времени
+        var operations: t_operations := cNO_OPERATIONS;
+        if GameStateActivating = pool.game.state then block {//RU Если нет участников, сразу запускаем новую игру
+            const r: t_pool * t_operations = activate(ipool, pool, operations);
+            pool := r.0; operations := r.1;
+        } else skip;
+    } with (pool, operations);
+
+    //RU< Получить случайное число из источника //EN< Get random number from random source
+    function getRandom(const ipool: t_ipool; var pool: t_pool): t_pool * t_operations is block {
+        if GameStateComplete = pool.game.state then skip
+        else failwith(cERR_INVALID_STATE);
+        //RU Запрашиваем случайное число колбеком
+        const operations: t_operations = list [
+            MRandom.get(pool.randomSource, pool.game.tsEnd, ipool, MCallback.onRandomEntrypoint(unit))
+        ];
+        pool.game.state := GameStateWaitRandom;
+    } with (pool, operations);
+
+//RU --- Для пользователей пулов
 
     function deposit(const ipool: t_ipool; var pool: t_pool; var user: t_user; const damount: t_amount; const doapprove: bool): t_pool * t_user * t_operations is block {
     //RU --- Проверки ограничений
@@ -183,7 +211,7 @@ module MPool is {
         if (pool.opts.maxDeposit > 0n) and (newbalance > pool.opts.maxDeposit) then failwith(cERR_OVER_MAX_DEPOSIT)
         else skip;
 
-        pool := MPoolGame.checkEnd(pool);//RU Обработка окончания розыгрыша по времени
+        pool := MPoolGame.checkComplete(pool);//RU Обработка окончания розыгрыша по времени
 
     //RU --- Корректируем веса для розыгрыша по внесенному депозиту
         const pool_user: t_pool * t_user  = MPoolGame.onDeposit(pool, user, damount);
@@ -196,13 +224,12 @@ module MPool is {
         user.balance := newbalance;//RU Новый баланс пользователя
         user.tsBalance := Tezos.now;//RU Когда он был изменен
 
-        const farmOperations: t_operations = MFarm.deposit(pool.farm, damount, doapprove);//RU Перечисляем депозит в ферму
+        const operations: t_operations = MFarm.deposit(pool.farm, damount, doapprove);//RU Перечисляем депозит в ферму
 
-    //RU Активируем новый розыгрыш, если необходимо
-        const pool_operations: t_pool * t_operations = activateIfNeed(ipool, pool, farmOperations);
-        pool := pool_operations.0;
-        const operations: t_operations = pool_operations.1;
-    } with (pool, user, operations);
+    //RU Если появилось больше 2 участников, нужно заказать случайное число для розыгрыша
+        const r: t_pool * t_operations = requestRandomIfNeed(ipool, pool, operations);
+
+    } with (r.0, user, r.1);
 
     //RU Извлечение из пула
     //RU
@@ -210,7 +237,7 @@ module MPool is {
     //EN Withdraw from pool
     //EN
     //EN 0n == wamount - withdraw all deposit from pool
-    function withdraw(const ipool: t_ipool; var pool: t_pool; var user: t_user; var wamount: t_amount): t_pool * t_user * t_operations is block {
+    function withdraw(const _ipool: t_ipool; var pool: t_pool; var user: t_user; var wamount: t_amount): t_pool * t_user * t_operations is block {
         //RU При wamount=0 списание всего баланса
         if 0n = wamount then wamount := user.balance else skip;
 
@@ -223,7 +250,7 @@ module MPool is {
             else skip;
         };
 
-        pool := MPoolGame.checkEnd(pool);//RU Обработка окончания розыгрыша по времени
+        pool := MPoolGame.checkComplete(pool);//RU Обработка окончания розыгрыша по времени
 
     //RU --- Корректируем веса для розыгрыша по извлеченному депозиту
         const pool_user: t_pool * t_user  = MPoolGame.onWithdraw(pool, user, wamount);
@@ -237,17 +264,17 @@ module MPool is {
         user.balance := newbalance;
         user.tsBalance := Tezos.now;
 
-        const farmOperations: t_operations = MFarm.withdraw(pool.farm, wamount);//RU Извлекаем депозит из фермы
-
-    //RU Активируем новый розыгрыш, если необходимо
-        const pool_operations: t_pool * t_operations = activateIfNeed(ipool, pool, farmOperations);
-        pool := pool_operations.0;
-        const operations: t_operations = pool_operations.1;
+        const operations: t_operations = MFarm.withdraw(pool.farm, wamount);//RU Извлекаем депозит из фермы
     } with (pool, user, operations);
 
     //RU Колбек провайдера случайных чисел
-    function onRandom(const _ipool: t_ipool; var pool: t_pool; const _random: t_random): t_pool is block {
-        skip;//TODO
+    function onRandom(const _ipool: t_ipool; var pool: t_pool; const random: t_random): t_pool is block {
+        if GameStateWaitRandom = pool.game.state then skip
+        else failwith(cERR_INVALID_STATE);
+        //RU Вес победителя должен быть больше 0, иначе могут быть отобраны участники весом 0,
+        //RU то есть, не участвующие в текущем розыгрыше
+        pool.game.winWeight := (random mod pool.game.weight) + 1n;
+        pool.game.state := GameStateWaitWinner;
     } with pool;
 
     //RU Колбек самого себя после запроса вознаграждения с фермы 

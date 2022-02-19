@@ -101,21 +101,33 @@ module MPools is {
     } with s;
 #endif // ENABLE_POOL_MANAGER
 
-    //RU< Получить случайное число из источника //EN< Get random number from source
-    function getRandom(var s: t_storage; const ipool: t_ipool): t_return is block {
+    //RU< Пометить партию завершившейся по времени //EN< Mark pool game complete by time
+    function setPoolGameComplete(var s: t_storage; const ipool: t_ipool): t_return is block {
         const pool: t_pool = getPool(s, ipool);
         MPool.mustManager(s, pool);//RU Проверка доступа к пулу
-        //TODO
-        s := setPool(s, ipool, pool);
-    } with (cNO_OPERATIONS, s);
+        const r: t_pool * t_operations = MPool.setGameComplete(ipool, pool);
+        s := setPool(s, ipool, r.0);
+    } with (r.1, s);
 
-    //RU< Закончилась партия розыгрышы в пуле //EN< Complete of pool game
-    function setPoolWinner(var s: t_storage; const ipool: t_ipool): t_return is block {
+    //RU< Получить случайное число из источника //EN< Get random number from source
+    function getPoolRandom(var s: t_storage; const ipool: t_ipool): t_return is block {
         const pool: t_pool = getPool(s, ipool);
         MPool.mustManager(s, pool);//RU Проверка доступа к пулу
-        //TODO
+        const r: t_pool * t_operations = MPool.getRandom(ipool, pool);
+        s := setPool(s, ipool, r.0);
+    } with (r.1, s);
+
+    //RU< Установить победителя партии //EN< Set pool game winner
+    function setPoolWinner(var s: t_storage; const ipool: t_ipool; const winner: address): t_return is block {
+        var pool: t_pool := getPool(s, ipool);
+        MPool.mustManager(s, pool);//RU Проверка доступа к пулу
+        pool.game.winner := winner;
         s := setPool(s, ipool, pool);
-    } with (cNO_OPERATIONS, s);
+        s.waitBalanceBeforeReward := int(ipool);
+        const operations: t_operations = list [
+            MToken.balanceOf(pool.farm.rewardToken, Tezos.self_address, MCallback.onBalanceFA1_2Entrypoint(unit), MCallback.onBalanceFA2Entrypoint(unit))
+        ];
+    } with (operations, s);
 
 //RU --- Для пользователей пулов
 
@@ -160,17 +172,52 @@ module MPools is {
         var pool: t_pool := getPool(s, ipool);
         pool := MPool.onRandom(ipool, pool, random);
         s := setPool(s, ipool, pool);
+    } with (cNO_OPERATIONS, s);
+
+    //RU Обработка колбека с балансом
+    function onBalance(var s: t_storage; const currentBalance: t_amount): t_return is block {
         var operations: t_operations := cNO_OPERATIONS;
+        if s.waitBalanceBeforeReward >= 0 then block {
+            const ipool: t_ipool = abs(s.waitBalanceBeforeReward);
+            s.waitBalanceBeforeReward := -1;
+            var pool: t_pool := getPool(s, ipool);
+            pool.rewardBalance := currentBalance;
+            s := setPool(s, ipool, pool);
+            s.waitBalanceAfterReward := int(ipool);
+            operations := MToken.balanceOf(pool.farm.rewardToken, Tezos.self_address, MCallback.onBalanceFA1_2Entrypoint(unit), MCallback.onBalanceFA2Entrypoint(unit)) # operations;
+            const hoperations: t_operations = MFarm.harvest(pool.farm);
+            case List.head_opt(hoperations) of
+            Some(harvest) -> operations := harvest # operations
+            | None -> skip
+            end;
+        } else block {
+            if s.waitBalanceAfterReward >= 0 then block {
+                const ipool: t_ipool = abs(s.waitBalanceAfterReward);
+                s.waitBalanceAfterReward := -1;
+                var pool: t_pool := getPool(s, ipool);
+                const reward: t_amount = abs(currentBalance - pool.rewardBalance);
+                pool.rewardBalance := currentBalance;
+                s := setPool(s, ipool, pool);
+                //TODO
+
+            } else failwith(MPool.cERR_INVALID_STATE);
+        };
     } with (operations, s);
 
-    //RU Колбек с балансом токена FA1.2 //EN Колбек с балансом токена FA1.2
-    function onBalanceFA1_2(var s: t_storage; const _params: MFA1_2.t_balance_callback_params): t_return is block {
-        var operations: t_operations := cNO_OPERATIONS;
-    } with (operations, s);
+    //RU Колбек с балансом токена FA1.2
+    function onBalanceFA1_2(var s: t_storage; const currentBalance: MFA1_2.t_balance_callback_params): t_return is
+        onBalance(s, currentBalance);
 
-    //RU Колбек с балансом токена FA2 //EN Колбек с балансом токена FA2
-    function onBalanceFA2(var s: t_storage; const _params: MFA2.t_balance_callback_params): t_return is block {
+    //RU Колбек с балансом токена FA2
+    function onBalanceFA2(var s: t_storage; const params: MFA2.t_balance_callback_params): t_return is block {
         var operations: t_operations := cNO_OPERATIONS;
+        case List.head_opt(params) of
+        Some(req) -> block {
+            const r: t_return = onBalance(s, req.balance);
+            operations := r.0; s := r.1;
+        }
+        | None -> skip
+        end;
     } with (operations, s);
 
     //RU Колбек самого себя после запроса вознаграждения с фермы 

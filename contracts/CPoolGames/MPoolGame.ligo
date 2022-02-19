@@ -12,24 +12,23 @@ module MPoolGame is {
             tsEnd = Tezos.now + int(seconds);
             weight = 0n;
             winWeight = 0n;
+            winner = cZERO_ADDRESS;
         ];
     } with game;
 
     //RU Начало партии
-    function activateIfNeed(var pool: t_pool): t_pool is block {
-        if GameStateActivating = pool.game.state then block {//RU Нужно запустить партию
-            pool.game.state := GameStateActive;
-            pool.game.tsBeg := Tezos.now;
-            const gameSeconds: nat = pool.opts.gameSeconds;
-            pool.game.tsEnd := Tezos.now + int(gameSeconds);
-            //RU Вес партии заполняем так, как будто все пользователи пробудут всю партию, при изменениях вес будет корректироваться
-            case pool.opts.algo of
-            | AlgoTime -> pool.game.weight := pool.count * gameSeconds
-            | AlgoTimeVol -> pool.game.weight := pool.balance * gameSeconds
-            | AlgoEqual -> pool.game.weight := pool.count
-            end;
-            pool.randomFuture := False;//RU Пока не заказывали случайное число
-        } else skip;
+    function activate(var pool: t_pool): t_pool is block {
+        pool.game.state := GameStateActive;
+        pool.game.tsBeg := Tezos.now;
+        const gameSeconds: nat = pool.opts.gameSeconds;
+        pool.game.tsEnd := Tezos.now + int(gameSeconds);
+        //RU Вес партии заполняем так, как будто все пользователи пробудут всю партию, при изменениях вес будет корректироваться
+        case pool.opts.algo of
+        | AlgoTime -> pool.game.weight := pool.count * gameSeconds
+        | AlgoTimeVol -> pool.game.weight := pool.balance * gameSeconds
+        | AlgoEqual -> pool.game.weight := pool.count
+        end;
+        pool.randomFuture := False;//RU Пока не заказывали случайное число
     } with pool;
 
     //RU Пополнен депозит пользователем
@@ -118,11 +117,14 @@ module MPoolGame is {
     } with (pool, user);
 
     //RU Проверяем, не закончилось ли время розыгрыша
-    function checkEnd(var pool: t_pool): t_pool is block {
+    function checkComplete(var pool: t_pool): t_pool is block {
         if (GameStateActive = pool.game.state) and (Tezos.now >= pool.game.tsEnd) then block { //RU Если партия активна и время вышло
             if pool.game.weight > 0n then block {//RU Идет какой-то розыгрыш
-                if pool.randomFuture then pool.game.state := GameStateWaitRandom; //RU Заказывали случайное число, ждем его
-                else {//RU Раз не заказывали случайное число, один реальный участник
+                if pool.randomFuture then block {
+                    //RU Заказывали случайное число, нужно будет его получить позже, пока помечаем партию законченной
+                    pool.game.state := GameStateComplete;
+                } else block {
+                    //RU Раз не заказывали случайное число, один реальный участник, можно сразу переходить к ожиданию победителя
                     pool.game.winWeight := pool.game.weight; //RU Обязательно попадем в него по суммарному весу
                     pool.game.state := GameStateWaitWinner;//RU Списка пользователей у нас нет, поэтому все равно нужна его загрузка извне
                 };
