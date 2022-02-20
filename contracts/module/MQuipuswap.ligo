@@ -33,10 +33,10 @@ module MQuipuswap is {
         Tez2Token(min_out, receiver);
 
     //RU Операция создания запроса tezToTokenPayment
-    function tez2token(const addr: address; const min_out: nat; const receiver: address): operation is
+    function tez2token(const addr: address; const changeTez: tez; const min_out: nat; const receiver: address): operation is
         Tezos.transaction(
             tez2tokenParams(min_out, receiver),
-            0mutez,
+            changeTez,
             tez2tokenEntrypoint(addr)
         );
 

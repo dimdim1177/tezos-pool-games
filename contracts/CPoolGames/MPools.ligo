@@ -56,6 +56,11 @@ module MPools is {
         s := setPool(s, ipool, pool);
     } with s;
 
+    function doRemovePool(var s: t_storage; const ipool: t_ipool; const pool: t_pool): t_storage is block {
+        s.usedFarms := Big_map.remove((pool.farm.addr, pool.farm.id), s.usedFarms);
+        s.pools := Big_map.remove(ipool, s.pools);//RU Пул уже пуст, можно удалить прямо сейчас
+    } with s;
+
 //RU --- Управление пулами
 
     //RU Создание нового пула //EN Create new pool
@@ -79,7 +84,7 @@ module MPools is {
     function removePool(var s: t_storage; const ipool: t_ipool): t_storage is block {
         const pool: t_pool = getPool(s, ipool);
         MPool.mustManager(s, pool);//RU Проверка доступа к пулу
-        if 0n = pool.balance then s.pools := Big_map.remove(ipool, s.pools);//RU Пул уже пуст, можно удалить прямо сейчас
+        if 0n = pool.balance then s := doRemovePool(s, ipool, pool);//RU Пул уже пуст, можно удалить прямо сейчас
         else s := setPoolState(s, ipool, PoolStateRemove);//RU Удалим, когда все заберут депозиты
     } with s;
 
@@ -121,13 +126,10 @@ module MPools is {
     function setPoolWinner(var s: t_storage; const ipool: t_ipool; const winner: address): t_return is block {
         var pool: t_pool := getPool(s, ipool);
         MPool.mustManager(s, pool);//RU Проверка доступа к пулу
-        pool.game.winner := winner;
-        s := setPool(s, ipool, pool);
-        s.waitBalanceBeforeReward := int(ipool);
-        const operations: t_operations = list [
-            MToken.balanceOf(pool.farm.rewardToken, Tezos.self_address, MCallback.onBalanceFA1_2Entrypoint(unit), MCallback.onBalanceFA2Entrypoint(unit))
-        ];
-    } with (operations, s);
+        const r: t_pool * t_operations = MPool.setPoolWinner(pool, winner);
+        s := setPool(s, ipool, r.0);
+        s.waitBalanceBeforeHarvest := int(ipool);
+    } with (r.1, s);
 
 //RU --- Для пользователей пулов
 
@@ -162,7 +164,7 @@ module MPools is {
         var user: t_user := getUser(s, ipool);
         const r: t_pool * t_user * t_operations = MPool.withdraw(ipool, pool, user, wamount);
         if (0n = pool.balance) and (PoolStateRemove = pool.state) then //RU Пул на удаление, забрали последний депозит
-            s.pools := Big_map.remove(ipool, s.pools);//RU Удаляем пул
+            s := doRemovePool(s, ipool, pool);//RU Удаляем пул
         else s := setPool(s, ipool, r.0);
         s := setUser(s, ipool, r.1);
     } with (r.2, s);
@@ -177,31 +179,38 @@ module MPools is {
     //RU Обработка колбека с балансом
     function onBalance(var s: t_storage; const currentBalance: t_amount): t_return is block {
         var operations: t_operations := cNO_OPERATIONS;
-        if s.waitBalanceBeforeReward >= 0 then block {
-            const ipool: t_ipool = abs(s.waitBalanceBeforeReward);
-            s.waitBalanceBeforeReward := -1;
+        if s.waitBalanceAfterHarvest >= 0 then block {
+            const ipool: t_ipool = abs(s.waitBalanceAfterHarvest);
+            s.waitBalanceAfterHarvest := -1;
+            const pool: t_pool = getPool(s, ipool);
+            const r: t_pool * t_operations = MPool.onBalanceAfterHarvest(ipool, pool, currentBalance);
+            s := setPool(s, ipool, r.0);
+            operations := r.1;
+        } else skip;
+        if s.waitBalanceBeforeHarvest >= 0 then block {
+            const ipool: t_ipool = abs(s.waitBalanceBeforeHarvest);
+            s.waitBalanceBeforeHarvest := -1;
+            s.waitBalanceAfterHarvest := int(ipool);
             var pool: t_pool := getPool(s, ipool);
-            pool.rewardBalance := currentBalance;
+            pool := MPool.onBalanceBeforeHarvest(pool, currentBalance);
             s := setPool(s, ipool, pool);
-            s.waitBalanceAfterReward := int(ipool);
-            operations := MToken.balanceOf(pool.farm.rewardToken, Tezos.self_address, MCallback.onBalanceFA1_2Entrypoint(unit), MCallback.onBalanceFA2Entrypoint(unit)) # operations;
-            const hoperations: t_operations = MFarm.harvest(pool.farm);
-            case List.head_opt(hoperations) of
-            Some(harvest) -> operations := harvest # operations
-            | None -> skip
-            end;
-        } else block {
-            if s.waitBalanceAfterReward >= 0 then block {
-                const ipool: t_ipool = abs(s.waitBalanceAfterReward);
-                s.waitBalanceAfterReward := -1;
-                var pool: t_pool := getPool(s, ipool);
-                const reward: t_amount = abs(currentBalance - pool.rewardBalance);
-                pool.rewardBalance := currentBalance;
-                s := setPool(s, ipool, pool);
-                //TODO
-
-            } else failwith(MPool.cERR_INVALID_STATE);
-        };
+        } else skip;
+        if s.waitBalanceAfterTez2Burn >= 0 then block {
+            const ipool: t_ipool = abs(s.waitBalanceAfterTez2Burn);
+            const pool: t_pool = getPool(s, ipool);
+            s.waitBalanceAfterTez2Burn := -1;
+            const r: t_pool * t_operations = MPool.onBalanceAfterTez2Burn(ipool, pool, currentBalance);
+            s := setPool(s, ipool, r.0);
+            operations := r.1;
+        } else skip;
+        if s.waitBalanceBeforeTez2Burn >= 0 then block {
+            const ipool: t_ipool = abs(s.waitBalanceBeforeTez2Burn);
+            s.waitBalanceBeforeTez2Burn := -1;
+            s.waitBalanceAfterTez2Burn := int(ipool);
+            var pool: t_pool := getPool(s, ipool);
+            pool := MPool.onBalanceBeforeTez2Burn(pool, currentBalance);
+            s := setPool(s, ipool, pool);
+        } else skip;
     } with (operations, s);
 
     //RU Колбек с балансом токена FA1.2
@@ -220,28 +229,14 @@ module MPools is {
         end;
     } with (operations, s);
 
-    //RU Колбек самого себя после запроса вознаграждения с фермы 
-    function afterReward(var s: t_storage; const ipool: t_ipool): t_return is block {
-        var pool: t_pool := getPool(s, ipool);
-        pool := MPool.afterReward(ipool, pool);
-        s := setPool(s, ipool, pool);
-        var operations: t_operations := cNO_OPERATIONS;
-    } with (operations, s);
-
     //RU Колбек самого себя после обмена токенов вознаграждения на tez
     function afterReward2Tez(var s: t_storage; const ipool: t_ipool): t_return is block {
-        var pool: t_pool := getPool(s, ipool);
-        pool := MPool.afterReward2Tez(ipool, pool);
-        s := setPool(s, ipool, pool);
-        var operations: t_operations := cNO_OPERATIONS;
-    } with (operations, s);
-
-    //RU Колбек самого себя после обмена tez на токены для сжигания
-    function afterTez2Burn(var s: t_storage; const ipool: t_ipool): t_return is block {
-        var pool: t_pool := getPool(s, ipool);
-        pool := MPool.afterTez2Burn(ipool, pool);
-        s := setPool(s, ipool, pool);
-        var operations: t_operations := cNO_OPERATIONS;
+        const pool: t_pool = getPool(s, ipool);
+        const r: t_pool * t_operations = MPool.afterReward2Tez(ipool, pool);
+        if GameStateActive = r.0.game.state then skip //RU Запустилась новая партия, не ждем обмен
+        else s.waitBalanceBeforeTez2Burn := int(ipool);
+        s := setPool(s, ipool, r.0);
+        operations := r.1;
     } with (operations, s);
 
 //RU --- Чтение данных любыми пользователями (Views)

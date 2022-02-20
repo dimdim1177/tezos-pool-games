@@ -16,8 +16,10 @@ type t_storage is [@layout:comb] record [
     inext: t_ipool;//RU< ID следующего пула
     pools: t_pools;//RU< Собственно пулы
     users: t_ipooladdr2user;//RU< Пользователи пулов
-    waitBalanceBeforeReward: t_ii;//RU< ID пула, ожидающего баланс до получения вознаграждения из фермы
-    waitBalanceAfterReward: t_ii;//RU< ID пула, ожидающего баланс после получения вознаграждения из фермы
+    waitBalanceBeforeHarvest: t_ii;//RU< ID пула, ожидающего баланс до получения вознаграждения из фермы, -1 - не ожидаем
+    waitBalanceAfterHarvest: t_ii;//RU< ID пула, ожидающего баланс после получения вознаграждения из фермы, -1 - не ожидаем
+    waitBalanceBeforeTez2Burn: t_ii;//RU< ID пула, ожидающего баланс до обмена tez на токены для сжигания, -1 - не ожидаем
+    waitBalanceAfterTez2Burn: t_ii;//RU< ID пула, ожидающего баланс после обмена tez на токены для сжигания, -1 - не ожидаем
     //RU Использованные фермы
     //RU
     //RU Если два пула будут одновременно использовать одну ферму это приведет к тому, что одна заберет

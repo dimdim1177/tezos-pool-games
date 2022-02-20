@@ -167,7 +167,7 @@ type t_game is [@layout:comb] record [
     tsEnd: timestamp;//RU< Конец партии
     weight: t_weight;//RU< Суммарный вес всех участников партии
     winWeight: t_weight;//RU< Вес победителя при проходе по всем пользователям в порядке возрастания их индексов
-    winner: address;//RU< Победитель партии
+    winner: address;//RU< Победитель текущей партии
 ];
 
 type t_iuser is t_i;//RU< Индекс пользователя внутри пула
@@ -187,16 +187,18 @@ type t_pool is [@layout:comb] record [
     opts: t_opts;//RU< Настройки пула
     farm: t_farm;//RU< Ферма для пула
     randomSource: t_random_source;//RU< Источник случайных чисел для розыгрышей
-    burn: option(t_token);//RU< Токен для сжигания всего, что выше процента выигрыша
-    swapfarm: option(t_swap);//RU Обменник Quipuswap для обмена токенов фермы через tez
-    swapburn: option(t_swap);//RU Обменник Quipuswap для обмена токенов для сжигания через tez
-    feeaddr: option(address);//RU< Адрес, для перечисления комиссии пула
+    burnToken: option(t_token);//RU< Токен для сжигания всего, что выше процента выигрыша
+    rewardSwap: option(t_swap);//RU Обменник Quipuswap для обмена токенов вознаграждения фермы через tez
+    burnSwap: option(t_swap);//RU Обменник Quipuswap для обмена токенов для сжигания через tez
+    feeAddr: option(address);//RU< Адрес, для перечисления комиссии пула
     state: t_pool_state;//RU< Состояние пула
     balance: t_amount;//RU< Сколько токенов фермы инвестировано в пул в настоящий момент
     count: nat;//RU< Кол-во пользователей в пуле
     game: t_game;//RU< Текущая партия розыгрыша вознаграждения
     randomFuture: bool;//RU< Делался ли запрос на колбек со случайным числом по окончании партии
-    rewardBalance: t_amount;//RU< Баланс контракта в токенах вознаграждения
+    beforeHarvestBalance: t_amount;//RU< Баланс контракта в токенах вознаграждения до взыскания вознаграждения
+    beforeReward2TezBalance: tez;//RU< Баланс контракта до обмена токенов вознаграждения на tez
+    beforeBurnBalance: t_amount;//RU< Баланс контракта в токенах для сжигания до обмена tez на них
 #if ENABLE_POOL_MANAGER
     manager: address;//RU< Менеджер пула (админ только данного пула)
 #endif // ENABLE_POOL_MANAGER
@@ -210,10 +212,10 @@ type t_pool_create is [@layout:comb] record [
     opts: t_opts;//RU< Настройки пула
     farm: t_farm;//RU< Ферма для пула
     randomSource: t_random_source;//RU< Источник случайных чисел для розыгрышей
-    burn: option(t_token);//RU< Токен для сжигания
-    swapfarm: option(t_swap);//RU Обменник Quipuswap для обмена токенов фермы через tez
-    swapburn: option(t_swap);//RU Обменник Quipuswap для обмена токенов для сжигания через tez
-    feeaddr: option(address);//RU< Адрес, для перечисления комиссии пула
+    burnToken: option(t_token);//RU< Токен для сжигания
+    rewardSwap: option(t_swap);//RU Обменник Quipuswap для обмена токенов фермы через tez
+    burnSwap: option(t_swap);//RU Обменник Quipuswap для обмена токенов для сжигания через tez
+    feeAddr: option(address);//RU< Адрес, для перечисления комиссии пула
     state: t_pool_state;//RU< Состояние пула
 ];
 
@@ -221,11 +223,11 @@ type t_pool_create is [@layout:comb] record [
 type t_pool_edit is [@layout:comb] record [
     opts: option(t_opts);//RU< Настройки пула
     randomSource: option(t_random_source);//RU< Источник случайных чисел для розыгрышей
-    burn: option(t_token);//RU< Токен для сжигания
-    swapfarm: option(t_swap);//RU Обменник Quipuswap для обмена токенов фермы через tez
-    swapburn: option(t_swap);//RU Обменник Quipuswap для обмена токенов для сжигания через tez
-    feeaddr: option(address);//RU< Адрес, для перечисления комиссии пула
-    state: t_pool_state;//RU< Состояние пула
+    burnToken: option(t_token);//RU< Токен для сжигания
+    rewardSwap: option(t_swap);//RU Обменник Quipuswap для обмена токенов фермы через tez
+    burnSwap: option(t_swap);//RU Обменник Quipuswap для обмена токенов для сжигания через tez
+    feeAddr: option(address);//RU< Адрес, для перечисления комиссии пула
+    state: option(t_pool_state);//RU< Состояние пула
 ];
 
 type t_ipool is t_i;//RU< Индекс пула

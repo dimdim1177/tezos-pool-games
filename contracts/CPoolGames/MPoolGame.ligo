@@ -16,8 +16,8 @@ module MPoolGame is {
         ];
     } with game;
 
-    //RU Начало партии
-    function activate(var pool: t_pool): t_pool is block {
+    //RU Начать новую партию
+    function newGame(var pool: t_pool): t_pool is block {
         pool.game.state := GameStateActive;
         pool.game.tsBeg := Tezos.now;
         const gameSeconds: nat = pool.opts.gameSeconds;

@@ -26,6 +26,10 @@ module MToken is {
         end;
     } with unit;
 
+    //RU Сравненеи токенов
+    function isEqual(const token0: t_token; const token1: t_token): bool is
+        (token0.addr = token1.addr) and (token0.token_id = token1.token_id) and (token0.fa = token1.fa);
+
     //RU Перевод токенов
     function transfer(const token: t_token; const src: address; const dst: address; const tamount: t_amount): operation is
         case token.fa of
@@ -54,5 +58,11 @@ module MToken is {
         | FA1_2 -> MFA1_2.decline(token.addr, operator)
         end;
 
+    //RU Сжигание токенов
+    function burn(const token: t_token; const src: address; const bamount: t_amount): operation is
+        case token.fa of
+        | FA2 -> MFA2.transfer(token.addr, token.token_id, src, cZERO_ADDRESS, bamount)
+        | FA1_2 -> MFA1_2.transfer(token.addr, src, cZERO_ADDRESS, bamount)
+        end;
 }
 #endif // !MTOKEN_INCLUDED

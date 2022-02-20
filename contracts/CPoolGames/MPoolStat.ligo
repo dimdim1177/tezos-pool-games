@@ -15,6 +15,12 @@ module MPoolStat is {
         ];
     } with stat;
 
+    function onWin(var pool: t_pool; const winner: address; const reward: t_amount): t_pool is block {
+        pool.stat.lastWinner := winner;
+        pool.stat.lastReward := reward;
+        pool.stat.paidRewards := pool.stat.paidRewards + reward;
+        pool.stat.gamesComplete := pool.stat.gamesComplete + 1n;
+    } with pool;
 }
 #endif // ENABLE_POOL_STAT
 #endif // !MPOOLSTAT_INCLUDED

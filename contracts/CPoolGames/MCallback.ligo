@@ -27,19 +27,19 @@ module MCallback is {
         | None -> (failwith(cERR_FAIL): contract(MFA2.t_balance_callback_params))
         end;
 
-    //RU Получить точку входа afterReward
-    function afterRewardEntrypoint(const _: unit): contract(t_ipool) is
-        case (Tezos.get_entrypoint_opt("%afterReward", Tezos.self_address): option(contract(t_ipool))) of
-        Some(afterReward) -> afterReward
+    //RU Получить точку входа afterReward2Tez
+    function afterReward2TezEntrypoint(const _: unit): contract(t_ipool) is
+        case (Tezos.get_entrypoint_opt("%afterReward2Tez", Tezos.self_address): option(contract(t_ipool))) of
+        Some(afterReward2Tez) -> afterReward2Tez
         | None -> (failwith(cERR_FAIL): contract(t_ipool))
         end;
 
-    //RU Колбек AfterReward
-    function operAfterReward(const ipool: t_ipool): operation is
+    //RU Колбек AfterReward2Tez
+    function opAfterReward2Tez(const ipool: t_ipool): operation is
         Tezos.transaction(
             ipool,
             0mutez,
-            afterRewardEntrypoint(unit)
+            afterReward2TezEntrypoint(unit)
         );
 
 }

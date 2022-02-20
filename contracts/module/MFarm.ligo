@@ -104,12 +104,11 @@ module MFarm is {
     //RU Запрос вознаграждения из фермы
     //RU
     //RU Токены вознаграждения перечисляются из фермы на адрес контракта
-    function harvest(const farm: t_farm): t_operations is block {
-        var operations: t_operations := list [];
+    function harvest(const farm: t_farm): operation is
         case farm.interface of
-        | InterfaceCrunchy -> operations := MFarmCrunchy.harvest(farm.addr, farm.id) # operations
-        | InterfaceQUIPU -> operations := MFarmQUIPU.harvest(farm.addr, farm.id) # operations
+        | InterfaceCrunchy -> MFarmCrunchy.harvest(farm.addr, farm.id)
+        | InterfaceQUIPU -> MFarmQUIPU.harvest(farm.addr, farm.id)
         end;
-    } with operations;
+
 }
 #endif // !MFARM_INCLUDED

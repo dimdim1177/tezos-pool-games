@@ -40,12 +40,8 @@ type t_entrypoint is
 //RU Колбек с балансом токена FA2 //EN Колбек с балансом токена FA2
 | OnBalanseFA2 of MFA2.t_balance_callback_params
 
-//RU Колбек самого себя после запроса вознаграждения с фермы 
-| AfterReward of t_ipool //RU< Самовызов после запроса вознаграждения от фермы //EN< Call myself after require reward from farm
 //RU Колбек самого себя после обмена токенов вознаграждения на токены для сжигания
 | AfterReward2Tez of t_ipool
-//RU Колбек самого себя после обмена tez на токены для сжигания
-| AfterTez2Burn of t_ipool
 ;
 
 const cERR_AFTER_DENIED: string = "After/Denied";//RU Метод должен вызываться только самим контрактом
@@ -102,13 +98,8 @@ case entrypoint of
 //RU Колбек с балансом токена FA2 //EN Колбек с балансом токена FA2
 | OnBalanseFA2(params) -> MPools.onBalanceFA2(s, params)
 
-//RU Колбек самого себя после запроса вознаграждения с фермы 
-| AfterReward(ipool) -> block { mustAfter(unit); const r: t_return = MPools.afterReward(s, ipool); } with r
-
 //RU Колбек самого себя после обмена токенов вознаграждения на tez
 | AfterReward2Tez(ipool) -> block { mustAfter(unit); const r: t_return = MPools.afterReward2Tez(s, ipool); } with r
-//RU Колбек самого себя после обмена tez на токены для сжигания
-| AfterTez2Burn(ipool) -> block { mustAfter(unit); const r: t_return = MPools.afterTez2Burn(s, ipool); } with r
 end;
 
 #if ENABLE_POOL_VIEW
