@@ -20,7 +20,7 @@
 //RU
 //RU Полный доступ ко всем операциям (включая добавление/удаление других админов]), кроме смены владельца
 //EN Contract has set of admins
-//#Define ENABLE_ADMINS
+//#define ENABLE_ADMINS
 
 //RU Необходимы либо ENABLE_ADMIN, либо ENABLE_ADMINS, но не оба сразу
 #if (ENABLE_ADMIN) && (ENABLE_ADMINS)

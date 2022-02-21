@@ -20,7 +20,7 @@
 //RU
 //RU Полный доступ ко всем операциям (включая добавление/удаление других админов]), кроме смены владельца
 //EN Contract has set of admins
-//#Define ENABLE_ADMINS
+//#define ENABLE_ADMINS
 
 //RU Необходимы либо ENABLE_ADMIN, либо ENABLE_ADMINS, но не оба сразу
 #if (ENABLE_ADMIN) && (ENABLE_ADMINS)
@@ -33,10 +33,10 @@
 #endif
 
 //RU Статистика работы пула (для продвижения: объем выплат, кол-во розыгрышей)
-#define ENABLE_POOL_STAT
+//#define ENABLE_POOL_STAT
 
 //RU Сгенерировать view для просмотра основной информации пула по его ID из других контрактов
-#define ENABLE_POOL_VIEW
+//#define ENABLE_POOL_VIEW
 
 //RU У пулов есть менеджеры (админ одного пула)
 //RU
@@ -46,7 +46,7 @@
 //RU Пулы для розыгрышей как сервис
 //RU
 //RU Создать пул может любой, он и будет его единственным админом, владелец и админы контракта не будут иметь доступа к пулу
-//#Define ENABLE_POOL_AS_SERVICE
+#define ENABLE_POOL_AS_SERVICE
 
 //RU Необходим ENABLE_POOL_MANAGER, если включен ENABLE_POOL_AS_SERVICE
 #if (ENABLE_POOL_AS_SERVICE) && (!ENABLE_POOL_MANAGER)
@@ -57,7 +57,7 @@
 //RU
 //RU Если включено, при переводе токенов сначала делается approve AMOUNT|add_operator, после перевода approve 0|remove_operator.
 //RU Если выключено, однократно включается approve MAXAMOUNT|add_operator и более не отзывается
-//#Define ENABLE_TRANSFER_SECURITY
+//#define ENABLE_TRANSFER_SECURITY
 
 //RU Сгенерировать view для баланса пользователя в пуле
 #define ENABLE_BALANCE_VIEW

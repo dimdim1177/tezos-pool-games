@@ -269,6 +269,11 @@ type t_pool_info is [@layout:comb] record [
 ];
 #endif // ENABLE_POOL_VIEW
 
+//RU Адрес, которому разрешено списывать токены с контракта
+type t_approve is address * t_token;
+//RU Уже одобренные адреса для списания токенов с контракта
+type t_approved is big_map(t_approve, unit);
+
 //RU Идентификация фермы
 type t_farm_ident is address * nat;
 //RU Использованные фермы
@@ -276,5 +281,6 @@ type t_farms is big_map(t_farm_ident, unit);
 
 //RU Прототип методов After
 type t_after_method is After of t_ipool;
+
 
 #endif // !TYPES_INCLUDED

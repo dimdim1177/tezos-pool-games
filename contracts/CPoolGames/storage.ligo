@@ -30,7 +30,7 @@ type t_storage is [@layout:comb] record [
     //RU Адреса, которым уже одобрили использование токенов контракта
     //RU
     //RU Для уменьшения кол-ва операций, одобряем ферме использование токенов контракта только один раз
-    approved: big_map(address, unit);
+    approved: t_approved;
 #endif // !ENABLE_TRANSFER_SECURITY
 ];
 
