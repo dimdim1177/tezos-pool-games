@@ -20,10 +20,10 @@ module MToken is {
 
     //RU Проверка параметров токена на валидность
     function check(const token: t_token): unit is block {
-        case token.fa of
+        case token.fa of [
         | FA2 -> MFA2.check(token.addr) //RU Проверяем наличие метода transfer для FA2
         | FA1_2 -> MFA1_2.check(token.addr) //RU Проверяем наличие метода transfer для FA1.2
-        end;
+        ];
     } with unit;
 
     //RU Сравненеи токенов
@@ -32,37 +32,37 @@ module MToken is {
 
     //RU Перевод токенов
     function transfer(const token: t_token; const src: address; const dst: address; const tamount: t_amount): operation is
-        case token.fa of
+        case token.fa of [
         | FA2 -> MFA2.transfer(token.addr, token.token_id, src, dst, tamount)
         | FA1_2 -> MFA1_2.transfer(token.addr, src, dst, tamount)
-        end;
+        ];
 
     //RU Запрос баланса токенов
     function balanceOf(const token: t_token; const owner: address; const callbackFA1_2: MFA1_2.t_balance_callback; const callbackFA2: MFA2.t_balance_callback): operation is
-        case token.fa of
+        case token.fa of [
         | FA2 -> MFA2.balanceOf(token.addr, token.token_id, owner, callbackFA2)
         | FA1_2 -> MFA1_2.balanceOf(token.addr, owner, callbackFA1_2)
-        end;
+        ];
 
     //RU Одобрение распоряжения токенами
     function approve(const token: t_token; const operator: address; const tamount: t_amount): operation is
-        case token.fa of
+        case token.fa of [
         | FA2 -> MFA2.approve(token.addr, token.token_id, operator)
         | FA1_2 -> MFA1_2.approve(token.addr, operator, tamount)
-        end;
+        ];
 
     //RU Запрет распоряжения токенами
     function decline(const token: t_token; const operator: address): operation is
-        case token.fa of
+        case token.fa of [
         | FA2 -> MFA2.decline(token.addr, token.token_id, operator)
         | FA1_2 -> MFA1_2.decline(token.addr, operator)
-        end;
+        ];
 
     //RU Сжигание токенов
     function burn(const token: t_token; const src: address; const bamount: t_amount): operation is
-        case token.fa of
+        case token.fa of [
         | FA2 -> MFA2.transfer(token.addr, token.token_id, src, cZERO_ADDRESS, bamount)
         | FA1_2 -> MFA1_2.transfer(token.addr, src, cZERO_ADDRESS, bamount)
-        end;
+        ];
 }
 #endif // !MTOKEN_INCLUDED

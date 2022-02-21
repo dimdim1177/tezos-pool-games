@@ -44,10 +44,10 @@ module MFarmQUIPU is {
 
     //RU Получить точку входа deposit фермы с интерфейсом QUIPU
     function depositEntrypoint(const addr: address): t_deposit_contract is
-        case (Tezos.get_entrypoint_opt("%deposit", addr): option(t_deposit_contract)) of
-        Some(deposit_contract) -> deposit_contract
+        case (Tezos.get_entrypoint_opt("%deposit", addr): option(t_deposit_contract)) of [
+        | Some(deposit_contract) -> deposit_contract
         | None -> (failwith(cERR_NOT_FOUND_DEPOSIT): t_deposit_contract)
-        end
+        ];
 
     //RU Параметры для метода deposit QUIPU
     function depositParams(const farm_id: t_farm_id; const damount: t_amount): t_deposit_method is
@@ -69,10 +69,10 @@ module MFarmQUIPU is {
 
     //RU Получить точку входа withdraw фермы с интерфейсом QUIPU
     function withdrawEntrypoint(const addr: address): t_withdraw_contract is
-        case (Tezos.get_entrypoint_opt("%withdraw", addr): option(t_withdraw_contract)) of
-        Some(withdraw_contract) -> withdraw_contract
+        case (Tezos.get_entrypoint_opt("%withdraw", addr): option(t_withdraw_contract)) of [
+        | Some(withdraw_contract) -> withdraw_contract
         | None -> (failwith(cERR_NOT_FOUND_WITHDRAW): t_withdraw_contract)
-        end
+        ];
 
     //RU Параметры для метода deposit QUIPU
     function withdrawParams(const farm_id: t_farm_id; const wamount: t_amount): t_withdraw_method is
@@ -93,10 +93,10 @@ module MFarmQUIPU is {
 
     //RU Получить точку входа harvest фермы с интерфейсом QUIPU
     function harvestEntrypoint(const addr: address): t_harvest_contract is
-        case (Tezos.get_entrypoint_opt("%harvest", addr): option(t_harvest_contract)) of
-        Some(harvest_contract) -> harvest_contract
+        case (Tezos.get_entrypoint_opt("%harvest", addr): option(t_harvest_contract)) of [
+        | Some(harvest_contract) -> harvest_contract
         | None -> (failwith(cERR_NOT_FOUND_HARVEST): t_harvest_contract)
-        end
+        ];
 
     //RU Параметры для метода harvest QUIPU
     function harvestParams(const farm_id: t_farm_id): t_harvest_method is

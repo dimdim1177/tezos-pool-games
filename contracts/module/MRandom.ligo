@@ -50,10 +50,10 @@ module MRandom is {
 
     //RU Получить точку входа createFuture
     function createFutureEntrypoint(const addr: address): t_create_contract is
-        case (Tezos.get_entrypoint_opt("%createFuture", addr): option(t_create_contract)) of
-        Some(create_contract) -> create_contract
+        case (Tezos.get_entrypoint_opt("%createFuture", addr): option(t_create_contract)) of [
+        | Some(create_contract) -> create_contract
         | None -> (failwith(cERR_NOT_FOUND_CREATE): t_create_contract)
-        end;
+        ];
 
     //RU Параметры для создания запроса случайного числа
     function createParams(const ts: t_ts; const iobj: t_iobj): t_create is
@@ -69,10 +69,10 @@ module MRandom is {
 
     //RU Получить точку входа deleteFuture
     function deleteFutureEntrypoint(const addr: address): t_delete_contract is
-        case (Tezos.get_entrypoint_opt("%deleteFuture", addr): option(t_delete_contract)) of
-        Some(delete_contract) -> delete_contract
+        case (Tezos.get_entrypoint_opt("%deleteFuture", addr): option(t_delete_contract)) of [
+        | Some(delete_contract) -> delete_contract
         | None -> (failwith(cERR_NOT_FOUND_DELETE): t_delete_contract)
-        end;
+        ];
 
 
     //RU Параметры для удаления запроса случайного числа
@@ -89,10 +89,10 @@ module MRandom is {
 
     //RU Получить точку входа getFuture
     function getFutureEntrypoint(const addr: address): t_get_contract is
-        case (Tezos.get_entrypoint_opt("%getFuture", addr): option(t_get_contract)) of
-        Some(contract) -> contract
+        case (Tezos.get_entrypoint_opt("%getFuture", addr): option(t_get_contract)) of [
+        | Some(contract) -> contract
         | None -> (failwith(cERR_NOT_FOUND_GET): t_get_contract)
-        end;
+        ];
 
     //RU Параметры для получения случайного числа
     function getParams(const ts: t_ts; const iobj: t_iobj; const callback: t_callback): t_get is

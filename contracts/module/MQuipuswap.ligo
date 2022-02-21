@@ -23,10 +23,10 @@ module MQuipuswap is {
 
     //RU Получить точку входа tezToTokenPayment
     function tez2tokenEntrypoint(const addr: address): t_tez2token_contract is
-        case (Tezos.get_entrypoint_opt("%tezToTokenPayment", addr): option(t_tez2token_contract)) of
-        Some(contract) -> contract
+        case (Tezos.get_entrypoint_opt("%tezToTokenPayment", addr): option(t_tez2token_contract)) of [
+        | Some(contract) -> contract
         | None -> (failwith(cERR_NOT_FOUND_TEZ2TOKEN): t_tez2token_contract)
-        end;
+        ];
 
     //RU Параметры для обмена tezToTokenPayment
     function tez2tokenParams(const min_out: nat; const receiver: address): t_tez2token_method is
@@ -42,10 +42,10 @@ module MQuipuswap is {
 
     //RU Получить точку входа tokenToTezPayment
     function token2tezEntrypoint(const addr: address): t_token2tez_contract is
-        case (Tezos.get_entrypoint_opt("%tokenToTezPayment", addr): option(t_token2tez_contract)) of
-        Some(contract) -> contract
+        case (Tezos.get_entrypoint_opt("%tokenToTezPayment", addr): option(t_token2tez_contract)) of [
+        | Some(contract) -> contract
         | None -> (failwith(cERR_NOT_FOUND_TOKEN2TEZ): t_token2tez_contract)
-        end;
+        ];
 
     //RU Параметры для обмена tokenToTezPayment
     function token2tezParams(const tamount: nat; const min_out: nat; const receiver: address): t_token2tez_method is

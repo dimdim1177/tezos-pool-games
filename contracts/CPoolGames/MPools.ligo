@@ -13,10 +13,10 @@ module MPools is {
     //RU
     //RU Если пул не найден, будет возвращена ошибка cERR_NOT_FOUND
     function getPool(const s: t_storage; const ipool: t_ipool): t_pool is
-        case s.pools[ipool] of
-        Some(pool) -> pool
+        case s.pools[ipool] of [
+        | Some(pool) -> pool
         | None -> (failwith(cERR_NOT_FOUND) : t_pool)
-        end;
+        ];
 
     //RU Обновить пул по индексу
     [@inline] function setPool(var s: t_storage; const ipool: t_ipool; const pool: t_pool): t_storage is block {
@@ -27,7 +27,7 @@ module MPools is {
     //RU
     //RU Пользователь идентифицируется по Tezos.sender
     function getUser(const s: t_storage; const ipool: t_ipool): t_user is
-        case s.users[(ipool, Tezos.sender)] of
+        case s.users[(ipool, Tezos.sender)] of [
         | Some(user) -> user
         | None -> record [//RU Параметры пользователя по умолчанию
             tsPool = Tezos.now;
@@ -35,7 +35,7 @@ module MPools is {
             tsBalance = Tezos.now;
             addWeight = 0n;
         ]
-        end;
+        ];
 
     //RU Обновить текущие параметры пользователя в пуле
     //RU
@@ -84,7 +84,7 @@ module MPools is {
     function removePool(var s: t_storage; const ipool: t_ipool): t_storage is block {
         const pool: t_pool = getPool(s, ipool);
         MPool.mustManager(s, pool);//RU Проверка доступа к пулу
-        if 0n = pool.balance then s := doRemovePool(s, ipool, pool);//RU Пул уже пуст, можно удалить прямо сейчас
+        if 0n = pool.balance then s := doRemovePool(s, ipool, pool)//RU Пул уже пуст, можно удалить прямо сейчас
         else s := setPoolState(s, ipool, PoolStateRemove);//RU Удалим, когда все заберут депозиты
     } with s;
 
@@ -164,7 +164,7 @@ module MPools is {
         var user: t_user := getUser(s, ipool);
         const r: t_pool * t_user * t_operations = MPool.withdraw(ipool, pool, user, wamount);
         if (0n = pool.balance) and (PoolStateRemove = pool.state) then //RU Пул на удаление, забрали последний депозит
-            s := doRemovePool(s, ipool, pool);//RU Удаляем пул
+            s := doRemovePool(s, ipool, pool)//RU Удаляем пул
         else s := setPool(s, ipool, r.0);
         s := setUser(s, ipool, r.1);
     } with (r.2, s);
@@ -220,13 +220,13 @@ module MPools is {
     //RU Колбек с балансом токена FA2
     function onBalanceFA2(var s: t_storage; const params: MFA2.t_balance_callback_params): t_return is block {
         var operations: t_operations := cNO_OPERATIONS;
-        case List.head_opt(params) of
+        case List.head_opt(params) of [
         Some(req) -> block {
             const r: t_return = onBalance(s, req.balance);
             operations := r.0; s := r.1;
         }
         | None -> skip
-        end;
+        ];
     } with (operations, s);
 
     //RU Колбек самого себя после обмена токенов вознаграждения на tez

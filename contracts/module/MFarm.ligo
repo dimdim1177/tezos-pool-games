@@ -50,10 +50,10 @@ module MFarm is {
     function check(const farm: t_farm): unit is block {
         MToken.check(farm.farmToken);
         MToken.check(farm.rewardToken);
-        case farm.interface of
+        case farm.interface of [
         | InterfaceCrunchy -> MFarmCrunchy.check(farm.addr)
         | InterfaceQUIPU -> MFarmQUIPU.check(farm.addr)
-        end;
+        ];
     } with unit;
 
     //RU Инвестирование токенов фермы в ферму пользователем через контракта
@@ -67,10 +67,10 @@ module MFarm is {
         operations := MToken.decline(farm.farmToken, farm.addr) # operations;
 #endif // ENABLE_TRANSFER_SECURITY
         //RU Вызываем метод депозита в ферму
-        case farm.interface of
+        case farm.interface of [
         | InterfaceCrunchy -> operations := MFarmCrunchy.deposit(farm.addr, farm.id, damount) # operations
         | InterfaceQUIPU -> operations := MFarmQUIPU.deposit(farm.addr, farm.id, damount) # operations
-        end;
+        ];
 #if ENABLE_TRANSFER_SECURITY
         //RU Разрешаем перевод токенов ферме с контракта
         if (doapprove) then operations := MToken.approve(farm.farmToken, farm.addr, damount) # operations
@@ -95,20 +95,20 @@ module MFarm is {
         //RU Переводим токены с контракта на адрес пользователя
         operations := MToken.transfer(farm.farmToken, Tezos.self_address, Tezos.sender, wamount) # operations;
         //RU Вызываем извлечение депозита из фермы
-        case farm.interface of
+        case farm.interface of [
         | InterfaceCrunchy -> operations := MFarmCrunchy.withdraw(farm.addr, farm.id, wamount) # operations
         | InterfaceQUIPU -> operations := MFarmQUIPU.withdraw(farm.addr, farm.id, wamount) # operations
-        end;
+        ];
     } with operations;
 
     //RU Запрос вознаграждения из фермы
     //RU
     //RU Токены вознаграждения перечисляются из фермы на адрес контракта
     function harvest(const farm: t_farm): operation is
-        case farm.interface of
+        case farm.interface of [
         | InterfaceCrunchy -> MFarmCrunchy.harvest(farm.addr, farm.id)
         | InterfaceQUIPU -> MFarmQUIPU.harvest(farm.addr, farm.id)
-        end;
+        ];
 
 }
 #endif // !MFARM_INCLUDED

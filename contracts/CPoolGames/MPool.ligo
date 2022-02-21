@@ -55,71 +55,70 @@ module MPool is {
 
     //RU Проверка настроек для сжигания
     function checkBurn(const rewardToken: t_token; const optburnToken: option(t_token); const optrewardSwap: option(t_swap); const optburnSwap: option(t_swap)): unit is block {
-        case optburnToken of
-        Some(burnToken) -> block {
+        case optburnToken of [
+        | Some(burnToken) -> block {
             MToken.check(burnToken);
             if MToken.isEqual(rewardToken, burnToken) then skip
             else block {
-                case optrewardSwap of
-                Some(rewardSwap) -> MQuipuswap.check(rewardSwap)
+                case optrewardSwap of [
+                | Some(rewardSwap) -> MQuipuswap.check(rewardSwap)
                 | None -> failwith(cERR_MUST_REWARD_SWAP)
-                end;
-                case optburnSwap of
-                Some(burnSwap) -> MQuipuswap.check(burnSwap)
+                ];
+                case optburnSwap of [
+                | Some(burnSwap) -> MQuipuswap.check(burnSwap)
                 | None -> failwith(cERR_MUST_BURN_SWAP)
-                end;
+                ];
             };
         }
         | None -> failwith(cERR_MUST_BURN_TOKEN)
-        end;
+        ];
     } with unit;
 
     //RU Снятие option с адреса для комиссии пула
     function getFeeAddr(const pool: t_pool): address is
-        case pool.feeAddr of
-        Some(feeAddr) -> feeAddr
+        case pool.feeAddr of [
+        | Some(feeAddr) -> feeAddr
         | None -> (failwith(cERR_LOGIC): address)
-        end;
+        ];
 
     //RU Снятие option с адреса фермы Quipuswap для обмена токенов вознаграждения
     function getSwapReward(const pool: t_pool): address is
-        case pool.rewardSwap of
-        Some(rewardSwap) -> rewardSwap
+        case pool.rewardSwap of [
+        | Some(rewardSwap) -> rewardSwap
         | None -> (failwith(cERR_LOGIC): address)
-        end;
+        ];
 
     //RU Снятие option с описания токена для сжигания
     function getBurnToken(const pool: t_pool): t_token is
-        case pool.burnToken of
-        Some(burnToken) -> burnToken
+        case pool.burnToken of [
+        | Some(burnToken) -> burnToken
         | None -> (failwith(cERR_LOGIC): t_token)
-        end;
+        ];
 
     //RU Снятие option с адреса фермы Quipuswap для обмена токенов для сжигания
     function getSwapBurn(const pool: t_pool): address is
-        case pool.burnSwap of
-        Some(burnSwap) -> burnSwap
+        case pool.burnSwap of [
+        | Some(burnSwap) -> burnSwap
         | None -> (failwith(cERR_LOGIC): address)
-        end;
+        ];
 
     //RU Создание нового пула
     function create(const pool_create: t_pool_create): t_pool is block {
         //RU Проверяем все входные параметры
-        if PoolStateRemove = pool_create.state then failwith(cERR_INVALID_STATE);
-        else skip;
+        if PoolStateRemove = pool_create.state then failwith(cERR_INVALID_STATE) else skip;
         MPoolOpts.check(pool_create.opts);
         MFarm.check(pool_create.farm);
         MRandom.check(pool_create.randomSource);
         //RU Проверяем настройки для сжигания только если они необходимы
         if MPoolOpts.maybeNoBurn(pool_create.opts) then skip
         else checkBurn(pool_create.farm.rewardToken, pool_create.burnToken, pool_create.rewardSwap, pool_create.burnSwap);
-        case pool_create.feeAddr of
-        Some(_feeAddr) -> skip
+        case pool_create.feeAddr of [
+        | Some(_feeAddr) -> skip
         | None -> block {
             if MPoolOpts.maybeNoFeeAddr(pool_create.opts) then skip
             else failwith(cERR_MUST_FEEADDR);
         }
-        end;
+        ];
 
     // RU И если все корректно, формируем начальные данные пула
         var gameState: t_game_state := GameStateActive;
@@ -163,46 +162,45 @@ module MPool is {
 
     //RU Редактирование параметров пула
     function edit(var pool: t_pool; const pool_edit: t_pool_edit): t_pool is block {
-        if isActive(pool) then failwith(cERR_EDIT_ACTIVE);
-        else skip;
-        case pool_edit.opts of
-        Some(opts) -> block {
+        if isActive(pool) then failwith(cERR_EDIT_ACTIVE) else skip;
+        case pool_edit.opts of [
+        | Some(opts) -> block {
             MPoolOpts.check(opts);
             pool.opts := opts;
         }
         | None -> skip
-        end;
-        case pool_edit.randomSource of
-        Some(randomSource) -> block {
+        ];
+        case pool_edit.randomSource of [
+        | Some(randomSource) -> block {
             MRandom.check(randomSource);
             pool.randomSource := randomSource;
         }
         | None -> skip
-        end;
+        ];
         //RU Настройки для сжигания просто пишем, если поданы, проверим потом
-        case pool_edit.burnToken of
-        Some(burnToken) -> pool.burnToken := Some(burnToken)
+        case pool_edit.burnToken of [
+        | Some(burnToken) -> pool.burnToken := Some(burnToken)
         | None -> skip
-        end;
-        case pool_edit.rewardSwap of
-        Some(rewardSwap) -> pool.rewardSwap := Some(rewardSwap)
+        ];
+        case pool_edit.rewardSwap of [
+        | Some(rewardSwap) -> pool.rewardSwap := Some(rewardSwap)
         | None -> skip
-        end;
-        case pool_edit.burnSwap of
-        Some(burnSwap) -> pool.burnSwap := Some(burnSwap)
+        ];
+        case pool_edit.burnSwap of [
+        | Some(burnSwap) -> pool.burnSwap := Some(burnSwap)
         | None -> skip
-        end;
+        ];
         //RU Проверяем настройки для сжигания только если они необходимы
         if MPoolOpts.maybeNoBurn(pool.opts) then skip
         else checkBurn(pool.farm.rewardToken, pool.burnToken, pool.rewardSwap, pool.burnSwap);
-        case pool_edit.feeAddr of
-        Some(feeAddr) -> pool.feeAddr := Some(feeAddr)
+        case pool_edit.feeAddr of [
+        | Some(feeAddr) -> pool.feeAddr := Some(feeAddr)
         | _ -> skip
-        end;
-        case pool_edit.state of
-        Some(state) -> pool.state := state
+        ];
+        case pool_edit.state of [
+        | Some(state) -> pool.state := state
         | _ -> skip
-        end;
+        ];
     } with pool;
 
     //RU Запуск новой партии, если необходимо

@@ -23,11 +23,11 @@ module MPoolGame is {
         const gameSeconds: nat = pool.opts.gameSeconds;
         pool.game.tsEnd := Tezos.now + int(gameSeconds);
         //RU Вес партии заполняем так, как будто все пользователи пробудут всю партию, при изменениях вес будет корректироваться
-        case pool.opts.algo of
+        case pool.opts.algo of [
         | AlgoTime -> pool.game.weight := pool.count * gameSeconds
         | AlgoTimeVol -> pool.game.weight := pool.balance * gameSeconds
         | AlgoEqual -> pool.game.weight := pool.count
-        end;
+        ];
         pool.randomFuture := False;//RU Пока не заказывали случайное число
     } with pool;
 
@@ -37,7 +37,7 @@ module MPoolGame is {
         const tsEnd: timestamp = pool.game.tsEnd;
         const goodMin: bool = ((user.tsPool + int(pool.opts.minSeconds)) > tsEnd);//RU Вступил в пул с соблюдением минимума по секундам
         if (GameStateActive = pool.game.state) and (goodMin) then block {
-            case pool.opts.algo of
+            case pool.opts.algo of [
             | AlgoTime -> block {
                 //RU Депозит в этом алгоритме влияет на вес только при внесении
                 if 0n = user.balance then pool.game.weight := pool.game.weight + abs(tsEnd - Tezos.now)
@@ -63,7 +63,7 @@ module MPoolGame is {
                 if 0n = user.balance then pool.game.weight := pool.game.weight + 1n
                 else skip;
             }
-            end;
+            ];
         } else skip;
     } with (pool, user);
 
@@ -76,7 +76,7 @@ module MPoolGame is {
             if (wamount = user.balance) and (goodMin) then block {//RU Полное извлечение, удаление участника
                 //RU Для вычисления весов моментом внесения баланса является максимум из момента внесения и начала партии
                 const tsBeg: timestamp = pool.game.tsBeg;
-                case pool.opts.algo of
+                case pool.opts.algo of [
                 | AlgoTime -> block {
                     var tsPool: timestamp := user.tsPool;
                     if tsPool < tsBeg then tsPool := tsBeg else skip;
@@ -94,7 +94,7 @@ module MPoolGame is {
                     };
                 }
                 | AlgoEqual -> pool.game.weight := abs(pool.game.weight - 1n)
-                end;
+                ];
             } else block {//RU Частичное извлечение депозита
                 if (AlgoTimeVol = pool.opts.algo) and (goodMin) then block {
                     const tsBalance: timestamp = user.tsBalance;

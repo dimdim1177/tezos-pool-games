@@ -5,7 +5,7 @@ dotenv.config();
 
 export const config = {
   repoName: "tzpool",
-  ligoVersion: "0.35.0", // ligo version | grep -E -o "[0-9]+\.[0-9]+\.[0-9]+"
+  ligoVersion: "0.36.0", // ligo version | grep -E -o "[0-9]+\.[0-9]+\.[0-9]+"
   preferredLigoFlavor: "pascaligo",
   networks: {
     sandbox: {

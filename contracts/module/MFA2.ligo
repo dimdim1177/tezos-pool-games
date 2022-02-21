@@ -93,10 +93,10 @@ module MFA2 is {
 
     //RU Получить точку входа transfer токена
     function transferEntrypoint(const addr: address): t_transfer_contract is
-        case (Tezos.get_entrypoint_opt("%transfer", addr): option(t_transfer_contract)) of
-        Some(transfer_contract) -> transfer_contract
+        case (Tezos.get_entrypoint_opt("%transfer", addr): option(t_transfer_contract)) of [
+        | Some(transfer_contract) -> transfer_contract
         | None -> (failwith(cERR_NOT_FOUND_TRANSFER): t_transfer_contract)
-        end
+        ];
 
     //RU Параметры для перевода токенов
     function transferParams(const token_id: t_token_id; const src: address; const dst: address; const tamount: nat): t_transfer_method is
@@ -123,10 +123,10 @@ module MFA2 is {
 
     //RU Получить точку входа balance_of токена
     function balanceEntrypoint(const addr: address): t_balance_contract is
-        case (Tezos.get_entrypoint_opt("%balance_of", addr): option(t_balance_contract)) of
-        Some(balance_contract) -> balance_contract
+        case (Tezos.get_entrypoint_opt("%balance_of", addr): option(t_balance_contract)) of [
+        | Some(balance_contract) -> balance_contract
         | None -> (failwith(cERR_NOT_FOUND_BALANCEOF): t_balance_contract)
-        end;
+        ];
 
     //RU Параметры для запроса баланса токенов
     function balanceParams(const token_id: t_token_id; const owner: address; const callback: t_balance_callback): t_balance_method is
@@ -150,10 +150,10 @@ module MFA2 is {
 
     //RU Получить точку входа update_operators токена
     function operatorsEntrypoint(const addr: address): t_operators_contract is
-        case (Tezos.get_entrypoint_opt("%update_operators", addr): option(t_operators_contract)) of
-        Some(operators_contract) -> operators_contract
+        case (Tezos.get_entrypoint_opt("%update_operators", addr): option(t_operators_contract)) of [
+        | Some(operators_contract) -> operators_contract
         | None -> (failwith(cERR_NOT_FOUND_OPERATORS): t_operators_contract)
-        end;
+        ];
 
     //RU Параметры для одобрения распоряжения токенами
     function approveParams(const token_id: t_token_id; const operator: address): t_operators_method is

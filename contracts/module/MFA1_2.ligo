@@ -58,10 +58,10 @@ module MFA1_2 is {
 
     //RU Получить точку входа transfer токена
     function transferEntrypoint(const addr: address): t_transfer_contract is
-        case (Tezos.get_entrypoint_opt("%transfer", addr): option(t_transfer_contract)) of
-        Some(transfer_contract) -> transfer_contract
+        case (Tezos.get_entrypoint_opt("%transfer", addr): option(t_transfer_contract)) of [
+        | Some(transfer_contract) -> transfer_contract
         | None -> (failwith(cERR_NOT_FOUND_TRANSFER): t_transfer_contract)
-        end;
+        ];
 
     //RU Параметры для перевода токенов
     function transferParams(const src: address; const dst: address; const tamount: nat): t_transfer_method is
@@ -81,10 +81,10 @@ module MFA1_2 is {
 
     //RU Получить точку входа balance токена
     function balanceEntrypoint(const addr: address): t_balance_contract is
-        case (Tezos.get_entrypoint_opt("%getBalance", addr): option(t_balance_contract)) of
-        Some(balance_contract) -> balance_contract
+        case (Tezos.get_entrypoint_opt("%getBalance", addr): option(t_balance_contract)) of [
+        | Some(balance_contract) -> balance_contract
         | None -> (failwith(cERR_NOT_FOUND_BALANCE): t_balance_contract)
-        end;
+        ];
 
     //RU Параметры для запроса баланса
     function balanceParams(const owner: address; const callback: t_balance_callback): t_balance_method is
@@ -103,10 +103,10 @@ module MFA1_2 is {
 
     //RU Получить точку входа approve токена
     function approveEntrypoint(const addr: address): t_approve_contract is
-        case (Tezos.get_entrypoint_opt("%approve", addr): option(t_approve_contract)) of
-        Some(approve_contract) -> approve_contract
+        case (Tezos.get_entrypoint_opt("%approve", addr): option(t_approve_contract)) of [
+        | Some(approve_contract) -> approve_contract
         | None -> (failwith(cERR_NOT_FOUND_APPROVE): t_approve_contract)
-        end;
+        ];
 
     //RU Параметры для одобрения распоряжения токенами
     function approveParams(const operator: address; const tamount: nat): t_approve_method is

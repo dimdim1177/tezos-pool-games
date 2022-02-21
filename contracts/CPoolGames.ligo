@@ -54,7 +54,7 @@ function mustAfter(const _: unit): unit is block {
 
 //RU Единая точка входа контракта
 function main(const entrypoint: t_entrypoint; var s: t_storage): t_return is
-case entrypoint of
+case entrypoint of [
 //RU --- Управление доступами
 #if ENABLE_OWNER //RU Есть владелец контракта
 | ChangeOwner(newowner) -> (cNO_OPERATIONS, block { s.owner:= MOwner.accessChange(newowner, s.owner); } with s)
@@ -100,7 +100,7 @@ case entrypoint of
 
 //RU Колбек самого себя после обмена токенов вознаграждения на tez
 | AfterReward2Tez(ipool) -> block { mustAfter(unit); const r: t_return = MPools.afterReward2Tez(s, ipool); } with r
-end;
+];
 
 #if ENABLE_POOL_VIEW
 //RU Получение основных настроек пула по его ID любым пользователем

@@ -5,7 +5,7 @@
     if ! "$dir/debian_ubuntu.sh" ; then exit 1 ; fi
 
     # Download and install LIGO package
-    if [ ! -e /usr/local/bin/ligo ] ; then
+    if [ "force" == "$1" ] || [ ! -e /usr/local/bin/ligo ] ; then
         wget -O "$dir/ligo.deb" "https://ligolang.org/deb/ligo.deb"
         sudo dpkg -i "$dir/ligo.deb"
         rm -f "$dir/ligo.deb"

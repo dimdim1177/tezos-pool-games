@@ -26,14 +26,14 @@ const cERR_NOT_READY = "NotReady";//RU< Случайное число еще н�
 
 //RU Получение случайного числа с выдачей ошибки, если не найдено
 function getFuture(const s: t_storage; const ifuture: t_ifuture): t_future is
-    case s.futures[ifuture] of
+    case s.futures[ifuture] of [
     | Some(future) -> future
     | None -> (failwith(cERR_NOT_FOUND): t_future)
-    end;
+    ];
 
 //RU Единая точка входа контракта
 function main(const entrypoint: t_entrypoint; var s: t_storage): t_return is
-case entrypoint of
+case entrypoint of [
 //RU --- Управление доступами
 #if ENABLE_OWNER //RU Есть владелец контракта
 | ChangeOwner(newowner) -> (cNO_OPERATIONS, block { s.owner:= MOwner.accessChange(newowner, s.owner); } with s)
@@ -49,8 +49,7 @@ case entrypoint of
 //RU Создание запроса на случайное число
 | CreateFuture(ts_iobj) -> (cNO_OPERATIONS, block {
     const ts: t_ts = ts_iobj.0;
-    if ts <= Tezos.now then failwith(cERR_ONLY_FUTURE);
-    else skip;
+    if ts <= Tezos.now then failwith(cERR_ONLY_FUTURE) else skip;
     const ifuture: t_ifuture = record [
         addr = Tezos.sender;
         ts = ts;
@@ -107,4 +106,4 @@ case entrypoint of
     mustAdmin(s);
     s.futures := Big_map.remove(ifuture, s.futures);
 } with s)
-end;
+];
