@@ -1,3 +1,5 @@
+//RU< Контракт для РЕДКОЙ генерации случайного числа по запросу //EN< Contract for SELDOM generation random number by request
+
 #include "CRandom/storage.ligo"
 #include "CRandom/access.ligo"
 
@@ -20,9 +22,9 @@ type t_entrypoint is
 | ForceDeleteFuture of t_ifuture //RU< Принудительное удаление запроса на случайное число админом контракта
 ;
 
-const cERR_ONLY_FUTURE = "OnlyFuture";//RU< Время заказа случайного числа должно быть в будущем
-const cERR_NOT_FOUND = "NotFound";//RU< Не найдено случайное число
-const cERR_NOT_READY = "NotReady";//RU< Случайное число еще не получено
+const cERR_ONLY_FUTURE: string = "OnlyFuture";//RU< Время заказа случайного числа должно быть в будущем
+const cERR_NOT_FOUND: string = "NotFound";//RU< Не найдено случайное число
+const cERR_NOT_READY: string = "NotReady";//RU< Случайное число еще не получено
 
 //RU Получение случайного числа с выдачей ошибки, если не найдено
 function getFuture(const s: t_storage; const ifuture: t_ifuture): t_future is

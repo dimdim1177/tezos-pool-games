@@ -1,7 +1,11 @@
+//RU< Контракт розыгрышей вознаграждения на пулах депозитов в фермы //EN< Contract for reward drawing on pools of deposits to farms
+
 #include "CPoolGames/storage.ligo"
 #include "CPoolGames/access.ligo"
 #include "CPoolGames/MPools.ligo"
 
+//RU Все точки входа контракта
+//EN All entrypoints of contract
 type t_entrypoint is
 //RU --- Управление доступами
 #if ENABLE_OWNER

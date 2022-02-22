@@ -23,8 +23,8 @@ module MOwner is {
     
     type t_owner is address; //RU< Владелец контракта
 
-    const cERR_DENIED: string = "MOwner/Denied";//RU< Ошибка: Нет доступа
-    const cERR_ALREADY: string = "MOwner/Already";//RU< Ошибка: Уже задан
+    const cERR_DENIED: string = "MOwner/Denied";//RU< Ошибка: Нет доступа //EN Error: Access denied
+    const cERR_ALREADY: string = "MOwner/Already";//RU< Ошибка: Уже задан //EN Error: Already setted
 
     //RU Является ли текущий пользователь владельцем
     [@inline] function isOwner(const owner: t_owner): bool is owner = Tezos.sender;
