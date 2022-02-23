@@ -32,11 +32,11 @@
             storage_tz="$build_dir/$contract_name.storage.tz"
             storage_log="$build_dir/$contract_name.storage.log"
             echo "   --- Compile contract $contract_name storage $storage_ligo to $storage_tz"
-            if [ -e "$config_ligo" ] ; then config="$(cat $config_ligo)" ; else config="" ; fi
+            if [ -e "$config_ligo" ] ; then config="$(cat $config_ligo | grep -E -v '^//')" ; else config="" ; fi
             owner_address=$($project_dir/tezbin/tezos-client show address owner 2>/dev/null| grep "^Hash:"|grep -E -o "[^ ]+$")
             admin_address=$($project_dir/tezbin/tezos-client show address admin 2>/dev/null| grep "^Hash:"|grep -E -o "[^ ]+$")
             # Cut comments, else ligo failed with magic errors
-            storage=$(echo -e "$config\n\n$(cat $storage_ligo)" | sed 's/\/\/.*//g' | sed 's/\[\@inline\].*//g')
+            storage=$(echo -e "$config\n\n$(cat $storage_ligo | grep -E -v '^//')" | sed 's/\/\/.*//g' | sed 's/\[\@inline\].*//g')
             # Fill OWNER_ADDRESS and ADMIN_ADDRESS in contract
             storage=$(echo "$storage" | sed "s/OWNER_ADDRESS/$owner_address/g" | sed "s/ADMIN_ADDRESS/$admin_address/g")
             if ligo compile storage "$contract_ligo" "$storage" > "$storage_tz" 2> >(tee "$storage_log" >&2) ; then

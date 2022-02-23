@@ -2,10 +2,10 @@
 #define MPOOLSTAT_INCLUDED
 #if ENABLE_POOL_STAT
 
-//RU Статистика пула
+///RU Статистика пула
 module MPoolStat is {
 
-    //RU Заполнение структуры по умолчанию
+    ///RU Заполнение структуры по умолчанию
     function create(const _u: unit): t_stat is block {
         const stat: t_stat = record [
             lastWinner = cZERO_ADDRESS;

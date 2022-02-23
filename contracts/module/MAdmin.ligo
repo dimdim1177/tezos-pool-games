@@ -1,10 +1,10 @@
 #if !MADMIN_INCLUDED
 #define MADMIN_INCLUDED
 
-//RU Модуль управления админом контракта
-//RU
-//RU Админ или владелец может заменить админа на другого
-//RU Пример использование модуля без других модулей доступа
+///RU Модуль управления админом контракта
+///RU
+///RU Админ или владелец может заменить админа на другого
+///RU Пример использование модуля без других модулей доступа
 // #Include "module/MAdmin.ligo"
 // type t_storage record [
 //     admin: MAdmin.t_admin;
@@ -21,39 +21,26 @@
 // ...
 module MAdmin is {
     
-    type t_admin is address;//RU< Админ контракта
+    type t_admin is address;///RU< Админ контракта
 
-    const cERR_DENIED: string = "MAdmin/Denied";//RU< Ошибка: Нет доступа
-    const cERR_ALREADY: string = "MAdmin/Already";//RU< Ошибка: Уже задан
+    const cERR_DENIED: string = "MAdmin/Denied";///RU< Ошибка: Нет доступа ///EN< Error: Access denied
 
-    //RU Является ли текущий пользователь админом
+    ///RU Является ли текущий пользователь админом
     [@inline] function isAdmin(const admin: t_admin): bool is (admin = Tezos.sender);
 
-    //RU Текущий пользователь должен обладать правами админа
-    //RU
-    //RU Если пользователь не админ, будет возвращена ошибка cERR_DENIED
+    ///RU Текущий пользователь должен обладать правами админа
+    ///RU
+    ///RU Если пользователь не админ, будет возвращена ошибка cERR_DENIED
     function mustAdmin(const admin: t_admin): unit is block {
         if isAdmin(admin) then skip
         else failwith(cERR_DENIED);
     } with unit;
 
-    //RU Смена админа безусловно
-    //RU
-    //RU Проверка прав на изменение админа должна делаться извне
-    //RU Если админ уже установлен, будет возвращена ошибка cERR_ALREADY
-    function forceChange(const newadmin: t_admin; var admin: t_admin): t_admin is block {
-        if newadmin = admin then failwith(cERR_ALREADY)
-        else skip;
-        admin := newadmin;
-    } with admin;
-
 #if !ENABLE_OWNER
-    //RU Смена админа с проверкой прав админа
-    //RU
-    //RU Если владелец уже установлен, будет возвращена ошибка cERR_ALREADY
+    ///RU Смена админа с проверкой прав админа
     function accessChange(const newadmin: t_admin; var admin: t_admin): t_admin is block {
         mustAdmin(admin);
-        forceChange(newadmin, admin);
+        admin := newadmin;
     } with admin;
 #endif // !ENABLE_OWNER
 
