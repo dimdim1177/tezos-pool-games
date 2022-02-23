@@ -3,7 +3,7 @@
 ///EN \namespace CRandom
 ///EN Contract for SELDOM generation random number by request
 /// \author Dmitrii Dmitriev
-///	\date 02.2022
+/// \date 02.2022
 /// \copyright MIT
 
 #include "CRandom/storage.ligo"

@@ -147,12 +147,18 @@ type t_opts is [@layout:comb] record [
 ///RU Состояния партии
 ///EN States of game
 type t_game_state is
-| GameStateActivating ///RU< Идет запуск партии (внутреннее состояние)
-| GameStateActive ///RU< Идет партия
-| GameStateComplete ///RU< Партия закончена по времени
-| GameStateWaitRandom///RU< Партия закончена по времени, ожидаем случайное число для определения победителя
-| GameStateWaitWinner///RU< Партия закончена по времени, случайное число получено (или не требуется), ожидаем определения победителя внешним кодом
-| GameStatePause///RU< Партии приостановлены (предыдущая завершена, но запуск следующей заблокирован)
+///RU Идет запуск партии (внутреннее состояние)
+| GameStateActivating
+///RU Идет партия
+| GameStateActive 
+///RU Партия закончена по времени
+| GameStateComplete
+///RU Партия закончена по времени, ожидаем случайное число для определения победителя
+| GameStateWaitRandom
+///RU Партия закончена по времени, случайное число получено (или не требуется), ожидаем определения победителя внешним кодом
+| GameStateWaitWinner
+///RU Партии приостановлены (предыдущая завершена, но запуск следующей заблокирован)
+| GameStatePause
 ;
 
 ///RU Вес для определения вероятности победы
@@ -172,7 +178,6 @@ type t_game is [@layout:comb] record [
 
 type t_iuser is t_i;///RU< Индекс пользователя внутри пула
 
-#if ENABLE_POOL_STAT
 ///RU Статистика пула
 type t_stat is [@layout:comb] record [
     lastWinner: address;///RU< Последний победитель
@@ -180,7 +185,6 @@ type t_stat is [@layout:comb] record [
     paidRewards: t_amount;///RU< Сколько токенов вознаграждения было выплачено пулом победителям за все партии
     gamesComplete: nat;///RU< Сколько партий уже проведено в этом пуле
 ];
-#endif // ENABLE_POOL_STAT
 
 ///RU Пул (возвращается при запросе информации о пуле админом)
 type t_pool is [@layout:comb] record [
@@ -257,7 +261,6 @@ type t_ipooladdr is t_ipool * address;
 ///RU Индекса в пуле по номеру пула и адресу пользователя
 type t_ipooladdr2user is big_map(t_ipooladdr, t_user);
 
-#if ENABLE_POOL_VIEW
 ///RU Информация о пуле, выдаваемая при запросе информации о пуле
 type t_pool_info is [@layout:comb] record [
     opts: t_opts;///RU< Настройки пула
@@ -267,7 +270,6 @@ type t_pool_info is [@layout:comb] record [
     count: nat;///RU< Кол-во пользователей в пуле
     game: t_game;///RU< Текущая партия розыгрыша вознаграждения
 ];
-#endif // ENABLE_POOL_VIEW
 
 ///RU Адрес, которому разрешено списывать токены с контракта
 type t_approve is address * t_token;

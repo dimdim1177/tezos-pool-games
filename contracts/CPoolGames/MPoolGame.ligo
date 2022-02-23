@@ -28,14 +28,14 @@ module MPoolGame is {
         | AlgoTimeVol -> pool.game.weight := pool.balance * gameSeconds
         | AlgoEqual -> pool.game.weight := pool.count
         ];
-        pool.randomFuture := False;///RU Пока не заказывали случайное число
+        pool.randomFuture := False;//RU Пока не заказывали случайное число
     } with pool;
 
     ///RU Пополнен депозит пользователем
     function onDeposit(var pool: t_pool; var user: t_user; const damount: t_amount): t_pool * t_user is block {
         ///RU Обновления веса розыгрыша и пользователя только если сейчас идет партия
         const tsEnd: timestamp = pool.game.tsEnd;
-        const goodMin: bool = ((user.tsPool + int(pool.opts.minSeconds)) > tsEnd);///RU Вступил в пул с соблюдением минимума по секундам
+        const goodMin: bool = ((user.tsPool + int(pool.opts.minSeconds)) > tsEnd);//RU Вступил в пул с соблюдением минимума по секундам
         if (GameStateActive = pool.game.state) and (goodMin) then block {
             case pool.opts.algo of [
             | AlgoTime -> block {
@@ -70,10 +70,10 @@ module MPoolGame is {
     ///RU Извлечен депозит пользователем
     function onWithdraw(var pool: t_pool; var user: t_user; const wamount: t_amount): t_pool * t_user is block {
         ///RU Обновления веса розыгрыша и пользователя только если сейчас идет партия
-        if GameStateActive = pool.game.state then block {///RU Партия активна, значит Tezos.now < tsEnd
+        if GameStateActive = pool.game.state then block {//RU Партия активна, значит Tezos.now < tsEnd
             const tsEnd: timestamp = pool.game.tsEnd;
-            const goodMin: bool = ((user.tsPool + int(pool.opts.minSeconds)) > tsEnd);///RU Вступил в пул с соблюдением минимума по секундам
-            if (wamount = user.balance) and (goodMin) then block {///RU Полное извлечение, удаление участника
+            const goodMin: bool = ((user.tsPool + int(pool.opts.minSeconds)) > tsEnd);//RU Вступил в пул с соблюдением минимума по секундам
+            if (wamount = user.balance) and (goodMin) then block {//RU Полное извлечение, удаление участника
                 ///RU Для вычисления весов моментом внесения баланса является максимум из момента внесения и начала партии
                 const tsBeg: timestamp = pool.game.tsBeg;
                 case pool.opts.algo of [
@@ -90,7 +90,7 @@ module MPoolGame is {
                         ///RU Также вычитаем вес участника от последнего изменения баланса до конца партии
                         pool.game.weight := abs(pool.game.weight - abs(tsEnd - tsBalance) * wamount);
                     } else block {///RU Участник внес депозит до партии и не менял баланс во время партии
-                        pool.game.weight := abs(pool.game.weight - abs(tsEnd - tsBeg) * wamount);///RU Вычитаем вес за всю партию
+                        pool.game.weight := abs(pool.game.weight - abs(tsEnd - tsBeg) * wamount);//RU Вычитаем вес за всю партию
                     };
                 }
                 | AlgoEqual -> pool.game.weight := abs(pool.game.weight - 1n)

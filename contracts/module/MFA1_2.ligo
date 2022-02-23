@@ -133,9 +133,9 @@ module MFA1_2 is {
 
     ///RU Проверка на соответствие стандарту FA1.2
     function check(const token: address): unit is block {
-        const _: t_transfer_contract = transferEntrypoint(token);///RU Проверяем наличие метода transfer для FA1.2
-        const _: t_balance_contract = balanceEntrypoint(token);///RU Проверяем наличие метода getBalance для FA1.2
-        const _: t_approve_contract = approveEntrypoint(token);///RU Проверяем наличие метода approve для FA1.2
+        const _: t_transfer_contract = transferEntrypoint(token);//RU Проверяем наличие метода transfer для FA1.2
+        const _: t_balance_contract = balanceEntrypoint(token);//RU Проверяем наличие метода getBalance для FA1.2
+        const _: t_approve_contract = approveEntrypoint(token);//RU Проверяем наличие метода approve для FA1.2
     } with unit;
 
 }

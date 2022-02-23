@@ -33,8 +33,8 @@ module MPool is {
     ///RU Проверка доступа к пулу
     function mustManager(const s: t_storage; const pool: t_pool):unit is block {
 #if ENABLE_POOL_AS_SERVICE
-        const _ = s;
-        MManager.mustManager(pool.manager);///RU Если пул-как-сервис, им управляет менеджер пула
+        const _ = s;//RU Чтобы избавиться от предупреждения LIGO //EN For hide LIGO warning
+        MManager.mustManager(pool.manager);//RU Если пул-как-сервис, им управляет менеджер пула
 #else // ENABLE_POOL_AS_SERVICE
 
 #if ENABLE_POOL_MANAGER
@@ -146,7 +146,7 @@ module MPool is {
             beforeReward2TezBalance = 0mutez;
             beforeBurnBalance = 0n;
 #if ENABLE_POOL_MANAGER
-            manager = Tezos.sender;///RU Менеджер пула - его создатель
+            manager = Tezos.sender;//RU Менеджер пула - его создатель
 #endif // ENABLE_POOL_MANAGER
 #if ENABLE_POOL_STAT
             stat = MPoolStat.create(unit);
@@ -208,8 +208,8 @@ module MPool is {
     function requestRandomIfNeed(const ipool: t_ipool; var pool: t_pool; var operations: t_operations): t_pool * t_operations is block {
         ///RU Если розыгрыш активен, участников больше одного и еще не заказывали случайное число
         if (GameStateActive = pool.game.state) and (pool.count > 1n) and (not pool.randomFuture) then block {
-            operations := MRandom.create(pool.randomSource, pool.game.tsEnd, ipool) # operations;///RU Заказываем случайное число
-            pool.randomFuture := True;///RU Случайное число заказано
+            operations := MRandom.create(pool.randomSource, pool.game.tsEnd, ipool) # operations;//RU Заказываем случайное число
+            pool.randomFuture := True;//RU Случайное число запрошено
         } else skip;
     } with (pool, operations);
 
@@ -221,7 +221,7 @@ module MPool is {
 
     ///RU< Пометить партию завершившейся по времени ///EN< Mark pool game complete by time
     function setGameComplete(const ipool: t_ipool; var pool: t_pool): t_pool * t_operations is block {
-        pool := MPoolGame.checkComplete(pool);///RU Обработка окончания розыгрыша по времени
+        pool := MPoolGame.checkComplete(pool);//RU Обработка окончания розыгрыша по времени
         var operations: t_operations := cNO_OPERATIONS;
         if GameStateActivating = pool.game.state then block {///RU Если нет участников, сразу запускаем новую игру
             const r: t_pool * t_operations = newGame(ipool, pool, operations);
@@ -263,7 +263,7 @@ module MPool is {
         if (pool.opts.maxDeposit > 0n) and (newbalance > pool.opts.maxDeposit) then failwith(cERR_OVER_MAX_DEPOSIT)
         else skip;
 
-        pool := MPoolGame.checkComplete(pool);///RU Обработка окончания розыгрыша по времени
+        pool := MPoolGame.checkComplete(pool);//RU Обработка окончания розыгрыша по времени
 
     ///RU --- Корректируем веса для розыгрыша по внесенному депозиту
         const pool_user: t_pool * t_user  = MPoolGame.onDeposit(pool, user, damount);
@@ -272,11 +272,11 @@ module MPool is {
     ///RU --- Фиксируем балансы
         if 0n = user.balance then pool.count := pool.count + 1n ///RU Добавление нового пользователя в пул
         else skip;
-        pool.balance := pool.balance + damount;///RU Новый баланс пула
-        user.balance := newbalance;///RU Новый баланс пользователя
-        user.tsBalance := Tezos.now;///RU Когда он был изменен
+        pool.balance := pool.balance + damount;//RU Новый баланс пула
+        user.balance := newbalance;//RU Новый баланс пользователя
+        user.tsBalance := Tezos.now;//RU Когда он был изменен
 
-        const operations: t_operations = MFarm.deposit(pool.farm, damount, doapprove);///RU Перечисляем депозит в ферму
+        const operations: t_operations = MFarm.deposit(pool.farm, damount, doapprove);//RU Перечисляем депозит в ферму
 
     ///RU Если появилось больше 2 участников, нужно заказать случайное число для розыгрыша
         const r: t_pool * t_operations = requestRandomIfNeed(ipool, pool, operations);
@@ -302,7 +302,7 @@ module MPool is {
             else skip;
         };
 
-        pool := MPoolGame.checkComplete(pool);///RU Обработка окончания розыгрыша по времени
+        pool := MPoolGame.checkComplete(pool);//RU Обработка окончания розыгрыша по времени
 
     ///RU --- Корректируем веса для розыгрыша по извлеченному депозиту
         const pool_user: t_pool * t_user  = MPoolGame.onWithdraw(pool, user, wamount);
@@ -316,7 +316,7 @@ module MPool is {
         user.balance := newbalance;
         user.tsBalance := Tezos.now;
 
-        const operations: t_operations = MFarm.withdraw(pool.farm, wamount);///RU Извлекаем депозит из фермы
+        const operations: t_operations = MFarm.withdraw(pool.farm, wamount);//RU Извлекаем депозит из фермы
     } with (pool, user, operations);
 
     ///RU Колбек провайдера случайных чисел
@@ -341,15 +341,15 @@ module MPool is {
         if Tezos.sender = pool.farm.rewardToken.addr then skip
         else failwith(cERR_DENIED);
         var operations: t_operations := cNO_OPERATIONS;
-        const ifullReward: int = currentBalance - pool.beforeHarvestBalance;///RU< Полученное из фермы вознаграждение
-        if ifullReward < 0 then failwith(cERR_LOGIC) else skip;///RU Отрицательное вознаграждение
+        const ifullReward: int = currentBalance - pool.beforeHarvestBalance;//RU< Полученное из фермы вознаграждение
+        if ifullReward < 0 then failwith(cERR_LOGIC) else skip;//RU Отрицательное вознаграждение
         const fullReward: t_amount = abs(ifullReward);
         ///RU Если есть комиссия, перечисляем ее
         const fee: t_amount = (fullReward * pool.opts.feePercent) / 100n;
         if fee > 0n then operations := MToken.transfer(pool.farm.rewardToken, Tezos.self_address, getFeeAddr(pool), fee) # operations
         else skip;
         const burn: t_amount = (fullReward * pool.opts.burnPercent) / 100n;
-        const reward: t_amount = abs(fullReward - fee - burn);///RU Оставшиеся токены с копейками в вознаграждение
+        const reward: t_amount = abs(fullReward - fee - burn);//RU Оставшиеся токены с копейками в вознаграждение
         ///RU Перечисляем вознаграждение победителю
         if reward > 0n then operations := MToken.transfer(pool.farm.rewardToken, Tezos.self_address, pool.game.winner, fee) # operations
         else skip;
@@ -409,8 +409,8 @@ module MPool is {
         const burnToken: t_token = getBurnToken(pool);
         if Tezos.sender = burnToken.addr then skip
         else failwith(cERR_DENIED);
-        const iburn: int = currentBalance - pool.beforeBurnBalance;///RU< Полученные токены для сжигания
-        if iburn < 0 then failwith(cERR_LOGIC) else skip;///RU Отрицательное кол-во
+        const iburn: int = currentBalance - pool.beforeBurnBalance;//RU< Полученные токены для сжигания
+        if iburn < 0 then failwith(cERR_LOGIC) else skip;//RU Отрицательное кол-во
         const burn: t_amount = abs(iburn);
         var operations: t_operations := cNO_OPERATIONS;
         operations := MToken.burn(burnToken, Tezos.self_address, burn) # operations;// RU Сжигаем токены

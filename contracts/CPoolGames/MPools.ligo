@@ -42,8 +42,8 @@ module MPools is {
     ///RU Пользователь идентифицируется по Tezos.sender. При нулевом сохраняемом балансе пользователь удаляется
     function setUser(var s: t_storage; const ipool: t_ipool; const user: t_user): t_storage is block {
         const ipooladdr: t_ipooladdr = (ipool, Tezos.sender);
-        if user.balance > 0n then s.users[ipooladdr] := user ///RU Обновление существующего
-        else s.users := Big_map.remove(ipooladdr, s.users);///RU Удаляем пользователя
+        if user.balance > 0n then s.users[ipooladdr] := user //RU Обновление существующего
+        else s.users := Big_map.remove(ipooladdr, s.users);//RU Удаляем пользователя
     } with s;
 
     ///RU Задать состояние пула
@@ -51,14 +51,14 @@ module MPools is {
     ///RU Если убрать inline компилятор падает
     function setPoolState(var s: t_storage; const ipool: t_ipool; const state: t_pool_state): t_storage is block {
         var pool: t_pool := getPool(s, ipool);
-        MPool.mustManager(s, pool);///RU Проверка доступа к пулу
+        MPool.mustManager(s, pool);//RU Проверка доступа к пулу
         pool := MPool.setState(pool, state);
         s := setPool(s, ipool, pool);
     } with s;
 
     function doRemovePool(var s: t_storage; const ipool: t_ipool; const pool: t_pool): t_storage is block {
         s.usedFarms := Big_map.remove((pool.farm.addr, pool.farm.id), s.usedFarms);
-        s.pools := Big_map.remove(ipool, s.pools);///RU Пул уже пуст, можно удалить прямо сейчас
+        s.pools := Big_map.remove(ipool, s.pools);//RU Пул уже пуст, можно удалить прямо сейчас
     } with s;
 
 ///RU --- Управление пулами
@@ -69,7 +69,7 @@ module MPools is {
         if Big_map.mem(farm_ident, s.usedFarms) then failwith(cERR_FARM_USED)
         else s.usedFarms[farm_ident] := unit;
         const pool: t_pool = MPool.create(pool_create);
-        const ipool: t_ipool = s.inext;///RU Индекс нового пула
+        const ipool: t_ipool = s.inext;//RU Индекс нового пула
         s.inext := ipool + 1n;
         s.pools := Big_map.add(ipool, pool, s.pools);
     } with s;
@@ -83,33 +83,31 @@ module MPools is {
     ///RU Удаление пула (по окончании партии) ///EN Remove pool (after game)
     function removePool(var s: t_storage; const ipool: t_ipool): t_storage is block {
         const pool: t_pool = getPool(s, ipool);
-        MPool.mustManager(s, pool);///RU Проверка доступа к пулу
+        MPool.mustManager(s, pool);//RU Проверка доступа к пулу
         if 0n = pool.balance then s := doRemovePool(s, ipool, pool)///RU Пул уже пуст, можно удалить прямо сейчас
-        else s := setPoolState(s, ipool, PoolStateRemove);///RU Удалим, когда все заберут депозиты
+        else s := setPoolState(s, ipool, PoolStateRemove);//RU Удалим, когда все заберут депозиты
     } with s;
 
     ///RU Редактирование пула (приостановленого) ///EN Edit pool (paused)
     function editPool(var s: t_storage; const ipool: t_ipool; const pool_edit: t_pool_edit): t_storage is block {
         var pool: t_pool := getPool(s, ipool);
-        MPool.mustManager(s, pool);///RU Проверка доступа к пулу
+        MPool.mustManager(s, pool);//RU Проверка доступа к пулу
         pool := MPool.edit(pool, pool_edit);
         s := setPool(s, ipool, pool);
     } with s;
 
-#if ENABLE_POOL_MANAGER
     ///RU Смена менеджера пула
     function changePoolManager(var s: t_storage; const ipool: t_ipool; const newmanager: address): t_storage is block {
         var pool: t_pool := getPool(s, ipool);
-        MPool.mustManager(s, pool);///RU Проверка доступа к пулу
+        MPool.mustManager(s, pool);//RU Проверка доступа к пулу
         pool := MPool.forceChangeManager(pool, newmanager);
         s := setPool(s, ipool, pool);
     } with s;
-#endif // ENABLE_POOL_MANAGER
 
     ///RU< Пометить партию завершившейся по времени ///EN< Mark pool game complete by time
     function setPoolGameComplete(var s: t_storage; const ipool: t_ipool): t_return is block {
         const pool: t_pool = getPool(s, ipool);
-        MPool.mustManager(s, pool);///RU Проверка доступа к пулу
+        MPool.mustManager(s, pool);//RU Проверка доступа к пулу
         const r: t_pool * t_operations = MPool.setGameComplete(ipool, pool);
         s := setPool(s, ipool, r.0);
     } with (r.1, s);
@@ -117,7 +115,7 @@ module MPools is {
     ///RU< Получить случайное число из источника ///EN< Get random number from source
     function getPoolRandom(var s: t_storage; const ipool: t_ipool): t_return is block {
         const pool: t_pool = getPool(s, ipool);
-        MPool.mustManager(s, pool);///RU Проверка доступа к пулу
+        MPool.mustManager(s, pool);//RU Проверка доступа к пулу
         const r: t_pool * t_operations = MPool.getRandom(ipool, pool);
         s := setPool(s, ipool, r.0);
     } with (r.1, s);
@@ -125,7 +123,7 @@ module MPools is {
     ///RU< Установить победителя партии ///EN< Set pool game winner
     function setPoolWinner(var s: t_storage; const ipool: t_ipool; const winner: address): t_return is block {
         var pool: t_pool := getPool(s, ipool);
-        MPool.mustManager(s, pool);///RU Проверка доступа к пулу
+        MPool.mustManager(s, pool);//RU Проверка доступа к пулу
         const r: t_pool * t_operations = MPool.setPoolWinner(pool, winner);
         s := setPool(s, ipool, r.0);
         s.waitBalanceBeforeHarvest := int(ipool);
@@ -242,7 +240,6 @@ module MPools is {
 
 ///RU --- Чтение данных любыми пользователями (Views)
 
-#if ENABLE_POOL_VIEW
     ///RU Получение основной информации о пуле
     function viewPoolInfo(const s: t_storage; const ipool: t_ipool): t_pool_info is block {
         const pool: t_pool = getPool(s, ipool);
@@ -255,14 +252,11 @@ module MPools is {
             game = pool.game;
         ];
     } with pool_info;
-#endif // ENABLE_POOL_VIEW
 
-#if ENABLE_BALANCE_VIEW
     ///RU Получение баланса пользователя в пуле
     function viewBalance(const s: t_storage; const ipool: t_ipool): nat is block {
         const user: t_user = getUser(s, ipool);
     } with user.balance;
-#endif // ENABLE_BALANCE_VIEW
 
 }
 #endif // !MPOOLS_INCLUDED
