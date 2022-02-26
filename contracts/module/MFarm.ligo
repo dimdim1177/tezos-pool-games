@@ -8,9 +8,6 @@
 ///RU Модуль взаимодействия с фермой
 module MFarm is {
 
-    type t_amount is MToken.t_amount;///RU< Кол-во токенов
-    type t_token is MToken.t_token;///RU< Структура токена
-
 ///RU --- Интерфейсы ферм ///EN --- Farm interfaces
 
     type t_interface is
@@ -41,8 +38,8 @@ module MFarm is {
     type t_farm is [@layout:comb] record [
         addr: address;///RU< Адрес фермы
         id: nat;///RU< ID фермы, где применимо
-        farmToken: t_token;///RU< Токен фермы
-        rewardToken: t_token;///RU< Токен вознаграждения
+        farmToken: MToken.t_token;///RU< Токен фермы
+        rewardToken: MToken.t_token;///RU< Токен вознаграждения
         interface: t_interface;///RU< Интерфейс фермы, см. cINTERFACE...
     ];
 
@@ -59,7 +56,7 @@ module MFarm is {
     ///RU Инвестирование токенов фермы в ферму пользователем через контракта
     ///RU
     ///RU Токены фермы от пользователя Tezos.sender перечисляются сначала контракту, а затем в ферму
-    function deposit(const farm: t_farm; const damount: t_amount; const doapprove: bool): t_operations is block {
+    function deposit(const farm: t_farm; const damount: MToken.t_amount; const doapprove: bool): t_operations is block {
         ///RU Добавляем транзакции в обратном порядке, потому что они вставляются в начало списка
         var operations: t_operations := list [];
 #if ENABLE_TRANSFER_SECURITY
@@ -89,7 +86,7 @@ module MFarm is {
     ///RU Отзыв токенов фермы пользователем
     ///RU
     ///RU Токены фермы перечисляются сначала контракту, а затем пользователю по адресу Tezos.sender
-    function withdraw(const farm: t_farm; const wamount: t_amount): t_operations is block {
+    function withdraw(const farm: t_farm; const wamount: MToken.t_amount): t_operations is block {
         ///RU Добавляем транзакции в обратном порядке, потому что они вставляются в начало списка
         var operations: t_operations := list [];
         ///RU Переводим токены с контракта на адрес пользователя

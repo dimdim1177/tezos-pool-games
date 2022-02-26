@@ -19,7 +19,7 @@ type t_operations is list(operation);///RU< Список операций ///EN<
 type t_i is nat;
 
 ///RU Тип для получения индексов, -1 - элемент отсутствует
-/// @see cABSENT
+/// \see cABSENT
 type t_ii is int;
 
 [@inline] const cABSENT: t_ii = -1;///RU Элемент отсутствует

@@ -1,10 +1,9 @@
-///RU \namespace CRandom
-///RU Контракт для РЕДКОЙ генерации случайного числа по запросу
-///EN \namespace CRandom
-///EN Contract for SELDOM generation random number by request
+/// \file
 /// \author Dmitrii Dmitriev
 /// \date 02.2022
 /// \copyright MIT
+///RU Контракт для РЕДКОЙ генерации случайного числа по запросу
+///EN Contract for SELDOM generation random number by request
 
 #include "CRandom/storage.ligo"
 #include "CRandom/access.ligo"
@@ -12,18 +11,18 @@
 type t_entrypoint is
 ///RU --- Управление доступами
 #if ENABLE_OWNER
-| ChangeOwner of t_owner ///RU< Смена владельца контракта ///EN< Change owner of contract
+| ChangeOwner of MOwner.t_owner ///RU< Смена владельца контракта ///EN< Change owner of contract
 #endif // ENABLE_OWNER
 #if ENABLE_ADMIN
-| ChangeAdmin of t_admin ///RU< Смена админа контракта ///EN< Change admin of contract
+| ChangeAdmin of MAdmins.t_admin ///RU< Смена админа контракта ///EN< Change admin of contract
 #endif // ENABLE_ADMIN
 #if ENABLE_ADMINS
-| AddAdmin of t_admin ///RU< Добавление админа контракта ///EN< Add admin of contract
-| RemAdmin of t_admin ///RU< Удаление админа контракта ///EN< Remove admin of contract
+| AddAdmin of MAdmins.t_admin ///RU< Добавление админа контракта ///EN< Add admin of contract
+| RemAdmin of MAdmins.t_admin ///RU< Удаление админа контракта ///EN< Remove admin of contract
 #endif // ENABLE_ADMINS
-| CreateFuture of t_ts_iobj ///RU< Создание запроса на случайное число
-| DeleteFuture of t_ts_iobj ///RU< Удаление запроса на случайное число
-| GetFuture of t_ts_iobj_callback ///RU< Запрос случайного числа
+| CreateFuture of MRandom.t_ts_iobj ///RU< Создание запроса на случайное число
+| DeleteFuture of MRandom.t_ts_iobj ///RU< Удаление запроса на случайное число
+| GetFuture of MRandom.t_ts_iobj_callback ///RU< Запрос случайного числа
 | FillFuture of t_ifuture * t_future ///RU< Заполнение случайного числа
 | ForceDeleteFuture of t_ifuture ///RU< Принудительное удаление запроса на случайное число админом контракта
 ;
@@ -44,7 +43,7 @@ function main(const entrypoint: t_entrypoint; var s: t_storage): t_return is
 case entrypoint of [
 ///RU --- Управление доступами
 #if ENABLE_OWNER ///RU Есть владелец контракта
-| ChangeOwner(newowner) -> (cNO_OPERATIONS, block { s.owner:= MOwner.accessChange(newowner, s.owner); } with s)
+| ChangeOwner(newowner) -> (cNO_OPERATIONS, block { s.owner := MOwner.accessChange(newowner, s.owner); } with s)
 #endif // ENABLE_OWNER
 #if ENABLE_ADMIN ///RU Есть админ контракта
 | ChangeAdmin(newadmin) -> (cNO_OPERATIONS, block { mustAdmin(s); s.admin := newadmin; } with s)
@@ -56,7 +55,7 @@ case entrypoint of [
 
 ///RU Создание запроса на случайное число
 | CreateFuture(ts_iobj) -> (cNO_OPERATIONS, block {
-    const ts: t_ts = ts_iobj.0;
+    const ts: MRandom.t_ts = ts_iobj.0;
     if ts <= Tezos.now then failwith(cERR_ONLY_FUTURE) else skip;
     const ifuture: t_ifuture = record [
         addr = Tezos.sender;
@@ -90,7 +89,7 @@ case entrypoint of [
 
 ///RU Получения случайного числа
 | GetFuture(ts_iobj_callback) -> block {
-    const iobj = ts_iobj_callback.1;
+    const iobj: MRandom.t_iobj = ts_iobj_callback.1;
     const ifuture: t_ifuture = record [
         addr = Tezos.sender;
         ts = ts_iobj_callback.0;

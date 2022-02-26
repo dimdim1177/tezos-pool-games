@@ -2,11 +2,11 @@
 #define CONFIG_INCLUDED
 
 ///RU \file
-///RU @brief Конфигурация контракта (ключи компиляции)
-///RU @attention Файл должен быть подключен в проект ДО всего остального
+///RU \brief Конфигурация контракта (ключи компиляции)
+///RU \attention Файл должен быть подключен в проект ДО всего остального
 ///EN \file
-///EN @brief Configuration of contract (compilation options)
-///EN @attention File must be included to project BEFORE all other files
+///EN \brief Configuration of contract (compilation options)
+///EN \attention File must be included to project BEFORE all other files
 
 ///RU У контракта есть владелец
 ///RU
@@ -18,8 +18,10 @@
 #define ENABLE_OWNER
 
 ///RU У контракта есть админ
+///RU
 ///RU Полный доступ ко всем операциям, кроме смены владельца
 ///EN Contract has admin
+///EN
 ///EN Full access to all contract method, except change of owner
 /// \see isAdmin, mustAdmin
 #define ENABLE_ADMIN
@@ -61,7 +63,7 @@
 ///EN Managers for pools (admin of one pool)
 ///EN
 ///EN Manager can control his pool and change manager. Required for ENABLE_POOL_AS_SERVICE
-/// \see ENABLE_POOL_AS_SERVICE, t_entrypoint::ChangePoolManager, MPools::changePoolManager
+/// \see ENABLE_POOL_AS_SERVICE, ChangePoolManager, MPools::changePoolManager
 #define ENABLE_POOL_MANAGER
 
 ///RU Пулы для розыгрыша вознаграждений как сервис
@@ -70,7 +72,7 @@
 ///EN Reward draw pools as a service
 ///EN
 ///EN Anybody can create pool, and he will be it alone admin, owner of contract and admins of contract has no access to pool
-/// \see t_entrypoint::CreatePool
+/// \see CreatePool
 #define ENABLE_POOL_AS_SERVICE
 
 #if (ENABLE_POOL_AS_SERVICE) && (!ENABLE_POOL_MANAGER)

@@ -11,12 +11,11 @@ module MFarmQUIPU is {
     const cERR_NOT_FOUND_HARVEST: string = "MFarmQUIPU/NotFoundHarvest";///RU< Ошибка: Не найдена точка входа harvest для фермы в формате QUIPU
 
     type t_farm_id is nat;///RU< ID фермы QUIPU
-    type t_amount is nat;///RU< Кол-во токенов
 
     ///RU Параметры для депозита в ферму QUIPU
     type t_deposit_params is [@layout:comb] record [
         fid: t_farm_id;///RU< ID фермы QUIPU
-        amt: t_amount;///RU< Кол-во токенов
+        amt: MToken.t_amount;///RU< Кол-во токенов
         referrer: option(address);
         rewards_receiver: address;
         candidate: key_hash;
@@ -27,7 +26,7 @@ module MFarmQUIPU is {
     ///RU Параметры для извлечения депозита в ферму QUIPU
     type t_withdraw_params is [@layout:comb] record [
         fid: t_farm_id;///RU< ID фермы QUIPU
-        amt: t_amount;///RU< Кол-во токенов
+        amt: MToken.t_amount;///RU< Кол-во токенов
         receiver: address;
         rewards_receiver: address;
     ];
@@ -50,7 +49,7 @@ module MFarmQUIPU is {
         ];
 
     ///RU Параметры для метода deposit QUIPU
-    function depositParams(const farm_id: t_farm_id; const damount: t_amount): t_deposit_method is
+    function depositParams(const farm_id: t_farm_id; const damount: MToken.t_amount): t_deposit_method is
         QUIPUDeposit(record [
             fid = farm_id;
             amt = damount;
@@ -60,7 +59,7 @@ module MFarmQUIPU is {
         ]);
 
     ///RU Депозит в ферму QUIPU
-    function deposit(const addr: address; const farm_id: t_farm_id; const damount: t_amount): operation is 
+    function deposit(const addr: address; const farm_id: t_farm_id; const damount: MToken.t_amount): operation is 
         Tezos.transaction(
             depositParams(farm_id, damount),
             0mutez,
@@ -75,7 +74,7 @@ module MFarmQUIPU is {
         ];
 
     ///RU Параметры для метода deposit QUIPU
-    function withdrawParams(const farm_id: t_farm_id; const wamount: t_amount): t_withdraw_method is
+    function withdrawParams(const farm_id: t_farm_id; const wamount: MToken.t_amount): t_withdraw_method is
         QUIPUWithdraw(record [
             fid = farm_id;
             amt = wamount;
@@ -84,7 +83,7 @@ module MFarmQUIPU is {
         ]);
 
     ///RU Извлечение депозита из фермы QUIPU
-    function withdraw(const addr: address; const farm_id: t_farm_id; const wamount: t_amount): operation is 
+    function withdraw(const addr: address; const farm_id: t_farm_id; const wamount: MToken.t_amount): operation is 
         Tezos.transaction(
             withdrawParams(farm_id, wamount),
             0mutez,

@@ -11,12 +11,11 @@ module MFarmCrunchy is {
     const cERR_NOT_FOUND_HARVEST: string = "MFarmCrunchy/NotFoundHarvest";///RU< Ошибка: Не найдена точка входа harvest для фермы Crunchy
 
     type t_farm_id is nat;///RU< ID фермы Crunchy
-    type t_amount is nat;///RU< Кол-во токенов
 
     ///RU Параметры для депозита в ферму Crunchy
     type t_deposit_params is [@layout:comb] record [
         farm_id: t_farm_id;
-        damount: t_amount;
+        damount: MToken.t_amount;
     ];
     type t_deposit_method is CrunchyDeposit of t_deposit_params;///RU Прототип метода deposit фермы Crunchy
     type t_deposit_contract is contract(t_deposit_method);///RU Контракт с точкой входа deposit в формате фермы Crunchy
@@ -24,7 +23,7 @@ module MFarmCrunchy is {
     ///RU< Параметры для извлечения депозита из фермы Crunchy
     type t_withdraw_params is [@layout:comb] record [
         farm_id: t_farm_id;
-        wamount: t_amount;
+        wamount: MToken.t_amount;
     ];
     type t_withdraw_method is CrunchyWithdraw of t_withdraw_params;///RU Прототип метода withdraw фермы Crunchy
     type t_withdraw_contract is contract(t_withdraw_method);///RU Контракт с точкой входа withdraw в формате фермы Crunchy
@@ -41,14 +40,14 @@ module MFarmCrunchy is {
         ];
 
     ///RU Параметры для метода deposit Crunchy
-    function depositParams(const farm_id: t_farm_id; const damount: t_amount): t_deposit_method is
+    function depositParams(const farm_id: t_farm_id; const damount: MToken.t_amount): t_deposit_method is
         CrunchyDeposit(record [
             farm_id = farm_id;
             damount = damount;
         ]);
 
     ///RU Депозит в ферму Crunchy
-    function deposit(const addr: address; const farm_id: t_farm_id; const damount: t_amount): operation is
+    function deposit(const addr: address; const farm_id: t_farm_id; const damount: MToken.t_amount): operation is
         Tezos.transaction(
             depositParams(farm_id, damount),
             0mutez,
@@ -63,14 +62,14 @@ module MFarmCrunchy is {
         ];
 
     ///RU Параметры для метода withdraw Crunchy
-    function withdrawParams(const farm_id: t_farm_id; const wamount: t_amount): t_withdraw_method is
+    function withdrawParams(const farm_id: t_farm_id; const wamount: MToken.t_amount): t_withdraw_method is
         CrunchyWithdraw(record [
             farm_id = farm_id;
             wamount = wamount;
         ]);
 
     ///RU Извлечение депозита из фермы Crunchy
-    function withdraw(const addr: address; const farm_id: t_farm_id; const wamount: t_amount): operation is
+    function withdraw(const addr: address; const farm_id: t_farm_id; const wamount: MToken.t_amount): operation is
         Tezos.transaction(
             withdrawParams(farm_id, wamount),
             0mutez,
