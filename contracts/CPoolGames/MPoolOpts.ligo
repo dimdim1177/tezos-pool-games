@@ -1,8 +1,8 @@
 #if !MPOOLOPTS_INCLUDED
 #define MPOOLOPTS_INCLUDED
 
-///RU Модуль управления пулом
-///EN Pool Management Module
+///RU Настройки пула
+///EN Pool options
 module MPoolOpts is {
 
     ///RU Ошибка: Недопустимое кол-во секунд

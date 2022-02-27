@@ -2,6 +2,7 @@
 #define MPOOLSTAT_INCLUDED
 
 ///RU Статистика пула
+///EN Pool statistics
 module MPoolStat is {
 
     ///RU Создание пустой структуры статистики

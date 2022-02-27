@@ -118,7 +118,7 @@ type t_algo is
 ;
 
 ///RU Настройки пула
-///EN Pool Settings
+///EN Pool settings
 type t_opts is [@layout:comb] record [
     ///RU Алгоритм пула
     ///EN Pool algorithm
@@ -127,7 +127,7 @@ type t_opts is [@layout:comb] record [
     ///RU Длительность партии в секундах
     ///RU
     ///RU Допустимо в интервале [cMIN_GAME_SECONDS, cMAX_GAME_SECONDS]
-    ///EN Batch duration in seconds
+    ///EN Game duration in seconds
     ///EN
     ///EN Allowed in the interval [cMIN_GAME_SECONDS, cMAX_GAME_SECONDS]
     /// \see cMIN_GAME_SECONDS, cMAX_GAME_SECONDS
@@ -177,7 +177,7 @@ type t_opts is [@layout:comb] record [
     ///RU Процент от вознаграждения для выигрыша
     ///RU
     ///RU В интервале [1; 100], в сумме с другими процентами должно быть 100.
-    ///EN Percentage of the reward for winning
+    ///EN Percentage of the reward for winner
     ///EN
     ///EN In the interval [1; 100], in total with other percentages should be 100.
     /// \see burnPercent, feePercent
@@ -250,13 +250,13 @@ type t_weight is nat;
 ///EN Parameters of the drawing party
 /// \see MPoolGame
 type t_game is [@layout:comb] record [
-    state: t_game_state;///RU< Состояние партии ///EN< Batch Status
-    tsBeg: timestamp;///RU< Время начала партии ///EN< Party start time
+    state: t_game_state;///RU< Состояние партии ///EN< Game status
+    tsBeg: timestamp;///RU< Время начала партии ///EN< Game start time
 
     ///RU Время окончания партии
     ///RU
     ///RU Время начала партии tsBeg + opts.gameSeconds
-    ///EN End time of the party
+    ///EN End time of the game
     ///EN
     ///EN Party start time tsBeg + opts.gameSeconds
     /// \see t_opts.gameSeconds
@@ -403,7 +403,7 @@ type t_pool is [@layout:comb] record [
     ///RU При выключенном пул-как-сервис может использоваться для увеличения безопасности бэкенда. Контракт должен вызываться
     ///RU внешним бэкендом для работы розыгрышей, можно использовать для этого доступ менеджера, а ключи владельца не хранить
     ///RU на сервере бэкенда
-    ///EN Pool Manager (admin of this pool only)
+    ///EN Pool manager (admin of this pool only)
     ///EN
     ///EN If the pool-as-a-service is enabled in the code with the ENABLE_POOL_AS_SERVICE key, then it is the only pool manager, the owner and
     ///EN the contract administrator do not have access to the pool.
@@ -547,9 +547,9 @@ type t_ipooladdr2user is big_map(t_ipooladdr, t_user);
 ///EN Pool information issued when requesting pool information
 /// \see ENABLE_POOL_VIEW
 type t_pool_info is [@layout:comb] record [
-    opts: t_opts;///RU< Настройки пула ///EN< Pool Settings
-    farm: MFarm.t_farm;///RU< Ферма для пула ///EN< Pool Farm
-    state: t_pool_state;///RU< Состояние пула ///EN< Pool Status
+    opts: t_opts;///RU< Настройки пула ///EN< Pool settings
+    farm: MFarm.t_farm;///RU< Ферма для пула ///EN< Pool sarm
+    state: t_pool_state;///RU< Состояние пула ///EN< Pool status
 
     ///RU Сколько токенов фермы инвестировано в пул в настоящий момент
     ///EN How many farm tokens are currently invested in the pool

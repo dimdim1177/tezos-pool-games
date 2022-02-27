@@ -8,7 +8,7 @@
 ///RU \todo По флагу, установленному пользователем, автоинвестирование выигранных токенов в тот же пул через автоконвертацию
 ///RU \todo Получение и вывод менеджерами пула вознаграждения с момента приостановки партий и до извлечения пользователями всех депозитов
 ///RU \todo Старт розыгрыша при внесении первого депозита в пул
-///EN Contract for periodic raffles of remuneration on deposit pools in farms
+///EN Contract for periodic reward draws on deposit pools in farms
 ///EN \todo Confirmation of the winner by other pool participants (except the winner) for a small reward from the winnings of the first N confirmed
 ///EN \todo The participants' choice of the token or XTZ in which they want to receive the winnings and autoconvert the winnings into the token needed by a particular user
 ///EN \todo According to the flag set by the user, the auto-investment of the won tokens into the same pool through auto-conversion

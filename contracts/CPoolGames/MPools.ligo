@@ -19,7 +19,7 @@ module MPools is {
     ///RU
     ///RU Если пул не найден, будет возвращена ошибка cERR_NOT_FOUND
     ///EN Get a pool by index
-    ///EN 
+    ///EN
     ///EN If the pool is not found, the error cERR_NOT_FOUND will be returned
     function getPool(const s: t_storage; const ipool: t_ipool): t_pool is
         case s.pools[ipool] of [
@@ -37,7 +37,7 @@ module MPools is {
     ///RU
     ///RU Пользователь идентифицируется по Tezos.sender
     ///EN Get the current user parameters in the pool
-    ///EN 
+    ///EN
     ///EN The user is identified by Tezos.sender
     function getUser(const s: t_storage; const ipool: t_ipool): t_user is
         case s.users[(ipool, Tezos.sender)] of [
@@ -54,7 +54,7 @@ module MPools is {
     ///RU
     ///RU Пользователь идентифицируется по Tezos.sender. При нулевом сохраняемом балансе пользователь удаляется
     ///EN Update the current user parameters in the pool
-    ///EN 
+    ///EN
     ///EN The user is identified by Tezos.sender. With zero saved balance, the user is deleted
     function setUser(var s: t_storage; const ipool: t_ipool; const user: t_user): t_storage is block {
         const ipooladdr: t_ipooladdr = (ipool, Tezos.sender);
@@ -66,7 +66,7 @@ module MPools is {
     ///RU
     ///RU Если убрать inline компилятор падает
     ///EN Set the pool state
-    ///EN 
+    ///EN
     ///EN If you remove inline, the compiler crashes
     function setPoolState(var s: t_storage; const ipool: t_ipool; const state: t_pool_state): t_storage is block {
         var pool: t_pool := getPool(s, ipool);
@@ -176,9 +176,11 @@ module MPools is {
 
     ///RU Извлечение из пула
     ///RU
+    ///RU \param wamount Кол-во токенов для извлечения из пула
     ///RU 0n == wamount - извлечение всего депозита из пула
     ///EN Withdraw from pool
     ///EN
+    ///EN \param wamount Amount of tokens for withdraw from pool
     ///EN 0n == wamount - withdraw all deposit from pool
     function withdraw(var s: t_storage; const ipool: t_ipool; const wamount: MToken.t_amount): t_return is block {
         var pool: t_pool := getPool(s, ipool);

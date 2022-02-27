@@ -8,7 +8,7 @@
     owner = ("OWNER_ADDRESS": address);
 #endif // ENABLE_OWNER
 #if ENABLE_ADMIN
-    admin = ("OWNER_ADDRESS": address);
+    admin = ("OWNER_ADDRESS": address);//RU Владельца используем как админа //EN We use the owner as an admin
 #endif // ENABLE_ADMIN
 #if ENABLE_ADMINS
     admins = (set [ ]: MAdmins.t_admins);

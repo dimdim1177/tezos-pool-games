@@ -4,21 +4,21 @@
 #include "types.ligo"
 
 ///RU Хранилище контракта
-///EN Contract Storage
+///EN Contract storage
 type t_storage is [@layout:comb] record [
 #if ENABLE_OWNER
-    owner: MOwner.t_owner;///RU< Владелец контракта ///EN< Contract Owner
+    owner: MOwner.t_owner;///RU< Владелец контракта ///EN< Contract owner
 #endif // ENABLE_OWNER
 #if ENABLE_ADMIN
-    admin: MAdmins.t_admin;///RU< Админ контракта ///EN< Contract Admin
+    admin: MAdmins.t_admin;///RU< Админ контракта ///EN< Contract admin
 #endif // ENABLE_ADMIN
 #if ENABLE_ADMINS
-    admins: MAdmins.t_admins;///RU< Набор админов контракта ///EN< Set of Contract admins
+    admins: MAdmins.t_admins;///RU< Набор админов контракта ///EN< Set of contract admins
 #endif // ENABLE_ADMINS
 
     inext: t_ipool;///RU< ID следующего пула ///EN< ID of the next pool
     pools: t_pools;///RU< Собственно пулы ///EN< Actual pools
-    users: t_ipooladdr2user;///RU< Пользователи пулов ///EN< Pool Users
+    users: t_ipooladdr2user;///RU< Пользователи пулов ///EN< Pool users
 
     ///RU ID пула, ожидающего баланс до получения вознаграждения из фермы, -1 - не ожидаем
     ///EN ID of the pool waiting for the balance before receiving the reward from the farm, -1 - not expected
