@@ -1,5 +1,6 @@
 ## Contracts for periodic reward draws on deposit pools in farms
 
+Full code and documentation of contracts for periodic reward draws on deposit from pools in farms Crunchy or Qupipuswap.
 Project developed on Debian 11, not tested in other OS.
 
 ## Getting start
@@ -17,14 +18,20 @@ Compiled files saved to 'build/NAME.tz' and 'build/NAME.storage.tz' files.
 
 ### Deploy
 
-Usage: $(basename $0) NAME|ALL [force]
-Deploy 'build/NAME.tz' inited by 'build/NAME.storage.tz' (or 'build/*.tz' for ALL) by account saved as 'owner' in tezos-client.
+Usage: deploy.sh NAME|ALL [force]
+Deploing 'build/NAME.tz' inited by 'build/NAME.storage.tz' (or 'build/*.tz' for ALL) by account saved as 'owner' in tezos-client.
 
 ### Documentation
 
-Execute script `./doc/doc.sh` for generate English and Russian documentations for contracts.
+Firstly, install submodules by `git submodule update --init --recursive`.
+Then execute script `./doc/doc.sh` for generate English and Russian documentations for contracts.
+Script usage code of subprojects, attached as git submodule:
+- https://github.com/dimdim1177/mlcomment Multi-Language comments
+- https://github.com/dimdim1177/ligo2dox Convert PascaLIGO to C++ like code for auto-documenting by Doxygen
 
-## Contract with pools - CPoolGames
+## Contracts
+
+### Contract with pools
 
 See contracts/CPoolGames.ligo and folder contracts/CPoolGames.
 Main features:
@@ -45,7 +52,7 @@ Main features:
     - can enable pool statictics in blockchain for promotion
     - can enable pool views for other smart contracts
 
-## Contract for generate random numbers - CRandom
+### Contract for generate random numbers
 
 See contracts/CRandom.ligo and folder contracts/CRandom
 Main features:
@@ -55,16 +62,6 @@ Main features:
 
 
 ## Folders tree
-
-### accounts
-
-Folder with *.json faucet files, downloaded from https://teztnets.xyz/, basename of file used as account name in tezos-client.
-One of it must be named as owner.json, this account used for deploy contracts.
-Script `accounts/activate.sh` activate all accounts in testnet.
-
-### build
-
-Folder for compiled files *.tz, logs *.log and so on.
 
 ### contracts
 
@@ -83,15 +80,41 @@ Common modules for all contracts.
 
 #### contracts/CPoolGames
 
-Specific for contract contract/CPoolGames.ligo includes and modules.
+Includes and modules specific for contract contracts/CPoolGames.ligo.
 
 #### contracts/CRandom
 
-Specific for contract contracts/CRandom.ligo includes and modules.
+Includes and modules specific for contract contracts/CRandom.ligo.
 
 ### doc
 
 Documentation folder.
+
+#### html-en
+
+English documentation, please open doc/html-en/index.html
+
+#### html-ru
+
+Russian documentation, please open doc/html-ru/index.html
+
+#### doc/mlcomment
+
+https://github.com/dimdim1177/mlcomment Multi-Language comments
+
+#### doc/ligo2dox
+
+https://github.com/dimdim1177/ligo2dox Convert PascaLIGO to C++ like code for auto-documenting by Doxygen
+
+### accounts
+
+Folder with *.json faucet files, downloaded from https://teztnets.xyz/, basename of file used as account name in tezos-client.
+One of it must be named as owner.json, this account used for deploy contracts.
+Script `accounts/activate.sh` activate all accounts in testnet.
+
+### build
+
+Folder for compiled files *.tz, logs *.log and so on.
 
 ### install
 

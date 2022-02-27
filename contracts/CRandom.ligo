@@ -2,12 +2,14 @@
 /// \author Dmitrii Dmitriev
 /// \date 02.2022
 /// \copyright MIT
-///RU Контракт для РЕДКОЙ генерации случайного числа по запросу
-///EN Contract for SELDOM generation random number by request
+///RU Контракт для РЕДКОЙ генерации случайного числа по запросу на основе блоков Тезос
+///EN Contract for SELDOM generation random number by request based on Tezos blocks
 
 #include "CRandom/storage.ligo"
 #include "CRandom/access.ligo"
 
+///RU Все точки входа контракта
+///EN All entrypoints of contract
 type t_entrypoint is
 //RU --- Управление доступами
 //EN --- Access management
