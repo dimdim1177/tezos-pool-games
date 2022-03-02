@@ -28,7 +28,7 @@ type t_pool_state is
 ///RU Если партия розыгрыша активна, она продолжается до завершения, но следующая не будет запущена.
 ///EN Pool suspended
 ///EN
-///EN If the drawing party is active, it continues until completion, but the next one will not be started.
+///EN If the drawing game is active, it continues until completion, but the next one will not be started.
 /// \see PausePool, CreatePool
 | PoolStatePause
 ///RU Пул на удаление
@@ -38,7 +38,7 @@ type t_pool_state is
 ///RU Если же пул уже пуст на момент установки состояния, он будет удален немедленно.
 ///EN Pool for deletion
 ///EN
-///EN If the drawing party is active, it continues until the end. At the end of the batch, when users
+///EN If the drawing game is active, it continues until the end. At the end of the game, when users
 ///EN have collected all deposits, the pool will be deleted during the last deposit debiting.
 ///EN If the pool is already empty at the time of setting the status, it will be deleted immediately.
 /// \see RemovePool
@@ -67,12 +67,12 @@ type t_algo is
 ///RU можно вложить мало, а выиграть много.
 ///EN The probability of winning is proportional to the total time in the game
 ///EN
-///EN The time of entry of each user into the draw is fixed. At the end of the batch, all the time spent in the batch
+///EN The time of entry of each user into the draw is fixed. At the end of the game, all the time spent in the game
 ///EN of all users are summed up (and this sum is taken as probability 1.0). Next, a random number is normalized to this amount and
 ///EN the user is selected based on this number. As a result, the probability of a user winning is proportional to his time in the
 ///EN pool.
-///EN Zeroing the deposit removes the user from the batch, respectively, removes his time in the pool, this makes
-///EN it pointless to exit and re-enter the batch.
+///EN Zeroing the deposit removes the user from the game, respectively, removes his time in the pool, this makes
+///EN it pointless to exit and re-enter the game.
 ///EN This algorithm is more interesting for users with small deposits, the probability of winning does not depend on the size of the
 ///EN deposit, so you can invest little and win a lot.
 /// \see t_opts.minDeposit, t_opts.minSeconds, t_weight, t_game.weight
@@ -94,13 +94,13 @@ type t_algo is
 ///EN
 ///EN The time of entry of each user into the draw and his deposit at this moment is fixed. When replenishing the deposit, the previous
 ///EN deposit is multiplied by its time of presence in the pool in seconds and this amount is accumulated separately for each user. This allows
-///EN users to increase the probability of winning by increasing the deposit during the game. At the end of the batch, all the time
-///EN spent in the batch multiplied by the deposits of all users are summed up (taking into account deposits during the batch, see above) (and this
+///EN users to increase the probability of winning by increasing the deposit during the game. At the end of the game, all the time
+///EN spent in the game multiplied by the deposits of all users are summed up (taking into account deposits during the game, see above) (and this
 ///EN amount is taken as probability 1.0). Next, a random number is normalized to this amount and the user is selected based
 ///EN on this number. As a result, the probability of a user winning is proportional to the sum of the products of his deposit and the time
 ///EN spent in his liquidity pool.
-///EN Zeroing the deposit removes the user from the batch, respectively, removes his time in the pool, this makes
-///EN it pointless to exit and re-enter the batch.
+///EN Zeroing the deposit removes the user from the game, respectively, removes his time in the pool, this makes
+///EN it pointless to exit and re-enter the game.
 ///EN This algorithm is more interesting for users with large deposits, the probability of winning depends on the size of the deposit, so you can
 ///EN significantly increase the probability of winning by investing a large deposit.
 /// \see t_opts.minDeposit, t_opts.maxDeposit, t_weight, t_game.weight
@@ -207,34 +207,34 @@ type t_opts is [@layout:comb] record [
 ];
 
 ///RU Состояния партии розыгрыша вознаграждения
-///EN States of the reward drawing party
+///EN States of the reward drawing game
 type t_game_state is
 ///RU Идет запуск партии
 ///RU
 ///RU Это состояние остается в хранилище только когда пользователи вносят или извлекают депозит после окончания розыгрыша
 ///RU в пустом пуле. Запуск нового розыгрыша требует дополнительных операций некорректно будет расход газа для этих операций
 ///RU истребовать с пользователя. Полноценный запуск партии будет произведен позднее менеджером пула
-///EN The batch is being launched
+///EN The game is being launched
 ///EN
 ///EN This state remains in the vault only when users make or withdraw a deposit after the end of the draw
 ///EN in an empty pool. Launching a new drawing requires additional operations, it will be incorrect to demand gas consumption for these
-///EN operations from the user. A full batch launch will be made later by the pool manager.
+///EN operations from the user. A full game launch will be made later by the pool manager.
 | GameStateActivating
 ///RU Идет партия розыгрыша
-///EN There is a drawing party going on
+///EN There is a drawing game going on
 | GameStateActive
 ///RU Партия розыгрыша закончена по времени
-///EN The drawing party is over in time
+///EN The drawing game is over in time
 | GameStateComplete
 ///RU Партия розыгрыша закончена по времени, ожидаем случайное число для определения победителя
-///EN The drawing party is over in time, we are waiting for a random number to determine the winner
+///EN The drawing game is over in time, we are waiting for a random number to determine the winner
 | GameStateWaitRandom
 ///RU Партия розыгрыша закончена по времени, случайное число получено (или не требуется), ожидаем определения победителя внешним кодом
-///EN The drawing party is over in time, a random number has been received (or is not required), we are waiting for the winner to be
+///EN The drawing game is over in time, a random number has been received (or is not required), we are waiting for the winner to be
 ///EN determined by an external code
 | GameStateWaitWinner
 ///RU Партии приостановлены (партия розыгрыша завершена, но запуск следующей заблокирован)
-///EN The games are suspended (the drawing party is completed, but the launch of the next one is blocked)
+///EN The games are suspended (the drawing game is completed, but the launch of the next one is blocked)
 | GameStatePause
 ;
 
@@ -243,11 +243,11 @@ type t_game_state is
 ///RU Вероятность выигрыша пользователя пропорциональна отношению веса участника к весу всей партии
 ///EN Weight to determine the probability of a participant winning
 ///EN
-///EN The probability of a user winning is proportional to the ratio of the participant's weight to the weight of the entire party
+///EN The probability of a user winning is proportional to the ratio of the participant's weight to the weight of the entire game
 type t_weight is nat;
 
 ///RU Параметры партии розыгрыша
-///EN Parameters of the drawing party
+///EN Parameters of the drawing game
 /// \see MPoolGame
 type t_game is [@layout:comb] record [
     state: t_game_state;///RU< Состояние партии ///EN< Game status
@@ -263,7 +263,7 @@ type t_game is [@layout:comb] record [
     tsEnd: timestamp;
 
     ///RU Вес партии - суммарный вес всех участников партии
-    ///EN Party weight - the total weight of all party participants
+    ///EN Party weight - the total weight of all game participants
     weight: t_weight;
 
     ///RU Вес для определения победителя
@@ -276,12 +276,12 @@ type t_game is [@layout:comb] record [
     ///RU для текущей партии вес 0 и таким образом исключаются из победителей.
     ///EN Weight to determine the winner
     ///EN
-    ///EN Weight is determined by dividing with remainder 256-bit random numbers on the weight of the party + 1n (that is never equal to 0)
+    ///EN Weight is determined by dividing with remainder 256-bit random numbers on the weight of the game + 1n (that is never equal to 0)
     ///EN To search for the winner of the backend needs to take addresses of all the members of the pool, sort them in alphabetical order and
     ///EN consistently adding up the weight of the participants to find someone, adding weight which result >=winWeight And <=winWeight,
     ///EN he will be the winners
     ///EN Participants who entered the pool in violation of the restrictions (for example, less than minSeconds before the end of the game)
-    ///EN will have for the current batch, the weight is 0 and thus excluded from the winners.
+    ///EN will have for the current game, the weight is 0 and thus excluded from the winners.
     /// \see winner
     winWeight: t_weight;
 
@@ -376,11 +376,11 @@ type t_pool is [@layout:comb] record [
     count: nat;
 
     ///RU Текущая партия розыгрыша вознаграждения
-    ///EN The current batch of the reward draw
+    ///EN The current game of the reward draw
     game: t_game;
 
     ///RU Делался ли запрос случайного числа для партии
-    ///EN Was a random number request made for the batch
+    ///EN Was a random number request made for the game
     randomFuture: bool;
 
     ///RU Баланс контракта в токенах вознаграждения до взыскания вознаграждения
@@ -528,9 +528,9 @@ type t_user is [@layout:comb] record [
     ///RU партиях (при tsBalance < game.tsBeg) переменная игнорируется, чтобы не делать лишних обновлений данных
     ///EN Additional user weight only for AlgoTimeVol at (tsBalance >= game.tsBeg) && (tsBalance < game.tsEnd)
     ///EN
-    ///EN When depositing/debiting during the party, this may change the user's weight in the draw at AlgoTimeVol
-    ///EN This variable stores the user's accumulated weight from the beginning of the game.tsBeg batch to tsBalance and in the following
-    ///EN batches (with tsBalance < game.tsBeg) the variable is ignored so as not to make unnecessary data updates
+    ///EN When depositing/debiting during the game, this may change the user's weight in the draw at AlgoTimeVol
+    ///EN This variable stores the user's accumulated weight from the beginning of the game.tsBeg game to tsBalance and in the following
+    ///EN games (with tsBalance < game.tsBeg) the variable is ignored so as not to make unnecessary data updates
     /// \see AlgoTimeVol
     addWeight: t_weight;
 ];
@@ -560,7 +560,7 @@ type t_pool_info is [@layout:comb] record [
     count: nat;
 
     ///RU Текущая партия розыгрыша вознаграждения
-    ///EN The current batch of the reward draw
+    ///EN The current game of the reward draw
     game: t_game;
 ];
 

@@ -144,10 +144,10 @@ case entrypoint of [
         ts = ts_iobj_callback.0;
         iobj = iobj;
     ];
-    const future: t_future = getFuture(s, ifuture);
+    const future = getFuture(s, ifuture);
     if 0n = future.level then failwith(cERR_NOT_READY)
     else skip;
-    const operations: t_operations = list [
+    const operations = list [
         Tezos.transaction(
             OnRandomCallback(iobj, future.random),
             0mutez,

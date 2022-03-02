@@ -64,10 +64,8 @@ module MPool is {
     ///RU Пока партия не приостановлена пул активен, он доступен для просмотра, для внесения депозитов и т.д.
     ///EN Is the pool active
     ///EN
-    ///EN While the batch is not suspended, the pool is active, it is available for viewing, for making deposits, etc.
-    [@inline] function isActive(const pool: t_pool): bool is block {
-        const r: bool = (pool.game.state =/= GameStatePause);
-    } with r;
+    ///EN While the game is not suspended, the pool is active, it is available for viewing, for making deposits, etc.
+    [@inline] function isActive(const pool: t_pool): bool is (pool.game.state =/= GameStatePause);
 
     ///RU Проверка доступа к пулу
     ///EN Checking access to the pool
@@ -262,7 +260,7 @@ module MPool is {
     } with pool;
 
     ///RU Запуск новой партии, если необходимо
-    ///EN Starting a new batch, if necessary
+    ///EN Starting a new game, if necessary
     function requestRandomIfNeed(const ipool: t_ipool; var pool: t_pool; var operations: t_operations): t_pool * t_operations is block {
         //RU Если розыгрыш активен, участников больше одного и еще не заказывали случайное число
         //EN If the draw is active, there are more than one participants and no random number has been ordered yet
@@ -275,7 +273,7 @@ module MPool is {
     } with (pool, operations);
 
     ///RU Запуск новой партии
-    ///EN Launching a new batch
+    ///EN Launching a new game
     function newGame(const ipool: t_ipool; var pool: t_pool; var operations: t_operations): t_pool * t_operations is block {
         pool := MPoolGame.newGame(pool);
         const r: t_pool * t_operations = requestRandomIfNeed(ipool, pool, operations);
@@ -303,7 +301,7 @@ module MPool is {
         else failwith(cERR_INVALID_STATE);
         //RU Запрашиваем случайное число колбеком
         //EN Requesting a random number with a callback
-        const operations: t_operations = list [
+        const operations = list [
             MRandom.get(pool.randomSource, pool.game.tsEnd, ipool, MCallback.onRandomEntrypoint(unit))
         ];
         pool.game.state := GameStateWaitRandom;
@@ -313,10 +311,10 @@ module MPool is {
     ///EN Set pool game winner
     function setPoolWinner(var pool: t_pool; const winner: address): t_pool * t_operations is block {
         pool.game.winner := winner;
-        const rewardToken: MToken.t_token = pool.farm.rewardToken;
-        const cbFA1_2: contract(MFA1_2.t_balance_callback_params) = MCallback.onBalanceFA1_2Entrypoint(unit);
-        const cbFA2: contract(MFA2.t_balance_callback_params) = MCallback.onBalanceFA2Entrypoint(unit);
-        const operations: t_operations = list [
+        const rewardToken = pool.farm.rewardToken;
+        const cbFA1_2 = MCallback.onBalanceFA1_2Entrypoint(unit);
+        const cbFA2 = MCallback.onBalanceFA2Entrypoint(unit);
+        const operations = list [
             MToken.balanceOf(rewardToken, Tezos.self_address, cbFA1_2, cbFA2);
             MFarm.harvest(pool.farm);
             MToken.balanceOf(rewardToken, Tezos.self_address, cbFA1_2, cbFA2)
@@ -332,7 +330,7 @@ module MPool is {
     //RU --- Проверки ограничений
     //EN --- Checking restrictions
         if isActive(pool) then skip else failwith(cERR_DEPOSIT_INACTIVE);
-        const newbalance: nat = user.balance + damount;
+        const newbalance = user.balance + damount;
         //RU Пополнять можно не больше максимального депозита
         //EN You can top up no more than the maximum deposit
         if (pool.opts.maxDeposit > 0n) and (newbalance > pool.opts.maxDeposit) then failwith(cERR_OVER_MAX_DEPOSIT)
@@ -355,7 +353,7 @@ module MPool is {
         user.balance := newbalance;//RU Новый баланс пользователя //EN New user balance
         user.tsBalance := Tezos.now;//RU Когда он был изменен //EN When it was changed
 
-        const operations: t_operations = MFarm.deposit(pool.farm, damount, doapprove);//RU Перечисляем депозит в ферму //EN We transfer the deposit to the farm
+        const operations = MFarm.deposit(pool.farm, damount, doapprove);//RU Перечисляем депозит в ферму //EN We transfer the deposit to the farm
 
     ///RU Если появилось больше 2 участников, нужно заказать случайное число для розыгрыша
     ///EN If there are more than 2 participants, you need to order a random number for the draw
@@ -376,7 +374,7 @@ module MPool is {
 
     //RU --- Проверки ограничений
     //EN --- Checking restrictions
-        const inewbalance: int = user.balance - wamount;
+        const inewbalance = user.balance - wamount;
         if inewbalance < 0 then failwith(cERR_INSUFFICIENT_FUNDS)
         else block {
             //RU Списать можно либо все, либо до минимального депозита
@@ -394,7 +392,7 @@ module MPool is {
 
     //RU --- Фиксируем балансы
     //EN --- Fixing balances
-        const newbalance: nat = abs(inewbalance);
+        const newbalance = abs(inewbalance);
         //RU Удаление пользователя из пула
         //EN Removing a user from the pool
         if 0n = newbalance then pool.count := abs(pool.count - 1n)
@@ -404,7 +402,7 @@ module MPool is {
         user.tsBalance := Tezos.now;
         //RU Извлекаем депозит из фермы
         //EN We extract the deposit from the farm
-        const operations: t_operations = MFarm.withdraw(pool.farm, wamount);
+        const operations = MFarm.withdraw(pool.farm, wamount);
     } with (pool, user, operations);
 
     ///RU Колбек провайдера случайных чисел
@@ -436,18 +434,18 @@ module MPool is {
         var operations: t_operations := cNO_OPERATIONS;
         //RU Полученное из фермы вознаграждение
         //EN The reward received from the farm
-        const ifullReward: int = currentBalance - pool.beforeHarvestBalance;
+        const ifullReward = currentBalance - pool.beforeHarvestBalance;
         if ifullReward < 0 then failwith(cERR_LOGIC) else skip;//RU Отрицательное вознаграждение //EN Negative remuneration
-        const fullReward: MToken.t_amount = abs(ifullReward);
+        const fullReward = abs(ifullReward);
         //RU Если есть комиссия, перечисляем ее
         //EN If there is a commission, we list it
-        const fee: MToken.t_amount = (fullReward * pool.opts.feePercent) / 100n;
+        const fee = (fullReward * pool.opts.feePercent) / 100n;
         if fee > 0n then operations := MToken.transfer(pool.farm.rewardToken, Tezos.self_address, getFeeAddr(pool), fee) # operations
         else skip;
-        const burn: MToken.t_amount = (fullReward * pool.opts.burnPercent) / 100n;
+        const burn = (fullReward * pool.opts.burnPercent) / 100n;
         //RU Оставшиеся токены с копейками в вознаграждение
         //EN The remaining tokens with pennies in the reward
-        const reward: MToken.t_amount = abs(fullReward - fee - burn);
+        const reward = abs(fullReward - fee - burn);
         //RU Перечисляем вознаграждение победителю
         //EN We transfer the reward to the winner
         if reward > 0n then operations := MToken.transfer(pool.farm.rewardToken, Tezos.self_address, pool.game.winner, fee) # operations
@@ -458,8 +456,8 @@ module MPool is {
         //RU Если нужно сжигать другие токены
         //EN If you need to burn other tokens
         if burn > 0n then block {
-            const burnToken: MToken.t_token = getBurnToken(pool);
-            const rewardToken: MToken.t_token = pool.farm.rewardToken;
+            const burnToken = getBurnToken(pool);
+            const rewardToken = pool.farm.rewardToken;
             //RU Если токены вознаграждения и сжигания совпадают, сжигаем их сразу
             //EN If the reward and burning tokens match, we burn them immediately
             if MToken.isEqual(burnToken, rewardToken) then block {
@@ -481,16 +479,16 @@ module MPool is {
     ///RU Колбек самого себя после обмена токенов вознаграждения на tez
     ///EN Callback of himself after exchanging reward tokens for tez
     function afterReward2Tez(const ipool: t_ipool; var pool: t_pool): t_pool * t_operations is block {
-        const currentTez: tez = Tezos.balance + Tezos.amount;
+        const currentTez = Tezos.balance + Tezos.amount;
         if currentTez < pool.beforeReward2TezBalance then failwith(cERR_LOGIC) else skip;
-        const changedTez: tez = currentTez - pool.beforeReward2TezBalance;
+        const changedTez = currentTez - pool.beforeReward2TezBalance;
         var operations: t_operations := cNO_OPERATIONS;
         if changedTez > 0mutez then block {
             //RU Если получили при конвертации хоть сколько-то tez
             //EN If you received at least some tez during the conversion
-            const burnToken: MToken.t_token = getBurnToken(pool);
-            const cbFA1_2: contract(MFA1_2.t_balance_callback_params) = MCallback.onBalanceFA1_2Entrypoint(unit);
-            const cbFA2: contract(MFA2.t_balance_callback_params) = MCallback.onBalanceFA2Entrypoint(unit);
+            const burnToken = getBurnToken(pool);
+            const cbFA1_2 = MCallback.onBalanceFA1_2Entrypoint(unit);
+            const cbFA2 = MCallback.onBalanceFA2Entrypoint(unit);
             operations := list [
                 MToken.balanceOf(burnToken, Tezos.self_address, cbFA1_2, cbFA2);
                 MQuipuswap.tez2token(getSwapBurn(pool), changedTez, 1n, Tezos.self_address);
@@ -509,7 +507,7 @@ module MPool is {
     ///RU Получен баланс токенов для сжигания до обмена tez на них
     ///EN Received a balance of tokens for burning before exchanging tez for them
     function onBalanceBeforeTez2Burn(var pool: t_pool; const currentBalance: MToken.t_amount): t_pool is block {
-        const burnToken: MToken.t_token = getBurnToken(pool);
+        const burnToken = getBurnToken(pool);
         if Tezos.sender = burnToken.addr then skip
         else failwith(cERR_DENIED);
         pool.beforeBurnBalance := currentBalance;
@@ -518,14 +516,14 @@ module MPool is {
     ///RU Получен баланс токенов для сжигания после обмена tez на них
     ///EN The balance of tokens for burning was obtained after the exchange of tez for them
     function onBalanceAfterTez2Burn(const ipool: t_ipool; var pool: t_pool; const currentBalance: MToken.t_amount): t_pool * t_operations is block {
-        const burnToken: MToken.t_token = getBurnToken(pool);
+        const burnToken = getBurnToken(pool);
         if Tezos.sender = burnToken.addr then skip
         else failwith(cERR_DENIED);
         //RU Полученные токены для сжигания
         //EN Received tokens for burning
-        const iburn: int = currentBalance - pool.beforeBurnBalance;
+        const iburn = currentBalance - pool.beforeBurnBalance;
         if iburn < 0 then failwith(cERR_LOGIC) else skip;//RU Отрицательное кол-во //EN Negative quantity
-        const burn: MToken.t_amount = abs(iburn);
+        const burn = abs(iburn);
         var operations: t_operations := cNO_OPERATIONS;
         operations := MToken.burn(burnToken, Tezos.self_address, burn) # operations;// RU Сжигаем токены
         ///RU Все действия по выигрышу выполнены, активируем новый розыгрыш

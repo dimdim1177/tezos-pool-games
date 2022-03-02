@@ -29,7 +29,7 @@ module MRandom is {
     ///RU значение requestHash. Cлучайное число вычисляется как random = levelHash ^ requestHash и переводится
     ///RU в формат nat. В итоге в общем случае у нас 256-битное случайное число
     ///EN Random number
-    ///EN 
+    ///EN
     ///EN To create a random number, the hash of the nearest Tezos block is taken, the time of which is greater than or equal
     ///EN to the time of the event, SHA-256 is removed from it, we get the levelHash value. Also, the SHA-256 hash is removed
     ///EN from the line "customer's address<space><object ID in the customer's contract in decimal notation>", we get
@@ -159,13 +159,13 @@ module MRandom is {
     function check(const randomSource: t_random_source): unit is block {
         //RU Проверяем наличие метода createFuture для источника
         //EN Checking for the createFuture method for the source
-        const _: t_create_contract = createFutureEntrypoint(randomSource);
+        const _ = createFutureEntrypoint(randomSource);
         //RU Проверяем наличие метода deleteFuture для источника
         //EN Checking for the deleteFuture method for the source
-        const _: t_delete_contract = deleteFutureEntrypoint(randomSource);
+        const _ = deleteFutureEntrypoint(randomSource);
         //RU Проверяем наличие метода getFuture для источника random
         //EN Checking for the getFuture method for the random source
-        const _: t_get_contract = getFutureEntrypoint(randomSource);
+        const _ = getFutureEntrypoint(randomSource);
      } with unit;
 
 }

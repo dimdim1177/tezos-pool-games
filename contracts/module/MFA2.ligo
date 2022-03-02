@@ -4,7 +4,7 @@
 ///RU Типы и методы для FA2
 ///EN Types and methods for FA2
 module MFA2 is {
-    
+
     ///RU ID токена ///EN Token ID
     type t_token_id is nat;
 
@@ -224,9 +224,9 @@ module MFA2 is {
     ///RU Проверка на соответствие стандарту FA2
     ///EN Checking for compliance with the FA2 standard
     function check(const token: address): unit is block {
-        const _: t_transfer_contract = transferEntrypoint(token);//RU Проверяем наличие метода transfer для FA2 //EN Checking for the transfer method for FA2
-        const _: t_balance_contract = balanceEntrypoint(token);//RU Проверяем наличие метода balance_of для FA2 //EN Checking for the balance_of method for FA2
-        const _: t_operators_contract = operatorsEntrypoint(token);//RU Проверяем наличие метода update_operators для FA2 //EN Checking for the update_operators method for FA2
+        const _ = transferEntrypoint(token);//RU Проверяем наличие метода transfer для FA2 //EN Checking for the transfer method for FA2
+        const _ = balanceEntrypoint(token);//RU Проверяем наличие метода balance_of для FA2 //EN Checking for the balance_of method for FA2
+        const _ = operatorsEntrypoint(token);//RU Проверяем наличие метода update_operators для FA2 //EN Checking for the update_operators method for FA2
     } with unit;
 
 }

@@ -89,6 +89,7 @@ Includes and modules specific for contract contracts/CRandom.ligo.
 ### doc
 
 Documentation folder.
+File algo.xlsx - example in comparing table of changeing weights users and game in different alrorithms in different situations for simplify understanding weight code logic.
 
 #### html-en
 

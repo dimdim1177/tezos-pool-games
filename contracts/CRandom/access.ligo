@@ -35,9 +35,9 @@ function isAdmin(const s: t_storage): bool is block {
 ///EN If Tezos.sender is not the contract admin, an error is generated
 function mustAdmin(const s: t_storage): unit is block {
 #if ENABLE_OWNER
-    const isOwner: bool = MOwner.isOwner(s.owner);
+    const isOwner = MOwner.isOwner(s.owner);
 #else // ENABLE_OWNER
-    const isOwner: bool = False;
+    const isOwner = False;
 #endif // else ENABLE_OWNER
     if isOwner then skip //RU Владелец как бы админ
     else MAdmin.mustAdmin(s.admin);
@@ -63,9 +63,9 @@ function isAdmin(const s: t_storage): bool is block {
 ///EN If Tezos.sender is not the contract admin, an error is generated
 function mustAdmin(const s: t_storage): unit is block {
 #if ENABLE_OWNER
-    const isOwner: bool = MOwner.isOwner(s.owner);
+    const isOwner = MOwner.isOwner(s.owner);
 #else // ENABLE_OWNER
-    const isOwner: bool = False;
+    const isOwner = False;
 #endif // else ENABLE_OWNER
     if isOwner then skip //RU Владелец как бы админ
     else MAdmins.mustAdmin(s.admins);

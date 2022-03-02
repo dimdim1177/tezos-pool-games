@@ -88,8 +88,8 @@ module MPools is {
         const farm_ident: t_farm_ident = (pool_create.farm.addr, pool_create.farm.id);
         if Big_map.mem(farm_ident, s.usedFarms) then failwith(cERR_FARM_USED)
         else s.usedFarms[farm_ident] := unit;
-        const pool: t_pool = MPool.create(pool_create);
-        const ipool: t_ipool = s.inext;//RU Индекс нового пула //EN Index of the new pool
+        const pool = MPool.create(pool_create);
+        const ipool = s.inext;//RU Индекс нового пула //EN Index of the new pool
         s.inext := ipool + 1n;
         s.pools := Big_map.add(ipool, pool, s.pools);
     } with s;
@@ -102,7 +102,7 @@ module MPools is {
 
     ///RU Удаление пула (по окончании партии) ///EN Remove pool (after game)
     function removePool(var s: t_storage; const ipool: t_ipool): t_storage is block {
-        const pool: t_pool = getPool(s, ipool);
+        const pool = getPool(s, ipool);
         MPool.mustManager(s, pool);//RU Проверка доступа к пулу //EN Checking access to the pool
         if 0n = pool.balance then s := doRemovePool(s, ipool, pool)//RU Пул уже пуст, можно удалить прямо сейчас //EN The pool is already empty, you can delete it right now
         else s := setPoolState(s, ipool, PoolStateRemove);//RU Удалим, когда все заберут депозиты //EN We will delete it when all the deposits are taken away
@@ -127,7 +127,7 @@ module MPools is {
 
     ///RU Пометить партию завершившейся по времени ///EN Mark pool game complete by time
     function setPoolGameComplete(var s: t_storage; const ipool: t_ipool): t_return is block {
-        const pool: t_pool = getPool(s, ipool);
+        const pool = getPool(s, ipool);
         MPool.mustManager(s, pool);//RU Проверка доступа к пулу //EN Checking access to the pool
         const r: t_pool * t_operations = MPool.setGameComplete(ipool, pool);
         s := setPool(s, ipool, r.0);
@@ -135,7 +135,7 @@ module MPools is {
 
     ///RU Получить случайное число из источника ///EN Get random number from source
     function getPoolRandom(var s: t_storage; const ipool: t_ipool): t_return is block {
-        const pool: t_pool = getPool(s, ipool);
+        const pool = getPool(s, ipool);
         MPool.mustManager(s, pool);//RU Проверка доступа к пулу //EN Checking access to the pool
         const r: t_pool * t_operations = MPool.getRandom(ipool, pool);
         s := setPool(s, ipool, r.0);
@@ -161,10 +161,10 @@ module MPools is {
         var pool: t_pool := getPool(s, ipool);
         var user: t_user := getUser(s, ipool);
 #if ENABLE_TRANSFER_SECURITY
-        const doapprove: bool = True;
+        const doapprove = True;
 #else // ENABLE_TRANSFER_SECURITY
         const approve: t_approve = (pool.farm.addr, pool.farm.rewardToken);
-        const doapprove: bool = (not Big_map.mem(approve, s.approved));
+        const doapprove = (not Big_map.mem(approve, s.approved));
 #endif // else ENABLE_TRANSFER_SECURITY
         const r: t_pool * t_user * t_operations = MPool.deposit(ipool, pool, user, damount, doapprove);
 #if !ENABLE_TRANSFER_SECURITY
@@ -204,15 +204,15 @@ module MPools is {
     function onBalance(var s: t_storage; const currentBalance: MToken.t_amount): t_return is block {
         var operations: t_operations := cNO_OPERATIONS;
         if s.waitBalanceAfterHarvest >= 0 then block {
-            const ipool: t_ipool = abs(s.waitBalanceAfterHarvest);
+            const ipool = abs(s.waitBalanceAfterHarvest);
             s.waitBalanceAfterHarvest := -1;
-            const pool: t_pool = getPool(s, ipool);
+            const pool = getPool(s, ipool);
             const r: t_pool * t_operations = MPool.onBalanceAfterHarvest(ipool, pool, currentBalance);
             s := setPool(s, ipool, r.0);
             operations := r.1;
         } else skip;
         if s.waitBalanceBeforeHarvest >= 0 then block {
-            const ipool: t_ipool = abs(s.waitBalanceBeforeHarvest);
+            const ipool = abs(s.waitBalanceBeforeHarvest);
             s.waitBalanceBeforeHarvest := -1;
             s.waitBalanceAfterHarvest := int(ipool);
             var pool: t_pool := getPool(s, ipool);
@@ -220,15 +220,15 @@ module MPools is {
             s := setPool(s, ipool, pool);
         } else skip;
         if s.waitBalanceAfterTez2Burn >= 0 then block {
-            const ipool: t_ipool = abs(s.waitBalanceAfterTez2Burn);
-            const pool: t_pool = getPool(s, ipool);
+            const ipool = abs(s.waitBalanceAfterTez2Burn);
+            const pool = getPool(s, ipool);
             s.waitBalanceAfterTez2Burn := -1;
             const r: t_pool * t_operations = MPool.onBalanceAfterTez2Burn(ipool, pool, currentBalance);
             s := setPool(s, ipool, r.0);
             operations := r.1;
         } else skip;
         if s.waitBalanceBeforeTez2Burn >= 0 then block {
-            const ipool: t_ipool = abs(s.waitBalanceBeforeTez2Burn);
+            const ipool = abs(s.waitBalanceBeforeTez2Burn);
             s.waitBalanceBeforeTez2Burn := -1;
             s.waitBalanceAfterTez2Burn := int(ipool);
             var pool: t_pool := getPool(s, ipool);
@@ -258,9 +258,9 @@ module MPools is {
     ///RU Колбек самого себя после обмена токенов вознаграждения на tez
     ///EN Callback of himself after exchanging reward tokens for tez
     function afterReward2Tez(var s: t_storage; const ipool: t_ipool): t_return is block {
-        const pool: t_pool = getPool(s, ipool);
+        const pool = getPool(s, ipool);
         const r: t_pool * t_operations = MPool.afterReward2Tez(ipool, pool);
-        if GameStateActive = r.0.game.state then skip //RU Запустилась новая партия, не ждем обмен //EN A new batch has been launched, we are not waiting for an exchange
+        if GameStateActive = r.0.game.state then skip //RU Запустилась новая партия, не ждем обмен //EN A new game has been launched, we are not waiting for an exchange
         else s.waitBalanceBeforeTez2Burn := int(ipool);
         s := setPool(s, ipool, r.0);
         operations := r.1;
@@ -272,7 +272,7 @@ module MPools is {
     ///RU Получение основной информации о пуле
     ///EN Getting basic Pool information
     function viewPoolInfo(const s: t_storage; const ipool: t_ipool): t_pool_info is block {
-        const pool: t_pool = getPool(s, ipool);
+        const pool = getPool(s, ipool);
         const pool_info: t_pool_info = record [
             opts = pool.opts;
             farm = pool.farm;
@@ -286,7 +286,7 @@ module MPools is {
     ///RU Получение баланса пользователя в пуле
     ///EN Getting the user's balance in the pool
     function viewBalance(const s: t_storage; const ipool: t_ipool): nat is block {
-        const user: t_user = getUser(s, ipool);
+        const user = getUser(s, ipool);
     } with user.balance;
 
 }

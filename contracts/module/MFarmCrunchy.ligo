@@ -139,13 +139,13 @@ module MFarmCrunchy is {
     function check(const addr: address): unit is block {
         //RU Проверяем наличие метода deposit для фермы в формате Crunchy
         //EN Check for the deposit method for the farm in Crunchy format
-        const _d: t_deposit_contract = depositEntrypoint(addr);
+        const _ = depositEntrypoint(addr);
         //RU Проверяем наличие метода withdraw для фермы в формате Crunchy
         //EN We check the availability of the withdraw method for the farm in the Crunchy format
-        const _w: t_withdraw_contract = withdrawEntrypoint(addr);
+        const _ = withdrawEntrypoint(addr);
         //RU Проверяем наличие метода harvest для фермы в формате Crunchy
         //EN We check the availability of the harvest method for the farm in the Crunchy format
-        const _h: t_harvest_contract = harvestEntrypoint(addr);
+        const _ = harvestEntrypoint(addr);
     } with unit;
 
 }

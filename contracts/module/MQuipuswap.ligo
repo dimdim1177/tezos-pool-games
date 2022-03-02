@@ -80,11 +80,11 @@ module MQuipuswap is {
     function check(const swap: t_swap): unit is block {
         //RU Проверяем наличие метода tezToTokenPayment для обменника
         //EN We check the availability of the tezToTokenPayment method for the exchanger
-        const _: t_tez2token_contract = tez2tokenEntrypoint(swap);
+        const _ = tez2tokenEntrypoint(swap);
 
         //RU Проверяем наличие метода tokenToTezPayment для обменника
         //EN We check the presence of the tokenToTezPayment method for the exchanger
-        const _: t_token2tez_contract = token2tezEntrypoint(swap);
+        const _ = token2tezEntrypoint(swap);
     } with unit;
 
 }

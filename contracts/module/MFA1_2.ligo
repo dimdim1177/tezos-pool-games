@@ -4,7 +4,7 @@
 ///RU Типы и методы для FA1.2
 ///EN Types and methods for FA1.2
 module MFA1_2 is {
-    
+
     ///RU Входные параметры для метода transfer
     ///EN Input parameters for the transfer method
     type t_transfer_params is [@layout:comb] record [
@@ -161,9 +161,9 @@ module MFA1_2 is {
     ///RU Проверка на соответствие стандарту FA1.2
     ///EN Checking for compliance with the FA1.2 standard
     function check(const token: address): unit is block {
-        const _: t_transfer_contract = transferEntrypoint(token);//RU Проверяем наличие метода transfer для FA1.2 //EN Checking for the transfer method for FA1.2
-        const _: t_balance_contract = balanceEntrypoint(token);//RU Проверяем наличие метода getBalance для FA1.2 //EN Checking for the getBalance method for FA1.2
-        const _: t_approve_contract = approveEntrypoint(token);//RU Проверяем наличие метода approve для FA1.2 //EN Checking for the approve method for FA1.2
+        const _ = transferEntrypoint(token);//RU Проверяем наличие метода transfer для FA1.2 //EN Checking for the transfer method for FA1.2
+        const _ = balanceEntrypoint(token);//RU Проверяем наличие метода getBalance для FA1.2 //EN Checking for the getBalance method for FA1.2
+        const _ = approveEntrypoint(token);//RU Проверяем наличие метода approve для FA1.2 //EN Checking for the approve method for FA1.2
     } with unit;
 
 }
