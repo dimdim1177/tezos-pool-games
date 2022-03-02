@@ -11,7 +11,11 @@
     admin = ("OWNER_ADDRESS": address);//RU Владельца используем как админа //EN We use the owner as an admin
 #endif // ENABLE_ADMIN
 #if ENABLE_ADMINS
+#if !ENABLE_OWNER
+    admins = (set [("OWNER_ADDRESS": address)]: MAdmins.t_admins);
+#else // !ENABLE_OWNER
     admins = (set []: MAdmins.t_admins);
+#endif // else !ENABLE_OWNER
 #endif // ENABLE_ADMINS
     inext = 1n;//RU ID первого пула //EN ID of the first pool
     pools = (big_map []: t_pools);

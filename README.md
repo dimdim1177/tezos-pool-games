@@ -16,6 +16,12 @@ Usage: compile.sh NAME|ALL
 Compile 'contracts/NAME.ligo' or 'contracts/*.ligo' for ALL.
 Compiled files saved to 'build/NAME.tz' and 'build/NAME.storage.tz' files.
 
+### Tests
+
+Usage: tests.sh NAME|ALL
+Execute tests 'tests/NAME.ligo' or 'tests/*.ligo' for ALL.
+Logs saved to 'build/NAME.test.log' files.
+
 ### Deploy
 
 Usage: deploy.sh NAME|ALL [force]
@@ -124,6 +130,22 @@ Folder with scripts for install development tools: LIGO, tezos-client and so on.
 ### tezbin
 
 Binaries from tezos: tezos-client and so on.
+
+### tests
+
+Unit tests in LIGO. See tests `tests/CPoolGames.ligo` and `tests/CRandom.ligo`.
+
+#### tests/include
+
+Common tests code
+
+#### tests/CPoolGames
+
+Only CPoolGames test code for include.
+
+#### tests/CRandom
+
+Only CRandom test code for include.
 
 ### venv
 

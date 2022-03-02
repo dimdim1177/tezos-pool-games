@@ -10,11 +10,17 @@
 Выполнить скрипт `./install/install_all.sh` для скачивания и установки: LIGO, tezos-client, python, pytezos и т.д.
 Или выполните скрипты ./install/install_*.sh для каждого инструмента вручную.
 
-### Компилировать
+### Компилирование
 
 Использование: compile.sh NAME|ALL
 Скомпилируйте 'contracts/NAME.ligo' или 'contracts/*.ligo' для ALL.
 Скомпилированные файлы сохраняются в файлах build/NAME.tz и build/NAME.storage.tz.
+
+### Тестирование
+
+Использование: tests.sh NAME|ALL
+Исполняет тесты из 'tests/NAME.ligo' или 'tests/*.ligo' для ALL.
+Логи тестирования сохраняются в файлах build/NAME.test.log.
 
 ### Развертывание
 
@@ -120,6 +126,22 @@ https://github.com/dimdim1177/ligo2dox Преобразование PascaLIGO в
 ### install
 
 Папка со скриптами для установки средств разработки: LIGO, tezos-client и так далее.
+
+### tests
+
+Тесты на LIGO. См. файлы `tests/CPoolGames.ligo` и `tests/CRandom.ligo`.
+
+#### tests/include
+
+Общий код тестирования.
+
+#### tests/CPoolGames
+
+Код тестирования только для CPoolGames.
+
+#### tests/CRandom
+
+Код тестирования только для CRandom.
 
 ### tezbin
 

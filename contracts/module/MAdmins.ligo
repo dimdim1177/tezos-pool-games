@@ -60,9 +60,7 @@ module MAdmins is {
     ///EN Adding an admin is definitely
     ///EN
     ///EN Checking the rights to add an admin should be done from the outside
-    function forceAdd(const addadmin: t_admin; var admins: t_admins): t_admins is block {
-        admins := Set.add(addadmin, admins);
-    } with admins;
+    function forceAdd(const addadmin: t_admin; var admins: t_admins): t_admins is Set.add(addadmin, admins);
 
     ///RU Удаление админа безусловно
     ///RU
@@ -77,12 +75,12 @@ module MAdmins is {
     ///EN which can add an admin, the error cERR_REM_LAST_ADMIN will be returned
     ///EN If the admin for deletion is not found, the error cERR_NOT_FOUND will be returned
     function forceRem(const remadmin: t_admin; var admins: t_admins): t_admins is block {
+        if admins contains remadmin then skip
+        else failwith(cERR_NOT_FOUND);
 #if !ENABLE_OWNER
         if 1n = Set.size(admins) then failwith(cERR_REM_LAST_ADMIN)
         else skip;
 #endif // !ENABLE_OWNER
-        if admins contains remadmin then skip
-        else failwith(cERR_NOT_FOUND);
         admins := Set.remove(remadmin, admins);
     } with admins;
 
@@ -91,14 +89,14 @@ module MAdmins is {
     ///EN Adding an admin with admin rights verification
     function accessAdd(const addadmin: t_admin; var admins: t_admins): t_admins is block {
         mustAdmin(admins);
-        forceAdd(addadmin, admins);
+        admins := forceAdd(addadmin, admins);
     } with admins;
 
     ///RU Удаление админа с проверкой прав админа
     ///EN Admin removal with admin rights check
     function accessRem(const remadmin: t_admin; var admins: t_admins): t_admins is block {
         mustAdmin(admins);
-        forceRem(remadmin, admins);
+        admins := forceRem(remadmin, admins);
     } with admins;
 
 #endif // !ENABLE_OWNER
