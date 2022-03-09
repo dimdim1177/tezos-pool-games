@@ -66,6 +66,13 @@ Main features:
 - Request has address and ID of obj
 - Random number based on nearest Tezos block hash with time more time in request and XORed with hash of request, that is why one Tezos block generate different random numbers for different requests.
 
+### Lexem prefixes
+
+- **C** - Contract
+- **M** - Module
+- **t_** - Type
+- **c_** - Constant
+- **cERR_** - Constant with error code for failwith
 
 ## Folders tree
 

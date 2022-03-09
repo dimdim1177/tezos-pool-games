@@ -15,9 +15,7 @@ const testChangeOwnerFailDenied = {
     Test.set_source(aADMIN);
     const r = Test.transfer_to_contract(c, ChangeOwner(aADMIN), 0mutez);
     Test.log(("ChangeOwnerFailDenied", r));
-
-    const musts = initialStorage(unit);
-} with (mustERR(r, MOwner.cERR_DENIED)) and (musts = Test.get_storage(caddr));
+} with (mustERR(r, MOwner.cERR_DENIED)) and (initialStorage(unit) = Test.get_storage(caddr));
 
 #endif // ENABLE_OWNER
 
@@ -31,16 +29,14 @@ const testChangeAdminByOwnerOK = {
 
     var musts: t_storage := initialStorage(unit);
     musts.admin := aADMIN;
-} with (Test.get_storage(caddr) = musts) and (mustOK(r));
+} with (mustOK(r)) and (musts = Test.get_storage(caddr));
 
 const testChangeAdminFailDenied = {
     const (caddr, c) = originate(unit);
     Test.set_source(aADMIN);
     const r = Test.transfer_to_contract(c, ChangeAdmin(aADMIN), 0mutez);
     Test.log(("ChangeAdminFailDenied", r));
-
-    const musts = initialStorage(unit);
-} with (mustERR(r, MAdmin.cERR_DENIED)) and (musts = Test.get_storage(caddr));
+} with (mustERR(r, MAdmin.cERR_DENIED)) and (initialStorage(unit) = Test.get_storage(caddr));
 
 const testChangeAdminByAdminOK = {
     const (caddr, c) = originate(unit);
@@ -52,7 +48,7 @@ const testChangeAdminByAdminOK = {
 
     var musts: t_storage := initialStorage(unit);
     musts.admin := aMANAGER;
-} with (Test.get_storage(caddr) = musts) and (mustOK(r));
+} with (mustOK(r)) and (musts = Test.get_storage(caddr));
 
 #endif // (ENABLE_OWNER) && (ENABLE_ADMIN)
 
@@ -73,9 +69,7 @@ const testChangeAdminFailDenied = {
     Test.set_source(aADMIN);
     const r = Test.transfer_to_contract(c, ChangeAdmin(aADMIN), 0mutez);
     Test.log(("ChangeAdminFailDenied", r));
-
-    const musts = initialStorage(unit);
-} with (mustERR(r, MAdmin.cERR_DENIED)) and (musts = Test.get_storage(caddr));
+} with (mustERR(r, MAdmin.cERR_DENIED)) and (initialStorage(unit) = Test.get_storage(caddr));
 
 #endif // (!ENABLE_OWNER) && (ENABLE_ADMIN)
 
@@ -89,16 +83,14 @@ const testAddAdminByOwnerOK = {
 
     var musts: t_storage := initialStorage(unit);
     musts.admins := (set [aADMIN]: MAdmins.t_admins);
-} with (Test.get_storage(caddr) = musts) and (mustOK(r));
+} with (mustOK(r)) and (musts = Test.get_storage(caddr));
 
 const testAddAdminFailDenied = {
     const (caddr, c) = originate(unit);
     Test.set_source(aADMIN);
     const r = Test.transfer_to_contract(c, AddAdmin(aADMIN), 0mutez);
     Test.log(("AddAdminFailDenied", r));
-
-    const musts = initialStorage(unit);
-} with (mustERR(r, MAdmins.cERR_DENIED)) and (musts = Test.get_storage(caddr));
+} with (mustERR(r, MAdmins.cERR_DENIED)) and (initialStorage(unit) = Test.get_storage(caddr));
 
 const testAddAdminByAdminOK = {
     const (caddr, c) = originate(unit);
@@ -110,7 +102,7 @@ const testAddAdminByAdminOK = {
 
     var musts: t_storage := initialStorage(unit);
     musts.admins := (set [aADMIN; aMANAGER]: MAdmins.t_admins);
-} with (Test.get_storage(caddr) = musts) and (mustOK(r));
+} with (mustOK(r)) and (musts = Test.get_storage(caddr));
 
 const testRemAdminByOwnerOK = {
     const (caddr, c) = originate(unit);
@@ -122,7 +114,7 @@ const testRemAdminByOwnerOK = {
 
     var musts: t_storage := initialStorage(unit);
     musts.admins := (set []: MAdmins.t_admins);
-} with (Test.get_storage(caddr) = musts) and (mustOK(r));
+} with (mustOK(r)) and (musts = Test.get_storage(caddr));
 
 const testRemAdminFailDenied = {
     const (caddr, c) = originate(unit);
@@ -134,7 +126,7 @@ const testRemAdminFailDenied = {
 
     var musts: t_storage := initialStorage(unit);
     musts.admins := (set [aADMIN]: MAdmins.t_admins);
-} with (Test.get_storage(caddr) = musts) and (mustERR(r, MAdmins.cERR_DENIED));
+} with (mustERR(r, MAdmins.cERR_DENIED)) and (musts = Test.get_storage(caddr));
 
 const testRemAdminFailNotFound = {
     const (caddr, c) = originate(unit);
@@ -158,7 +150,7 @@ const testRemAdminByAdminOK = {
 
     var musts: t_storage := initialStorage(unit);
     musts.admins := (set []: MAdmins.t_admins);
-} with (Test.get_storage(caddr) = musts) and (mustOK(r));
+} with (mustOK(r)) and (musts = Test.get_storage(caddr));
 
 #endif // (ENABLE_OWNER) && (ENABLE_ADMIN)
 
@@ -172,16 +164,14 @@ const testAddAdminOK = {
 
     var musts: t_storage := initialStorage(unit);
     musts.admins := (set [aOWNER; aADMIN]: MAdmins.t_admins);
-} with (Test.get_storage(caddr) = musts) and (mustOK(r));
+} with (mustOK(r)) and (musts = Test.get_storage(caddr));
 
 const testAddAdminFailDenied = {
     const (caddr, c) = originate(unit);
     Test.set_source(aADMIN);
     const r = Test.transfer_to_contract(c, AddAdmin(aADMIN), 0mutez);
     Test.log(("AddAdminFailDenied", r));
-
-    const musts = initialStorage(unit);
-} with (mustERR(r, MAdmins.cERR_DENIED)) and (musts = Test.get_storage(caddr));
+} with (mustERR(r, MAdmins.cERR_DENIED)) and (initialStorage(unit) = Test.get_storage(caddr));
 
 const testRemAdminOK = {
     const (caddr, c) = originate(unit);
@@ -193,34 +183,28 @@ const testRemAdminOK = {
 
     var musts: t_storage := initialStorage(unit);
     musts.admins := (set [aOWNER]: MAdmins.t_admins);
-} with (Test.get_storage(caddr) = musts) and (mustOK(r));
+} with (mustOK(r)) and (musts = Test.get_storage(caddr));
 
 const testRemAdminFailDenied = {
     const (caddr, c) = originate(unit);
     Test.set_source(aADMIN);
     const r = Test.transfer_to_contract(c, RemAdmin(aOWNER), 0mutez);
     Test.log(("RemAdminFailDenied", r));
-
-    var musts: t_storage := initialStorage(unit);
-} with (Test.get_storage(caddr) = musts) and (mustERR(r, MAdmins.cERR_DENIED));
+} with (mustERR(r, MAdmins.cERR_DENIED)) and (initialStorage(unit) = Test.get_storage(caddr));
 
 const testRemAdminFailNotFound = {
     const (caddr, c) = originate(unit);
     Test.set_source(aOWNER);
     const r = Test.transfer_to_contract(c, RemAdmin(aADMIN), 0mutez);
     Test.log(("RemAdminFailNotFound", r));
-
-    var musts: t_storage := initialStorage(unit);
-} with (Test.get_storage(caddr) = musts) and (mustERR(r, MAdmins.cERR_NOT_FOUND));
+} with (mustERR(r, MAdmins.cERR_NOT_FOUND)) and (initialStorage(unit) = Test.get_storage(caddr));
 
 const testRemAdminFailLastAdmin = {
     const (caddr, c) = originate(unit);
     Test.set_source(aOWNER);
     const r = Test.transfer_to_contract(c, RemAdmin(aOWNER), 0mutez);
     Test.log(("RemAdminFailLastAdmin", r));
-
-    var musts: t_storage := initialStorage(unit);
-} with (Test.get_storage(caddr) = musts) and (mustERR(r, MAdmins.cERR_REM_LAST_ADMIN));
+} with (mustERR(r, MAdmins.cERR_REM_LAST_ADMIN)) and (initialStorage(unit) = Test.get_storage(caddr));
 
 const testRemAdminOK = {
     const (caddr, c) = originate(unit);
@@ -232,6 +216,6 @@ const testRemAdminOK = {
 
     var musts: t_storage := initialStorage(unit);
     musts.admins := (set [aADMIN]: MAdmins.t_admins);
-} with (Test.get_storage(caddr) = musts) and (mustOK(r));
+} with (mustOK(r)) and (musts = Test.get_storage(caddr));
 
 #endif // (!ENABLE_OWNER) && (ENABLE_ADMIN)

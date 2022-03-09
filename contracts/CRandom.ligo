@@ -57,16 +57,20 @@ type t_entrypoint is
 | ForceDeleteFuture of t_ifuture
 ;
 
-///RU Время заказа случайного числа должно быть в будущем
-///EN The order time of a random number should be in the future
+///RU Ошибка: Время заказа случайного числа должно быть в будущем
+///EN Error: The order time of a random number should be in the future
 const cERR_ONLY_FUTURE: string = "OnlyFuture";
 
 ///RU Не найдено случайное число
-///EN No random number found
+///EN Error: No random number found
 const cERR_NOT_FOUND: string = "NotFound";
 
-///RU Случайное число еще не получено
-///EN Random number not received yet
+///RU Ошибка: Заполнение случайного числа раньше времени события
+///EN Error: Early filling random number
+const cERR_EARLY: string = "Early";
+
+///RU Ошибка: Случайное число еще не получено
+///EN Error: Random number not received yet
 const cERR_NOT_READY: string = "NotReady";
 
 ///RU Получение случайного числа с выдачей ошибки, если не найдено
@@ -131,8 +135,13 @@ case entrypoint of [
 | FillFuture(ifuture_future) -> (cNO_OPERATIONS, block {
     mustAdmin(s);
     const ifuture: t_ifuture = ifuture_future.0;
-    if Big_map.mem(ifuture, s.futures) then s.futures[ifuture] := ifuture_future.1 ///RU Заполняем только существующие ///EN Fill in only existing ones
-    else skip;
+    const future: t_future = ifuture_future.1;
+    //RU Заполняем только после события //EN Fill in only after event
+    if (future.tsLevel > ifuture.ts) and (Tezos.now >= ifuture.ts) and (Tezos.now >= future.tsLevel) then block {
+        //RU Заполняем только существующие //EN Fill in only existing ones
+        if Big_map.mem(ifuture, s.futures) then s.futures[ifuture] := future
+        else failwith(cERR_NOT_FOUND);
+    } else failwith(cERR_EARLY);
 } with s)
 
 //RU Получения случайного числа

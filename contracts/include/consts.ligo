@@ -4,24 +4,24 @@
 (**RU
     \file
 
-    Префиксы:
+    Префиксы лексем:
     С - Контракт
     M - Модуль
     t_ - Тип
-    c[_A-Z0-9]+ - Константа
-    cERR_[_A-Z0-9]+ - Константа с кодом ошибки для failwith
+    c - Константа
+    cERR_ - Константа с кодом ошибки для failwith
 
     //#Include - если будет include, компилятор падает при повторном включении файла
 *)
 (**EN
     \file
 
-    Prefixes:
+    Lexem prefixes:
     C - Contract
     M - Module
     t_ - Type
-    c[_A-Z0-9]+ - Constant
-    cERR_[_A-Z0-9]+ - Constant with error code for failwith
+    c - Constant
+    cERR_ - Constant with error code for failwith
 
     //#Include - if there is an include, the compiler crashes when the file is included again
 *)
