@@ -1,5 +1,5 @@
-#include "../../contracts/CRandom.ligo"
 #include "../include/workspace.ligo"
+#include "../../contracts/CRandom.ligo"
 
 function initialStorage(const _: unit): t_storage is block {
     const s = (record [
@@ -40,10 +40,10 @@ function callbackContract(const e: MRandom.t_callback_params; var s: t_callback_
     ];
 } with (cNO_OPERATIONS, s);
 
-function originateCallback(const _: unit): typed_address(MRandom.t_callback_params, t_callback_storage) * MRandom.t_callback is block {
+function originateCallback(const _: unit): MRandom.t_callback is block {
     const (addr, _, _) = Test.originate(callbackContract, (record [iobj = 0n; random = 0n]: t_callback_storage), 0tez);
     const contract = (Test.to_contract(addr): MRandom.t_callback);
-} with (addr, contract);
+} with contract;
 
 const tsNow: timestamp = ("2022-01-01T00:00:00Z" : timestamp);
 const tsEvent: timestamp = ("2022-01-01T01:00:00Z" : timestamp);

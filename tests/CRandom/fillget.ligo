@@ -55,7 +55,7 @@ const testFillFutureFailEarly = {
 const testGetFutureFailNotFound = {
     const (caddr, c) = originate(unit);
     Test.set_source(aUSER0);
-    const (cbaddr, cb) = originateCallback(unit);
+    const cb = originateCallback(unit);
     const r = Test.transfer_to_contract(c, GetFuture((tsEvent, iobj, cb)), 0mutez);
     Test.log(("GetFutureFailNotFound", r));
 } with (mustERR(r, cERR_NOT_FOUND)) and (initialStorage(unit) = Test.get_storage(caddr));
@@ -65,7 +65,7 @@ const testGetFutureFailNotReady = {
     Test.set_source(aUSER0);
     Test.set_now(tsNow + 230);
     const r0 = Test.transfer_to_contract(c, CreateFuture((tsEvent, iobj)), 0mutez);
-    const (cbaddr, cb) = originateCallback(unit);
+    const cb = originateCallback(unit);
     const r = Test.transfer_to_contract(c, GetFuture((tsEvent, iobj, cb)), 0mutez);
     Test.log(("GetFutureFailNotReady", r));
 
@@ -90,16 +90,16 @@ const testFillGetFutureOK = {
     ];
     Test.set_now(filledFuture.tsLevel);
     const r = Test.transfer_to_contract(c, FillFuture((ifuture, filledFuture)), 0mutez);
-    Test.log(("FillGetFutureOK", r));
+    Test.log(("FillGetFutureOK", "Fill", r));
 
     var musts: t_storage := initialStorage(unit);
     musts.futures[ifuture] := filledFuture;
 
     if ((mustOK(r)) and (musts = Test.get_storage(caddr))) then block {
         Test.set_source(aUSER0);
-        const (cbaddr, cb) = originateCallback(unit);
+        const cb = originateCallback(unit);
         const r = Test.transfer_to_contract(c, GetFuture((tsEvent, iobj, cb)), 0mutez);
-        Test.log(("FillGetFutureOK", r));
+        Test.log(("FillGetFutureOK", "Get", r));
         musts := initialStorage(unit);
     } else skip;
 } with (mustOK(r)) and (musts = Test.get_storage(caddr));

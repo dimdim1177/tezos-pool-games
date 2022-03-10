@@ -7,17 +7,25 @@ module MQuipuswap is {
 
     type t_swap is address;///RU< Обменник одного токена на tez ///EN< One token exchange for tez
 
+    ///RU Параметры для конвертации tez в токен
+    ///EN Parameters for convert tez to token
+    type t_tez2token_params is nat * address;
+
     ///RU Прототип метода tezToTokenPayment
     ///EN Prototype of the tezToTokenPayment method
-    type t_tez2token_method is Tez2Token of nat * address;
+    type t_tez2token_method is Tez2Token of t_tez2token_params;
 
     ///RU Контракт с точкой входа tezToTokenPayment
     ///EN Contract with tezToTokenPayment entry point
     type t_tez2token_contract is contract(t_tez2token_method);
 
+    ///RU Параметры для конвертации токена в tez
+    ///EN Parameters for convert token to tez
+    type t_token2tez_params is nat * nat * address;
+
     ///RU Прототип метода tokenToTezPayment
     ///EN Prototype of the tokenToTezPayment method
-    type t_token2tez_method is Token2Tez of nat * nat * address;
+    type t_token2tez_method is Token2Tez of t_token2tez_params;
 
     ///RU Контракт с точкой входа tokenToTezPayment
     ///EN Contract with tokenToTezPayment entry point

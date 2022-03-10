@@ -188,7 +188,7 @@ module MPool is {
             burnToken = pool_create.burnToken;
             feeAddr = pool_create.feeAddr;
             state = pool_create.state;
-            balance = 1n;
+            balance = 0n;
             count = 0n;
             game = MPoolGame.create(gameState, gameSeconds);
             randomFuture = False;

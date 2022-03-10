@@ -8,10 +8,16 @@ module MPoolGame is {
     ///RU Параметры партии при создании пула в активном илии приостановленном состоянии
     ///EN Game parameters when creating a pool in an active or suspended state
     function create(const state: t_game_state; const seconds: nat): t_game is block {
+#if TESTING_MODE
+        const tsBeg: timestamp = ("2022-01-01T00:00:00Z" : timestamp);
+#else // TESTING_MODE
+        const tsBeg = Tezos.now;
+#endif // else TESTING_MODE
+
         const game: t_game = record [
             state = state;
-            tsBeg = Tezos.now;
-            tsEnd = Tezos.now + int(seconds);
+            tsBeg = tsBeg;
+            tsEnd = tsBeg + int(seconds);
             weight = 0n;
             winWeight = 0n;
             winner = cZERO_ADDRESS;

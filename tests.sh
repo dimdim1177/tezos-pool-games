@@ -23,7 +23,7 @@
         echo "   --- Test $test_name"
         log=$(ligo run test "$test_ligo" 2>&1)
         echo "$log" > "$test_log"
-        echo -e "${log/exited with value false/"${RED}exited with value false${NOCOLOR}"}"
+        echo -e "${log//exited with value false/"${RED}exited with value false${NOCOLOR}"}"
         if echo "$log" | grep "exited with value false" >/dev/null ; then
             echo "   === FAIL test $test_name"
         else

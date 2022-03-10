@@ -20,3 +20,5 @@ function mustERR(const r: test_exec_result; const cERR: string): bool is
         | Other -> False
         ]
     ];
+
+#define TESTING_MODE
