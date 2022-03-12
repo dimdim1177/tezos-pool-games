@@ -1,0 +1,7 @@
+<map id="CPoolGames::t_pool_info" name="CPoolGames::t_pool_info">
+<area shape="rect" id="node1" title="Pool information issued when requesting pool information." alt="" coords="140,199,325,225"/>
+<area shape="rect" id="node2" href="$structMFarm_1_1t__farm.html" title="Farm Parameters." alt="" coords="10,109,127,136"/>
+<area shape="rect" id="node3" href="$structMToken_1_1t__token.html" title="Token." alt="" coords="5,5,132,32"/>
+<area shape="rect" id="node4" href="$structCPoolGames_1_1t__game.html" title="Parameters of the drawing game." alt="" coords="151,109,314,136"/>
+<area shape="rect" id="node5" href="$structCPoolGames_1_1t__opts.html" title="Pool settings." alt="" coords="339,109,492,136"/>
+</map>

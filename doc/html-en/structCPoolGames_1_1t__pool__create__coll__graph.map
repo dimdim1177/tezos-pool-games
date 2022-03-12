@@ -1,0 +1,6 @@
+<map id="CPoolGames::t_pool_create" name="CPoolGames::t_pool_create">
+<area shape="rect" id="node1" title="Data for creating a pool." alt="" coords="111,199,264,240"/>
+<area shape="rect" id="node2" href="$structMFarm_1_1t__farm.html" title="Farm Parameters." alt="" coords="10,109,127,136"/>
+<area shape="rect" id="node3" href="$structMToken_1_1t__token.html" title="Token." alt="" coords="5,5,132,32"/>
+<area shape="rect" id="node4" href="$structCPoolGames_1_1t__opts.html" title="Pool settings." alt="" coords="151,109,304,136"/>
+</map>

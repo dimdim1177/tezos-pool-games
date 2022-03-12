@@ -1,0 +1,11 @@
+Код контрактов структурирован на модули.
+
+Написаны скрипты для тестирования на PascaLIGO
+и развертывания.
+
+С помощью Doxygen сгенерирована HTML автодокументация
+на русском и английском языках.
+
+https://github.com/dimdim1177/tezos-pool-games
+https://github.com/dimdim1177/ligo2dox
+https://github.com/dimdim1177/mlcomment

@@ -18,22 +18,18 @@ function createPoolOK(const burn: bool; const fee: bool): bool is block {
 
 const testCreatePoolOK00 = {
     const r = createPoolOK(False, False);
-    Test.log(("testCreatePoolOK00", r));
 } with r;
 
 const testCreatePoolOK01 = {
     const r = createPoolOK(False, True);
-    Test.log(("testCreatePoolOK01", r));
 } with r;
 
 const testCreatePoolOK10 = {
     const r = createPoolOK(True, False);
-    Test.log(("testCreatePoolOK10", r));
 } with r;
 
 const testCreatePoolOK11 = {
     const r = createPoolOK(True, True);
-    Test.log(("testCreatePoolOK11", r));
 } with r;
 
 const testCreatePoolFailInvalidState = {

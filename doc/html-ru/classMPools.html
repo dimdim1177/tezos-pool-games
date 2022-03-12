@@ -1,0 +1,1380 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.1"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Pool Games: Класс MPools</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Pool Games
+   </div>
+   <div id="projectbrief">Розыгрыши вознаграждения на основе смарт-контрактов Tezos</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Создано системой Doxygen 1.9.1 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+var searchBox = new SearchBox("searchBox", "search",false,'Поиск','.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(function() {
+  initMenu('',true,false,'search.php','Поиск');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(document).ready(function(){initNavTree('classMPools.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">Открытые члены</a> &#124;
+<a href="#pub-attribs">Открытые атрибуты</a> &#124;
+<a href="classMPools-members.html">Полный список членов класса</a>  </div>
+  <div class="headertitle">
+<div class="title">Класс MPools</div>  </div>
+</div><!--header-->
+<div class="contents">
+
+<p>Модуль списка пулов ликвидности с периодическими розыгрышами вознаграждений  
+ <a href="classMPools.html#details">Подробнее...</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
+Открытые члены</h2></td></tr>
+<tr class="memitem:a7fcd7e25175da969c040061af484ff07"><td class="memItemLeft" align="right" valign="top">t_pool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMPools.html#a7fcd7e25175da969c040061af484ff07">getPool</a> (const t_storage s, const t_ipool ipool)</td></tr>
+<tr class="memdesc:a7fcd7e25175da969c040061af484ff07"><td class="mdescLeft">&#160;</td><td class="mdescRight">Получить пул по индексу  <a href="classMPools.html#a7fcd7e25175da969c040061af484ff07">Подробнее...</a><br /></td></tr>
+<tr class="separator:a7fcd7e25175da969c040061af484ff07"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5faaa4dcb436ce667863cc4b264a8ec5"><td class="memItemLeft" align="right" valign="top">t_storage&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMPools.html#a5faaa4dcb436ce667863cc4b264a8ec5">setPool</a> (t_storage s, const t_ipool ipool, const t_pool pool)</td></tr>
+<tr class="memdesc:a5faaa4dcb436ce667863cc4b264a8ec5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Обновить пул по индексу  <a href="classMPools.html#a5faaa4dcb436ce667863cc4b264a8ec5">Подробнее...</a><br /></td></tr>
+<tr class="separator:a5faaa4dcb436ce667863cc4b264a8ec5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2be4f3a017b6962dae2bd4d4607d9761"><td class="memItemLeft" align="right" valign="top">t_user&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMPools.html#a2be4f3a017b6962dae2bd4d4607d9761">getUser</a> (const t_storage s, const t_ipool ipool)</td></tr>
+<tr class="memdesc:a2be4f3a017b6962dae2bd4d4607d9761"><td class="mdescLeft">&#160;</td><td class="mdescRight">Получить текущие параметры пользователя в пуле  <a href="classMPools.html#a2be4f3a017b6962dae2bd4d4607d9761">Подробнее...</a><br /></td></tr>
+<tr class="separator:a2be4f3a017b6962dae2bd4d4607d9761"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac78aca96aa52ddac1e977e59d29c8555"><td class="memItemLeft" align="right" valign="top">t_storage&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMPools.html#ac78aca96aa52ddac1e977e59d29c8555">setUser</a> (t_storage s, const t_ipool ipool, const t_user user)</td></tr>
+<tr class="memdesc:ac78aca96aa52ddac1e977e59d29c8555"><td class="mdescLeft">&#160;</td><td class="mdescRight">Обновить текущие параметры пользователя в пуле  <a href="classMPools.html#ac78aca96aa52ddac1e977e59d29c8555">Подробнее...</a><br /></td></tr>
+<tr class="separator:ac78aca96aa52ddac1e977e59d29c8555"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6832651104478c3520bc0cc112556333"><td class="memItemLeft" align="right" valign="top">t_storage&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMPools.html#a6832651104478c3520bc0cc112556333">setPoolState</a> (t_storage s, const t_ipool ipool, const t_pool_state state)</td></tr>
+<tr class="memdesc:a6832651104478c3520bc0cc112556333"><td class="mdescLeft">&#160;</td><td class="mdescRight">Задать состояние пула  <a href="classMPools.html#a6832651104478c3520bc0cc112556333">Подробнее...</a><br /></td></tr>
+<tr class="separator:a6832651104478c3520bc0cc112556333"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aef1421dd811599431b2325929b5b651d"><td class="memItemLeft" align="right" valign="top">t_storage&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMPools.html#aef1421dd811599431b2325929b5b651d">doRemovePool</a> (t_storage s, const t_ipool ipool, const t_pool pool)</td></tr>
+<tr class="separator:aef1421dd811599431b2325929b5b651d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0bf890734288dab804d22cc6838dda81"><td class="memItemLeft" align="right" valign="top">t_storage&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMPools.html#a0bf890734288dab804d22cc6838dda81">createPool</a> (t_storage s, const t_pool_create pool_create)</td></tr>
+<tr class="memdesc:a0bf890734288dab804d22cc6838dda81"><td class="mdescLeft">&#160;</td><td class="mdescRight">Создание нового пула  <a href="classMPools.html#a0bf890734288dab804d22cc6838dda81">Подробнее...</a><br /></td></tr>
+<tr class="separator:a0bf890734288dab804d22cc6838dda81"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa9fe000a5b32d8775d2a15d6de3ad9a5"><td class="memItemLeft" align="right" valign="top">t_storage&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMPools.html#aa9fe000a5b32d8775d2a15d6de3ad9a5">pausePool</a> (const t_storage s, const t_ipool ipool)</td></tr>
+<tr class="memdesc:aa9fe000a5b32d8775d2a15d6de3ad9a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Приостановка пула  <a href="classMPools.html#aa9fe000a5b32d8775d2a15d6de3ad9a5">Подробнее...</a><br /></td></tr>
+<tr class="separator:aa9fe000a5b32d8775d2a15d6de3ad9a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a39fc6d49f57274fba60a2e27baf578f6"><td class="memItemLeft" align="right" valign="top">t_storage&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMPools.html#a39fc6d49f57274fba60a2e27baf578f6">startPool</a> (const t_storage s, const t_ipool ipool)</td></tr>
+<tr class="memdesc:a39fc6d49f57274fba60a2e27baf578f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Запуск пула (после паузы)  <a href="classMPools.html#a39fc6d49f57274fba60a2e27baf578f6">Подробнее...</a><br /></td></tr>
+<tr class="separator:a39fc6d49f57274fba60a2e27baf578f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0698a3320168044007fbee6558b1396c"><td class="memItemLeft" align="right" valign="top">t_storage&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMPools.html#a0698a3320168044007fbee6558b1396c">removePool</a> (t_storage s, const t_ipool ipool)</td></tr>
+<tr class="memdesc:a0698a3320168044007fbee6558b1396c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Удаление пула (по окончании партии)  <a href="classMPools.html#a0698a3320168044007fbee6558b1396c">Подробнее...</a><br /></td></tr>
+<tr class="separator:a0698a3320168044007fbee6558b1396c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aacf8eb2d1db4ec3ee76c5ba69e8385e2"><td class="memItemLeft" align="right" valign="top">t_storage&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMPools.html#aacf8eb2d1db4ec3ee76c5ba69e8385e2">editPool</a> (t_storage s, const t_ipool ipool, const t_pool_edit pool_edit)</td></tr>
+<tr class="memdesc:aacf8eb2d1db4ec3ee76c5ba69e8385e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Редактирование пула (приостановленого)  <a href="classMPools.html#aacf8eb2d1db4ec3ee76c5ba69e8385e2">Подробнее...</a><br /></td></tr>
+<tr class="separator:aacf8eb2d1db4ec3ee76c5ba69e8385e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8fc346cfc9dc05e58cbb95f8563afe4b"><td class="memItemLeft" align="right" valign="top">t_storage&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMPools.html#a8fc346cfc9dc05e58cbb95f8563afe4b">changePoolManager</a> (t_storage s, const t_ipool ipool, const address newmanager)</td></tr>
+<tr class="memdesc:a8fc346cfc9dc05e58cbb95f8563afe4b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Смена менеджера пула  <a href="classMPools.html#a8fc346cfc9dc05e58cbb95f8563afe4b">Подробнее...</a><br /></td></tr>
+<tr class="separator:a8fc346cfc9dc05e58cbb95f8563afe4b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3b53cbf2be3d1899951f6563fb3def82"><td class="memItemLeft" align="right" valign="top">t_return&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMPools.html#a3b53cbf2be3d1899951f6563fb3def82">setPoolGameComplete</a> (t_storage s, const t_ipool ipool)</td></tr>
+<tr class="memdesc:a3b53cbf2be3d1899951f6563fb3def82"><td class="mdescLeft">&#160;</td><td class="mdescRight">Пометить партию завершившейся по времени  <a href="classMPools.html#a3b53cbf2be3d1899951f6563fb3def82">Подробнее...</a><br /></td></tr>
+<tr class="separator:a3b53cbf2be3d1899951f6563fb3def82"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae220d76f0791d04992ffb2b75dedd976"><td class="memItemLeft" align="right" valign="top">t_return&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMPools.html#ae220d76f0791d04992ffb2b75dedd976">getPoolRandom</a> (t_storage s, const t_ipool ipool)</td></tr>
+<tr class="memdesc:ae220d76f0791d04992ffb2b75dedd976"><td class="mdescLeft">&#160;</td><td class="mdescRight">Получить случайное число из источника  <a href="classMPools.html#ae220d76f0791d04992ffb2b75dedd976">Подробнее...</a><br /></td></tr>
+<tr class="separator:ae220d76f0791d04992ffb2b75dedd976"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab9a0a80d91504b201b638917b915ecba"><td class="memItemLeft" align="right" valign="top">t_return&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMPools.html#ab9a0a80d91504b201b638917b915ecba">setPoolWinner</a> (t_storage s, const t_ipool ipool, const address winner)</td></tr>
+<tr class="memdesc:ab9a0a80d91504b201b638917b915ecba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Установить победителя партии  <a href="classMPools.html#ab9a0a80d91504b201b638917b915ecba">Подробнее...</a><br /></td></tr>
+<tr class="separator:ab9a0a80d91504b201b638917b915ecba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab0c658277793bd1f78fa7cc2d620f9bd"><td class="memItemLeft" align="right" valign="top">t_return&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMPools.html#ab0c658277793bd1f78fa7cc2d620f9bd">deposit</a> (t_storage s, const t_ipool ipool, const <a class="el" href="classMToken.html#a6c3208a738cac7cfd34651561ac6e7f6">MToken::t_amount</a> damount)</td></tr>
+<tr class="memdesc:ab0c658277793bd1f78fa7cc2d620f9bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Депозит в пул  <a href="classMPools.html#ab0c658277793bd1f78fa7cc2d620f9bd">Подробнее...</a><br /></td></tr>
+<tr class="separator:ab0c658277793bd1f78fa7cc2d620f9bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5b97481ecfde7cb55525e15ccf7dc970"><td class="memItemLeft" align="right" valign="top">t_return&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMPools.html#a5b97481ecfde7cb55525e15ccf7dc970">withdraw</a> (t_storage s, const t_ipool ipool, const <a class="el" href="classMToken.html#a6c3208a738cac7cfd34651561ac6e7f6">MToken::t_amount</a> wamount)</td></tr>
+<tr class="memdesc:a5b97481ecfde7cb55525e15ccf7dc970"><td class="mdescLeft">&#160;</td><td class="mdescRight">Извлечение из пула  <a href="classMPools.html#a5b97481ecfde7cb55525e15ccf7dc970">Подробнее...</a><br /></td></tr>
+<tr class="separator:a5b97481ecfde7cb55525e15ccf7dc970"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7da7043a04eacdfc8b8e365aaa3685d7"><td class="memItemLeft" align="right" valign="top">t_return&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMPools.html#a7da7043a04eacdfc8b8e365aaa3685d7">onRandom</a> (t_storage s, const t_ipool ipool, const <a class="el" href="classMRandom.html#a51d8a8706e1c8c6bdf10fbe9fea58d16">MRandom::t_random</a> random)</td></tr>
+<tr class="memdesc:a7da7043a04eacdfc8b8e365aaa3685d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Колбек со случайным числом для определения победителя  <a href="classMPools.html#a7da7043a04eacdfc8b8e365aaa3685d7">Подробнее...</a><br /></td></tr>
+<tr class="separator:a7da7043a04eacdfc8b8e365aaa3685d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a50663e6d20743d55773185dfcfabc805"><td class="memItemLeft" align="right" valign="top">t_return&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMPools.html#a50663e6d20743d55773185dfcfabc805">onBalance</a> (t_storage s, const <a class="el" href="classMToken.html#a6c3208a738cac7cfd34651561ac6e7f6">MToken::t_amount</a> currentBalance)</td></tr>
+<tr class="memdesc:a50663e6d20743d55773185dfcfabc805"><td class="mdescLeft">&#160;</td><td class="mdescRight">Обработка колбека с балансом  <a href="classMPools.html#a50663e6d20743d55773185dfcfabc805">Подробнее...</a><br /></td></tr>
+<tr class="separator:a50663e6d20743d55773185dfcfabc805"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a139cbbd4ab9705b2c546d4c1a4af4d42"><td class="memItemLeft" align="right" valign="top">t_return&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMPools.html#a139cbbd4ab9705b2c546d4c1a4af4d42">onBalanceFA1_2</a> (t_storage s, const <a class="el" href="classMFA1__2.html#a1dc5f4c0a11f09c5dd962e3e1cf22526">MFA1_2::t_balance_callback_params</a> currentBalance)</td></tr>
+<tr class="memdesc:a139cbbd4ab9705b2c546d4c1a4af4d42"><td class="mdescLeft">&#160;</td><td class="mdescRight">Колбек с балансом токена FA1.2.  <a href="classMPools.html#a139cbbd4ab9705b2c546d4c1a4af4d42">Подробнее...</a><br /></td></tr>
+<tr class="separator:a139cbbd4ab9705b2c546d4c1a4af4d42"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a08efd85c10d42518af61867acd94b2fd"><td class="memItemLeft" align="right" valign="top">t_return&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMPools.html#a08efd85c10d42518af61867acd94b2fd">onBalanceFA2</a> (t_storage s, const <a class="el" href="classMFA2.html#a633966ae917a98fdbee6a6134a658afe">MFA2::t_balance_callback_params</a> params)</td></tr>
+<tr class="memdesc:a08efd85c10d42518af61867acd94b2fd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Колбек с балансом токена FA2.  <a href="classMPools.html#a08efd85c10d42518af61867acd94b2fd">Подробнее...</a><br /></td></tr>
+<tr class="separator:a08efd85c10d42518af61867acd94b2fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab0f136653a6a0ffc3a11a94cd5137070"><td class="memItemLeft" align="right" valign="top">t_return&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMPools.html#ab0f136653a6a0ffc3a11a94cd5137070">afterReward2Tez</a> (t_storage s, const t_ipool ipool)</td></tr>
+<tr class="memdesc:ab0f136653a6a0ffc3a11a94cd5137070"><td class="mdescLeft">&#160;</td><td class="mdescRight">Колбек самого себя после обмена токенов вознаграждения на tez.  <a href="classMPools.html#ab0f136653a6a0ffc3a11a94cd5137070">Подробнее...</a><br /></td></tr>
+<tr class="separator:ab0f136653a6a0ffc3a11a94cd5137070"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a084216af325758ee2d5915fca6849632"><td class="memItemLeft" align="right" valign="top">t_pool_info&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMPools.html#a084216af325758ee2d5915fca6849632">viewPoolInfo</a> (const t_storage s, const t_ipool ipool)</td></tr>
+<tr class="memdesc:a084216af325758ee2d5915fca6849632"><td class="mdescLeft">&#160;</td><td class="mdescRight">Получение основной информации о пуле  <a href="classMPools.html#a084216af325758ee2d5915fca6849632">Подробнее...</a><br /></td></tr>
+<tr class="separator:a084216af325758ee2d5915fca6849632"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2f3de0e977a9d7e625ca90513bf12bcf"><td class="memItemLeft" align="right" valign="top">nat&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMPools.html#a2f3de0e977a9d7e625ca90513bf12bcf">viewBalance</a> (const t_storage s, const t_ipool ipool)</td></tr>
+<tr class="memdesc:a2f3de0e977a9d7e625ca90513bf12bcf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Получение баланса пользователя в пуле  <a href="classMPools.html#a2f3de0e977a9d7e625ca90513bf12bcf">Подробнее...</a><br /></td></tr>
+<tr class="separator:a2f3de0e977a9d7e625ca90513bf12bcf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
+Открытые атрибуты</h2></td></tr>
+<tr class="memitem:a8c31f6aa2559bf6da7e83ca2af833914"><td class="memItemLeft" align="right" valign="top">const string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMPools.html#a8c31f6aa2559bf6da7e83ca2af833914">cERR_NOT_FOUND</a> = &quot;MPools/NotFound&quot;</td></tr>
+<tr class="memdesc:a8c31f6aa2559bf6da7e83ca2af833914"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ошибка: Не найден пул  <a href="classMPools.html#a8c31f6aa2559bf6da7e83ca2af833914">Подробнее...</a><br /></td></tr>
+<tr class="separator:a8c31f6aa2559bf6da7e83ca2af833914"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6f9b5004df270d5839ed6ed41f5db8b6"><td class="memItemLeft" align="right" valign="top">const string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMPools.html#a6f9b5004df270d5839ed6ed41f5db8b6">cERR_FARM_USED</a> = &quot;MPools/FarmUsed&quot;</td></tr>
+<tr class="memdesc:a6f9b5004df270d5839ed6ed41f5db8b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ошибка: Нельзя использовать одинаковые фермы в пулах  <a href="classMPools.html#a6f9b5004df270d5839ed6ed41f5db8b6">Подробнее...</a><br /></td></tr>
+<tr class="separator:a6f9b5004df270d5839ed6ed41f5db8b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae1535299ed45e70007971039430f37e9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMPools.html#ae1535299ed45e70007971039430f37e9">balance</a></td></tr>
+<tr class="separator:ae1535299ed45e70007971039430f37e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Подробное описание</h2>
+<div class="textblock"><p>Модуль списка пулов ликвидности с периодическими розыгрышами вознаграждений </p>
+
+<p class="definition">См. определение в файле <a class="el" href="MPools_8ligo_source.html">MPools.ligo</a> строка <a class="el" href="MPools_8ligo_source.html#l00008">8</a></p>
+</div><h2 class="groupheader">Методы</h2>
+<a id="ab0f136653a6a0ffc3a11a94cd5137070"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab0f136653a6a0ffc3a11a94cd5137070">&#9670;&nbsp;</a></span>afterReward2Tez()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">t_return MPools::afterReward2Tez </td>
+          <td>(</td>
+          <td class="paramtype">t_storage&#160;</td>
+          <td class="paramname"><em>s</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const t_ipool&#160;</td>
+          <td class="paramname"><em>ipool</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Колбек самого себя после обмена токенов вознаграждения на tez. </p>
+
+<p class="definition">См. определение в файле <a class="el" href="MPools_8ligo_source.html">MPools.ligo</a> строка <a class="el" href="MPools_8ligo_source.html#l00260">260</a></p>
+
+<p class="reference">Перекрестные ссылки <a class="el" href="MPool_8ligo_source.html#l00481">MPool::afterReward2Tez()</a>, <a class="el" href="MPools_8ligo_source.html#l00024">getPool()</a> и <a class="el" href="MPools_8ligo_source.html#l00032">setPool()</a>.</p>
+
+<p class="reference">Используется в <a class="el" href="CPoolGames_8ligo_source.html#l00141">CPoolGames::main()</a>.</p>
+
+</div>
+</div>
+<a id="a8fc346cfc9dc05e58cbb95f8563afe4b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8fc346cfc9dc05e58cbb95f8563afe4b">&#9670;&nbsp;</a></span>changePoolManager()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">t_storage MPools::changePoolManager </td>
+          <td>(</td>
+          <td class="paramtype">t_storage&#160;</td>
+          <td class="paramname"><em>s</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const t_ipool&#160;</td>
+          <td class="paramname"><em>ipool</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const address&#160;</td>
+          <td class="paramname"><em>newmanager</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Смена менеджера пула </p>
+
+<p class="definition">См. определение в файле <a class="el" href="MPools_8ligo_source.html">MPools.ligo</a> строка <a class="el" href="MPools_8ligo_source.html#l00121">121</a></p>
+
+<p class="reference">Перекрестные ссылки <a class="el" href="MPool_8ligo_source.html#l00094">MPool::forceChangeManager()</a>, <a class="el" href="MPools_8ligo_source.html#l00024">getPool()</a>, <a class="el" href="MPool_8ligo_source.html#l00072">MPool::mustManager()</a> и <a class="el" href="MPools_8ligo_source.html#l00032">setPool()</a>.</p>
+
+<p class="reference">Используется в <a class="el" href="CPoolGames_8ligo_source.html#l00141">CPoolGames::main()</a>.</p>
+
+</div>
+</div>
+<a id="a0bf890734288dab804d22cc6838dda81"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0bf890734288dab804d22cc6838dda81">&#9670;&nbsp;</a></span>createPool()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">t_storage MPools::createPool </td>
+          <td>(</td>
+          <td class="paramtype">t_storage&#160;</td>
+          <td class="paramname"><em>s</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const t_pool_create&#160;</td>
+          <td class="paramname"><em>pool_create</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Создание нового пула </p>
+
+<p class="definition">См. определение в файле <a class="el" href="MPools_8ligo_source.html">MPools.ligo</a> строка <a class="el" href="MPools_8ligo_source.html#l00087">87</a></p>
+
+<p class="reference">Перекрестные ссылки <a class="el" href="MPools_8ligo_source.html#l00016">cERR_FARM_USED</a> и <a class="el" href="MPool_8ligo_source.html#l00155">MPool::create()</a>.</p>
+
+<p class="reference">Используется в <a class="el" href="CPoolGames_8ligo_source.html#l00141">CPoolGames::main()</a>.</p>
+
+</div>
+</div>
+<a id="ab0c658277793bd1f78fa7cc2d620f9bd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab0c658277793bd1f78fa7cc2d620f9bd">&#9670;&nbsp;</a></span>deposit()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">t_return MPools::deposit </td>
+          <td>(</td>
+          <td class="paramtype">t_storage&#160;</td>
+          <td class="paramname"><em>s</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const t_ipool&#160;</td>
+          <td class="paramname"><em>ipool</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classMToken.html#a6c3208a738cac7cfd34651561ac6e7f6">MToken::t_amount</a>&#160;</td>
+          <td class="paramname"><em>damount</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Депозит в пул </p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">damount</td><td>Кол-во токенов для инвестирования в пул </td></tr>
+    <tr><td class="paramname">damount</td><td>Amount of tokens for invest to pool </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">См. определение в файле <a class="el" href="MPools_8ligo_source.html">MPools.ligo</a> строка <a class="el" href="MPools_8ligo_source.html#l00160">160</a></p>
+
+<p class="reference">Перекрестные ссылки <a class="el" href="MPool_8ligo_source.html#l00329">MPool::deposit()</a>, <a class="el" href="MPools_8ligo_source.html#l00024">getPool()</a>, <a class="el" href="MPools_8ligo_source.html#l00042">getUser()</a>, <a class="el" href="MPools_8ligo_source.html#l00032">setPool()</a> и <a class="el" href="MPools_8ligo_source.html#l00059">setUser()</a>.</p>
+
+<p class="reference">Используется в <a class="el" href="CPoolGames_8ligo_source.html#l00141">CPoolGames::main()</a>.</p>
+
+</div>
+</div>
+<a id="aef1421dd811599431b2325929b5b651d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aef1421dd811599431b2325929b5b651d">&#9670;&nbsp;</a></span>doRemovePool()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">t_storage MPools::doRemovePool </td>
+          <td>(</td>
+          <td class="paramtype">t_storage&#160;</td>
+          <td class="paramname"><em>s</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const t_ipool&#160;</td>
+          <td class="paramname"><em>ipool</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const t_pool&#160;</td>
+          <td class="paramname"><em>pool</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">См. определение в файле <a class="el" href="MPools_8ligo_source.html">MPools.ligo</a> строка <a class="el" href="MPools_8ligo_source.html#l00078">78</a></p>
+
+<p class="reference">Используется в <a class="el" href="MPools_8ligo_source.html#l00104">removePool()</a> и <a class="el" href="MPools_8ligo_source.html#l00185">withdraw()</a>.</p>
+
+</div>
+</div>
+<a id="aacf8eb2d1db4ec3ee76c5ba69e8385e2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aacf8eb2d1db4ec3ee76c5ba69e8385e2">&#9670;&nbsp;</a></span>editPool()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">t_storage MPools::editPool </td>
+          <td>(</td>
+          <td class="paramtype">t_storage&#160;</td>
+          <td class="paramname"><em>s</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const t_ipool&#160;</td>
+          <td class="paramname"><em>ipool</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const t_pool_edit&#160;</td>
+          <td class="paramname"><em>pool_edit</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Редактирование пула (приостановленого) </p>
+
+<p class="definition">См. определение в файле <a class="el" href="MPools_8ligo_source.html">MPools.ligo</a> строка <a class="el" href="MPools_8ligo_source.html#l00112">112</a></p>
+
+<p class="reference">Перекрестные ссылки <a class="el" href="MPool_8ligo_source.html#l00218">MPool::edit()</a>, <a class="el" href="MPools_8ligo_source.html#l00024">getPool()</a>, <a class="el" href="MPool_8ligo_source.html#l00072">MPool::mustManager()</a> и <a class="el" href="MPools_8ligo_source.html#l00032">setPool()</a>.</p>
+
+<p class="reference">Используется в <a class="el" href="CPoolGames_8ligo_source.html#l00141">CPoolGames::main()</a>.</p>
+
+</div>
+</div>
+<a id="a7fcd7e25175da969c040061af484ff07"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7fcd7e25175da969c040061af484ff07">&#9670;&nbsp;</a></span>getPool()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">t_pool MPools::getPool </td>
+          <td>(</td>
+          <td class="paramtype">const t_storage&#160;</td>
+          <td class="paramname"><em>s</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const t_ipool&#160;</td>
+          <td class="paramname"><em>ipool</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Получить пул по индексу </p>
+<p>Если пул не найден, будет возвращена ошибка cERR_NOT_FOUND </p>
+
+<p class="definition">См. определение в файле <a class="el" href="MPools_8ligo_source.html">MPools.ligo</a> строка <a class="el" href="MPools_8ligo_source.html#l00024">24</a></p>
+
+<p class="reference">Перекрестные ссылки <a class="el" href="MPools_8ligo_source.html#l00012">cERR_NOT_FOUND</a>.</p>
+
+<p class="reference">Используется в <a class="el" href="MPools_8ligo_source.html#l00260">afterReward2Tez()</a>, <a class="el" href="MPools_8ligo_source.html#l00121">changePoolManager()</a>, <a class="el" href="MPools_8ligo_source.html#l00160">deposit()</a>, <a class="el" href="MPools_8ligo_source.html#l00112">editPool()</a>, <a class="el" href="MPools_8ligo_source.html#l00137">getPoolRandom()</a>, <a class="el" href="MPools_8ligo_source.html#l00204">onBalance()</a>, <a class="el" href="MPools_8ligo_source.html#l00196">onRandom()</a>, <a class="el" href="MPools_8ligo_source.html#l00104">removePool()</a>, <a class="el" href="MPools_8ligo_source.html#l00129">setPoolGameComplete()</a>, <a class="el" href="MPools_8ligo_source.html#l00071">setPoolState()</a>, <a class="el" href="MPools_8ligo_source.html#l00145">setPoolWinner()</a>, <a class="el" href="MPools_8ligo_source.html#l00274">viewPoolInfo()</a> и <a class="el" href="MPools_8ligo_source.html#l00185">withdraw()</a>.</p>
+
+</div>
+</div>
+<a id="ae220d76f0791d04992ffb2b75dedd976"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae220d76f0791d04992ffb2b75dedd976">&#9670;&nbsp;</a></span>getPoolRandom()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">t_return MPools::getPoolRandom </td>
+          <td>(</td>
+          <td class="paramtype">t_storage&#160;</td>
+          <td class="paramname"><em>s</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const t_ipool&#160;</td>
+          <td class="paramname"><em>ipool</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Получить случайное число из источника </p>
+
+<p class="definition">См. определение в файле <a class="el" href="MPools_8ligo_source.html">MPools.ligo</a> строка <a class="el" href="MPools_8ligo_source.html#l00137">137</a></p>
+
+<p class="reference">Перекрестные ссылки <a class="el" href="MPools_8ligo_source.html#l00024">getPool()</a>, <a class="el" href="MPool_8ligo_source.html#l00299">MPool::getRandom()</a>, <a class="el" href="MPool_8ligo_source.html#l00072">MPool::mustManager()</a> и <a class="el" href="MPools_8ligo_source.html#l00032">setPool()</a>.</p>
+
+<p class="reference">Используется в <a class="el" href="CPoolGames_8ligo_source.html#l00141">CPoolGames::main()</a>.</p>
+
+</div>
+</div>
+<a id="a2be4f3a017b6962dae2bd4d4607d9761"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2be4f3a017b6962dae2bd4d4607d9761">&#9670;&nbsp;</a></span>getUser()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">t_user MPools::getUser </td>
+          <td>(</td>
+          <td class="paramtype">const t_storage&#160;</td>
+          <td class="paramname"><em>s</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const t_ipool&#160;</td>
+          <td class="paramname"><em>ipool</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Получить текущие параметры пользователя в пуле </p>
+<p>Пользователь идентифицируется по Tezos.sender </p>
+
+<p class="definition">См. определение в файле <a class="el" href="MPools_8ligo_source.html">MPools.ligo</a> строка <a class="el" href="MPools_8ligo_source.html#l00042">42</a></p>
+
+<p class="reference">Перекрестные ссылки <a class="el" href="MPools_8ligo_source.html#l00290">balance</a>.</p>
+
+<p class="reference">Используется в <a class="el" href="MPools_8ligo_source.html#l00160">deposit()</a>, <a class="el" href="MPools_8ligo_source.html#l00288">viewBalance()</a> и <a class="el" href="MPools_8ligo_source.html#l00185">withdraw()</a>.</p>
+
+</div>
+</div>
+<a id="a50663e6d20743d55773185dfcfabc805"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a50663e6d20743d55773185dfcfabc805">&#9670;&nbsp;</a></span>onBalance()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">t_return MPools::onBalance </td>
+          <td>(</td>
+          <td class="paramtype">t_storage&#160;</td>
+          <td class="paramname"><em>s</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classMToken.html#a6c3208a738cac7cfd34651561ac6e7f6">MToken::t_amount</a>&#160;</td>
+          <td class="paramname"><em>currentBalance</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Обработка колбека с балансом </p>
+
+<p class="definition">См. определение в файле <a class="el" href="MPools_8ligo_source.html">MPools.ligo</a> строка <a class="el" href="MPools_8ligo_source.html#l00204">204</a></p>
+
+<p class="reference">Перекрестные ссылки <a class="el" href="consts_8ligo_source.html#l00030">cNO_OPERATIONS</a>, <a class="el" href="MPools_8ligo_source.html#l00024">getPool()</a>, <a class="el" href="MPool_8ligo_source.html#l00431">MPool::onBalanceAfterHarvest()</a>, <a class="el" href="MPool_8ligo_source.html#l00518">MPool::onBalanceAfterTez2Burn()</a>, <a class="el" href="MPool_8ligo_source.html#l00423">MPool::onBalanceBeforeHarvest()</a>, <a class="el" href="MPool_8ligo_source.html#l00509">MPool::onBalanceBeforeTez2Burn()</a> и <a class="el" href="MPools_8ligo_source.html#l00032">setPool()</a>.</p>
+
+<p class="reference">Используется в <a class="el" href="MPools_8ligo_source.html#l00242">onBalanceFA1_2()</a> и <a class="el" href="MPools_8ligo_source.html#l00247">onBalanceFA2()</a>.</p>
+
+</div>
+</div>
+<a id="a139cbbd4ab9705b2c546d4c1a4af4d42"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a139cbbd4ab9705b2c546d4c1a4af4d42">&#9670;&nbsp;</a></span>onBalanceFA1_2()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">t_return MPools::onBalanceFA1_2 </td>
+          <td>(</td>
+          <td class="paramtype">t_storage&#160;</td>
+          <td class="paramname"><em>s</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classMFA1__2.html#a1dc5f4c0a11f09c5dd962e3e1cf22526">MFA1_2::t_balance_callback_params</a>&#160;</td>
+          <td class="paramname"><em>currentBalance</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Колбек с балансом токена FA1.2. </p>
+
+<p class="definition">См. определение в файле <a class="el" href="MPools_8ligo_source.html">MPools.ligo</a> строка <a class="el" href="MPools_8ligo_source.html#l00242">242</a></p>
+
+<p class="reference">Перекрестные ссылки <a class="el" href="MPools_8ligo_source.html#l00204">onBalance()</a>.</p>
+
+<p class="reference">Используется в <a class="el" href="CPoolGames_8ligo_source.html#l00141">CPoolGames::main()</a>.</p>
+
+</div>
+</div>
+<a id="a08efd85c10d42518af61867acd94b2fd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a08efd85c10d42518af61867acd94b2fd">&#9670;&nbsp;</a></span>onBalanceFA2()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">t_return MPools::onBalanceFA2 </td>
+          <td>(</td>
+          <td class="paramtype">t_storage&#160;</td>
+          <td class="paramname"><em>s</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classMFA2.html#a633966ae917a98fdbee6a6134a658afe">MFA2::t_balance_callback_params</a>&#160;</td>
+          <td class="paramname"><em>params</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Колбек с балансом токена FA2. </p>
+
+<p class="definition">См. определение в файле <a class="el" href="MPools_8ligo_source.html">MPools.ligo</a> строка <a class="el" href="MPools_8ligo_source.html#l00247">247</a></p>
+
+<p class="reference">Перекрестные ссылки <a class="el" href="consts_8ligo_source.html#l00030">cNO_OPERATIONS</a> и <a class="el" href="MPools_8ligo_source.html#l00204">onBalance()</a>.</p>
+
+<p class="reference">Используется в <a class="el" href="CPoolGames_8ligo_source.html#l00141">CPoolGames::main()</a>.</p>
+
+</div>
+</div>
+<a id="a7da7043a04eacdfc8b8e365aaa3685d7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7da7043a04eacdfc8b8e365aaa3685d7">&#9670;&nbsp;</a></span>onRandom()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">t_return MPools::onRandom </td>
+          <td>(</td>
+          <td class="paramtype">t_storage&#160;</td>
+          <td class="paramname"><em>s</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const t_ipool&#160;</td>
+          <td class="paramname"><em>ipool</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classMRandom.html#a51d8a8706e1c8c6bdf10fbe9fea58d16">MRandom::t_random</a>&#160;</td>
+          <td class="paramname"><em>random</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Колбек со случайным числом для определения победителя </p>
+
+<p class="definition">См. определение в файле <a class="el" href="MPools_8ligo_source.html">MPools.ligo</a> строка <a class="el" href="MPools_8ligo_source.html#l00196">196</a></p>
+
+<p class="reference">Перекрестные ссылки <a class="el" href="MPools_8ligo_source.html#l00024">getPool()</a>, <a class="el" href="MPool_8ligo_source.html#l00410">MPool::onRandom()</a> и <a class="el" href="MPools_8ligo_source.html#l00032">setPool()</a>.</p>
+
+<p class="reference">Используется в <a class="el" href="CPoolGames_8ligo_source.html#l00141">CPoolGames::main()</a>.</p>
+
+</div>
+</div>
+<a id="aa9fe000a5b32d8775d2a15d6de3ad9a5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa9fe000a5b32d8775d2a15d6de3ad9a5">&#9670;&nbsp;</a></span>pausePool()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">t_storage MPools::pausePool </td>
+          <td>(</td>
+          <td class="paramtype">const t_storage&#160;</td>
+          <td class="paramname"><em>s</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const t_ipool&#160;</td>
+          <td class="paramname"><em>ipool</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Приостановка пула </p>
+
+<p class="definition">См. определение в файле <a class="el" href="MPools_8ligo_source.html">MPools.ligo</a> строка <a class="el" href="MPools_8ligo_source.html#l00098">98</a></p>
+
+<p class="reference">Перекрестные ссылки <a class="el" href="MPools_8ligo_source.html#l00071">setPoolState()</a>.</p>
+
+<p class="reference">Используется в <a class="el" href="CPoolGames_8ligo_source.html#l00141">CPoolGames::main()</a>.</p>
+
+</div>
+</div>
+<a id="a0698a3320168044007fbee6558b1396c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0698a3320168044007fbee6558b1396c">&#9670;&nbsp;</a></span>removePool()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">t_storage MPools::removePool </td>
+          <td>(</td>
+          <td class="paramtype">t_storage&#160;</td>
+          <td class="paramname"><em>s</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const t_ipool&#160;</td>
+          <td class="paramname"><em>ipool</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Удаление пула (по окончании партии) </p>
+
+<p class="definition">См. определение в файле <a class="el" href="MPools_8ligo_source.html">MPools.ligo</a> строка <a class="el" href="MPools_8ligo_source.html#l00104">104</a></p>
+
+<p class="reference">Перекрестные ссылки <a class="el" href="MPools_8ligo_source.html#l00078">doRemovePool()</a>, <a class="el" href="MPools_8ligo_source.html#l00024">getPool()</a>, <a class="el" href="MPool_8ligo_source.html#l00072">MPool::mustManager()</a> и <a class="el" href="MPools_8ligo_source.html#l00071">setPoolState()</a>.</p>
+
+<p class="reference">Используется в <a class="el" href="CPoolGames_8ligo_source.html#l00141">CPoolGames::main()</a>.</p>
+
+</div>
+</div>
+<a id="a5faaa4dcb436ce667863cc4b264a8ec5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5faaa4dcb436ce667863cc4b264a8ec5">&#9670;&nbsp;</a></span>setPool()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">t_storage MPools::setPool </td>
+          <td>(</td>
+          <td class="paramtype">t_storage&#160;</td>
+          <td class="paramname"><em>s</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const t_ipool&#160;</td>
+          <td class="paramname"><em>ipool</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const t_pool&#160;</td>
+          <td class="paramname"><em>pool</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Обновить пул по индексу </p>
+
+<p class="definition">См. определение в файле <a class="el" href="MPools_8ligo_source.html">MPools.ligo</a> строка <a class="el" href="MPools_8ligo_source.html#l00032">32</a></p>
+
+<p class="reference">Используется в <a class="el" href="MPools_8ligo_source.html#l00260">afterReward2Tez()</a>, <a class="el" href="MPools_8ligo_source.html#l00121">changePoolManager()</a>, <a class="el" href="MPools_8ligo_source.html#l00160">deposit()</a>, <a class="el" href="MPools_8ligo_source.html#l00112">editPool()</a>, <a class="el" href="MPools_8ligo_source.html#l00137">getPoolRandom()</a>, <a class="el" href="MPools_8ligo_source.html#l00204">onBalance()</a>, <a class="el" href="MPools_8ligo_source.html#l00196">onRandom()</a>, <a class="el" href="MPools_8ligo_source.html#l00129">setPoolGameComplete()</a>, <a class="el" href="MPools_8ligo_source.html#l00071">setPoolState()</a>, <a class="el" href="MPools_8ligo_source.html#l00145">setPoolWinner()</a> и <a class="el" href="MPools_8ligo_source.html#l00185">withdraw()</a>.</p>
+
+</div>
+</div>
+<a id="a3b53cbf2be3d1899951f6563fb3def82"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3b53cbf2be3d1899951f6563fb3def82">&#9670;&nbsp;</a></span>setPoolGameComplete()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">t_return MPools::setPoolGameComplete </td>
+          <td>(</td>
+          <td class="paramtype">t_storage&#160;</td>
+          <td class="paramname"><em>s</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const t_ipool&#160;</td>
+          <td class="paramname"><em>ipool</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Пометить партию завершившейся по времени </p>
+
+<p class="definition">См. определение в файле <a class="el" href="MPools_8ligo_source.html">MPools.ligo</a> строка <a class="el" href="MPools_8ligo_source.html#l00129">129</a></p>
+
+<p class="reference">Перекрестные ссылки <a class="el" href="MPools_8ligo_source.html#l00024">getPool()</a>, <a class="el" href="MPool_8ligo_source.html#l00072">MPool::mustManager()</a>, <a class="el" href="MPool_8ligo_source.html#l00284">MPool::setGameComplete()</a> и <a class="el" href="MPools_8ligo_source.html#l00032">setPool()</a>.</p>
+
+<p class="reference">Используется в <a class="el" href="CPoolGames_8ligo_source.html#l00141">CPoolGames::main()</a>.</p>
+
+</div>
+</div>
+<a id="a6832651104478c3520bc0cc112556333"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6832651104478c3520bc0cc112556333">&#9670;&nbsp;</a></span>setPoolState()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">t_storage MPools::setPoolState </td>
+          <td>(</td>
+          <td class="paramtype">t_storage&#160;</td>
+          <td class="paramname"><em>s</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const t_ipool&#160;</td>
+          <td class="paramname"><em>ipool</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const t_pool_state&#160;</td>
+          <td class="paramname"><em>state</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Задать состояние пула </p>
+<p>Если убрать inline компилятор падает </p>
+
+<p class="definition">См. определение в файле <a class="el" href="MPools_8ligo_source.html">MPools.ligo</a> строка <a class="el" href="MPools_8ligo_source.html#l00071">71</a></p>
+
+<p class="reference">Перекрестные ссылки <a class="el" href="MPools_8ligo_source.html#l00024">getPool()</a>, <a class="el" href="MPool_8ligo_source.html#l00072">MPool::mustManager()</a>, <a class="el" href="MPools_8ligo_source.html#l00032">setPool()</a> и <a class="el" href="MPool_8ligo_source.html#l00212">MPool::setState()</a>.</p>
+
+<p class="reference">Используется в <a class="el" href="MPools_8ligo_source.html#l00098">pausePool()</a>, <a class="el" href="MPools_8ligo_source.html#l00104">removePool()</a> и <a class="el" href="MPools_8ligo_source.html#l00101">startPool()</a>.</p>
+
+</div>
+</div>
+<a id="ab9a0a80d91504b201b638917b915ecba"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab9a0a80d91504b201b638917b915ecba">&#9670;&nbsp;</a></span>setPoolWinner()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">t_return MPools::setPoolWinner </td>
+          <td>(</td>
+          <td class="paramtype">t_storage&#160;</td>
+          <td class="paramname"><em>s</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const t_ipool&#160;</td>
+          <td class="paramname"><em>ipool</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const address&#160;</td>
+          <td class="paramname"><em>winner</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Установить победителя партии </p>
+
+<p class="definition">См. определение в файле <a class="el" href="MPools_8ligo_source.html">MPools.ligo</a> строка <a class="el" href="MPools_8ligo_source.html#l00145">145</a></p>
+
+<p class="reference">Перекрестные ссылки <a class="el" href="MPools_8ligo_source.html#l00024">getPool()</a>, <a class="el" href="MPool_8ligo_source.html#l00072">MPool::mustManager()</a>, <a class="el" href="MPools_8ligo_source.html#l00032">setPool()</a> и <a class="el" href="MPool_8ligo_source.html#l00312">MPool::setPoolWinner()</a>.</p>
+
+<p class="reference">Используется в <a class="el" href="CPoolGames_8ligo_source.html#l00141">CPoolGames::main()</a>.</p>
+
+</div>
+</div>
+<a id="ac78aca96aa52ddac1e977e59d29c8555"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac78aca96aa52ddac1e977e59d29c8555">&#9670;&nbsp;</a></span>setUser()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">t_storage MPools::setUser </td>
+          <td>(</td>
+          <td class="paramtype">t_storage&#160;</td>
+          <td class="paramname"><em>s</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const t_ipool&#160;</td>
+          <td class="paramname"><em>ipool</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const t_user&#160;</td>
+          <td class="paramname"><em>user</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Обновить текущие параметры пользователя в пуле </p>
+<p>Пользователь идентифицируется по Tezos.sender. При нулевом сохраняемом балансе пользователь удаляется </p>
+
+<p class="definition">См. определение в файле <a class="el" href="MPools_8ligo_source.html">MPools.ligo</a> строка <a class="el" href="MPools_8ligo_source.html#l00059">59</a></p>
+
+<p class="reference">Используется в <a class="el" href="MPools_8ligo_source.html#l00160">deposit()</a> и <a class="el" href="MPools_8ligo_source.html#l00185">withdraw()</a>.</p>
+
+</div>
+</div>
+<a id="a39fc6d49f57274fba60a2e27baf578f6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a39fc6d49f57274fba60a2e27baf578f6">&#9670;&nbsp;</a></span>startPool()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">t_storage MPools::startPool </td>
+          <td>(</td>
+          <td class="paramtype">const t_storage&#160;</td>
+          <td class="paramname"><em>s</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const t_ipool&#160;</td>
+          <td class="paramname"><em>ipool</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Запуск пула (после паузы) </p>
+
+<p class="definition">См. определение в файле <a class="el" href="MPools_8ligo_source.html">MPools.ligo</a> строка <a class="el" href="MPools_8ligo_source.html#l00101">101</a></p>
+
+<p class="reference">Перекрестные ссылки <a class="el" href="MPools_8ligo_source.html#l00071">setPoolState()</a>.</p>
+
+<p class="reference">Используется в <a class="el" href="CPoolGames_8ligo_source.html#l00141">CPoolGames::main()</a>.</p>
+
+</div>
+</div>
+<a id="a2f3de0e977a9d7e625ca90513bf12bcf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2f3de0e977a9d7e625ca90513bf12bcf">&#9670;&nbsp;</a></span>viewBalance()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">nat MPools::viewBalance </td>
+          <td>(</td>
+          <td class="paramtype">const t_storage&#160;</td>
+          <td class="paramname"><em>s</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const t_ipool&#160;</td>
+          <td class="paramname"><em>ipool</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Получение баланса пользователя в пуле </p>
+
+<p class="definition">См. определение в файле <a class="el" href="MPools_8ligo_source.html">MPools.ligo</a> строка <a class="el" href="MPools_8ligo_source.html#l00288">288</a></p>
+
+<p class="reference">Перекрестные ссылки <a class="el" href="MPools_8ligo_source.html#l00042">getUser()</a>.</p>
+
+</div>
+</div>
+<a id="a084216af325758ee2d5915fca6849632"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a084216af325758ee2d5915fca6849632">&#9670;&nbsp;</a></span>viewPoolInfo()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">t_pool_info MPools::viewPoolInfo </td>
+          <td>(</td>
+          <td class="paramtype">const t_storage&#160;</td>
+          <td class="paramname"><em>s</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const t_ipool&#160;</td>
+          <td class="paramname"><em>ipool</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Получение основной информации о пуле </p>
+
+<p class="definition">См. определение в файле <a class="el" href="MPools_8ligo_source.html">MPools.ligo</a> строка <a class="el" href="MPools_8ligo_source.html#l00274">274</a></p>
+
+<p class="reference">Перекрестные ссылки <a class="el" href="MPools_8ligo_source.html#l00290">balance</a> и <a class="el" href="MPools_8ligo_source.html#l00024">getPool()</a>.</p>
+
+</div>
+</div>
+<a id="a5b97481ecfde7cb55525e15ccf7dc970"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5b97481ecfde7cb55525e15ccf7dc970">&#9670;&nbsp;</a></span>withdraw()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">t_return MPools::withdraw </td>
+          <td>(</td>
+          <td class="paramtype">t_storage&#160;</td>
+          <td class="paramname"><em>s</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const t_ipool&#160;</td>
+          <td class="paramname"><em>ipool</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classMToken.html#a6c3208a738cac7cfd34651561ac6e7f6">MToken::t_amount</a>&#160;</td>
+          <td class="paramname"><em>wamount</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Извлечение из пула </p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">wamount</td><td>Кол-во токенов для извлечения из пула 0n == wamount - извлечение всего депозита из пула </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">См. определение в файле <a class="el" href="MPools_8ligo_source.html">MPools.ligo</a> строка <a class="el" href="MPools_8ligo_source.html#l00185">185</a></p>
+
+<p class="reference">Перекрестные ссылки <a class="el" href="MPools_8ligo_source.html#l00078">doRemovePool()</a>, <a class="el" href="MPools_8ligo_source.html#l00024">getPool()</a>, <a class="el" href="MPools_8ligo_source.html#l00042">getUser()</a>, <a class="el" href="MPools_8ligo_source.html#l00032">setPool()</a>, <a class="el" href="MPools_8ligo_source.html#l00059">setUser()</a> и <a class="el" href="MPool_8ligo_source.html#l00370">MPool::withdraw()</a>.</p>
+
+<p class="reference">Используется в <a class="el" href="CPoolGames_8ligo_source.html#l00141">CPoolGames::main()</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Данные класса</h2>
+<a id="ae1535299ed45e70007971039430f37e9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae1535299ed45e70007971039430f37e9">&#9670;&nbsp;</a></span>balance</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">MPools::balance</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">См. определение в файле <a class="el" href="MPools_8ligo_source.html">MPools.ligo</a> строка <a class="el" href="MPools_8ligo_source.html#l00290">290</a></p>
+
+<p class="reference">Используется в <a class="el" href="MPools_8ligo_source.html#l00042">getUser()</a> и <a class="el" href="MPools_8ligo_source.html#l00274">viewPoolInfo()</a>.</p>
+
+</div>
+</div>
+<a id="a6f9b5004df270d5839ed6ed41f5db8b6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6f9b5004df270d5839ed6ed41f5db8b6">&#9670;&nbsp;</a></span>cERR_FARM_USED</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const string MPools::cERR_FARM_USED = &quot;MPools/FarmUsed&quot;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Ошибка: Нельзя использовать одинаковые фермы в пулах </p>
+
+<p class="definition">См. определение в файле <a class="el" href="MPools_8ligo_source.html">MPools.ligo</a> строка <a class="el" href="MPools_8ligo_source.html#l00016">16</a></p>
+
+<p class="reference">Используется в <a class="el" href="MPools_8ligo_source.html#l00087">createPool()</a>.</p>
+
+</div>
+</div>
+<a id="a8c31f6aa2559bf6da7e83ca2af833914"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8c31f6aa2559bf6da7e83ca2af833914">&#9670;&nbsp;</a></span>cERR_NOT_FOUND</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const string MPools::cERR_NOT_FOUND = &quot;MPools/NotFound&quot;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Ошибка: Не найден пул </p>
+
+<p class="definition">См. определение в файле <a class="el" href="MPools_8ligo_source.html">MPools.ligo</a> строка <a class="el" href="MPools_8ligo_source.html#l00012">12</a></p>
+
+<p class="reference">Используется в <a class="el" href="MPools_8ligo_source.html#l00024">getPool()</a>.</p>
+
+</div>
+</div>
+<hr/>Объявления и описания членов класса находятся в файле:<ul>
+<li><a class="el" href="MPools_8ligo_source.html">MPools.ligo</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="classMPools.html">MPools</a></li>
+    <li class="footer">Создано системой <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+  </ul>
+</div>
+</body>
+</html>

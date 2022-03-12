@@ -1,0 +1,27 @@
+var searchData=
+[
+  ['t_5fapprove_5fparams_430',['t_approve_params',['../structMFA1__2_1_1t__approve__params.html',1,'MFA1_2']]],
+  ['t_5fbalance_5fparams_431',['t_balance_params',['../structMFA1__2_1_1t__balance__params.html',1,'MFA1_2::t_balance_params'],['../structMFA2_1_1t__balance__params.html',1,'MFA2::t_balance_params']]],
+  ['t_5fbalance_5frequest_432',['t_balance_request',['../structMFA2_1_1t__balance__request.html',1,'MFA2']]],
+  ['t_5fbalance_5fresponse_433',['t_balance_response',['../structMFA2_1_1t__balance__response.html',1,'MFA2']]],
+  ['t_5fdeposit_5fparams_434',['t_deposit_params',['../structMFarmCrunchy_1_1t__deposit__params.html',1,'MFarmCrunchy::t_deposit_params'],['../structMFarmQUIPU_1_1t__deposit__params.html',1,'MFarmQUIPU::t_deposit_params']]],
+  ['t_5ffarm_435',['t_farm',['../structMFarm_1_1t__farm.html',1,'MFarm']]],
+  ['t_5ffuture_436',['t_future',['../structCRandom_1_1t__future.html',1,'CRandom']]],
+  ['t_5fgame_437',['t_game',['../structCPoolGames_1_1t__game.html',1,'CPoolGames']]],
+  ['t_5fharvest_5fparams_438',['t_harvest_params',['../structMFarmQUIPU_1_1t__harvest__params.html',1,'MFarmQUIPU']]],
+  ['t_5fifuture_439',['t_ifuture',['../structCRandom_1_1t__ifuture.html',1,'CRandom']]],
+  ['t_5foperator_440',['t_operator',['../structMFA2_1_1t__operator.html',1,'MFA2']]],
+  ['t_5fopts_441',['t_opts',['../structCPoolGames_1_1t__opts.html',1,'CPoolGames']]],
+  ['t_5fpool_442',['t_pool',['../structCPoolGames_1_1t__pool.html',1,'CPoolGames']]],
+  ['t_5fpool_5fcreate_443',['t_pool_create',['../structCPoolGames_1_1t__pool__create.html',1,'CPoolGames']]],
+  ['t_5fpool_5fedit_444',['t_pool_edit',['../structCPoolGames_1_1t__pool__edit.html',1,'CPoolGames']]],
+  ['t_5fpool_5finfo_445',['t_pool_info',['../structCPoolGames_1_1t__pool__info.html',1,'CPoolGames']]],
+  ['t_5fstat_446',['t_stat',['../structCPoolGames_1_1t__stat.html',1,'CPoolGames']]],
+  ['t_5fstorage_447',['t_storage',['../structCPoolGames_1_1t__storage.html',1,'CPoolGames::t_storage'],['../structCRandom_1_1t__storage.html',1,'CRandom::t_storage']]],
+  ['t_5ftoken_448',['t_token',['../structMToken_1_1t__token.html',1,'MToken']]],
+  ['t_5ftransfer_5fdst_449',['t_transfer_dst',['../structMFA2_1_1t__transfer__dst.html',1,'MFA2']]],
+  ['t_5ftransfer_5fparams_450',['t_transfer_params',['../structMFA1__2_1_1t__transfer__params.html',1,'MFA1_2']]],
+  ['t_5ftransfer_5fsrc2dsts_451',['t_transfer_src2dsts',['../structMFA2_1_1t__transfer__src2dsts.html',1,'MFA2']]],
+  ['t_5fuser_452',['t_user',['../structCPoolGames_1_1t__user.html',1,'CPoolGames']]],
+  ['t_5fwithdraw_5fparams_453',['t_withdraw_params',['../structMFarmCrunchy_1_1t__withdraw__params.html',1,'MFarmCrunchy::t_withdraw_params'],['../structMFarmQUIPU_1_1t__withdraw__params.html',1,'MFarmQUIPU::t_withdraw_params']]]
+];

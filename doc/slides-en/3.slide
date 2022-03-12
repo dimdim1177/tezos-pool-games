@@ -1,0 +1,5 @@
+Flexible code configuration with compilation keys:
+- pool owner / administrators / managers or pool-as-a-service
+- safe transfer of tokens (revoke operator after transfer)
+- pool statistics in the blockchain for promotion
+- pool views methods for other smart contracts

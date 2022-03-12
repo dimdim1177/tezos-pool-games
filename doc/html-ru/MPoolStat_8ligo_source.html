@@ -1,0 +1,139 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.1"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Pool Games: Исходный файл MPoolStat.ligo</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Pool Games
+   </div>
+   <div id="projectbrief">Розыгрыши вознаграждения на основе смарт-контрактов Tezos</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Создано системой Doxygen 1.9.1 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+var searchBox = new SearchBox("searchBox", "search",false,'Поиск','.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(function() {
+  initMenu('',true,false,'search.php','Поиск');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(document).ready(function(){initNavTree('MPoolStat_8ligo_source.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="headertitle">
+<div class="title">MPoolStat.ligo</div>  </div>
+</div><!--header-->
+<div class="contents">
+<a href="MPoolStat_8ligo.html">См. документацию.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#if !MPOOLSTAT_INCLUDED</span></div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#define MPOOLSTAT_INCLUDED</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment">///RU Статистика пула</span></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="comment">///EN Pool statistics</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno"><a class="line" href="classMPoolStat.html">    6</a></span>&#160;<span class="comment"></span>module <a class="code" href="classMPoolStat.html">MPoolStat</a> is {</div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="comment">    ///RU Создание пустой структуры статистики</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="comment">    ///EN Create empty struct of statistic</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno"><a class="line" href="classMPoolStat.html#ac04f052e94a69ac4160c515ace88fbbe">   10</a></span>&#160;<span class="comment"></span>    <span class="keyword">function</span> <a class="code" href="classMPoolStat.html#ac04f052e94a69ac4160c515ace88fbbe">create</a>(<span class="keyword">const</span> _u: unit): t_stat is block {</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;        const stat: t_stat = record [</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;            lastWinner = <a class="code" href="consts_8ligo.html#a13b9acf7be9282b21ba8dcfb61278226">cZERO_ADDRESS</a>;</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;            lastReward = 0n;</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;            paidRewards = 0n;</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;            gamesComplete = 0n;</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;        ];</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    } with stat;</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160; </div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor">#if ENABLE_POOL_STAT</span><span class="comment"></span></div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="comment">    ///RU Определен победитель очередного розыгрыша вознаграждения</span></div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="comment">    ///RU \param winner Адрес победителя</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="comment">    ///RU \param reward Количество токенов вознаграждения для перечисления победителю</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="comment">    ///EN The winner of the next prize drawing has been determined</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="comment">    ///EN \param winner Address of winner</span></div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="comment">    ///EN \param reward Count of reward tokens for tranfer to winner</span></div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="comment"></span>    <span class="keyword">function</span> onWin(var pool: t_pool; <span class="keyword">const</span> winner: address; <span class="keyword">const</span> reward: <a class="code" href="classMToken.html">MToken</a>.<a class="code" href="classMToken.html#a6c3208a738cac7cfd34651561ac6e7f6">t_amount</a>): t_pool is block {</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;        pool.stat.lastWinner := winner;</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;        pool.stat.lastReward := reward;</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;        pool.stat.paidRewards := pool.stat.paidRewards + reward;</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;        pool.stat.gamesComplete := pool.stat.gamesComplete + 1n;</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    } with pool;</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// ENABLE_POOL_STAT</span></div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160; </div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;}</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// !MPOOLSTAT_INCLUDED</span></div>
+<div class="ttc" id="aclassMPoolStat_html"><div class="ttname"><a href="classMPoolStat.html">MPoolStat</a></div><div class="ttdoc">Статистика пула</div><div class="ttdef"><b>Definition:</b> <a href="MPoolStat_8ligo_source.html#l00006">MPoolStat.ligo:6</a></div></div>
+<div class="ttc" id="aclassMPoolStat_html_ac04f052e94a69ac4160c515ace88fbbe"><div class="ttname"><a href="classMPoolStat.html#ac04f052e94a69ac4160c515ace88fbbe">MPoolStat::create</a></div><div class="ttdeci">t_stat create(const unit _u)</div><div class="ttdoc">Создание пустой структуры статистики</div><div class="ttdef"><b>Definition:</b> <a href="MPoolStat_8ligo_source.html#l00010">MPoolStat.ligo:10</a></div></div>
+<div class="ttc" id="aclassMToken_html"><div class="ttname"><a href="classMToken.html">MToken</a></div><div class="ttdoc">Модуль для работы с токенами разных стандартов</div><div class="ttdef"><b>Definition:</b> <a href="MToken_8ligo_source.html#l00009">MToken.ligo:9</a></div></div>
+<div class="ttc" id="aclassMToken_html_a6c3208a738cac7cfd34651561ac6e7f6"><div class="ttname"><a href="classMToken.html#a6c3208a738cac7cfd34651561ac6e7f6">MToken::t_amount</a></div><div class="ttdeci">nat t_amount</div><div class="ttdoc">Кол-во токенов</div><div class="ttdef"><b>Definition:</b> <a href="MToken_8ligo_source.html#l00011">MToken.ligo:11</a></div></div>
+<div class="ttc" id="aconsts_8ligo_html_a13b9acf7be9282b21ba8dcfb61278226"><div class="ttname"><a href="consts_8ligo.html#a13b9acf7be9282b21ba8dcfb61278226">cZERO_ADDRESS</a></div><div class="ttdeci">const address cZERO_ADDRESS</div><div class="ttdoc">Нулевой address.</div><div class="ttdef"><b>Definition:</b> <a href="consts_8ligo_source.html#l00043">consts.ligo:43</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_ae9b15dd87e066e1908bbd90e8f38627.html">contracts</a></li><li class="navelem"><a class="el" href="dir_7cc707eec257175dcf149022e845402e.html">CPoolGames</a></li><li class="navelem"><a class="el" href="MPoolStat_8ligo.html">MPoolStat.ligo</a></li>
+    <li class="footer">Создано системой <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+  </ul>
+</div>
+</body>
+</html>

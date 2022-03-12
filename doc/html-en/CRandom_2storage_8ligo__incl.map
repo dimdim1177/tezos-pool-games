@@ -1,0 +1,10 @@
+<map id="storage.ligo" name="storage.ligo">
+<area shape="rect" id="node1" title=" " alt="" coords="429,5,527,32"/>
+<area shape="rect" id="node2" href="$CRandom_2types_8ligo.html" title=" " alt="" coords="435,80,521,107"/>
+<area shape="rect" id="node3" href="$CRandom_2config_8ligo.html" title="Configuration of contract (compilation options)" alt="" coords="5,155,95,181"/>
+<area shape="rect" id="node4" href="$consts_8ligo.html" title=" " alt="" coords="119,155,274,181"/>
+<area shape="rect" id="node5" href="$MOwner_8ligo.html" title=" " alt="" coords="298,155,466,181"/>
+<area shape="rect" id="node6" href="$MAdmin_8ligo.html" title=" " alt="" coords="491,155,660,181"/>
+<area shape="rect" id="node7" href="$MAdmins_8ligo.html" title=" " alt="" coords="685,155,861,181"/>
+<area shape="rect" id="node8" href="$MRandom_8ligo.html" title=" " alt="" coords="885,155,1066,181"/>
+</map>

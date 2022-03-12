@@ -1,0 +1,979 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.1"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Pool Games: Класс MRandom</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Pool Games
+   </div>
+   <div id="projectbrief">Розыгрыши вознаграждения на основе смарт-контрактов Tezos</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Создано системой Doxygen 1.9.1 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+var searchBox = new SearchBox("searchBox", "search",false,'Поиск','.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(function() {
+  initMenu('',true,false,'search.php','Поиск');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(document).ready(function(){initNavTree('classMRandom.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#pub-types">Открытые типы</a> &#124;
+<a href="#pub-methods">Открытые члены</a> &#124;
+<a href="#pub-attribs">Открытые атрибуты</a> &#124;
+<a href="classMRandom-members.html">Полный список членов класса</a>  </div>
+  <div class="headertitle">
+<div class="title">Класс MRandom</div>  </div>
+</div><!--header-->
+<div class="contents">
+
+<p>Модуль взаимодействия с источником случайных чисел  
+ <a href="classMRandom.html#details">Подробнее...</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
+Открытые типы</h2></td></tr>
+<tr class="memitem:a6f8a50fd4599ffed4424d9831c87693a"><td class="memItemLeft" align="right" valign="top">typedef address&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMRandom.html#a6f8a50fd4599ffed4424d9831c87693a">t_random_source</a></td></tr>
+<tr class="memdesc:a6f8a50fd4599ffed4424d9831c87693a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Адрес источника случайных чисел  <a href="classMRandom.html#a6f8a50fd4599ffed4424d9831c87693a">Подробнее...</a><br /></td></tr>
+<tr class="separator:a6f8a50fd4599ffed4424d9831c87693a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9a42d31af80c0f3b5d427474fc254674"><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="consts_8ligo.html#a0e6f05ec9d41b082623116792d1d2a09">t_i</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMRandom.html#a9a42d31af80c0f3b5d427474fc254674">t_iobj</a></td></tr>
+<tr class="memdesc:a9a42d31af80c0f3b5d427474fc254674"><td class="mdescLeft">&#160;</td><td class="mdescRight">ID объекта в контракте заказчике  <a href="classMRandom.html#a9a42d31af80c0f3b5d427474fc254674">Подробнее...</a><br /></td></tr>
+<tr class="separator:a9a42d31af80c0f3b5d427474fc254674"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6fb6b57a6be28013680f04ae9500d1b3"><td class="memItemLeft" align="right" valign="top">typedef timestamp&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMRandom.html#a6fb6b57a6be28013680f04ae9500d1b3">t_ts</a></td></tr>
+<tr class="memdesc:a6fb6b57a6be28013680f04ae9500d1b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Время события, для которого случайное число  <a href="classMRandom.html#a6fb6b57a6be28013680f04ae9500d1b3">Подробнее...</a><br /></td></tr>
+<tr class="separator:a6fb6b57a6be28013680f04ae9500d1b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa45ade42ff33e743dfc08d512bcac558"><td class="memItemLeft" align="right" valign="top">typedef pair&lt; <a class="el" href="classMRandom.html#a6fb6b57a6be28013680f04ae9500d1b3">t_ts</a>, <a class="el" href="classMRandom.html#a9a42d31af80c0f3b5d427474fc254674">t_iobj</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMRandom.html#aa45ade42ff33e743dfc08d512bcac558">t_ts_iobj</a></td></tr>
+<tr class="memdesc:aa45ade42ff33e743dfc08d512bcac558"><td class="mdescLeft">&#160;</td><td class="mdescRight">Время события и ID объекта  <a href="classMRandom.html#aa45ade42ff33e743dfc08d512bcac558">Подробнее...</a><br /></td></tr>
+<tr class="separator:aa45ade42ff33e743dfc08d512bcac558"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a51d8a8706e1c8c6bdf10fbe9fea58d16"><td class="memItemLeft" align="right" valign="top">typedef nat&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMRandom.html#a51d8a8706e1c8c6bdf10fbe9fea58d16">t_random</a></td></tr>
+<tr class="memdesc:a51d8a8706e1c8c6bdf10fbe9fea58d16"><td class="mdescLeft">&#160;</td><td class="mdescRight">Случайное число  <a href="classMRandom.html#a51d8a8706e1c8c6bdf10fbe9fea58d16">Подробнее...</a><br /></td></tr>
+<tr class="separator:a51d8a8706e1c8c6bdf10fbe9fea58d16"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac8c2b7f39368322fc9f0af3407c5aad3"><td class="memItemLeft" align="right" valign="top">typedef pair&lt; <a class="el" href="classMRandom.html#a9a42d31af80c0f3b5d427474fc254674">t_iobj</a>, <a class="el" href="classMRandom.html#a51d8a8706e1c8c6bdf10fbe9fea58d16">t_random</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMRandom.html#ac8c2b7f39368322fc9f0af3407c5aad3">t_iobj_random</a></td></tr>
+<tr class="memdesc:ac8c2b7f39368322fc9f0af3407c5aad3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Тип колбека для получения случайного числа  <a href="classMRandom.html#ac8c2b7f39368322fc9f0af3407c5aad3">Подробнее...</a><br /></td></tr>
+<tr class="separator:ac8c2b7f39368322fc9f0af3407c5aad3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acafb4abc23d44d7171ae1f0029344ea7"><td class="memItemLeft" align="right" valign="top">typedef OnRandomCallback of <a class="el" href="classMRandom.html#ac8c2b7f39368322fc9f0af3407c5aad3">t_iobj_random</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMRandom.html#acafb4abc23d44d7171ae1f0029344ea7">t_callback_params</a></td></tr>
+<tr class="separator:acafb4abc23d44d7171ae1f0029344ea7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6518736ada3a67ce0659780adc4d08fe"><td class="memItemLeft" align="right" valign="top">typedef contract&lt; <a class="el" href="classMRandom.html#acafb4abc23d44d7171ae1f0029344ea7">t_callback_params</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMRandom.html#a6518736ada3a67ce0659780adc4d08fe">t_callback</a></td></tr>
+<tr class="separator:a6518736ada3a67ce0659780adc4d08fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a78e493b450d2a843da7740da6c5a25e1"><td class="memItemLeft" align="right" valign="top">typedef tuple&lt; <a class="el" href="classMRandom.html#a6fb6b57a6be28013680f04ae9500d1b3">t_ts</a>, <a class="el" href="classMRandom.html#a9a42d31af80c0f3b5d427474fc254674">t_iobj</a>, <a class="el" href="classMRandom.html#a6518736ada3a67ce0659780adc4d08fe">t_callback</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMRandom.html#a78e493b450d2a843da7740da6c5a25e1">t_ts_iobj_callback</a></td></tr>
+<tr class="memdesc:a78e493b450d2a843da7740da6c5a25e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Время события, ID объекта и колбек для случайного числа  <a href="classMRandom.html#a78e493b450d2a843da7740da6c5a25e1">Подробнее...</a><br /></td></tr>
+<tr class="separator:a78e493b450d2a843da7740da6c5a25e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a74542500aa5e34ff20750cf9c5ec5ea5"><td class="memItemLeft" align="right" valign="top">typedef RandomCreateFuture of <a class="el" href="classMRandom.html#aa45ade42ff33e743dfc08d512bcac558">t_ts_iobj</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMRandom.html#a74542500aa5e34ff20750cf9c5ec5ea5">t_create</a></td></tr>
+<tr class="memdesc:a74542500aa5e34ff20750cf9c5ec5ea5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Прототип метода createFuture.  <a href="classMRandom.html#a74542500aa5e34ff20750cf9c5ec5ea5">Подробнее...</a><br /></td></tr>
+<tr class="separator:a74542500aa5e34ff20750cf9c5ec5ea5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae2bbc2e9d31c5ab6ddc5d3d3a028d81d"><td class="memItemLeft" align="right" valign="top">typedef contract&lt; <a class="el" href="classMRandom.html#a74542500aa5e34ff20750cf9c5ec5ea5">t_create</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMRandom.html#ae2bbc2e9d31c5ab6ddc5d3d3a028d81d">t_create_contract</a></td></tr>
+<tr class="memdesc:ae2bbc2e9d31c5ab6ddc5d3d3a028d81d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Контракт с точкой входа createFuture.  <a href="classMRandom.html#ae2bbc2e9d31c5ab6ddc5d3d3a028d81d">Подробнее...</a><br /></td></tr>
+<tr class="separator:ae2bbc2e9d31c5ab6ddc5d3d3a028d81d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4d06b74b88013de6a159b81dfae2677c"><td class="memItemLeft" align="right" valign="top">typedef RandomDeleteFuture of <a class="el" href="classMRandom.html#aa45ade42ff33e743dfc08d512bcac558">t_ts_iobj</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMRandom.html#a4d06b74b88013de6a159b81dfae2677c">t_delete</a></td></tr>
+<tr class="memdesc:a4d06b74b88013de6a159b81dfae2677c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Прототип метода deleteFuture.  <a href="classMRandom.html#a4d06b74b88013de6a159b81dfae2677c">Подробнее...</a><br /></td></tr>
+<tr class="separator:a4d06b74b88013de6a159b81dfae2677c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5af09def682193e16810be50aecb6531"><td class="memItemLeft" align="right" valign="top">typedef contract&lt; <a class="el" href="classMRandom.html#a4d06b74b88013de6a159b81dfae2677c">t_delete</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMRandom.html#a5af09def682193e16810be50aecb6531">t_delete_contract</a></td></tr>
+<tr class="memdesc:a5af09def682193e16810be50aecb6531"><td class="mdescLeft">&#160;</td><td class="mdescRight">Контракт с точкой входа deleteFuture.  <a href="classMRandom.html#a5af09def682193e16810be50aecb6531">Подробнее...</a><br /></td></tr>
+<tr class="separator:a5af09def682193e16810be50aecb6531"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaabe440c847922fbc7e01c0360d50eb6"><td class="memItemLeft" align="right" valign="top">typedef RandomGetFuture of <a class="el" href="classMRandom.html#a78e493b450d2a843da7740da6c5a25e1">t_ts_iobj_callback</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMRandom.html#aaabe440c847922fbc7e01c0360d50eb6">t_get</a></td></tr>
+<tr class="memdesc:aaabe440c847922fbc7e01c0360d50eb6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Прототип метода getFuture.  <a href="classMRandom.html#aaabe440c847922fbc7e01c0360d50eb6">Подробнее...</a><br /></td></tr>
+<tr class="separator:aaabe440c847922fbc7e01c0360d50eb6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaa0be59972cf8cb4de86c4f3d1becbeb"><td class="memItemLeft" align="right" valign="top">typedef contract&lt; <a class="el" href="classMRandom.html#aaabe440c847922fbc7e01c0360d50eb6">t_get</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMRandom.html#aaa0be59972cf8cb4de86c4f3d1becbeb">t_get_contract</a></td></tr>
+<tr class="memdesc:aaa0be59972cf8cb4de86c4f3d1becbeb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Контракт с точкой входа getFuture.  <a href="classMRandom.html#aaa0be59972cf8cb4de86c4f3d1becbeb">Подробнее...</a><br /></td></tr>
+<tr class="separator:aaa0be59972cf8cb4de86c4f3d1becbeb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
+Открытые члены</h2></td></tr>
+<tr class="memitem:a1113a4469acd269345f9b91fc8a08362"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classMRandom.html#ae2bbc2e9d31c5ab6ddc5d3d3a028d81d">t_create_contract</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMRandom.html#a1113a4469acd269345f9b91fc8a08362">createFutureEntrypoint</a> (const address addr)</td></tr>
+<tr class="memdesc:a1113a4469acd269345f9b91fc8a08362"><td class="mdescLeft">&#160;</td><td class="mdescRight">Получить точку входа createFuture.  <a href="classMRandom.html#a1113a4469acd269345f9b91fc8a08362">Подробнее...</a><br /></td></tr>
+<tr class="separator:a1113a4469acd269345f9b91fc8a08362"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a284936247cb915f7c307dc8059894e29"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classMRandom.html#a74542500aa5e34ff20750cf9c5ec5ea5">t_create</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMRandom.html#a284936247cb915f7c307dc8059894e29">createParams</a> (const <a class="el" href="classMRandom.html#a6fb6b57a6be28013680f04ae9500d1b3">t_ts</a> ts, const <a class="el" href="classMRandom.html#a9a42d31af80c0f3b5d427474fc254674">t_iobj</a> iobj)</td></tr>
+<tr class="memdesc:a284936247cb915f7c307dc8059894e29"><td class="mdescLeft">&#160;</td><td class="mdescRight">Параметры для создания запроса случайного числа  <a href="classMRandom.html#a284936247cb915f7c307dc8059894e29">Подробнее...</a><br /></td></tr>
+<tr class="separator:a284936247cb915f7c307dc8059894e29"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad9a131ef4579f85748ec1803a66a5dbc"><td class="memItemLeft" align="right" valign="top">operation&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMRandom.html#ad9a131ef4579f85748ec1803a66a5dbc">create</a> (const address addr, const <a class="el" href="classMRandom.html#a6fb6b57a6be28013680f04ae9500d1b3">t_ts</a> ts, const <a class="el" href="classMRandom.html#a9a42d31af80c0f3b5d427474fc254674">t_iobj</a> iobj)</td></tr>
+<tr class="memdesc:ad9a131ef4579f85748ec1803a66a5dbc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Операция создания запроса случайного числа  <a href="classMRandom.html#ad9a131ef4579f85748ec1803a66a5dbc">Подробнее...</a><br /></td></tr>
+<tr class="separator:ad9a131ef4579f85748ec1803a66a5dbc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aca85ed4eca7ad0f30d23f4ee98d7a289"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classMRandom.html#a5af09def682193e16810be50aecb6531">t_delete_contract</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMRandom.html#aca85ed4eca7ad0f30d23f4ee98d7a289">deleteFutureEntrypoint</a> (const address addr)</td></tr>
+<tr class="memdesc:aca85ed4eca7ad0f30d23f4ee98d7a289"><td class="mdescLeft">&#160;</td><td class="mdescRight">Получить точку входа deleteFuture.  <a href="classMRandom.html#aca85ed4eca7ad0f30d23f4ee98d7a289">Подробнее...</a><br /></td></tr>
+<tr class="separator:aca85ed4eca7ad0f30d23f4ee98d7a289"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a16726d8f041db1891015cdf124c2018c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classMRandom.html#a4d06b74b88013de6a159b81dfae2677c">t_delete</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMRandom.html#a16726d8f041db1891015cdf124c2018c">deleteParams</a> (const <a class="el" href="classMRandom.html#a6fb6b57a6be28013680f04ae9500d1b3">t_ts</a> ts, const <a class="el" href="classMRandom.html#a9a42d31af80c0f3b5d427474fc254674">t_iobj</a> iobj)</td></tr>
+<tr class="memdesc:a16726d8f041db1891015cdf124c2018c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Параметры для удаления запроса случайного числа  <a href="classMRandom.html#a16726d8f041db1891015cdf124c2018c">Подробнее...</a><br /></td></tr>
+<tr class="separator:a16726d8f041db1891015cdf124c2018c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af79628f8faff843c268a3d9290fa5fcc"><td class="memItemLeft" align="right" valign="top">operation&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMRandom.html#af79628f8faff843c268a3d9290fa5fcc">delete</a> (const address addr, const <a class="el" href="classMRandom.html#a6fb6b57a6be28013680f04ae9500d1b3">t_ts</a> ts, const <a class="el" href="classMRandom.html#a9a42d31af80c0f3b5d427474fc254674">t_iobj</a> iobj)</td></tr>
+<tr class="memdesc:af79628f8faff843c268a3d9290fa5fcc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Операция удаления запроса случайного числа  <a href="classMRandom.html#af79628f8faff843c268a3d9290fa5fcc">Подробнее...</a><br /></td></tr>
+<tr class="separator:af79628f8faff843c268a3d9290fa5fcc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a81b996594ad5e317e01907af7e9282a6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classMRandom.html#aaa0be59972cf8cb4de86c4f3d1becbeb">t_get_contract</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMRandom.html#a81b996594ad5e317e01907af7e9282a6">getFutureEntrypoint</a> (const address addr)</td></tr>
+<tr class="memdesc:a81b996594ad5e317e01907af7e9282a6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Получить точку входа getFuture.  <a href="classMRandom.html#a81b996594ad5e317e01907af7e9282a6">Подробнее...</a><br /></td></tr>
+<tr class="separator:a81b996594ad5e317e01907af7e9282a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5c0c81f4aced9f1e0ae1d2d17544a292"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classMRandom.html#aaabe440c847922fbc7e01c0360d50eb6">t_get</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMRandom.html#a5c0c81f4aced9f1e0ae1d2d17544a292">getParams</a> (const <a class="el" href="classMRandom.html#a6fb6b57a6be28013680f04ae9500d1b3">t_ts</a> ts, const <a class="el" href="classMRandom.html#a9a42d31af80c0f3b5d427474fc254674">t_iobj</a> iobj, const <a class="el" href="classMRandom.html#a6518736ada3a67ce0659780adc4d08fe">t_callback</a> callback)</td></tr>
+<tr class="memdesc:a5c0c81f4aced9f1e0ae1d2d17544a292"><td class="mdescLeft">&#160;</td><td class="mdescRight">Параметры для получения случайного числа  <a href="classMRandom.html#a5c0c81f4aced9f1e0ae1d2d17544a292">Подробнее...</a><br /></td></tr>
+<tr class="separator:a5c0c81f4aced9f1e0ae1d2d17544a292"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a453b5e340f04dacd026640d00cd54bbb"><td class="memItemLeft" align="right" valign="top">operation&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMRandom.html#a453b5e340f04dacd026640d00cd54bbb">get</a> (const address addr, const <a class="el" href="classMRandom.html#a6fb6b57a6be28013680f04ae9500d1b3">t_ts</a> ts, const <a class="el" href="classMRandom.html#a9a42d31af80c0f3b5d427474fc254674">t_iobj</a> iobj, const <a class="el" href="classMRandom.html#a6518736ada3a67ce0659780adc4d08fe">t_callback</a> callback)</td></tr>
+<tr class="memdesc:a453b5e340f04dacd026640d00cd54bbb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Операция создания запроса случайного числа  <a href="classMRandom.html#a453b5e340f04dacd026640d00cd54bbb">Подробнее...</a><br /></td></tr>
+<tr class="separator:a453b5e340f04dacd026640d00cd54bbb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae291d62798d42b680c45fbc99592b741"><td class="memItemLeft" align="right" valign="top">unit&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMRandom.html#ae291d62798d42b680c45fbc99592b741">check</a> (const <a class="el" href="classMRandom.html#a6f8a50fd4599ffed4424d9831c87693a">t_random_source</a> randomSource)</td></tr>
+<tr class="memdesc:ae291d62798d42b680c45fbc99592b741"><td class="mdescLeft">&#160;</td><td class="mdescRight">Проверка источника случайных чисел на валидность  <a href="classMRandom.html#ae291d62798d42b680c45fbc99592b741">Подробнее...</a><br /></td></tr>
+<tr class="separator:ae291d62798d42b680c45fbc99592b741"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
+Открытые атрибуты</h2></td></tr>
+<tr class="memitem:adf90e600d9e27aceaf06af6c7e33ef6e"><td class="memItemLeft" align="right" valign="top">const string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMRandom.html#adf90e600d9e27aceaf06af6c7e33ef6e">cERR_NOT_FOUND</a> = &quot;MRandom/NotFound&quot;</td></tr>
+<tr class="memdesc:adf90e600d9e27aceaf06af6c7e33ef6e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ошибка: Не найден контракт источника  <a href="classMRandom.html#adf90e600d9e27aceaf06af6c7e33ef6e">Подробнее...</a><br /></td></tr>
+<tr class="separator:adf90e600d9e27aceaf06af6c7e33ef6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5a35b525fd15e8d552e62b0f49e59ea5"><td class="memItemLeft" align="right" valign="top">const string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMRandom.html#a5a35b525fd15e8d552e62b0f49e59ea5">cERR_NOT_FOUND_CREATE</a> = &quot;MRandom/NotFoundCreateFuture&quot;</td></tr>
+<tr class="memdesc:a5a35b525fd15e8d552e62b0f49e59ea5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ошибка: Не найден метод createFuture токена  <a href="classMRandom.html#a5a35b525fd15e8d552e62b0f49e59ea5">Подробнее...</a><br /></td></tr>
+<tr class="separator:a5a35b525fd15e8d552e62b0f49e59ea5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a79b8f211f9dfb906c76ecd0f651bc0ef"><td class="memItemLeft" align="right" valign="top">const string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMRandom.html#a79b8f211f9dfb906c76ecd0f651bc0ef">cERR_NOT_FOUND_DELETE</a> = &quot;MRandom/NotFoundDeleteFuture&quot;</td></tr>
+<tr class="memdesc:a79b8f211f9dfb906c76ecd0f651bc0ef"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ошибка: Не найден метод deleteFuture токена  <a href="classMRandom.html#a79b8f211f9dfb906c76ecd0f651bc0ef">Подробнее...</a><br /></td></tr>
+<tr class="separator:a79b8f211f9dfb906c76ecd0f651bc0ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a906e97ca7982f83b99b10af50a28242d"><td class="memItemLeft" align="right" valign="top">const string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMRandom.html#a906e97ca7982f83b99b10af50a28242d">cERR_NOT_FOUND_GET</a> = &quot;MRandom/NotFoundGetFuture&quot;</td></tr>
+<tr class="memdesc:a906e97ca7982f83b99b10af50a28242d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ошибка: Не найден метод getFuture токена  <a href="classMRandom.html#a906e97ca7982f83b99b10af50a28242d">Подробнее...</a><br /></td></tr>
+<tr class="separator:a906e97ca7982f83b99b10af50a28242d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Подробное описание</h2>
+<div class="textblock"><p>Модуль взаимодействия с источником случайных чисел </p>
+
+<p class="definition">См. определение в файле <a class="el" href="MRandom_8ligo_source.html">MRandom.ligo</a> строка <a class="el" href="MRandom_8ligo_source.html#l00006">6</a></p>
+</div><h2 class="groupheader">Определения типов</h2>
+<a id="a6518736ada3a67ce0659780adc4d08fe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6518736ada3a67ce0659780adc4d08fe">&#9670;&nbsp;</a></span>t_callback</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef contract&lt;<a class="el" href="classMRandom.html#acafb4abc23d44d7171ae1f0029344ea7">t_callback_params</a>&gt; <a class="el" href="classMRandom.html#a6518736ada3a67ce0659780adc4d08fe">MRandom::t_callback</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">См. определение в файле <a class="el" href="MRandom_8ligo_source.html">MRandom.ligo</a> строка <a class="el" href="MRandom_8ligo_source.html#l00044">44</a></p>
+
+</div>
+</div>
+<a id="acafb4abc23d44d7171ae1f0029344ea7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acafb4abc23d44d7171ae1f0029344ea7">&#9670;&nbsp;</a></span>t_callback_params</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef OnRandomCallback of <a class="el" href="classMRandom.html#ac8c2b7f39368322fc9f0af3407c5aad3">t_iobj_random</a> <a class="el" href="classMRandom.html#acafb4abc23d44d7171ae1f0029344ea7">MRandom::t_callback_params</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">См. определение в файле <a class="el" href="MRandom_8ligo_source.html">MRandom.ligo</a> строка <a class="el" href="MRandom_8ligo_source.html#l00043">43</a></p>
+
+</div>
+</div>
+<a id="a74542500aa5e34ff20750cf9c5ec5ea5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a74542500aa5e34ff20750cf9c5ec5ea5">&#9670;&nbsp;</a></span>t_create</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef RandomCreateFuture of <a class="el" href="classMRandom.html#aa45ade42ff33e743dfc08d512bcac558">t_ts_iobj</a> <a class="el" href="classMRandom.html#a74542500aa5e34ff20750cf9c5ec5ea5">MRandom::t_create</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Прототип метода createFuture. </p>
+
+<p class="definition">См. определение в файле <a class="el" href="MRandom_8ligo_source.html">MRandom.ligo</a> строка <a class="el" href="MRandom_8ligo_source.html#l00068">68</a></p>
+
+</div>
+</div>
+<a id="ae2bbc2e9d31c5ab6ddc5d3d3a028d81d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae2bbc2e9d31c5ab6ddc5d3d3a028d81d">&#9670;&nbsp;</a></span>t_create_contract</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef contract&lt;<a class="el" href="classMRandom.html#a74542500aa5e34ff20750cf9c5ec5ea5">t_create</a>&gt; <a class="el" href="classMRandom.html#ae2bbc2e9d31c5ab6ddc5d3d3a028d81d">MRandom::t_create_contract</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Контракт с точкой входа createFuture. </p>
+
+<p class="definition">См. определение в файле <a class="el" href="MRandom_8ligo_source.html">MRandom.ligo</a> строка <a class="el" href="MRandom_8ligo_source.html#l00072">72</a></p>
+
+</div>
+</div>
+<a id="a4d06b74b88013de6a159b81dfae2677c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4d06b74b88013de6a159b81dfae2677c">&#9670;&nbsp;</a></span>t_delete</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef RandomDeleteFuture of <a class="el" href="classMRandom.html#aa45ade42ff33e743dfc08d512bcac558">t_ts_iobj</a> <a class="el" href="classMRandom.html#a4d06b74b88013de6a159b81dfae2677c">MRandom::t_delete</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Прототип метода deleteFuture. </p>
+
+<p class="definition">См. определение в файле <a class="el" href="MRandom_8ligo_source.html">MRandom.ligo</a> строка <a class="el" href="MRandom_8ligo_source.html#l00076">76</a></p>
+
+</div>
+</div>
+<a id="a5af09def682193e16810be50aecb6531"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5af09def682193e16810be50aecb6531">&#9670;&nbsp;</a></span>t_delete_contract</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef contract&lt;<a class="el" href="classMRandom.html#a4d06b74b88013de6a159b81dfae2677c">t_delete</a>&gt; <a class="el" href="classMRandom.html#a5af09def682193e16810be50aecb6531">MRandom::t_delete_contract</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Контракт с точкой входа deleteFuture. </p>
+
+<p class="definition">См. определение в файле <a class="el" href="MRandom_8ligo_source.html">MRandom.ligo</a> строка <a class="el" href="MRandom_8ligo_source.html#l00080">80</a></p>
+
+</div>
+</div>
+<a id="aaabe440c847922fbc7e01c0360d50eb6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaabe440c847922fbc7e01c0360d50eb6">&#9670;&nbsp;</a></span>t_get</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef RandomGetFuture of <a class="el" href="classMRandom.html#a78e493b450d2a843da7740da6c5a25e1">t_ts_iobj_callback</a> <a class="el" href="classMRandom.html#aaabe440c847922fbc7e01c0360d50eb6">MRandom::t_get</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Прототип метода getFuture. </p>
+
+<p class="definition">См. определение в файле <a class="el" href="MRandom_8ligo_source.html">MRandom.ligo</a> строка <a class="el" href="MRandom_8ligo_source.html#l00084">84</a></p>
+
+</div>
+</div>
+<a id="aaa0be59972cf8cb4de86c4f3d1becbeb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaa0be59972cf8cb4de86c4f3d1becbeb">&#9670;&nbsp;</a></span>t_get_contract</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef contract&lt;<a class="el" href="classMRandom.html#aaabe440c847922fbc7e01c0360d50eb6">t_get</a>&gt; <a class="el" href="classMRandom.html#aaa0be59972cf8cb4de86c4f3d1becbeb">MRandom::t_get_contract</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Контракт с точкой входа getFuture. </p>
+
+<p class="definition">См. определение в файле <a class="el" href="MRandom_8ligo_source.html">MRandom.ligo</a> строка <a class="el" href="MRandom_8ligo_source.html#l00088">88</a></p>
+
+</div>
+</div>
+<a id="a9a42d31af80c0f3b5d427474fc254674"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9a42d31af80c0f3b5d427474fc254674">&#9670;&nbsp;</a></span>t_iobj</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef <a class="el" href="consts_8ligo.html#a0e6f05ec9d41b082623116792d1d2a09">t_i</a> <a class="el" href="classMRandom.html#a9a42d31af80c0f3b5d427474fc254674">MRandom::t_iobj</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>ID объекта в контракте заказчике </p>
+
+<p class="definition">См. определение в файле <a class="el" href="MRandom_8ligo_source.html">MRandom.ligo</a> строка <a class="el" href="MRandom_8ligo_source.html#l00014">14</a></p>
+
+</div>
+</div>
+<a id="ac8c2b7f39368322fc9f0af3407c5aad3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac8c2b7f39368322fc9f0af3407c5aad3">&#9670;&nbsp;</a></span>t_iobj_random</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef pair&lt;<a class="el" href="classMRandom.html#a9a42d31af80c0f3b5d427474fc254674">t_iobj</a>,<a class="el" href="classMRandom.html#a51d8a8706e1c8c6bdf10fbe9fea58d16">t_random</a>&gt; <a class="el" href="classMRandom.html#ac8c2b7f39368322fc9f0af3407c5aad3">MRandom::t_iobj_random</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Тип колбека для получения случайного числа </p>
+
+<p class="definition">См. определение в файле <a class="el" href="MRandom_8ligo_source.html">MRandom.ligo</a> строка <a class="el" href="MRandom_8ligo_source.html#l00042">42</a></p>
+
+</div>
+</div>
+<a id="a51d8a8706e1c8c6bdf10fbe9fea58d16"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a51d8a8706e1c8c6bdf10fbe9fea58d16">&#9670;&nbsp;</a></span>t_random</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef nat <a class="el" href="classMRandom.html#a51d8a8706e1c8c6bdf10fbe9fea58d16">MRandom::t_random</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Случайное число </p>
+<p>Для создания случайного числа берется хеш ближайшего блока Tezos, время которого больше или равно времени события, с него снимается SHA-256, получаем значение levelHash. Также хеш SHA-256 снимается со строки "адрес заказчика&lt;пробел&gt;&lt;ID объекта в контракте заказчика в десятичной записи&gt;", получаем значение requestHash. Cлучайное число вычисляется как random = levelHash ^ requestHash и переводится в формат nat. В итоге в общем случае у нас 256-битное случайное число </p>
+
+<p class="definition">См. определение в файле <a class="el" href="MRandom_8ligo_source.html">MRandom.ligo</a> строка <a class="el" href="MRandom_8ligo_source.html#l00038">38</a></p>
+
+</div>
+</div>
+<a id="a6f8a50fd4599ffed4424d9831c87693a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6f8a50fd4599ffed4424d9831c87693a">&#9670;&nbsp;</a></span>t_random_source</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef address <a class="el" href="classMRandom.html#a6f8a50fd4599ffed4424d9831c87693a">MRandom::t_random_source</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Адрес источника случайных чисел </p>
+
+<p class="definition">См. определение в файле <a class="el" href="MRandom_8ligo_source.html">MRandom.ligo</a> строка <a class="el" href="MRandom_8ligo_source.html#l00010">10</a></p>
+
+</div>
+</div>
+<a id="a6fb6b57a6be28013680f04ae9500d1b3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6fb6b57a6be28013680f04ae9500d1b3">&#9670;&nbsp;</a></span>t_ts</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef timestamp <a class="el" href="classMRandom.html#a6fb6b57a6be28013680f04ae9500d1b3">MRandom::t_ts</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Время события, для которого случайное число </p>
+
+<p class="definition">См. определение в файле <a class="el" href="MRandom_8ligo_source.html">MRandom.ligo</a> строка <a class="el" href="MRandom_8ligo_source.html#l00018">18</a></p>
+
+</div>
+</div>
+<a id="aa45ade42ff33e743dfc08d512bcac558"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa45ade42ff33e743dfc08d512bcac558">&#9670;&nbsp;</a></span>t_ts_iobj</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef pair&lt;<a class="el" href="classMRandom.html#a6fb6b57a6be28013680f04ae9500d1b3">t_ts</a>,<a class="el" href="classMRandom.html#a9a42d31af80c0f3b5d427474fc254674">t_iobj</a>&gt; <a class="el" href="classMRandom.html#aa45ade42ff33e743dfc08d512bcac558">MRandom::t_ts_iobj</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Время события и ID объекта </p>
+
+<p class="definition">См. определение в файле <a class="el" href="MRandom_8ligo_source.html">MRandom.ligo</a> строка <a class="el" href="MRandom_8ligo_source.html#l00022">22</a></p>
+
+</div>
+</div>
+<a id="a78e493b450d2a843da7740da6c5a25e1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a78e493b450d2a843da7740da6c5a25e1">&#9670;&nbsp;</a></span>t_ts_iobj_callback</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef tuple&lt;<a class="el" href="classMRandom.html#a6fb6b57a6be28013680f04ae9500d1b3">t_ts</a>,<a class="el" href="classMRandom.html#a9a42d31af80c0f3b5d427474fc254674">t_iobj</a>,<a class="el" href="classMRandom.html#a6518736ada3a67ce0659780adc4d08fe">t_callback</a>&gt; <a class="el" href="classMRandom.html#a78e493b450d2a843da7740da6c5a25e1">MRandom::t_ts_iobj_callback</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Время события, ID объекта и колбек для случайного числа </p>
+
+<p class="definition">См. определение в файле <a class="el" href="MRandom_8ligo_source.html">MRandom.ligo</a> строка <a class="el" href="MRandom_8ligo_source.html#l00048">48</a></p>
+
+</div>
+</div>
+<h2 class="groupheader">Методы</h2>
+<a id="ae291d62798d42b680c45fbc99592b741"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae291d62798d42b680c45fbc99592b741">&#9670;&nbsp;</a></span>check()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">unit MRandom::check </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classMRandom.html#a6f8a50fd4599ffed4424d9831c87693a">t_random_source</a>&#160;</td>
+          <td class="paramname"><em>randomSource</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Проверка источника случайных чисел на валидность </p>
+
+<p class="definition">См. определение в файле <a class="el" href="MRandom_8ligo_source.html">MRandom.ligo</a> строка <a class="el" href="MRandom_8ligo_source.html#l00159">159</a></p>
+
+<p class="reference">Перекрестные ссылки <a class="el" href="MRandom_8ligo_source.html#l00092">createFutureEntrypoint()</a>, <a class="el" href="MRandom_8ligo_source.html#l00114">deleteFutureEntrypoint()</a> и <a class="el" href="MRandom_8ligo_source.html#l00137">getFutureEntrypoint()</a>.</p>
+
+<p class="reference">Используется в <a class="el" href="MPool_8ligo_source.html#l00155">MPool::create()</a> и <a class="el" href="MPool_8ligo_source.html#l00218">MPool::edit()</a>.</p>
+
+</div>
+</div>
+<a id="ad9a131ef4579f85748ec1803a66a5dbc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad9a131ef4579f85748ec1803a66a5dbc">&#9670;&nbsp;</a></span>create()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">operation MRandom::create </td>
+          <td>(</td>
+          <td class="paramtype">const address&#160;</td>
+          <td class="paramname"><em>addr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classMRandom.html#a6fb6b57a6be28013680f04ae9500d1b3">t_ts</a>&#160;</td>
+          <td class="paramname"><em>ts</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classMRandom.html#a9a42d31af80c0f3b5d427474fc254674">t_iobj</a>&#160;</td>
+          <td class="paramname"><em>iobj</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Операция создания запроса случайного числа </p>
+
+<p class="definition">См. определение в файле <a class="el" href="MRandom_8ligo_source.html">MRandom.ligo</a> строка <a class="el" href="MRandom_8ligo_source.html#l00105">105</a></p>
+
+<p class="reference">Перекрестные ссылки <a class="el" href="MRandom_8ligo_source.html#l00092">createFutureEntrypoint()</a> и <a class="el" href="MRandom_8ligo_source.html#l00100">createParams()</a>.</p>
+
+<p class="reference">Используется в <a class="el" href="MPool_8ligo_source.html#l00264">MPool::requestRandomIfNeed()</a>.</p>
+
+</div>
+</div>
+<a id="a1113a4469acd269345f9b91fc8a08362"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1113a4469acd269345f9b91fc8a08362">&#9670;&nbsp;</a></span>createFutureEntrypoint()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classMRandom.html#ae2bbc2e9d31c5ab6ddc5d3d3a028d81d">t_create_contract</a> MRandom::createFutureEntrypoint </td>
+          <td>(</td>
+          <td class="paramtype">const address&#160;</td>
+          <td class="paramname"><em>addr</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Получить точку входа createFuture. </p>
+
+<p class="definition">См. определение в файле <a class="el" href="MRandom_8ligo_source.html">MRandom.ligo</a> строка <a class="el" href="MRandom_8ligo_source.html#l00092">92</a></p>
+
+<p class="reference">Перекрестные ссылки <a class="el" href="MRandom_8ligo_source.html#l00056">cERR_NOT_FOUND_CREATE</a>.</p>
+
+<p class="reference">Используется в <a class="el" href="MRandom_8ligo_source.html#l00159">check()</a> и <a class="el" href="MRandom_8ligo_source.html#l00105">create()</a>.</p>
+
+</div>
+</div>
+<a id="a284936247cb915f7c307dc8059894e29"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a284936247cb915f7c307dc8059894e29">&#9670;&nbsp;</a></span>createParams()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classMRandom.html#a74542500aa5e34ff20750cf9c5ec5ea5">t_create</a> MRandom::createParams </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classMRandom.html#a6fb6b57a6be28013680f04ae9500d1b3">t_ts</a>&#160;</td>
+          <td class="paramname"><em>ts</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classMRandom.html#a9a42d31af80c0f3b5d427474fc254674">t_iobj</a>&#160;</td>
+          <td class="paramname"><em>iobj</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Параметры для создания запроса случайного числа </p>
+
+<p class="definition">См. определение в файле <a class="el" href="MRandom_8ligo_source.html">MRandom.ligo</a> строка <a class="el" href="MRandom_8ligo_source.html#l00100">100</a></p>
+
+<p class="reference">Используется в <a class="el" href="MRandom_8ligo_source.html#l00105">create()</a>.</p>
+
+</div>
+</div>
+<a id="af79628f8faff843c268a3d9290fa5fcc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af79628f8faff843c268a3d9290fa5fcc">&#9670;&nbsp;</a></span>delete()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">operation MRandom::delete </td>
+          <td>(</td>
+          <td class="paramtype">const address&#160;</td>
+          <td class="paramname"><em>addr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classMRandom.html#a6fb6b57a6be28013680f04ae9500d1b3">t_ts</a>&#160;</td>
+          <td class="paramname"><em>ts</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classMRandom.html#a9a42d31af80c0f3b5d427474fc254674">t_iobj</a>&#160;</td>
+          <td class="paramname"><em>iobj</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Операция удаления запроса случайного числа </p>
+
+<p class="definition">См. определение в файле <a class="el" href="MRandom_8ligo_source.html">MRandom.ligo</a> строка <a class="el" href="MRandom_8ligo_source.html#l00128">128</a></p>
+
+<p class="reference">Перекрестные ссылки <a class="el" href="MRandom_8ligo_source.html#l00114">deleteFutureEntrypoint()</a> и <a class="el" href="MRandom_8ligo_source.html#l00123">deleteParams()</a>.</p>
+
+</div>
+</div>
+<a id="aca85ed4eca7ad0f30d23f4ee98d7a289"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aca85ed4eca7ad0f30d23f4ee98d7a289">&#9670;&nbsp;</a></span>deleteFutureEntrypoint()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classMRandom.html#a5af09def682193e16810be50aecb6531">t_delete_contract</a> MRandom::deleteFutureEntrypoint </td>
+          <td>(</td>
+          <td class="paramtype">const address&#160;</td>
+          <td class="paramname"><em>addr</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Получить точку входа deleteFuture. </p>
+
+<p class="definition">См. определение в файле <a class="el" href="MRandom_8ligo_source.html">MRandom.ligo</a> строка <a class="el" href="MRandom_8ligo_source.html#l00114">114</a></p>
+
+<p class="reference">Перекрестные ссылки <a class="el" href="MRandom_8ligo_source.html#l00060">cERR_NOT_FOUND_DELETE</a>.</p>
+
+<p class="reference">Используется в <a class="el" href="MRandom_8ligo_source.html#l00159">check()</a> и <a class="el" href="MRandom_8ligo_source.html#l00128">delete()</a>.</p>
+
+</div>
+</div>
+<a id="a16726d8f041db1891015cdf124c2018c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a16726d8f041db1891015cdf124c2018c">&#9670;&nbsp;</a></span>deleteParams()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classMRandom.html#a4d06b74b88013de6a159b81dfae2677c">t_delete</a> MRandom::deleteParams </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classMRandom.html#a6fb6b57a6be28013680f04ae9500d1b3">t_ts</a>&#160;</td>
+          <td class="paramname"><em>ts</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classMRandom.html#a9a42d31af80c0f3b5d427474fc254674">t_iobj</a>&#160;</td>
+          <td class="paramname"><em>iobj</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Параметры для удаления запроса случайного числа </p>
+
+<p class="definition">См. определение в файле <a class="el" href="MRandom_8ligo_source.html">MRandom.ligo</a> строка <a class="el" href="MRandom_8ligo_source.html#l00123">123</a></p>
+
+<p class="reference">Используется в <a class="el" href="MRandom_8ligo_source.html#l00128">delete()</a>.</p>
+
+</div>
+</div>
+<a id="a453b5e340f04dacd026640d00cd54bbb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a453b5e340f04dacd026640d00cd54bbb">&#9670;&nbsp;</a></span>get()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">operation MRandom::get </td>
+          <td>(</td>
+          <td class="paramtype">const address&#160;</td>
+          <td class="paramname"><em>addr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classMRandom.html#a6fb6b57a6be28013680f04ae9500d1b3">t_ts</a>&#160;</td>
+          <td class="paramname"><em>ts</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classMRandom.html#a9a42d31af80c0f3b5d427474fc254674">t_iobj</a>&#160;</td>
+          <td class="paramname"><em>iobj</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classMRandom.html#a6518736ada3a67ce0659780adc4d08fe">t_callback</a>&#160;</td>
+          <td class="paramname"><em>callback</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Операция создания запроса случайного числа </p>
+
+<p class="definition">См. определение в файле <a class="el" href="MRandom_8ligo_source.html">MRandom.ligo</a> строка <a class="el" href="MRandom_8ligo_source.html#l00150">150</a></p>
+
+<p class="reference">Перекрестные ссылки <a class="el" href="MRandom_8ligo_source.html#l00137">getFutureEntrypoint()</a> и <a class="el" href="MRandom_8ligo_source.html#l00145">getParams()</a>.</p>
+
+<p class="reference">Используется в <a class="el" href="MPool_8ligo_source.html#l00299">MPool::getRandom()</a>.</p>
+
+</div>
+</div>
+<a id="a81b996594ad5e317e01907af7e9282a6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a81b996594ad5e317e01907af7e9282a6">&#9670;&nbsp;</a></span>getFutureEntrypoint()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classMRandom.html#aaa0be59972cf8cb4de86c4f3d1becbeb">t_get_contract</a> MRandom::getFutureEntrypoint </td>
+          <td>(</td>
+          <td class="paramtype">const address&#160;</td>
+          <td class="paramname"><em>addr</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Получить точку входа getFuture. </p>
+
+<p class="definition">См. определение в файле <a class="el" href="MRandom_8ligo_source.html">MRandom.ligo</a> строка <a class="el" href="MRandom_8ligo_source.html#l00137">137</a></p>
+
+<p class="reference">Перекрестные ссылки <a class="el" href="MRandom_8ligo_source.html#l00064">cERR_NOT_FOUND_GET</a>.</p>
+
+<p class="reference">Используется в <a class="el" href="MRandom_8ligo_source.html#l00159">check()</a> и <a class="el" href="MRandom_8ligo_source.html#l00150">get()</a>.</p>
+
+</div>
+</div>
+<a id="a5c0c81f4aced9f1e0ae1d2d17544a292"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5c0c81f4aced9f1e0ae1d2d17544a292">&#9670;&nbsp;</a></span>getParams()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classMRandom.html#aaabe440c847922fbc7e01c0360d50eb6">t_get</a> MRandom::getParams </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classMRandom.html#a6fb6b57a6be28013680f04ae9500d1b3">t_ts</a>&#160;</td>
+          <td class="paramname"><em>ts</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classMRandom.html#a9a42d31af80c0f3b5d427474fc254674">t_iobj</a>&#160;</td>
+          <td class="paramname"><em>iobj</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classMRandom.html#a6518736ada3a67ce0659780adc4d08fe">t_callback</a>&#160;</td>
+          <td class="paramname"><em>callback</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Параметры для получения случайного числа </p>
+
+<p class="definition">См. определение в файле <a class="el" href="MRandom_8ligo_source.html">MRandom.ligo</a> строка <a class="el" href="MRandom_8ligo_source.html#l00145">145</a></p>
+
+<p class="reference">Используется в <a class="el" href="MRandom_8ligo_source.html#l00150">get()</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Данные класса</h2>
+<a id="adf90e600d9e27aceaf06af6c7e33ef6e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adf90e600d9e27aceaf06af6c7e33ef6e">&#9670;&nbsp;</a></span>cERR_NOT_FOUND</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const string MRandom::cERR_NOT_FOUND = &quot;MRandom/NotFound&quot;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Ошибка: Не найден контракт источника </p>
+
+<p class="definition">См. определение в файле <a class="el" href="MRandom_8ligo_source.html">MRandom.ligo</a> строка <a class="el" href="MRandom_8ligo_source.html#l00052">52</a></p>
+
+</div>
+</div>
+<a id="a5a35b525fd15e8d552e62b0f49e59ea5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5a35b525fd15e8d552e62b0f49e59ea5">&#9670;&nbsp;</a></span>cERR_NOT_FOUND_CREATE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const string MRandom::cERR_NOT_FOUND_CREATE = &quot;MRandom/NotFoundCreateFuture&quot;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Ошибка: Не найден метод createFuture токена </p>
+
+<p class="definition">См. определение в файле <a class="el" href="MRandom_8ligo_source.html">MRandom.ligo</a> строка <a class="el" href="MRandom_8ligo_source.html#l00056">56</a></p>
+
+<p class="reference">Используется в <a class="el" href="MRandom_8ligo_source.html#l00092">createFutureEntrypoint()</a>.</p>
+
+</div>
+</div>
+<a id="a79b8f211f9dfb906c76ecd0f651bc0ef"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a79b8f211f9dfb906c76ecd0f651bc0ef">&#9670;&nbsp;</a></span>cERR_NOT_FOUND_DELETE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const string MRandom::cERR_NOT_FOUND_DELETE = &quot;MRandom/NotFoundDeleteFuture&quot;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Ошибка: Не найден метод deleteFuture токена </p>
+
+<p class="definition">См. определение в файле <a class="el" href="MRandom_8ligo_source.html">MRandom.ligo</a> строка <a class="el" href="MRandom_8ligo_source.html#l00060">60</a></p>
+
+<p class="reference">Используется в <a class="el" href="MRandom_8ligo_source.html#l00114">deleteFutureEntrypoint()</a>.</p>
+
+</div>
+</div>
+<a id="a906e97ca7982f83b99b10af50a28242d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a906e97ca7982f83b99b10af50a28242d">&#9670;&nbsp;</a></span>cERR_NOT_FOUND_GET</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const string MRandom::cERR_NOT_FOUND_GET = &quot;MRandom/NotFoundGetFuture&quot;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Ошибка: Не найден метод getFuture токена </p>
+
+<p class="definition">См. определение в файле <a class="el" href="MRandom_8ligo_source.html">MRandom.ligo</a> строка <a class="el" href="MRandom_8ligo_source.html#l00064">64</a></p>
+
+<p class="reference">Используется в <a class="el" href="MRandom_8ligo_source.html#l00137">getFutureEntrypoint()</a>.</p>
+
+</div>
+</div>
+<hr/>Объявления и описания членов класса находятся в файле:<ul>
+<li><a class="el" href="MRandom_8ligo_source.html">MRandom.ligo</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="classMRandom.html">MRandom</a></li>
+    <li class="footer">Создано системой <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+  </ul>
+</div>
+</body>
+</html>

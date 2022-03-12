@@ -1,0 +1,4 @@
+<map id="MFA2::t_balance_response" name="MFA2::t_balance_response">
+<area shape="rect" id="node1" title="Response to the balance request." alt="" coords="5,95,200,121"/>
+<area shape="rect" id="node2" href="$structMFA2_1_1t__balance__request.html" title="Balance Request." alt="" coords="11,5,195,32"/>
+</map>

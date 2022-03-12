@@ -1,0 +1,282 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.1"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Pool Games: Исходный файл MFarmCrunchy.ligo</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Pool Games
+   </div>
+   <div id="projectbrief">Розыгрыши вознаграждения на основе смарт-контрактов Tezos</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Создано системой Doxygen 1.9.1 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+var searchBox = new SearchBox("searchBox", "search",false,'Поиск','.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(function() {
+  initMenu('',true,false,'search.php','Поиск');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(document).ready(function(){initNavTree('MFarmCrunchy_8ligo_source.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="headertitle">
+<div class="title">MFarmCrunchy.ligo</div>  </div>
+</div><!--header-->
+<div class="contents">
+<a href="MFarmCrunchy_8ligo.html">См. документацию.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#if !MFARMCRUNCHY_INCLUDED</span></div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#define MFARMCRUNCHY_INCLUDED</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160; </div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="MToken_8ligo.html">MToken.ligo</a>&quot;</span></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="comment">///RU Модуль взаимодействия с фермой Crunchy</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="comment">///EN Crunchy Farm Interaction Module</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno"><a class="line" href="classMFarmCrunchy.html">    8</a></span>&#160;<span class="comment"></span>module <a class="code" href="classMFarmCrunchy.html">MFarmCrunchy</a> is {</div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="comment">    ///RU Ошибка: Не найдена точка входа deposit для фермы Crunchy</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="comment">    ///EN Error: Deposit entry point for Crunchy farm not found</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno"><a class="line" href="classMFarmCrunchy.html#a8c433fdeb07efe0e0ba9d2203ebce490">   12</a></span>&#160;<span class="comment"></span>    <span class="keyword">const</span> <a class="code" href="classMFarmCrunchy.html#a8c433fdeb07efe0e0ba9d2203ebce490">cERR_NOT_FOUND_DEPOSIT</a>: <span class="keywordtype">string</span> = <span class="stringliteral">&quot;MFarmCrunchy/NotFoundDeposit&quot;</span>;</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="comment">    ///RU Ошибка: Не найдена точка входа withdraw для фермы Crunchy</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="comment">    ///EN Error: Withdrawal entry point not found for Crunchy farm</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno"><a class="line" href="classMFarmCrunchy.html#a3147341ef558b5400a98adbae26294d0">   16</a></span>&#160;<span class="comment"></span>    <span class="keyword">const</span> <a class="code" href="classMFarmCrunchy.html#a3147341ef558b5400a98adbae26294d0">cERR_NOT_FOUND_WITHDRAW</a>: <span class="keywordtype">string</span> = <span class="stringliteral">&quot;MFarmCrunchy/NotFoundWithdraw&quot;</span>;</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="comment">    ///RU Ошибка: Не найдена точка входа harvest для фермы Crunchy</span></div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="comment">    ///EN Error: No harvest entry point found for Crunchy farm</span></div>
+<div class="line"><a name="l00020"></a><span class="lineno"><a class="line" href="classMFarmCrunchy.html#a09759cf7ad9def037a5bd63e11f76cf9">   20</a></span>&#160;<span class="comment"></span>    <span class="keyword">const</span> <a class="code" href="classMFarmCrunchy.html#a09759cf7ad9def037a5bd63e11f76cf9">cERR_NOT_FOUND_HARVEST</a>: <span class="keywordtype">string</span> = <span class="stringliteral">&quot;MFarmCrunchy/NotFoundHarvest&quot;</span>;</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160; </div>
+<div class="line"><a name="l00022"></a><span class="lineno"><a class="line" href="classMFarmCrunchy.html#a06616a489eacfa4740c7136894b75823">   22</a></span>&#160;    type <a class="code" href="classMFarmCrunchy.html#a06616a489eacfa4740c7136894b75823">t_farm_id</a> is nat;<span class="comment">///RU&lt; ID фермы Crunchy ///EN&lt; Crunchy farm ID</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="comment">    ///RU Параметры для депозита в ферму Crunchy</span></div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="comment">    ///EN Parameters for the deposit to the Crunchy farm</span></div>
+<div class="line"><a name="l00026"></a><span class="lineno"><a class="line" href="structMFarmCrunchy_1_1t__deposit__params.html">   26</a></span>&#160;<span class="comment"></span>    type <a class="code" href="structMFarmCrunchy_1_1t__deposit__params.html">t_deposit_params</a> is [@layout:comb] record [</div>
+<div class="line"><a name="l00027"></a><span class="lineno"><a class="line" href="structMFarmCrunchy_1_1t__deposit__params.html#a9fd8d6edea8e0a951c51a11d14364fd6">   27</a></span>&#160;        <a class="code" href="structMFarmCrunchy_1_1t__deposit__params.html#a9fd8d6edea8e0a951c51a11d14364fd6">farm_id</a>: <a class="code" href="classMFarmCrunchy.html#a06616a489eacfa4740c7136894b75823">t_farm_id</a>;</div>
+<div class="line"><a name="l00028"></a><span class="lineno"><a class="line" href="structMFarmCrunchy_1_1t__deposit__params.html#a5b84f1917c295ed3ec0e4552f7c0c4d9">   28</a></span>&#160;        <a class="code" href="structMFarmCrunchy_1_1t__deposit__params.html#a5b84f1917c295ed3ec0e4552f7c0c4d9">damount</a>: <a class="code" href="classMToken.html">MToken</a>.<a class="code" href="classMToken.html#a6c3208a738cac7cfd34651561ac6e7f6">t_amount</a>;</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    ];</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="comment">    ///RU Прототип метода deposit фермы Crunchy</span></div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="comment">    ///EN Prototype of the Crunchy farm deposit method</span></div>
+<div class="line"><a name="l00033"></a><span class="lineno"><a class="line" href="classMFarmCrunchy.html#ad98aa04fa157f7cd10b144a785a66124">   33</a></span>&#160;<span class="comment"></span>    type <a class="code" href="classMFarmCrunchy.html#ad98aa04fa157f7cd10b144a785a66124">t_deposit_method</a> is CrunchyDeposit of <a class="code" href="structMFarmCrunchy_1_1t__deposit__params.html">t_deposit_params</a>;</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="comment">    ///RU Контракт с точкой входа deposit в формате фермы Crunchy</span></div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="comment">    ///EN Contract with deposit entry point in Crunchy farm format</span></div>
+<div class="line"><a name="l00037"></a><span class="lineno"><a class="line" href="classMFarmCrunchy.html#a289d3339175435c0767ac5f2a477d986">   37</a></span>&#160;<span class="comment"></span>    type <a class="code" href="classMFarmCrunchy.html#a289d3339175435c0767ac5f2a477d986">t_deposit_contract</a> is contract(<a class="code" href="classMFarmCrunchy.html#ad98aa04fa157f7cd10b144a785a66124">t_deposit_method</a>);</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="comment">    ///RU Параметры для извлечения депозита из фермы Crunchy</span></div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="comment">    ///EN Parameters for extracting a deposit from a Crunchy farm</span></div>
+<div class="line"><a name="l00041"></a><span class="lineno"><a class="line" href="structMFarmCrunchy_1_1t__withdraw__params.html">   41</a></span>&#160;<span class="comment"></span>    type <a class="code" href="structMFarmCrunchy_1_1t__withdraw__params.html">t_withdraw_params</a> is [@layout:comb] record [</div>
+<div class="line"><a name="l00042"></a><span class="lineno"><a class="line" href="structMFarmCrunchy_1_1t__withdraw__params.html#a6b7e379a7dd9d35d5286dd99b5336c39">   42</a></span>&#160;        <a class="code" href="structMFarmCrunchy_1_1t__withdraw__params.html#a6b7e379a7dd9d35d5286dd99b5336c39">farm_id</a>: <a class="code" href="classMFarmCrunchy.html#a06616a489eacfa4740c7136894b75823">t_farm_id</a>;</div>
+<div class="line"><a name="l00043"></a><span class="lineno"><a class="line" href="structMFarmCrunchy_1_1t__withdraw__params.html#a097bac66883f8f0adfd41b2309e8a0a3">   43</a></span>&#160;        <a class="code" href="structMFarmCrunchy_1_1t__withdraw__params.html#a097bac66883f8f0adfd41b2309e8a0a3">wamount</a>: <a class="code" href="classMToken.html">MToken</a>.<a class="code" href="classMToken.html#a6c3208a738cac7cfd34651561ac6e7f6">t_amount</a>;</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    ];</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="comment">    ///RU Прототип метода withdraw фермы Crunchy</span></div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="comment">    ///EN Prototype of the Crunchy farm withdrawal method</span></div>
+<div class="line"><a name="l00048"></a><span class="lineno"><a class="line" href="classMFarmCrunchy.html#af94af17fe366b4ac824fc8c3f3cd0dba">   48</a></span>&#160;<span class="comment"></span>    type <a class="code" href="classMFarmCrunchy.html#af94af17fe366b4ac824fc8c3f3cd0dba">t_withdraw_method</a> is CrunchyWithdraw of <a class="code" href="structMFarmCrunchy_1_1t__withdraw__params.html">t_withdraw_params</a>;</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="comment">    ///RU Контракт с точкой входа withdraw в формате фермы Crunchy</span></div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="comment">    ///EN Contract with withdrawal entry point in Crunchy farm format</span></div>
+<div class="line"><a name="l00052"></a><span class="lineno"><a class="line" href="classMFarmCrunchy.html#ad1c54c9a8ac0a4f5e5da784336c0c9dd">   52</a></span>&#160;<span class="comment"></span>    type <a class="code" href="classMFarmCrunchy.html#ad1c54c9a8ac0a4f5e5da784336c0c9dd">t_withdraw_contract</a> is contract(<a class="code" href="classMFarmCrunchy.html#af94af17fe366b4ac824fc8c3f3cd0dba">t_withdraw_method</a>);</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="comment">    ///RU Параметры получения вознаграждения из фермы Crunchy</span></div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="comment">    ///EN Parameters for receiving rewards from the Crunchy farm</span></div>
+<div class="line"><a name="l00056"></a><span class="lineno"><a class="line" href="classMFarmCrunchy.html#a2bcd36a363c02a50521e85aa5ea26619">   56</a></span>&#160;<span class="comment"></span>    type <a class="code" href="classMFarmCrunchy.html#a2bcd36a363c02a50521e85aa5ea26619">t_harvest_params</a> is <a class="code" href="classMFarmCrunchy.html#a06616a489eacfa4740c7136894b75823">t_farm_id</a>;</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="comment">    ///RU Прототип метода harvest фермы Crunchy</span></div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="comment">    ///EN Prototype of the Crunchy farm harvest method</span></div>
+<div class="line"><a name="l00060"></a><span class="lineno"><a class="line" href="classMFarmCrunchy.html#a5747dc6e0a5f5e30960a8560f4fd0b49">   60</a></span>&#160;<span class="comment"></span>    type <a class="code" href="classMFarmCrunchy.html#a5747dc6e0a5f5e30960a8560f4fd0b49">t_harvest_method</a> is CrunchyHarvest of <a class="code" href="classMFarmCrunchy.html#a2bcd36a363c02a50521e85aa5ea26619">t_harvest_params</a>;</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="comment">    ///RU Контракт с точкой входа harvest в формате фермы Crunchy</span></div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="comment">    ///EN A contract with the harvest entry point in the Crunchy farm format</span></div>
+<div class="line"><a name="l00064"></a><span class="lineno"><a class="line" href="classMFarmCrunchy.html#ae88dbda4cf236cb6ba87a06ceafe4ac0">   64</a></span>&#160;<span class="comment"></span>    type <a class="code" href="classMFarmCrunchy.html#ae88dbda4cf236cb6ba87a06ceafe4ac0">t_harvest_contract</a> is contract(<a class="code" href="classMFarmCrunchy.html#a5747dc6e0a5f5e30960a8560f4fd0b49">t_harvest_method</a>);</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<span class="comment">    ///RU Получить точку входа deposit фермы с интерфейсом Crunchy</span></div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="comment">    ///EN Get the deposit farm entry point with the Crunchy interface</span></div>
+<div class="line"><a name="l00068"></a><span class="lineno"><a class="line" href="classMFarmCrunchy.html#a8fcd6de9b9225af9f2db3bbb11c12506">   68</a></span>&#160;<span class="comment"></span>    <span class="keyword">function</span> <a class="code" href="classMFarmCrunchy.html#a8fcd6de9b9225af9f2db3bbb11c12506">depositEntrypoint</a>(<span class="keyword">const</span> addr: address): <a class="code" href="classMFarmCrunchy.html#a289d3339175435c0767ac5f2a477d986">t_deposit_contract</a> is</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        case (Tezos.get_entrypoint_opt(<span class="stringliteral">&quot;%deposit&quot;</span>, addr): option(<a class="code" href="classMFarmCrunchy.html#a289d3339175435c0767ac5f2a477d986">t_deposit_contract</a>)) of [</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;        | Some(deposit_contract) -&gt; deposit_contract</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;        | None -&gt; (failwith(cERR_NOT_FOUND_DEPOSIT): <a class="code" href="classMFarmCrunchy.html#a289d3339175435c0767ac5f2a477d986">t_deposit_contract</a>)</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;        ];</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;<span class="comment">    ///RU Параметры для метода deposit Crunchy</span></div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;<span class="comment">    ///EN Parameters for the deposit Crunchy method</span></div>
+<div class="line"><a name="l00076"></a><span class="lineno"><a class="line" href="classMFarmCrunchy.html#afa7a10cde5d833ea1263f848f5c03b8f">   76</a></span>&#160;<span class="comment"></span>    <span class="keyword">function</span> <a class="code" href="classMFarmCrunchy.html#afa7a10cde5d833ea1263f848f5c03b8f">depositParams</a>(<span class="keyword">const</span> farm_id: <a class="code" href="classMFarmCrunchy.html#a06616a489eacfa4740c7136894b75823">t_farm_id</a>; <span class="keyword">const</span> damount: <a class="code" href="classMToken.html">MToken</a>.<a class="code" href="classMToken.html#a6c3208a738cac7cfd34651561ac6e7f6">t_amount</a>): <a class="code" href="classMFarmCrunchy.html#ad98aa04fa157f7cd10b144a785a66124">t_deposit_method</a> is</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;        CrunchyDeposit(record [</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;            farm_id = farm_id;</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;            damount = damount;</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;        ]);</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;<span class="comment">    ///RU Депозит в ферму Crunchy</span></div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;<span class="comment">    ///EN Deposit to Crunchy farm</span></div>
+<div class="line"><a name="l00084"></a><span class="lineno"><a class="line" href="classMFarmCrunchy.html#a302979fa891b34493c56461302ebafd6">   84</a></span>&#160;<span class="comment"></span>    <span class="keyword">function</span> <a class="code" href="classMFarmCrunchy.html#a302979fa891b34493c56461302ebafd6">deposit</a>(<span class="keyword">const</span> addr: address; <span class="keyword">const</span> farm_id: <a class="code" href="classMFarmCrunchy.html#a06616a489eacfa4740c7136894b75823">t_farm_id</a>; <span class="keyword">const</span> damount: <a class="code" href="classMToken.html">MToken</a>.<a class="code" href="classMToken.html#a6c3208a738cac7cfd34651561ac6e7f6">t_amount</a>): operation is</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;        Tezos.transaction(</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;            depositParams(farm_id, damount),</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;            0mutez,</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;            depositEntrypoint(addr)</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;        );</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;<span class="comment">    ///RU Получить точку входа withdraw фермы с интерфейсом Crunchy</span></div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;<span class="comment">    ///EN Get the withdrawal farm entry point with the Crunchy interface</span></div>
+<div class="line"><a name="l00093"></a><span class="lineno"><a class="line" href="classMFarmCrunchy.html#a459b3dd9a35af5b9903a7e2f71fc0042">   93</a></span>&#160;<span class="comment"></span>    <span class="keyword">function</span> <a class="code" href="classMFarmCrunchy.html#a459b3dd9a35af5b9903a7e2f71fc0042">withdrawEntrypoint</a>(<span class="keyword">const</span> addr: address): <a class="code" href="classMFarmCrunchy.html#ad1c54c9a8ac0a4f5e5da784336c0c9dd">t_withdraw_contract</a> is</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;        case (Tezos.get_entrypoint_opt(<span class="stringliteral">&quot;%withdraw&quot;</span>, addr): option(<a class="code" href="classMFarmCrunchy.html#ad1c54c9a8ac0a4f5e5da784336c0c9dd">t_withdraw_contract</a>)) of [</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;        | Some(withdraw_contract) -&gt; withdraw_contract</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;        | None -&gt; (failwith(cERR_NOT_FOUND_WITHDRAW): <a class="code" href="classMFarmCrunchy.html#ad1c54c9a8ac0a4f5e5da784336c0c9dd">t_withdraw_contract</a>)</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;        ];</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;<span class="comment">    ///RU Параметры для метода withdraw Crunchy</span></div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;<span class="comment">    ///EN Parameters for the withdraw Crunchy method</span></div>
+<div class="line"><a name="l00101"></a><span class="lineno"><a class="line" href="classMFarmCrunchy.html#a8f410aae8dca0dd6fc7562172ee6e72b">  101</a></span>&#160;<span class="comment"></span>    <span class="keyword">function</span> <a class="code" href="classMFarmCrunchy.html#a8f410aae8dca0dd6fc7562172ee6e72b">withdrawParams</a>(<span class="keyword">const</span> farm_id: <a class="code" href="classMFarmCrunchy.html#a06616a489eacfa4740c7136894b75823">t_farm_id</a>; <span class="keyword">const</span> wamount: <a class="code" href="classMToken.html">MToken</a>.<a class="code" href="classMToken.html#a6c3208a738cac7cfd34651561ac6e7f6">t_amount</a>): <a class="code" href="classMFarmCrunchy.html#af94af17fe366b4ac824fc8c3f3cd0dba">t_withdraw_method</a> is</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;        CrunchyWithdraw(record [</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;            farm_id = farm_id;</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;            wamount = wamount;</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;        ]);</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;<span class="comment">    ///RU Извлечение депозита из фермы Crunchy</span></div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;<span class="comment">    ///EN Extracting a deposit from a Crunchy farm</span></div>
+<div class="line"><a name="l00109"></a><span class="lineno"><a class="line" href="classMFarmCrunchy.html#aac19aaaeded5e7ed4476e14e5b82144a">  109</a></span>&#160;<span class="comment"></span>    <span class="keyword">function</span> <a class="code" href="classMFarmCrunchy.html#aac19aaaeded5e7ed4476e14e5b82144a">withdraw</a>(<span class="keyword">const</span> addr: address; <span class="keyword">const</span> farm_id: <a class="code" href="classMFarmCrunchy.html#a06616a489eacfa4740c7136894b75823">t_farm_id</a>; <span class="keyword">const</span> wamount: <a class="code" href="classMToken.html">MToken</a>.<a class="code" href="classMToken.html#a6c3208a738cac7cfd34651561ac6e7f6">t_amount</a>): operation is</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;        Tezos.transaction(</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;            withdrawParams(farm_id, wamount),</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;            0mutez,</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;            withdrawEntrypoint(addr)</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;        );</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;<span class="comment">    ///RU Получить точку входа harvest фермы с интерфейсом Crunchy</span></div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;<span class="comment">    ///EN Get the harvest farm entry point with the Crunchy interface</span></div>
+<div class="line"><a name="l00118"></a><span class="lineno"><a class="line" href="classMFarmCrunchy.html#aa7f15baf8df88765f6a64a36d75d84d2">  118</a></span>&#160;<span class="comment"></span>    <span class="keyword">function</span> <a class="code" href="classMFarmCrunchy.html#aa7f15baf8df88765f6a64a36d75d84d2">harvestEntrypoint</a>(<span class="keyword">const</span> addr: address): <a class="code" href="classMFarmCrunchy.html#ae88dbda4cf236cb6ba87a06ceafe4ac0">t_harvest_contract</a> is</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;        case (Tezos.get_entrypoint_opt(<span class="stringliteral">&quot;%harvest&quot;</span>, addr): option(<a class="code" href="classMFarmCrunchy.html#ae88dbda4cf236cb6ba87a06ceafe4ac0">t_harvest_contract</a>)) of [</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;        | Some(harvest_contract) -&gt; harvest_contract</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;        | None -&gt; (failwith(cERR_NOT_FOUND_HARVEST): <a class="code" href="classMFarmCrunchy.html#ae88dbda4cf236cb6ba87a06ceafe4ac0">t_harvest_contract</a>)</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;        ];</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;<span class="comment">    ///RU Параметры для метода harvest Crunchy</span></div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;<span class="comment">    ///EN Parameters for the harvest Crunchy method</span></div>
+<div class="line"><a name="l00126"></a><span class="lineno"><a class="line" href="classMFarmCrunchy.html#a752083c8a113e4f5ab054fa74abbcd54">  126</a></span>&#160;<span class="comment"></span>    <span class="keyword">function</span> <a class="code" href="classMFarmCrunchy.html#a752083c8a113e4f5ab054fa74abbcd54">harvestParams</a>(<span class="keyword">const</span> farm_id: <a class="code" href="classMFarmCrunchy.html#a06616a489eacfa4740c7136894b75823">t_farm_id</a>): <a class="code" href="classMFarmCrunchy.html#a5747dc6e0a5f5e30960a8560f4fd0b49">t_harvest_method</a> is CrunchyHarvest(farm_id);</div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;<span class="comment">    ///RU Получение вознаграждения из фермы Crunchy</span></div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;<span class="comment">    ///EN Getting Rewards from Crunchy arm</span></div>
+<div class="line"><a name="l00130"></a><span class="lineno"><a class="line" href="classMFarmCrunchy.html#a0f50a3a429397aa3e501d42d369c925b">  130</a></span>&#160;<span class="comment"></span>    <span class="keyword">function</span> <a class="code" href="classMFarmCrunchy.html#a0f50a3a429397aa3e501d42d369c925b">harvest</a>(<span class="keyword">const</span> addr: address; <span class="keyword">const</span> farm_id: <a class="code" href="classMFarmCrunchy.html#a06616a489eacfa4740c7136894b75823">t_farm_id</a>): operation is</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;        Tezos.transaction(</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;            harvestParams(farm_id),</div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;            0mutez,</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;            harvestEntrypoint(addr)</div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;        );</div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;<span class="comment">    ///RU Проверка параметров фермы на валидность</span></div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;<span class="comment">    ///EN Checking the farm parameters for validity</span></div>
+<div class="line"><a name="l00139"></a><span class="lineno"><a class="line" href="classMFarmCrunchy.html#a284f92bc4eb40c677ad539efd06fe87e">  139</a></span>&#160;<span class="comment"></span>    <span class="keyword">function</span> <a class="code" href="classMFarmCrunchy.html#a284f92bc4eb40c677ad539efd06fe87e">check</a>(<span class="keyword">const</span> addr: address): unit is block {</div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;        <span class="comment">//RU Проверяем наличие метода deposit для фермы в формате Crunchy</span></div>
+<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;        <span class="comment">//EN Check for the deposit method for the farm in Crunchy format</span></div>
+<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;        const _ = depositEntrypoint(addr);</div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;        <span class="comment">//RU Проверяем наличие метода withdraw для фермы в формате Crunchy</span></div>
+<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;        <span class="comment">//EN We check the availability of the withdraw method for the farm in the Crunchy format</span></div>
+<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;        <span class="keyword">const</span> _ = withdrawEntrypoint(addr);</div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;        <span class="comment">//RU Проверяем наличие метода harvest для фермы в формате Crunchy</span></div>
+<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;        <span class="comment">//EN We check the availability of the harvest method for the farm in the Crunchy format</span></div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;        <span class="keyword">const</span> _ = harvestEntrypoint(addr);</div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;    } with unit;</div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160; </div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;}</div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// !MFARMCRUNCHY_INCLUDED</span></div>
+<div class="ttc" id="aMToken_8ligo_html"><div class="ttname"><a href="MToken_8ligo.html">MToken.ligo</a></div></div>
+<div class="ttc" id="aclassMFarmCrunchy_html"><div class="ttname"><a href="classMFarmCrunchy.html">MFarmCrunchy</a></div><div class="ttdoc">Модуль взаимодействия с фермой Crunchy.</div><div class="ttdef"><b>Definition:</b> <a href="MFarmCrunchy_8ligo_source.html#l00008">MFarmCrunchy.ligo:8</a></div></div>
+<div class="ttc" id="aclassMFarmCrunchy_html_a06616a489eacfa4740c7136894b75823"><div class="ttname"><a href="classMFarmCrunchy.html#a06616a489eacfa4740c7136894b75823">MFarmCrunchy::t_farm_id</a></div><div class="ttdeci">nat t_farm_id</div><div class="ttdoc">ID фермы Crunchy.</div><div class="ttdef"><b>Definition:</b> <a href="MFarmCrunchy_8ligo_source.html#l00022">MFarmCrunchy.ligo:22</a></div></div>
+<div class="ttc" id="aclassMFarmCrunchy_html_a09759cf7ad9def037a5bd63e11f76cf9"><div class="ttname"><a href="classMFarmCrunchy.html#a09759cf7ad9def037a5bd63e11f76cf9">MFarmCrunchy::cERR_NOT_FOUND_HARVEST</a></div><div class="ttdeci">const string cERR_NOT_FOUND_HARVEST</div><div class="ttdoc">Ошибка: Не найдена точка входа harvest для фермы Crunchy.</div><div class="ttdef"><b>Definition:</b> <a href="MFarmCrunchy_8ligo_source.html#l00020">MFarmCrunchy.ligo:20</a></div></div>
+<div class="ttc" id="aclassMFarmCrunchy_html_a0f50a3a429397aa3e501d42d369c925b"><div class="ttname"><a href="classMFarmCrunchy.html#a0f50a3a429397aa3e501d42d369c925b">MFarmCrunchy::harvest</a></div><div class="ttdeci">operation harvest(const address addr, const t_farm_id farm_id)</div><div class="ttdoc">Получение вознаграждения из фермы Crunchy.</div><div class="ttdef"><b>Definition:</b> <a href="MFarmCrunchy_8ligo_source.html#l00130">MFarmCrunchy.ligo:130</a></div></div>
+<div class="ttc" id="aclassMFarmCrunchy_html_a284f92bc4eb40c677ad539efd06fe87e"><div class="ttname"><a href="classMFarmCrunchy.html#a284f92bc4eb40c677ad539efd06fe87e">MFarmCrunchy::check</a></div><div class="ttdeci">unit check(const address addr)</div><div class="ttdoc">Проверка параметров фермы на валидность</div><div class="ttdef"><b>Definition:</b> <a href="MFarmCrunchy_8ligo_source.html#l00139">MFarmCrunchy.ligo:139</a></div></div>
+<div class="ttc" id="aclassMFarmCrunchy_html_a289d3339175435c0767ac5f2a477d986"><div class="ttname"><a href="classMFarmCrunchy.html#a289d3339175435c0767ac5f2a477d986">MFarmCrunchy::t_deposit_contract</a></div><div class="ttdeci">contract&lt; t_deposit_method &gt; t_deposit_contract</div><div class="ttdoc">Контракт с точкой входа deposit в формате фермы Crunchy.</div><div class="ttdef"><b>Definition:</b> <a href="MFarmCrunchy_8ligo_source.html#l00037">MFarmCrunchy.ligo:37</a></div></div>
+<div class="ttc" id="aclassMFarmCrunchy_html_a2bcd36a363c02a50521e85aa5ea26619"><div class="ttname"><a href="classMFarmCrunchy.html#a2bcd36a363c02a50521e85aa5ea26619">MFarmCrunchy::t_harvest_params</a></div><div class="ttdeci">t_farm_id t_harvest_params</div><div class="ttdoc">Параметры получения вознаграждения из фермы Crunchy.</div><div class="ttdef"><b>Definition:</b> <a href="MFarmCrunchy_8ligo_source.html#l00056">MFarmCrunchy.ligo:56</a></div></div>
+<div class="ttc" id="aclassMFarmCrunchy_html_a302979fa891b34493c56461302ebafd6"><div class="ttname"><a href="classMFarmCrunchy.html#a302979fa891b34493c56461302ebafd6">MFarmCrunchy::deposit</a></div><div class="ttdeci">operation deposit(const address addr, const t_farm_id farm_id, const MToken::t_amount damount)</div><div class="ttdoc">Депозит в ферму Crunchy.</div><div class="ttdef"><b>Definition:</b> <a href="MFarmCrunchy_8ligo_source.html#l00084">MFarmCrunchy.ligo:84</a></div></div>
+<div class="ttc" id="aclassMFarmCrunchy_html_a3147341ef558b5400a98adbae26294d0"><div class="ttname"><a href="classMFarmCrunchy.html#a3147341ef558b5400a98adbae26294d0">MFarmCrunchy::cERR_NOT_FOUND_WITHDRAW</a></div><div class="ttdeci">const string cERR_NOT_FOUND_WITHDRAW</div><div class="ttdoc">Ошибка: Не найдена точка входа withdraw для фермы Crunchy.</div><div class="ttdef"><b>Definition:</b> <a href="MFarmCrunchy_8ligo_source.html#l00016">MFarmCrunchy.ligo:16</a></div></div>
+<div class="ttc" id="aclassMFarmCrunchy_html_a459b3dd9a35af5b9903a7e2f71fc0042"><div class="ttname"><a href="classMFarmCrunchy.html#a459b3dd9a35af5b9903a7e2f71fc0042">MFarmCrunchy::withdrawEntrypoint</a></div><div class="ttdeci">t_withdraw_contract withdrawEntrypoint(const address addr)</div><div class="ttdoc">Получить точку входа withdraw фермы с интерфейсом Crunchy.</div><div class="ttdef"><b>Definition:</b> <a href="MFarmCrunchy_8ligo_source.html#l00093">MFarmCrunchy.ligo:93</a></div></div>
+<div class="ttc" id="aclassMFarmCrunchy_html_a5747dc6e0a5f5e30960a8560f4fd0b49"><div class="ttname"><a href="classMFarmCrunchy.html#a5747dc6e0a5f5e30960a8560f4fd0b49">MFarmCrunchy::t_harvest_method</a></div><div class="ttdeci">CrunchyHarvest of t_harvest_params t_harvest_method</div><div class="ttdoc">Прототип метода harvest фермы Crunchy.</div><div class="ttdef"><b>Definition:</b> <a href="MFarmCrunchy_8ligo_source.html#l00060">MFarmCrunchy.ligo:60</a></div></div>
+<div class="ttc" id="aclassMFarmCrunchy_html_a752083c8a113e4f5ab054fa74abbcd54"><div class="ttname"><a href="classMFarmCrunchy.html#a752083c8a113e4f5ab054fa74abbcd54">MFarmCrunchy::harvestParams</a></div><div class="ttdeci">t_harvest_method harvestParams(const t_farm_id farm_id)</div><div class="ttdoc">Параметры для метода harvest Crunchy.</div><div class="ttdef"><b>Definition:</b> <a href="MFarmCrunchy_8ligo_source.html#l00126">MFarmCrunchy.ligo:126</a></div></div>
+<div class="ttc" id="aclassMFarmCrunchy_html_a8c433fdeb07efe0e0ba9d2203ebce490"><div class="ttname"><a href="classMFarmCrunchy.html#a8c433fdeb07efe0e0ba9d2203ebce490">MFarmCrunchy::cERR_NOT_FOUND_DEPOSIT</a></div><div class="ttdeci">const string cERR_NOT_FOUND_DEPOSIT</div><div class="ttdoc">Ошибка: Не найдена точка входа deposit для фермы Crunchy.</div><div class="ttdef"><b>Definition:</b> <a href="MFarmCrunchy_8ligo_source.html#l00012">MFarmCrunchy.ligo:12</a></div></div>
+<div class="ttc" id="aclassMFarmCrunchy_html_a8f410aae8dca0dd6fc7562172ee6e72b"><div class="ttname"><a href="classMFarmCrunchy.html#a8f410aae8dca0dd6fc7562172ee6e72b">MFarmCrunchy::withdrawParams</a></div><div class="ttdeci">t_withdraw_method withdrawParams(const t_farm_id farm_id, const MToken::t_amount wamount)</div><div class="ttdoc">Параметры для метода withdraw Crunchy.</div><div class="ttdef"><b>Definition:</b> <a href="MFarmCrunchy_8ligo_source.html#l00101">MFarmCrunchy.ligo:101</a></div></div>
+<div class="ttc" id="aclassMFarmCrunchy_html_a8fcd6de9b9225af9f2db3bbb11c12506"><div class="ttname"><a href="classMFarmCrunchy.html#a8fcd6de9b9225af9f2db3bbb11c12506">MFarmCrunchy::depositEntrypoint</a></div><div class="ttdeci">t_deposit_contract depositEntrypoint(const address addr)</div><div class="ttdoc">Получить точку входа deposit фермы с интерфейсом Crunchy.</div><div class="ttdef"><b>Definition:</b> <a href="MFarmCrunchy_8ligo_source.html#l00068">MFarmCrunchy.ligo:68</a></div></div>
+<div class="ttc" id="aclassMFarmCrunchy_html_aa7f15baf8df88765f6a64a36d75d84d2"><div class="ttname"><a href="classMFarmCrunchy.html#aa7f15baf8df88765f6a64a36d75d84d2">MFarmCrunchy::harvestEntrypoint</a></div><div class="ttdeci">t_harvest_contract harvestEntrypoint(const address addr)</div><div class="ttdoc">Получить точку входа harvest фермы с интерфейсом Crunchy.</div><div class="ttdef"><b>Definition:</b> <a href="MFarmCrunchy_8ligo_source.html#l00118">MFarmCrunchy.ligo:118</a></div></div>
+<div class="ttc" id="aclassMFarmCrunchy_html_aac19aaaeded5e7ed4476e14e5b82144a"><div class="ttname"><a href="classMFarmCrunchy.html#aac19aaaeded5e7ed4476e14e5b82144a">MFarmCrunchy::withdraw</a></div><div class="ttdeci">operation withdraw(const address addr, const t_farm_id farm_id, const MToken::t_amount wamount)</div><div class="ttdoc">Извлечение депозита из фермы Crunchy.</div><div class="ttdef"><b>Definition:</b> <a href="MFarmCrunchy_8ligo_source.html#l00109">MFarmCrunchy.ligo:109</a></div></div>
+<div class="ttc" id="aclassMFarmCrunchy_html_ad1c54c9a8ac0a4f5e5da784336c0c9dd"><div class="ttname"><a href="classMFarmCrunchy.html#ad1c54c9a8ac0a4f5e5da784336c0c9dd">MFarmCrunchy::t_withdraw_contract</a></div><div class="ttdeci">contract&lt; t_withdraw_method &gt; t_withdraw_contract</div><div class="ttdoc">Контракт с точкой входа withdraw в формате фермы Crunchy.</div><div class="ttdef"><b>Definition:</b> <a href="MFarmCrunchy_8ligo_source.html#l00052">MFarmCrunchy.ligo:52</a></div></div>
+<div class="ttc" id="aclassMFarmCrunchy_html_ad98aa04fa157f7cd10b144a785a66124"><div class="ttname"><a href="classMFarmCrunchy.html#ad98aa04fa157f7cd10b144a785a66124">MFarmCrunchy::t_deposit_method</a></div><div class="ttdeci">CrunchyDeposit of t_deposit_params t_deposit_method</div><div class="ttdoc">Прототип метода deposit фермы Crunchy.</div><div class="ttdef"><b>Definition:</b> <a href="MFarmCrunchy_8ligo_source.html#l00033">MFarmCrunchy.ligo:33</a></div></div>
+<div class="ttc" id="aclassMFarmCrunchy_html_ae88dbda4cf236cb6ba87a06ceafe4ac0"><div class="ttname"><a href="classMFarmCrunchy.html#ae88dbda4cf236cb6ba87a06ceafe4ac0">MFarmCrunchy::t_harvest_contract</a></div><div class="ttdeci">contract&lt; t_harvest_method &gt; t_harvest_contract</div><div class="ttdoc">Контракт с точкой входа harvest в формате фермы Crunchy.</div><div class="ttdef"><b>Definition:</b> <a href="MFarmCrunchy_8ligo_source.html#l00064">MFarmCrunchy.ligo:64</a></div></div>
+<div class="ttc" id="aclassMFarmCrunchy_html_af94af17fe366b4ac824fc8c3f3cd0dba"><div class="ttname"><a href="classMFarmCrunchy.html#af94af17fe366b4ac824fc8c3f3cd0dba">MFarmCrunchy::t_withdraw_method</a></div><div class="ttdeci">CrunchyWithdraw of t_withdraw_params t_withdraw_method</div><div class="ttdoc">Прототип метода withdraw фермы Crunchy.</div><div class="ttdef"><b>Definition:</b> <a href="MFarmCrunchy_8ligo_source.html#l00048">MFarmCrunchy.ligo:48</a></div></div>
+<div class="ttc" id="aclassMFarmCrunchy_html_afa7a10cde5d833ea1263f848f5c03b8f"><div class="ttname"><a href="classMFarmCrunchy.html#afa7a10cde5d833ea1263f848f5c03b8f">MFarmCrunchy::depositParams</a></div><div class="ttdeci">t_deposit_method depositParams(const t_farm_id farm_id, const MToken::t_amount damount)</div><div class="ttdoc">Параметры для метода deposit Crunchy.</div><div class="ttdef"><b>Definition:</b> <a href="MFarmCrunchy_8ligo_source.html#l00076">MFarmCrunchy.ligo:76</a></div></div>
+<div class="ttc" id="aclassMToken_html"><div class="ttname"><a href="classMToken.html">MToken</a></div><div class="ttdoc">Модуль для работы с токенами разных стандартов</div><div class="ttdef"><b>Definition:</b> <a href="MToken_8ligo_source.html#l00009">MToken.ligo:9</a></div></div>
+<div class="ttc" id="aclassMToken_html_a6c3208a738cac7cfd34651561ac6e7f6"><div class="ttname"><a href="classMToken.html#a6c3208a738cac7cfd34651561ac6e7f6">MToken::t_amount</a></div><div class="ttdeci">nat t_amount</div><div class="ttdoc">Кол-во токенов</div><div class="ttdef"><b>Definition:</b> <a href="MToken_8ligo_source.html#l00011">MToken.ligo:11</a></div></div>
+<div class="ttc" id="astructMFarmCrunchy_1_1t__deposit__params_html"><div class="ttname"><a href="structMFarmCrunchy_1_1t__deposit__params.html">MFarmCrunchy::t_deposit_params</a></div><div class="ttdoc">Параметры для депозита в ферму Crunchy.</div><div class="ttdef"><b>Definition:</b> <a href="MFarmCrunchy_8ligo_source.html#l00026">MFarmCrunchy.ligo:26</a></div></div>
+<div class="ttc" id="astructMFarmCrunchy_1_1t__deposit__params_html_a5b84f1917c295ed3ec0e4552f7c0c4d9"><div class="ttname"><a href="structMFarmCrunchy_1_1t__deposit__params.html#a5b84f1917c295ed3ec0e4552f7c0c4d9">MFarmCrunchy::t_deposit_params::damount</a></div><div class="ttdeci">MToken::t_amount damount</div><div class="ttdef"><b>Definition:</b> <a href="MFarmCrunchy_8ligo_source.html#l00028">MFarmCrunchy.ligo:28</a></div></div>
+<div class="ttc" id="astructMFarmCrunchy_1_1t__deposit__params_html_a9fd8d6edea8e0a951c51a11d14364fd6"><div class="ttname"><a href="structMFarmCrunchy_1_1t__deposit__params.html#a9fd8d6edea8e0a951c51a11d14364fd6">MFarmCrunchy::t_deposit_params::farm_id</a></div><div class="ttdeci">t_farm_id farm_id</div><div class="ttdef"><b>Definition:</b> <a href="MFarmCrunchy_8ligo_source.html#l00027">MFarmCrunchy.ligo:27</a></div></div>
+<div class="ttc" id="astructMFarmCrunchy_1_1t__withdraw__params_html"><div class="ttname"><a href="structMFarmCrunchy_1_1t__withdraw__params.html">MFarmCrunchy::t_withdraw_params</a></div><div class="ttdoc">Параметры для извлечения депозита из фермы Crunchy.</div><div class="ttdef"><b>Definition:</b> <a href="MFarmCrunchy_8ligo_source.html#l00041">MFarmCrunchy.ligo:41</a></div></div>
+<div class="ttc" id="astructMFarmCrunchy_1_1t__withdraw__params_html_a097bac66883f8f0adfd41b2309e8a0a3"><div class="ttname"><a href="structMFarmCrunchy_1_1t__withdraw__params.html#a097bac66883f8f0adfd41b2309e8a0a3">MFarmCrunchy::t_withdraw_params::wamount</a></div><div class="ttdeci">MToken::t_amount wamount</div><div class="ttdef"><b>Definition:</b> <a href="MFarmCrunchy_8ligo_source.html#l00043">MFarmCrunchy.ligo:43</a></div></div>
+<div class="ttc" id="astructMFarmCrunchy_1_1t__withdraw__params_html_a6b7e379a7dd9d35d5286dd99b5336c39"><div class="ttname"><a href="structMFarmCrunchy_1_1t__withdraw__params.html#a6b7e379a7dd9d35d5286dd99b5336c39">MFarmCrunchy::t_withdraw_params::farm_id</a></div><div class="ttdeci">t_farm_id farm_id</div><div class="ttdef"><b>Definition:</b> <a href="MFarmCrunchy_8ligo_source.html#l00042">MFarmCrunchy.ligo:42</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_ae9b15dd87e066e1908bbd90e8f38627.html">contracts</a></li><li class="navelem"><a class="el" href="dir_096bafc1b3c9e8e4179a990f0f323fba.html">module</a></li><li class="navelem"><a class="el" href="MFarmCrunchy_8ligo.html">MFarmCrunchy.ligo</a></li>
+    <li class="footer">Создано системой <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+  </ul>
+</div>
+</body>
+</html>

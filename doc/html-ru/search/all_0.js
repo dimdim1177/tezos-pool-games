@@ -1,0 +1,21 @@
+var searchData=
+[
+  ['accessadd_0',['accessAdd',['../classMAdmins.html#af6f39012210e0830632a9bf61137c8a9',1,'MAdmins']]],
+  ['accesschange_1',['accessChange',['../classMAdmin.html#a2a377bd9e18e3eb82d747d8adc6363e6',1,'MAdmin::accessChange()'],['../classMOwner.html#a4da3472192e52f65d9bcd9499c2d45a9',1,'MOwner::accessChange()']]],
+  ['accessrem_2',['accessRem',['../classMAdmins.html#ac692e9e148c4f9bcfc0a3a11ccb5fd09',1,'MAdmins']]],
+  ['addr_3',['addr',['../structCRandom_1_1t__ifuture.html#acaff3dbcdef36a011dae4aea4cbdf3b1',1,'CRandom::t_ifuture::addr()'],['../structMFarm_1_1t__farm.html#aa526243d7db173b34c9bb6a68908ea7b',1,'MFarm::t_farm::addr()'],['../structMToken_1_1t__token.html#ae6b33ebb4127c214c720f2328376655d',1,'MToken::t_token::addr()']]],
+  ['addweight_4',['addWeight',['../structCPoolGames_1_1t__user.html#a91139b9b41a8c04c3e4ee3763141e5d6',1,'CPoolGames::t_user']]],
+  ['admin_5',['admin',['../structCPoolGames_1_1t__storage.html#a280734532f6acd91e6afd90b69c8de2d',1,'CPoolGames::t_storage::admin()'],['../structCRandom_1_1t__storage.html#a8f00e27b0be8aa5907aaf686894823de',1,'CRandom::t_storage::admin()']]],
+  ['afterreward2tez_6',['AfterReward2Tez',['../classCPoolGames.html#ad7dd8a8d43ba2a0b6f79bed62c25936cacadaa1123f2e4b46fb3bc0bec822b5b3',1,'CPoolGames']]],
+  ['afterreward2tez_7',['afterReward2Tez',['../classMPool.html#a3c429d16ac6c5b8391362ff4d32ad9b3',1,'MPool::afterReward2Tez()'],['../classMPools.html#ab0f136653a6a0ffc3a11a94cd5137070',1,'MPools::afterReward2Tez()']]],
+  ['afterreward2tezentrypoint_8',['afterReward2TezEntrypoint',['../classMCallback.html#aee5d6bae22b6f7d4bb62055a64c441ba',1,'MCallback']]],
+  ['algo_9',['algo',['../structCPoolGames_1_1t__opts.html#a19e13bb31588bd834fa426d0887b3457',1,'CPoolGames::t_opts']]],
+  ['algoequal_10',['AlgoEqual',['../classCPoolGames.html#a6eb46410a24a756e9ecced1e0e4077a8a4bed54f0ce1d134daf66e64121fcdca9',1,'CPoolGames']]],
+  ['algotime_11',['AlgoTime',['../classCPoolGames.html#a6eb46410a24a756e9ecced1e0e4077a8ad3d6fa6d0157bbd13fd51bdf6dd751e9',1,'CPoolGames']]],
+  ['algotimevol_12',['AlgoTimeVol',['../classCPoolGames.html#a6eb46410a24a756e9ecced1e0e4077a8a3a5fbd442cecc22ba839ccc105f8df27',1,'CPoolGames']]],
+  ['amt_13',['amt',['../structMFarmQUIPU_1_1t__deposit__params.html#a7b7541ce89ce81794572780664b09acf',1,'MFarmQUIPU::t_deposit_params::amt()'],['../structMFarmQUIPU_1_1t__withdraw__params.html#a7fb235553334c173dc0af8521c9c0132',1,'MFarmQUIPU::t_withdraw_params::amt()']]],
+  ['approve_14',['approve',['../classMFA1__2.html#a8cec3ccdc6b4351ea60c5332b3a248f5',1,'MFA1_2::approve()'],['../classMFA2.html#aaa384170139b7f036621a26d4d6109fd',1,'MFA2::approve()'],['../classMToken.html#a6ca33c1ca319e28c970221b3e3bb982e',1,'MToken::approve()']]],
+  ['approved_15',['approved',['../structCPoolGames_1_1t__storage.html#a9845ccacd0856f1b80aaca3011c0b8a9',1,'CPoolGames::t_storage']]],
+  ['approveentrypoint_16',['approveEntrypoint',['../classMFA1__2.html#aebdb11de465337675086e507fc1688e1',1,'MFA1_2']]],
+  ['approveparams_17',['approveParams',['../classMFA1__2.html#a76ab7986fd15ad175303642d80f07047',1,'MFA1_2::approveParams()'],['../classMFA2.html#a06b94fcf64c98934e10037ababd7ccfb',1,'MFA2::approveParams()']]]
+];

@@ -1,0 +1,6 @@
+var searchData=
+[
+  ['operator_669',['operator',['../structMFA2_1_1t__operator.html#aaa2f4f71634c9babf14cfa5a30ff0526',1,'MFA2::t_operator']]],
+  ['opts_670',['opts',['../structCPoolGames_1_1t__pool.html#a6f21550e7781d083538dcc0ab115f10a',1,'CPoolGames::t_pool::opts()'],['../structCPoolGames_1_1t__pool__create.html#aca601f21db9f899bf4ed959d21e24cec',1,'CPoolGames::t_pool_create::opts()'],['../structCPoolGames_1_1t__pool__edit.html#a259efbf85f3e953e7f772be9e519cf79',1,'CPoolGames::t_pool_edit::opts()'],['../structCPoolGames_1_1t__pool__info.html#ad0cfa4396309bfcd3616a03d022cb13a',1,'CPoolGames::t_pool_info::opts()']]],
+  ['owner_671',['owner',['../structCPoolGames_1_1t__storage.html#a8f5333d80d8f6e61f48af1e63c88b707',1,'CPoolGames::t_storage::owner()'],['../structCRandom_1_1t__storage.html#a22e560e4481710300eab106f7b5e1121',1,'CRandom::t_storage::owner()'],['../structMFA1__2_1_1t__balance__params.html#a22a286c6e352e1556a820e42d237e95d',1,'MFA1_2::t_balance_params::owner()'],['../structMFA2_1_1t__balance__request.html#a2e63beb1f2b16469fa3add30e3badef8',1,'MFA2::t_balance_request::owner()'],['../structMFA2_1_1t__operator.html#a406a35ada10449c62b4d37d5177fb6a0',1,'MFA2::t_operator::owner()']]]
+];

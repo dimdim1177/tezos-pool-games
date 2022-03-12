@@ -1,0 +1,9 @@
+Main characteristics of a contract with liquidity pools:
+- Arbitrary number of pools
+- Support for two farm interfaces: Crunchy and QUIPU
+- Three algorithms for determining the winner,
+  when the probability of winning a participant:
+    - proportional to the time in the current game of the draw
+    - proportional to the sum of the products of the time and 
+      the deposit in the current game of the draw
+    - equal for all participants

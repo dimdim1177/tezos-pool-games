@@ -1,0 +1,215 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.1"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Pool Games: Исходный файл MQuipuswap.ligo</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Pool Games
+   </div>
+   <div id="projectbrief">Розыгрыши вознаграждения на основе смарт-контрактов Tezos</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Создано системой Doxygen 1.9.1 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+var searchBox = new SearchBox("searchBox", "search",false,'Поиск','.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(function() {
+  initMenu('',true,false,'search.php','Поиск');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(document).ready(function(){initNavTree('MQuipuswap_8ligo_source.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="headertitle">
+<div class="title">MQuipuswap.ligo</div>  </div>
+</div><!--header-->
+<div class="contents">
+<a href="MQuipuswap_8ligo.html">См. документацию.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#if !MQUIPUSWAP_INCLUDED</span></div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#define MQUIPUSWAP_INCLUDED</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment">///RU Типы и методы для обменника токенов через tez в формате Quipuswap</span></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="comment">///EN Types and methods for the token exchanger via tez in Quipuswap format</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno"><a class="line" href="classMQuipuswap.html">    6</a></span>&#160;<span class="comment"></span>module <a class="code" href="classMQuipuswap.html">MQuipuswap</a> is {</div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160; </div>
+<div class="line"><a name="l00008"></a><span class="lineno"><a class="line" href="classMQuipuswap.html#a40b1db8a4a2a4943c46730c2313be820">    8</a></span>&#160;    type <a class="code" href="classMQuipuswap.html#a40b1db8a4a2a4943c46730c2313be820">t_swap</a> is address;<span class="comment">///RU&lt; Обменник одного токена на tez ///EN&lt; One token exchange for tez</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="comment">    ///RU Параметры для конвертации tez в токен</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="comment">    ///EN Parameters for convert tez to token</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno"><a class="line" href="classMQuipuswap.html#a25f1cca2f9bb90fe20f27bb8245e6644">   12</a></span>&#160;<span class="comment"></span>    type <a class="code" href="classMQuipuswap.html#a25f1cca2f9bb90fe20f27bb8245e6644">t_tez2token_params</a> is nat * address;</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="comment">    ///RU Прототип метода tezToTokenPayment</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="comment">    ///EN Prototype of the tezToTokenPayment method</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno"><a class="line" href="classMQuipuswap.html#abe1df3057144c0d0e12120f464938042">   16</a></span>&#160;<span class="comment"></span>    type <a class="code" href="classMQuipuswap.html#abe1df3057144c0d0e12120f464938042">t_tez2token_method</a> is Tez2Token of <a class="code" href="classMQuipuswap.html#a25f1cca2f9bb90fe20f27bb8245e6644">t_tez2token_params</a>;</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="comment">    ///RU Контракт с точкой входа tezToTokenPayment</span></div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="comment">    ///EN Contract with tezToTokenPayment entry point</span></div>
+<div class="line"><a name="l00020"></a><span class="lineno"><a class="line" href="classMQuipuswap.html#a308644449529b868cbf948be010afbed">   20</a></span>&#160;<span class="comment"></span>    type <a class="code" href="classMQuipuswap.html#a308644449529b868cbf948be010afbed">t_tez2token_contract</a> is contract(<a class="code" href="classMQuipuswap.html#abe1df3057144c0d0e12120f464938042">t_tez2token_method</a>);</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="comment">    ///RU Параметры для конвертации токена в tez</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="comment">    ///EN Parameters for convert token to tez</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno"><a class="line" href="classMQuipuswap.html#ab03035958280996f6125b837d1d76656">   24</a></span>&#160;<span class="comment"></span>    type <a class="code" href="classMQuipuswap.html#ab03035958280996f6125b837d1d76656">t_token2tez_params</a> is nat * nat * address;</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="comment">    ///RU Прототип метода tokenToTezPayment</span></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="comment">    ///EN Prototype of the tokenToTezPayment method</span></div>
+<div class="line"><a name="l00028"></a><span class="lineno"><a class="line" href="classMQuipuswap.html#a614c4c23c0eedcbd7e7f7dbbc1f76a4a">   28</a></span>&#160;<span class="comment"></span>    type <a class="code" href="classMQuipuswap.html#a614c4c23c0eedcbd7e7f7dbbc1f76a4a">t_token2tez_method</a> is Token2Tez of <a class="code" href="classMQuipuswap.html#ab03035958280996f6125b837d1d76656">t_token2tez_params</a>;</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="comment">    ///RU Контракт с точкой входа tokenToTezPayment</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="comment">    ///EN Contract with tokenToTezPayment entry point</span></div>
+<div class="line"><a name="l00032"></a><span class="lineno"><a class="line" href="classMQuipuswap.html#a778f0bf2f381a5bc3f7c5bd42f5cb497">   32</a></span>&#160;<span class="comment"></span>    type <a class="code" href="classMQuipuswap.html#a778f0bf2f381a5bc3f7c5bd42f5cb497">t_token2tez_contract</a> is contract(<a class="code" href="classMQuipuswap.html#a614c4c23c0eedcbd7e7f7dbbc1f76a4a">t_token2tez_method</a>);</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="comment">    ///RU Ошибка: Не найден метод tezToTokenPayment</span></div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="comment">    ///EN Error: tezToTokenPayment method not found</span></div>
+<div class="line"><a name="l00036"></a><span class="lineno"><a class="line" href="classMQuipuswap.html#a0d10ca8b6e531d10c1681dacb215d83d">   36</a></span>&#160;<span class="comment"></span>    <span class="keyword">const</span> <a class="code" href="classMQuipuswap.html#a0d10ca8b6e531d10c1681dacb215d83d">cERR_NOT_FOUND_TEZ2TOKEN</a>: <span class="keywordtype">string</span> = <span class="stringliteral">&quot;MRandom/NotFoundTez2Token&quot;</span>;</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="comment">    ///RU Ошибка: Не найден метод tokenToTezPayment</span></div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="comment">    ///EN Error: tokenToTezPayment method not found</span></div>
+<div class="line"><a name="l00040"></a><span class="lineno"><a class="line" href="classMQuipuswap.html#aff12c686f2c505295a139c5f758ecc83">   40</a></span>&#160;<span class="comment"></span>    <span class="keyword">const</span> <a class="code" href="classMQuipuswap.html#aff12c686f2c505295a139c5f758ecc83">cERR_NOT_FOUND_TOKEN2TEZ</a>: <span class="keywordtype">string</span> = <span class="stringliteral">&quot;MRandom/NotFoundToken2Tez&quot;</span>;</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="comment">    ///RU Получить точку входа tezToTokenPayment</span></div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="comment">    ///EN Get the tezToTokenPayment entry point</span></div>
+<div class="line"><a name="l00044"></a><span class="lineno"><a class="line" href="classMQuipuswap.html#a5dc4834ff8809b84ac3a13737f4b6704">   44</a></span>&#160;<span class="comment"></span>    <span class="keyword">function</span> <a class="code" href="classMQuipuswap.html#a5dc4834ff8809b84ac3a13737f4b6704">tez2tokenEntrypoint</a>(<span class="keyword">const</span> addr: address): <a class="code" href="classMQuipuswap.html#a308644449529b868cbf948be010afbed">t_tez2token_contract</a> is</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;        case (Tezos.get_entrypoint_opt(<span class="stringliteral">&quot;%tezToTokenPayment&quot;</span>, addr): option(<a class="code" href="classMQuipuswap.html#a308644449529b868cbf948be010afbed">t_tez2token_contract</a>)) of [</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;        | Some(contract) -&gt; contract</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        | None -&gt; (failwith(cERR_NOT_FOUND_TEZ2TOKEN): <a class="code" href="classMQuipuswap.html#a308644449529b868cbf948be010afbed">t_tez2token_contract</a>)</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        ];</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="comment">    ///RU Параметры для обмена tezToTokenPayment</span></div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="comment">    ///EN Parameters for exchanging tezToTokenPayment</span></div>
+<div class="line"><a name="l00052"></a><span class="lineno"><a class="line" href="classMQuipuswap.html#a3c0c4dc36430c6f6125794438c4e15ba">   52</a></span>&#160;<span class="comment"></span>    <span class="keyword">function</span> <a class="code" href="classMQuipuswap.html#a3c0c4dc36430c6f6125794438c4e15ba">tez2tokenParams</a>(<span class="keyword">const</span> min_out: nat; <span class="keyword">const</span> receiver: address): <a class="code" href="classMQuipuswap.html#abe1df3057144c0d0e12120f464938042">t_tez2token_method</a> is</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;        Tez2Token(min_out, receiver);</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="comment">    ///RU Операция создания запроса tezToTokenPayment</span></div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="comment">    ///EN tezToTokenPayment Request Creation Operation</span></div>
+<div class="line"><a name="l00057"></a><span class="lineno"><a class="line" href="classMQuipuswap.html#aa5db1a0a0eb6710395161687d492738d">   57</a></span>&#160;<span class="comment"></span>    <span class="keyword">function</span> <a class="code" href="classMQuipuswap.html#aa5db1a0a0eb6710395161687d492738d">tez2token</a>(<span class="keyword">const</span> addr: address; <span class="keyword">const</span> changeTez: tez; <span class="keyword">const</span> min_out: nat; <span class="keyword">const</span> receiver: address): operation is</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;        Tezos.transaction(</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;            tez2tokenParams(min_out, receiver),</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;            changeTez,</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;            tez2tokenEntrypoint(addr)</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        );</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="comment">    ///RU Получить точку входа tokenToTezPayment</span></div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="comment">    ///EN Get the tokenToTezPayment entry point</span></div>
+<div class="line"><a name="l00066"></a><span class="lineno"><a class="line" href="classMQuipuswap.html#a0c04a06582ab47fb54f64cfa7afb2ad1">   66</a></span>&#160;<span class="comment"></span>    <span class="keyword">function</span> <a class="code" href="classMQuipuswap.html#a0c04a06582ab47fb54f64cfa7afb2ad1">token2tezEntrypoint</a>(<span class="keyword">const</span> addr: address): <a class="code" href="classMQuipuswap.html#a778f0bf2f381a5bc3f7c5bd42f5cb497">t_token2tez_contract</a> is</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        case (Tezos.get_entrypoint_opt(<span class="stringliteral">&quot;%tokenToTezPayment&quot;</span>, addr): option(<a class="code" href="classMQuipuswap.html#a778f0bf2f381a5bc3f7c5bd42f5cb497">t_token2tez_contract</a>)) of [</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        | Some(contract) -&gt; contract</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        | None -&gt; (failwith(cERR_NOT_FOUND_TOKEN2TEZ): <a class="code" href="classMQuipuswap.html#a778f0bf2f381a5bc3f7c5bd42f5cb497">t_token2tez_contract</a>)</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;        ];</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;<span class="comment">    ///RU Параметры для обмена tokenToTezPayment</span></div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;<span class="comment">    ///EN Parameters for exchanging tokenToTezPayment</span></div>
+<div class="line"><a name="l00074"></a><span class="lineno"><a class="line" href="classMQuipuswap.html#af4fea81cf895bebbd55e8e3510933693">   74</a></span>&#160;<span class="comment"></span>    <span class="keyword">function</span> <a class="code" href="classMQuipuswap.html#af4fea81cf895bebbd55e8e3510933693">token2tezParams</a>(<span class="keyword">const</span> tamount: nat; <span class="keyword">const</span> min_out: nat; <span class="keyword">const</span> receiver: address): <a class="code" href="classMQuipuswap.html#a614c4c23c0eedcbd7e7f7dbbc1f76a4a">t_token2tez_method</a> is</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;        Token2Tez(tamount, min_out, receiver);</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;<span class="comment">    ///RU Операция создания запроса tokenToTezPayment</span></div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;<span class="comment">    ///EN Operation of creating a tokenToTezPayment request</span></div>
+<div class="line"><a name="l00079"></a><span class="lineno"><a class="line" href="classMQuipuswap.html#ae923562fa62c822be2667d0ceb1ef411">   79</a></span>&#160;<span class="comment"></span>    <span class="keyword">function</span> <a class="code" href="classMQuipuswap.html#ae923562fa62c822be2667d0ceb1ef411">token2tez</a>(<span class="keyword">const</span> addr: address; <span class="keyword">const</span> tamount: nat; <span class="keyword">const</span> min_out: nat; <span class="keyword">const</span> receiver: address): operation is</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;        Tezos.transaction(</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;            token2tezParams(tamount, min_out, receiver),</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;            0mutez,</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;            token2tezEntrypoint(addr)</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;        );</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;<span class="comment">    ///RU Проверка параметров обменника токена на валидность</span></div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;<span class="comment">    ///EN Checking the parameters of the token exchanger for validity</span></div>
+<div class="line"><a name="l00088"></a><span class="lineno"><a class="line" href="classMQuipuswap.html#ae596aa7ab532a00edebc242266c1e9e3">   88</a></span>&#160;<span class="comment"></span>    <span class="keyword">function</span> <a class="code" href="classMQuipuswap.html#ae596aa7ab532a00edebc242266c1e9e3">check</a>(<span class="keyword">const</span> swap: <a class="code" href="classMQuipuswap.html#a40b1db8a4a2a4943c46730c2313be820">t_swap</a>): unit is block {</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;        <span class="comment">//RU Проверяем наличие метода tezToTokenPayment для обменника</span></div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;        <span class="comment">//EN We check the availability of the tezToTokenPayment method for the exchanger</span></div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;        const _ = tez2tokenEntrypoint(swap);</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160; </div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;        <span class="comment">//RU Проверяем наличие метода tokenToTezPayment для обменника</span></div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;        <span class="comment">//EN We check the presence of the tokenToTezPayment method for the exchanger</span></div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;        <span class="keyword">const</span> _ = token2tezEntrypoint(swap);</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;    } with unit;</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160; </div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;}</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// !MQUIPUSWAP_INCLUDED</span></div>
+<div class="ttc" id="aclassMQuipuswap_html"><div class="ttname"><a href="classMQuipuswap.html">MQuipuswap</a></div><div class="ttdoc">Типы и методы для обменника токенов через tez в формате Quipuswap.</div><div class="ttdef"><b>Definition:</b> <a href="MQuipuswap_8ligo_source.html#l00006">MQuipuswap.ligo:6</a></div></div>
+<div class="ttc" id="aclassMQuipuswap_html_a0c04a06582ab47fb54f64cfa7afb2ad1"><div class="ttname"><a href="classMQuipuswap.html#a0c04a06582ab47fb54f64cfa7afb2ad1">MQuipuswap::token2tezEntrypoint</a></div><div class="ttdeci">t_token2tez_contract token2tezEntrypoint(const address addr)</div><div class="ttdoc">Получить точку входа tokenToTezPayment.</div><div class="ttdef"><b>Definition:</b> <a href="MQuipuswap_8ligo_source.html#l00066">MQuipuswap.ligo:66</a></div></div>
+<div class="ttc" id="aclassMQuipuswap_html_a0d10ca8b6e531d10c1681dacb215d83d"><div class="ttname"><a href="classMQuipuswap.html#a0d10ca8b6e531d10c1681dacb215d83d">MQuipuswap::cERR_NOT_FOUND_TEZ2TOKEN</a></div><div class="ttdeci">const string cERR_NOT_FOUND_TEZ2TOKEN</div><div class="ttdoc">Ошибка: Не найден метод tezToTokenPayment.</div><div class="ttdef"><b>Definition:</b> <a href="MQuipuswap_8ligo_source.html#l00036">MQuipuswap.ligo:36</a></div></div>
+<div class="ttc" id="aclassMQuipuswap_html_a25f1cca2f9bb90fe20f27bb8245e6644"><div class="ttname"><a href="classMQuipuswap.html#a25f1cca2f9bb90fe20f27bb8245e6644">MQuipuswap::t_tez2token_params</a></div><div class="ttdeci">pair&lt; nat, address &gt; t_tez2token_params</div><div class="ttdoc">Параметры для конвертации tez в токен</div><div class="ttdef"><b>Definition:</b> <a href="MQuipuswap_8ligo_source.html#l00012">MQuipuswap.ligo:12</a></div></div>
+<div class="ttc" id="aclassMQuipuswap_html_a308644449529b868cbf948be010afbed"><div class="ttname"><a href="classMQuipuswap.html#a308644449529b868cbf948be010afbed">MQuipuswap::t_tez2token_contract</a></div><div class="ttdeci">contract&lt; t_tez2token_method &gt; t_tez2token_contract</div><div class="ttdoc">Контракт с точкой входа tezToTokenPayment.</div><div class="ttdef"><b>Definition:</b> <a href="MQuipuswap_8ligo_source.html#l00020">MQuipuswap.ligo:20</a></div></div>
+<div class="ttc" id="aclassMQuipuswap_html_a3c0c4dc36430c6f6125794438c4e15ba"><div class="ttname"><a href="classMQuipuswap.html#a3c0c4dc36430c6f6125794438c4e15ba">MQuipuswap::tez2tokenParams</a></div><div class="ttdeci">t_tez2token_method tez2tokenParams(const nat min_out, const address receiver)</div><div class="ttdoc">Параметры для обмена tezToTokenPayment.</div><div class="ttdef"><b>Definition:</b> <a href="MQuipuswap_8ligo_source.html#l00052">MQuipuswap.ligo:52</a></div></div>
+<div class="ttc" id="aclassMQuipuswap_html_a40b1db8a4a2a4943c46730c2313be820"><div class="ttname"><a href="classMQuipuswap.html#a40b1db8a4a2a4943c46730c2313be820">MQuipuswap::t_swap</a></div><div class="ttdeci">address t_swap</div><div class="ttdoc">Обменник одного токена на tez.</div><div class="ttdef"><b>Definition:</b> <a href="MQuipuswap_8ligo_source.html#l00008">MQuipuswap.ligo:8</a></div></div>
+<div class="ttc" id="aclassMQuipuswap_html_a5dc4834ff8809b84ac3a13737f4b6704"><div class="ttname"><a href="classMQuipuswap.html#a5dc4834ff8809b84ac3a13737f4b6704">MQuipuswap::tez2tokenEntrypoint</a></div><div class="ttdeci">t_tez2token_contract tez2tokenEntrypoint(const address addr)</div><div class="ttdoc">Получить точку входа tezToTokenPayment.</div><div class="ttdef"><b>Definition:</b> <a href="MQuipuswap_8ligo_source.html#l00044">MQuipuswap.ligo:44</a></div></div>
+<div class="ttc" id="aclassMQuipuswap_html_a614c4c23c0eedcbd7e7f7dbbc1f76a4a"><div class="ttname"><a href="classMQuipuswap.html#a614c4c23c0eedcbd7e7f7dbbc1f76a4a">MQuipuswap::t_token2tez_method</a></div><div class="ttdeci">Token2Tez of t_token2tez_params t_token2tez_method</div><div class="ttdoc">Прототип метода tokenToTezPayment.</div><div class="ttdef"><b>Definition:</b> <a href="MQuipuswap_8ligo_source.html#l00028">MQuipuswap.ligo:28</a></div></div>
+<div class="ttc" id="aclassMQuipuswap_html_a778f0bf2f381a5bc3f7c5bd42f5cb497"><div class="ttname"><a href="classMQuipuswap.html#a778f0bf2f381a5bc3f7c5bd42f5cb497">MQuipuswap::t_token2tez_contract</a></div><div class="ttdeci">contract&lt; t_token2tez_method &gt; t_token2tez_contract</div><div class="ttdoc">Контракт с точкой входа tokenToTezPayment.</div><div class="ttdef"><b>Definition:</b> <a href="MQuipuswap_8ligo_source.html#l00032">MQuipuswap.ligo:32</a></div></div>
+<div class="ttc" id="aclassMQuipuswap_html_aa5db1a0a0eb6710395161687d492738d"><div class="ttname"><a href="classMQuipuswap.html#aa5db1a0a0eb6710395161687d492738d">MQuipuswap::tez2token</a></div><div class="ttdeci">operation tez2token(const address addr, const tez changeTez, const nat min_out, const address receiver)</div><div class="ttdoc">Операция создания запроса tezToTokenPayment.</div><div class="ttdef"><b>Definition:</b> <a href="MQuipuswap_8ligo_source.html#l00057">MQuipuswap.ligo:57</a></div></div>
+<div class="ttc" id="aclassMQuipuswap_html_ab03035958280996f6125b837d1d76656"><div class="ttname"><a href="classMQuipuswap.html#ab03035958280996f6125b837d1d76656">MQuipuswap::t_token2tez_params</a></div><div class="ttdeci">tuple&lt; nat, nat, address &gt; t_token2tez_params</div><div class="ttdoc">Параметры для конвертации токена в tez.</div><div class="ttdef"><b>Definition:</b> <a href="MQuipuswap_8ligo_source.html#l00024">MQuipuswap.ligo:24</a></div></div>
+<div class="ttc" id="aclassMQuipuswap_html_abe1df3057144c0d0e12120f464938042"><div class="ttname"><a href="classMQuipuswap.html#abe1df3057144c0d0e12120f464938042">MQuipuswap::t_tez2token_method</a></div><div class="ttdeci">Tez2Token of t_tez2token_params t_tez2token_method</div><div class="ttdoc">Прототип метода tezToTokenPayment.</div><div class="ttdef"><b>Definition:</b> <a href="MQuipuswap_8ligo_source.html#l00016">MQuipuswap.ligo:16</a></div></div>
+<div class="ttc" id="aclassMQuipuswap_html_ae596aa7ab532a00edebc242266c1e9e3"><div class="ttname"><a href="classMQuipuswap.html#ae596aa7ab532a00edebc242266c1e9e3">MQuipuswap::check</a></div><div class="ttdeci">unit check(const t_swap swap)</div><div class="ttdoc">Проверка параметров обменника токена на валидность</div><div class="ttdef"><b>Definition:</b> <a href="MQuipuswap_8ligo_source.html#l00088">MQuipuswap.ligo:88</a></div></div>
+<div class="ttc" id="aclassMQuipuswap_html_ae923562fa62c822be2667d0ceb1ef411"><div class="ttname"><a href="classMQuipuswap.html#ae923562fa62c822be2667d0ceb1ef411">MQuipuswap::token2tez</a></div><div class="ttdeci">operation token2tez(const address addr, const nat tamount, const nat min_out, const address receiver)</div><div class="ttdoc">Операция создания запроса tokenToTezPayment.</div><div class="ttdef"><b>Definition:</b> <a href="MQuipuswap_8ligo_source.html#l00079">MQuipuswap.ligo:79</a></div></div>
+<div class="ttc" id="aclassMQuipuswap_html_af4fea81cf895bebbd55e8e3510933693"><div class="ttname"><a href="classMQuipuswap.html#af4fea81cf895bebbd55e8e3510933693">MQuipuswap::token2tezParams</a></div><div class="ttdeci">t_token2tez_method token2tezParams(const nat tamount, const nat min_out, const address receiver)</div><div class="ttdoc">Параметры для обмена tokenToTezPayment.</div><div class="ttdef"><b>Definition:</b> <a href="MQuipuswap_8ligo_source.html#l00074">MQuipuswap.ligo:74</a></div></div>
+<div class="ttc" id="aclassMQuipuswap_html_aff12c686f2c505295a139c5f758ecc83"><div class="ttname"><a href="classMQuipuswap.html#aff12c686f2c505295a139c5f758ecc83">MQuipuswap::cERR_NOT_FOUND_TOKEN2TEZ</a></div><div class="ttdeci">const string cERR_NOT_FOUND_TOKEN2TEZ</div><div class="ttdoc">Ошибка: Не найден метод tokenToTezPayment.</div><div class="ttdef"><b>Definition:</b> <a href="MQuipuswap_8ligo_source.html#l00040">MQuipuswap.ligo:40</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_ae9b15dd87e066e1908bbd90e8f38627.html">contracts</a></li><li class="navelem"><a class="el" href="dir_096bafc1b3c9e8e4179a990f0f323fba.html">module</a></li><li class="navelem"><a class="el" href="MQuipuswap_8ligo.html">MQuipuswap.ligo</a></li>
+    <li class="footer">Создано системой <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+  </ul>
+</div>
+</body>
+</html>

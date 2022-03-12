@@ -4,8 +4,7 @@
 
 smartpy
 tezbin
-build
-doc/html*
+build/*.log
 
 #-------------------------
 # NodeJS

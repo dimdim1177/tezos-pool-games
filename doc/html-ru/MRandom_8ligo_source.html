@@ -1,0 +1,301 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.1"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Pool Games: Исходный файл MRandom.ligo</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Pool Games
+   </div>
+   <div id="projectbrief">Розыгрыши вознаграждения на основе смарт-контрактов Tezos</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Создано системой Doxygen 1.9.1 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+var searchBox = new SearchBox("searchBox", "search",false,'Поиск','.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(function() {
+  initMenu('',true,false,'search.php','Поиск');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(document).ready(function(){initNavTree('MRandom_8ligo_source.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="headertitle">
+<div class="title">MRandom.ligo</div>  </div>
+</div><!--header-->
+<div class="contents">
+<a href="MRandom_8ligo.html">См. документацию.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#if !MRANDOM_INCLUDED</span></div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#define MRANDOM_INCLUDED</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment">///RU Модуль взаимодействия с источником случайных чисел</span></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="comment">///EN Module for interaction with a random number source</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno"><a class="line" href="classMRandom.html">    6</a></span>&#160;<span class="comment"></span>module <a class="code" href="classMRandom.html">MRandom</a> is {</div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="comment">    ///RU Адрес источника случайных чисел</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="comment">    ///EN Address of the source of random numbers</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno"><a class="line" href="classMRandom.html#a6f8a50fd4599ffed4424d9831c87693a">   10</a></span>&#160;<span class="comment"></span>    type <a class="code" href="classMRandom.html#a6f8a50fd4599ffed4424d9831c87693a">t_random_source</a> is address;</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="comment">    ///RU ID объекта в контракте заказчике</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="comment">    ///EN Object ID in the customer contract</span></div>
+<div class="line"><a name="l00014"></a><span class="lineno"><a class="line" href="classMRandom.html#a9a42d31af80c0f3b5d427474fc254674">   14</a></span>&#160;<span class="comment"></span>    type <a class="code" href="classMRandom.html#a9a42d31af80c0f3b5d427474fc254674">t_iobj</a> is <a class="code" href="consts_8ligo.html#a0e6f05ec9d41b082623116792d1d2a09">t_i</a>;</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="comment">    ///RU Время события, для которого случайное число</span></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="comment">    ///EN The time of the event for which a random number</span></div>
+<div class="line"><a name="l00018"></a><span class="lineno"><a class="line" href="classMRandom.html#a6fb6b57a6be28013680f04ae9500d1b3">   18</a></span>&#160;<span class="comment"></span>    type <a class="code" href="classMRandom.html#a6fb6b57a6be28013680f04ae9500d1b3">t_ts</a> is timestamp;</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="comment">    ///RU Время события и ID объекта</span></div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="comment">    ///EN Event time and Object ID</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno"><a class="line" href="classMRandom.html#aa45ade42ff33e743dfc08d512bcac558">   22</a></span>&#160;<span class="comment"></span>    type <a class="code" href="classMRandom.html#aa45ade42ff33e743dfc08d512bcac558">t_ts_iobj</a> is <a class="code" href="classMRandom.html#a6fb6b57a6be28013680f04ae9500d1b3">t_ts</a> * <a class="code" href="classMRandom.html#a9a42d31af80c0f3b5d427474fc254674">t_iobj</a>;</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="comment">    ///RU Случайное число</span></div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="comment">    ///RU</span></div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="comment">    ///RU Для создания случайного числа берется хеш ближайшего блока Tezos, время которого больше или равно</span></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="comment">    ///RU времени события, с него снимается SHA-256, получаем значение levelHash. Также хеш SHA-256 снимается</span></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="comment">    ///RU со строки &quot;адрес заказчика&lt;пробел&gt;&lt;ID объекта в контракте заказчика в десятичной записи&gt;&quot;, получаем</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="comment">    ///RU значение requestHash. Cлучайное число вычисляется как random = levelHash ^ requestHash и переводится</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="comment">    ///RU в формат nat. В итоге в общем случае у нас 256-битное случайное число</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="comment">    ///EN Random number</span></div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="comment">    ///EN</span></div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="comment">    ///EN To create a random number, the hash of the nearest Tezos block is taken, the time of which is greater than or equal</span></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="comment">    ///EN to the time of the event, SHA-256 is removed from it, we get the levelHash value. Also, the SHA-256 hash is removed</span></div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="comment">    ///EN from the line &quot;customer&#39;s address&lt;space&gt;&lt;object ID in the customer&#39;s contract in decimal notation&gt;&quot;, we get</span></div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="comment">    ///EN the requestHash value. A random number is calculated as random = levelHash^ requestHash and converted</span></div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="comment">    ///EN to nat format. As a result, in general, we have a 256-bit random number</span></div>
+<div class="line"><a name="l00038"></a><span class="lineno"><a class="line" href="classMRandom.html#a51d8a8706e1c8c6bdf10fbe9fea58d16">   38</a></span>&#160;<span class="comment"></span>    type <a class="code" href="classMRandom.html#a51d8a8706e1c8c6bdf10fbe9fea58d16">t_random</a> is nat;</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="comment">    ///RU Тип колбека для получения случайного числа</span></div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="comment">    ///EN The type of callback for getting a random number</span></div>
+<div class="line"><a name="l00042"></a><span class="lineno"><a class="line" href="classMRandom.html#ac8c2b7f39368322fc9f0af3407c5aad3">   42</a></span>&#160;<span class="comment"></span>    type <a class="code" href="classMRandom.html#ac8c2b7f39368322fc9f0af3407c5aad3">t_iobj_random</a> is <a class="code" href="classMRandom.html#a9a42d31af80c0f3b5d427474fc254674">t_iobj</a> * <a class="code" href="classMRandom.html#a51d8a8706e1c8c6bdf10fbe9fea58d16">t_random</a>;</div>
+<div class="line"><a name="l00043"></a><span class="lineno"><a class="line" href="classMRandom.html#acafb4abc23d44d7171ae1f0029344ea7">   43</a></span>&#160;    type <a class="code" href="classMRandom.html#acafb4abc23d44d7171ae1f0029344ea7">t_callback_params</a> is OnRandomCallback of <a class="code" href="classMRandom.html#ac8c2b7f39368322fc9f0af3407c5aad3">t_iobj_random</a>;</div>
+<div class="line"><a name="l00044"></a><span class="lineno"><a class="line" href="classMRandom.html#a6518736ada3a67ce0659780adc4d08fe">   44</a></span>&#160;    type <a class="code" href="classMRandom.html#a6518736ada3a67ce0659780adc4d08fe">t_callback</a> is contract(<a class="code" href="classMRandom.html#acafb4abc23d44d7171ae1f0029344ea7">t_callback_params</a>);</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="comment">    ///RU Время события, ID объекта и колбек для случайного числа</span></div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="comment">    ///EN Event time, Object ID, and callback for a random number</span></div>
+<div class="line"><a name="l00048"></a><span class="lineno"><a class="line" href="classMRandom.html#a78e493b450d2a843da7740da6c5a25e1">   48</a></span>&#160;<span class="comment"></span>    type <a class="code" href="classMRandom.html#a78e493b450d2a843da7740da6c5a25e1">t_ts_iobj_callback</a> is <a class="code" href="classMRandom.html#a6fb6b57a6be28013680f04ae9500d1b3">t_ts</a> * <a class="code" href="classMRandom.html#a9a42d31af80c0f3b5d427474fc254674">t_iobj</a> * <a class="code" href="classMRandom.html#a6518736ada3a67ce0659780adc4d08fe">t_callback</a>;</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="comment">    ///RU Ошибка: Не найден контракт источника</span></div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="comment">    ///EN Error: Source contract not found</span></div>
+<div class="line"><a name="l00052"></a><span class="lineno"><a class="line" href="classMRandom.html#adf90e600d9e27aceaf06af6c7e33ef6e">   52</a></span>&#160;<span class="comment"></span>    <span class="keyword">const</span> <a class="code" href="classMRandom.html#adf90e600d9e27aceaf06af6c7e33ef6e">cERR_NOT_FOUND</a>: <span class="keywordtype">string</span> = <span class="stringliteral">&quot;MRandom/NotFound&quot;</span>;</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="comment">    ///RU Ошибка: Не найден метод createFuture токена</span></div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="comment">    ///EN Error: The createFuture token method was not found</span></div>
+<div class="line"><a name="l00056"></a><span class="lineno"><a class="line" href="classMRandom.html#a5a35b525fd15e8d552e62b0f49e59ea5">   56</a></span>&#160;<span class="comment"></span>    <span class="keyword">const</span> <a class="code" href="classMRandom.html#a5a35b525fd15e8d552e62b0f49e59ea5">cERR_NOT_FOUND_CREATE</a>: <span class="keywordtype">string</span> = <span class="stringliteral">&quot;MRandom/NotFoundCreateFuture&quot;</span>;</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="comment">    ///RU Ошибка: Не найден метод deleteFuture токена</span></div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="comment">    ///EN Error: Token deleteFuture method not found</span></div>
+<div class="line"><a name="l00060"></a><span class="lineno"><a class="line" href="classMRandom.html#a79b8f211f9dfb906c76ecd0f651bc0ef">   60</a></span>&#160;<span class="comment"></span>    <span class="keyword">const</span> <a class="code" href="classMRandom.html#a79b8f211f9dfb906c76ecd0f651bc0ef">cERR_NOT_FOUND_DELETE</a>: <span class="keywordtype">string</span> = <span class="stringliteral">&quot;MRandom/NotFoundDeleteFuture&quot;</span>;</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="comment">    ///RU Ошибка: Не найден метод getFuture токена</span></div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="comment">    ///EN Error: Token getFuture method not found</span></div>
+<div class="line"><a name="l00064"></a><span class="lineno"><a class="line" href="classMRandom.html#a906e97ca7982f83b99b10af50a28242d">   64</a></span>&#160;<span class="comment"></span>    <span class="keyword">const</span> <a class="code" href="classMRandom.html#a906e97ca7982f83b99b10af50a28242d">cERR_NOT_FOUND_GET</a>: <span class="keywordtype">string</span> = <span class="stringliteral">&quot;MRandom/NotFoundGetFuture&quot;</span>;</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<span class="comment">    ///RU Прототип метода createFuture</span></div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="comment">    ///EN Prototype of the createFuture method</span></div>
+<div class="line"><a name="l00068"></a><span class="lineno"><a class="line" href="classMRandom.html#a74542500aa5e34ff20750cf9c5ec5ea5">   68</a></span>&#160;<span class="comment"></span>    type <a class="code" href="classMRandom.html#a74542500aa5e34ff20750cf9c5ec5ea5">t_create</a> is RandomCreateFuture of <a class="code" href="classMRandom.html#aa45ade42ff33e743dfc08d512bcac558">t_ts_iobj</a>;</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<span class="comment">    ///RU Контракт с точкой входа createFuture</span></div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;<span class="comment">    ///EN Contract with createFuture entry point</span></div>
+<div class="line"><a name="l00072"></a><span class="lineno"><a class="line" href="classMRandom.html#ae2bbc2e9d31c5ab6ddc5d3d3a028d81d">   72</a></span>&#160;<span class="comment"></span>    type <a class="code" href="classMRandom.html#ae2bbc2e9d31c5ab6ddc5d3d3a028d81d">t_create_contract</a> is contract(<a class="code" href="classMRandom.html#a74542500aa5e34ff20750cf9c5ec5ea5">t_create</a>);</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;<span class="comment">    ///RU Прототип метода deleteFuture</span></div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;<span class="comment">    ///EN Prototype of the deleteFuture method</span></div>
+<div class="line"><a name="l00076"></a><span class="lineno"><a class="line" href="classMRandom.html#a4d06b74b88013de6a159b81dfae2677c">   76</a></span>&#160;<span class="comment"></span>    type <a class="code" href="classMRandom.html#a4d06b74b88013de6a159b81dfae2677c">t_delete</a> is RandomDeleteFuture of <a class="code" href="classMRandom.html#aa45ade42ff33e743dfc08d512bcac558">t_ts_iobj</a>;</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;<span class="comment">    ///RU Контракт с точкой входа deleteFuture</span></div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;<span class="comment">    ///EN Contract with the deleteFuture entry point</span></div>
+<div class="line"><a name="l00080"></a><span class="lineno"><a class="line" href="classMRandom.html#a5af09def682193e16810be50aecb6531">   80</a></span>&#160;<span class="comment"></span>    type <a class="code" href="classMRandom.html#a5af09def682193e16810be50aecb6531">t_delete_contract</a> is contract(<a class="code" href="classMRandom.html#a4d06b74b88013de6a159b81dfae2677c">t_delete</a>);</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;<span class="comment">    ///RU Прототип метода getFuture</span></div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;<span class="comment">    ///EN Prototype of the getFuture method</span></div>
+<div class="line"><a name="l00084"></a><span class="lineno"><a class="line" href="classMRandom.html#aaabe440c847922fbc7e01c0360d50eb6">   84</a></span>&#160;<span class="comment"></span>    type <a class="code" href="classMRandom.html#aaabe440c847922fbc7e01c0360d50eb6">t_get</a> is RandomGetFuture of <a class="code" href="classMRandom.html#a78e493b450d2a843da7740da6c5a25e1">t_ts_iobj_callback</a>;</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;<span class="comment">    ///RU Контракт с точкой входа getFuture</span></div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;<span class="comment">    ///EN Contract with the getFuture entry point</span></div>
+<div class="line"><a name="l00088"></a><span class="lineno"><a class="line" href="classMRandom.html#aaa0be59972cf8cb4de86c4f3d1becbeb">   88</a></span>&#160;<span class="comment"></span>    type <a class="code" href="classMRandom.html#aaa0be59972cf8cb4de86c4f3d1becbeb">t_get_contract</a> is contract(<a class="code" href="classMRandom.html#aaabe440c847922fbc7e01c0360d50eb6">t_get</a>);</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;<span class="comment">    ///RU Получить точку входа createFuture</span></div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;<span class="comment">    ///EN Get the createFuture entry point</span></div>
+<div class="line"><a name="l00092"></a><span class="lineno"><a class="line" href="classMRandom.html#a1113a4469acd269345f9b91fc8a08362">   92</a></span>&#160;<span class="comment"></span>    <span class="keyword">function</span> <a class="code" href="classMRandom.html#a1113a4469acd269345f9b91fc8a08362">createFutureEntrypoint</a>(<span class="keyword">const</span> addr: address): <a class="code" href="classMRandom.html#ae2bbc2e9d31c5ab6ddc5d3d3a028d81d">t_create_contract</a> is</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;        case (Tezos.get_entrypoint_opt(<span class="stringliteral">&quot;%createFuture&quot;</span>, addr): option(<a class="code" href="classMRandom.html#ae2bbc2e9d31c5ab6ddc5d3d3a028d81d">t_create_contract</a>)) of [</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;        | Some(create_contract) -&gt; create_contract</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;        | None -&gt; (failwith(cERR_NOT_FOUND_CREATE): <a class="code" href="classMRandom.html#ae2bbc2e9d31c5ab6ddc5d3d3a028d81d">t_create_contract</a>)</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;        ];</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;<span class="comment">    ///RU Параметры для создания запроса случайного числа</span></div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;<span class="comment">    ///EN Parameters for creating a random number request</span></div>
+<div class="line"><a name="l00100"></a><span class="lineno"><a class="line" href="classMRandom.html#a284936247cb915f7c307dc8059894e29">  100</a></span>&#160;<span class="comment"></span>    <span class="keyword">function</span> <a class="code" href="classMRandom.html#a284936247cb915f7c307dc8059894e29">createParams</a>(<span class="keyword">const</span> ts: <a class="code" href="classMRandom.html#a6fb6b57a6be28013680f04ae9500d1b3">t_ts</a>; <span class="keyword">const</span> iobj: <a class="code" href="classMRandom.html#a9a42d31af80c0f3b5d427474fc254674">t_iobj</a>): <a class="code" href="classMRandom.html#a74542500aa5e34ff20750cf9c5ec5ea5">t_create</a> is</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;        RandomCreateFuture(ts, iobj);</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;<span class="comment">    ///RU Операция создания запроса случайного числа</span></div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;<span class="comment">    ///EN Operation of creating a random number request</span></div>
+<div class="line"><a name="l00105"></a><span class="lineno"><a class="line" href="classMRandom.html#ad9a131ef4579f85748ec1803a66a5dbc">  105</a></span>&#160;<span class="comment"></span>    <span class="keyword">function</span> <a class="code" href="classMRandom.html#ad9a131ef4579f85748ec1803a66a5dbc">create</a>(<span class="keyword">const</span> addr: address; <span class="keyword">const</span> ts: <a class="code" href="classMRandom.html#a6fb6b57a6be28013680f04ae9500d1b3">t_ts</a>; <span class="keyword">const</span> iobj: <a class="code" href="classMRandom.html#a9a42d31af80c0f3b5d427474fc254674">t_iobj</a>): operation is</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;        Tezos.transaction(</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;            createParams(ts, iobj),</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;            0mutez,</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;            createFutureEntrypoint(addr)</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;        );</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;<span class="comment">    ///RU Получить точку входа deleteFuture</span></div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;<span class="comment">    ///EN Get the deleteFuture entry point</span></div>
+<div class="line"><a name="l00114"></a><span class="lineno"><a class="line" href="classMRandom.html#aca85ed4eca7ad0f30d23f4ee98d7a289">  114</a></span>&#160;<span class="comment"></span>    <span class="keyword">function</span> <a class="code" href="classMRandom.html#aca85ed4eca7ad0f30d23f4ee98d7a289">deleteFutureEntrypoint</a>(<span class="keyword">const</span> addr: address): <a class="code" href="classMRandom.html#a5af09def682193e16810be50aecb6531">t_delete_contract</a> is</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;        case (Tezos.get_entrypoint_opt(<span class="stringliteral">&quot;%deleteFuture&quot;</span>, addr): option(<a class="code" href="classMRandom.html#a5af09def682193e16810be50aecb6531">t_delete_contract</a>)) of [</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;        | Some(delete_contract) -&gt; delete_contract</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;        | None -&gt; (failwith(cERR_NOT_FOUND_DELETE): <a class="code" href="classMRandom.html#a5af09def682193e16810be50aecb6531">t_delete_contract</a>)</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;        ];</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160; </div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;<span class="comment">    ///RU Параметры для удаления запроса случайного числа</span></div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;<span class="comment">    ///EN Parameters for deleting a random number request</span></div>
+<div class="line"><a name="l00123"></a><span class="lineno"><a class="line" href="classMRandom.html#a16726d8f041db1891015cdf124c2018c">  123</a></span>&#160;<span class="comment"></span>    <span class="keyword">function</span> <a class="code" href="classMRandom.html#a16726d8f041db1891015cdf124c2018c">deleteParams</a>(<span class="keyword">const</span> ts: <a class="code" href="classMRandom.html#a6fb6b57a6be28013680f04ae9500d1b3">t_ts</a>; <span class="keyword">const</span> iobj: <a class="code" href="classMRandom.html#a9a42d31af80c0f3b5d427474fc254674">t_iobj</a>): <a class="code" href="classMRandom.html#a4d06b74b88013de6a159b81dfae2677c">t_delete</a> is</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;        RandomDeleteFuture(ts, iobj);</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;<span class="comment">    ///RU Операция удаления запроса случайного числа</span></div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;<span class="comment">    ///EN Operation of deleting a random number request</span></div>
+<div class="line"><a name="l00128"></a><span class="lineno"><a class="line" href="classMRandom.html#af79628f8faff843c268a3d9290fa5fcc">  128</a></span>&#160;<span class="comment"></span>    <span class="keyword">function</span> <span class="keyword">delete</span>(<span class="keyword">const</span> addr: address; <span class="keyword">const</span> ts: <a class="code" href="classMRandom.html#a6fb6b57a6be28013680f04ae9500d1b3">t_ts</a>; <span class="keyword">const</span> iobj: <a class="code" href="classMRandom.html#a9a42d31af80c0f3b5d427474fc254674">t_iobj</a>): operation is</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;        Tezos.transaction(</div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;            deleteParams(ts, iobj),</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;            0mutez,</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;            deleteFutureEntrypoint(addr)</div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;        );</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;<span class="comment">    ///RU Получить точку входа getFuture</span></div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;<span class="comment">    ///EN Get a getFuture entry point</span></div>
+<div class="line"><a name="l00137"></a><span class="lineno"><a class="line" href="classMRandom.html#a81b996594ad5e317e01907af7e9282a6">  137</a></span>&#160;<span class="comment"></span>    <span class="keyword">function</span> <a class="code" href="classMRandom.html#a81b996594ad5e317e01907af7e9282a6">getFutureEntrypoint</a>(<span class="keyword">const</span> addr: address): <a class="code" href="classMRandom.html#aaa0be59972cf8cb4de86c4f3d1becbeb">t_get_contract</a> is</div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;        case (Tezos.get_entrypoint_opt(<span class="stringliteral">&quot;%getFuture&quot;</span>, addr): option(<a class="code" href="classMRandom.html#aaa0be59972cf8cb4de86c4f3d1becbeb">t_get_contract</a>)) of [</div>
+<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;        | Some(contract) -&gt; contract</div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;        | None -&gt; (failwith(cERR_NOT_FOUND_GET): <a class="code" href="classMRandom.html#aaa0be59972cf8cb4de86c4f3d1becbeb">t_get_contract</a>)</div>
+<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;        ];</div>
+<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;<span class="comment">    ///RU Параметры для получения случайного числа</span></div>
+<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;<span class="comment">    ///EN Parameters for getting a random number</span></div>
+<div class="line"><a name="l00145"></a><span class="lineno"><a class="line" href="classMRandom.html#a5c0c81f4aced9f1e0ae1d2d17544a292">  145</a></span>&#160;<span class="comment"></span>    <span class="keyword">function</span> <a class="code" href="classMRandom.html#a5c0c81f4aced9f1e0ae1d2d17544a292">getParams</a>(<span class="keyword">const</span> ts: <a class="code" href="classMRandom.html#a6fb6b57a6be28013680f04ae9500d1b3">t_ts</a>; <span class="keyword">const</span> iobj: <a class="code" href="classMRandom.html#a9a42d31af80c0f3b5d427474fc254674">t_iobj</a>; <span class="keyword">const</span> callback: <a class="code" href="classMRandom.html#a6518736ada3a67ce0659780adc4d08fe">t_callback</a>): <a class="code" href="classMRandom.html#aaabe440c847922fbc7e01c0360d50eb6">t_get</a> is</div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;        RandomGetFuture(ts, iobj, callback);</div>
+<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;<span class="comment">    ///RU Операция создания запроса случайного числа</span></div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;<span class="comment">    ///EN Operation of creating a random number request</span></div>
+<div class="line"><a name="l00150"></a><span class="lineno"><a class="line" href="classMRandom.html#a453b5e340f04dacd026640d00cd54bbb">  150</a></span>&#160;<span class="comment"></span>    <span class="keyword">function</span> <a class="code" href="classMRandom.html#a453b5e340f04dacd026640d00cd54bbb">get</a>(<span class="keyword">const</span> addr: address; <span class="keyword">const</span> ts: <a class="code" href="classMRandom.html#a6fb6b57a6be28013680f04ae9500d1b3">t_ts</a>; <span class="keyword">const</span> iobj: <a class="code" href="classMRandom.html#a9a42d31af80c0f3b5d427474fc254674">t_iobj</a>; <span class="keyword">const</span> callback: <a class="code" href="classMRandom.html#a6518736ada3a67ce0659780adc4d08fe">t_callback</a>): operation is</div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;        Tezos.transaction(</div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;            getParams(ts, iobj, callback),</div>
+<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;            0mutez,</div>
+<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;            getFutureEntrypoint(addr)</div>
+<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;        );</div>
+<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;<span class="comment">    ///RU Проверка источника случайных чисел на валидность</span></div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;<span class="comment">    ///EN Checking the source of random numbers for validity</span></div>
+<div class="line"><a name="l00159"></a><span class="lineno"><a class="line" href="classMRandom.html#ae291d62798d42b680c45fbc99592b741">  159</a></span>&#160;<span class="comment"></span>    <span class="keyword">function</span> <a class="code" href="classMRandom.html#ae291d62798d42b680c45fbc99592b741">check</a>(<span class="keyword">const</span> randomSource: <a class="code" href="classMRandom.html#a6f8a50fd4599ffed4424d9831c87693a">t_random_source</a>): unit is block {</div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;        <span class="comment">//RU Проверяем наличие метода createFuture для источника</span></div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;        <span class="comment">//EN Checking for the createFuture method for the source</span></div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;        const _ = createFutureEntrypoint(randomSource);</div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;        <span class="comment">//RU Проверяем наличие метода deleteFuture для источника</span></div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;        <span class="comment">//EN Checking for the deleteFuture method for the source</span></div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;        <span class="keyword">const</span> _ = deleteFutureEntrypoint(randomSource);</div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;        <span class="comment">//RU Проверяем наличие метода getFuture для источника random</span></div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;        <span class="comment">//EN Checking for the getFuture method for the random source</span></div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;        <span class="keyword">const</span> _ = getFutureEntrypoint(randomSource);</div>
+<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;     } with unit;</div>
+<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160; </div>
+<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;}</div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// !MRANDOM_INCLUDED</span></div>
+<div class="ttc" id="aclassMRandom_html"><div class="ttname"><a href="classMRandom.html">MRandom</a></div><div class="ttdoc">Модуль взаимодействия с источником случайных чисел</div><div class="ttdef"><b>Definition:</b> <a href="MRandom_8ligo_source.html#l00006">MRandom.ligo:6</a></div></div>
+<div class="ttc" id="aclassMRandom_html_a1113a4469acd269345f9b91fc8a08362"><div class="ttname"><a href="classMRandom.html#a1113a4469acd269345f9b91fc8a08362">MRandom::createFutureEntrypoint</a></div><div class="ttdeci">t_create_contract createFutureEntrypoint(const address addr)</div><div class="ttdoc">Получить точку входа createFuture.</div><div class="ttdef"><b>Definition:</b> <a href="MRandom_8ligo_source.html#l00092">MRandom.ligo:92</a></div></div>
+<div class="ttc" id="aclassMRandom_html_a16726d8f041db1891015cdf124c2018c"><div class="ttname"><a href="classMRandom.html#a16726d8f041db1891015cdf124c2018c">MRandom::deleteParams</a></div><div class="ttdeci">t_delete deleteParams(const t_ts ts, const t_iobj iobj)</div><div class="ttdoc">Параметры для удаления запроса случайного числа</div><div class="ttdef"><b>Definition:</b> <a href="MRandom_8ligo_source.html#l00123">MRandom.ligo:123</a></div></div>
+<div class="ttc" id="aclassMRandom_html_a284936247cb915f7c307dc8059894e29"><div class="ttname"><a href="classMRandom.html#a284936247cb915f7c307dc8059894e29">MRandom::createParams</a></div><div class="ttdeci">t_create createParams(const t_ts ts, const t_iobj iobj)</div><div class="ttdoc">Параметры для создания запроса случайного числа</div><div class="ttdef"><b>Definition:</b> <a href="MRandom_8ligo_source.html#l00100">MRandom.ligo:100</a></div></div>
+<div class="ttc" id="aclassMRandom_html_a453b5e340f04dacd026640d00cd54bbb"><div class="ttname"><a href="classMRandom.html#a453b5e340f04dacd026640d00cd54bbb">MRandom::get</a></div><div class="ttdeci">operation get(const address addr, const t_ts ts, const t_iobj iobj, const t_callback callback)</div><div class="ttdoc">Операция создания запроса случайного числа</div><div class="ttdef"><b>Definition:</b> <a href="MRandom_8ligo_source.html#l00150">MRandom.ligo:150</a></div></div>
+<div class="ttc" id="aclassMRandom_html_a4d06b74b88013de6a159b81dfae2677c"><div class="ttname"><a href="classMRandom.html#a4d06b74b88013de6a159b81dfae2677c">MRandom::t_delete</a></div><div class="ttdeci">RandomDeleteFuture of t_ts_iobj t_delete</div><div class="ttdoc">Прототип метода deleteFuture.</div><div class="ttdef"><b>Definition:</b> <a href="MRandom_8ligo_source.html#l00076">MRandom.ligo:76</a></div></div>
+<div class="ttc" id="aclassMRandom_html_a51d8a8706e1c8c6bdf10fbe9fea58d16"><div class="ttname"><a href="classMRandom.html#a51d8a8706e1c8c6bdf10fbe9fea58d16">MRandom::t_random</a></div><div class="ttdeci">nat t_random</div><div class="ttdoc">Случайное число</div><div class="ttdef"><b>Definition:</b> <a href="MRandom_8ligo_source.html#l00038">MRandom.ligo:38</a></div></div>
+<div class="ttc" id="aclassMRandom_html_a5a35b525fd15e8d552e62b0f49e59ea5"><div class="ttname"><a href="classMRandom.html#a5a35b525fd15e8d552e62b0f49e59ea5">MRandom::cERR_NOT_FOUND_CREATE</a></div><div class="ttdeci">const string cERR_NOT_FOUND_CREATE</div><div class="ttdoc">Ошибка: Не найден метод createFuture токена</div><div class="ttdef"><b>Definition:</b> <a href="MRandom_8ligo_source.html#l00056">MRandom.ligo:56</a></div></div>
+<div class="ttc" id="aclassMRandom_html_a5af09def682193e16810be50aecb6531"><div class="ttname"><a href="classMRandom.html#a5af09def682193e16810be50aecb6531">MRandom::t_delete_contract</a></div><div class="ttdeci">contract&lt; t_delete &gt; t_delete_contract</div><div class="ttdoc">Контракт с точкой входа deleteFuture.</div><div class="ttdef"><b>Definition:</b> <a href="MRandom_8ligo_source.html#l00080">MRandom.ligo:80</a></div></div>
+<div class="ttc" id="aclassMRandom_html_a5c0c81f4aced9f1e0ae1d2d17544a292"><div class="ttname"><a href="classMRandom.html#a5c0c81f4aced9f1e0ae1d2d17544a292">MRandom::getParams</a></div><div class="ttdeci">t_get getParams(const t_ts ts, const t_iobj iobj, const t_callback callback)</div><div class="ttdoc">Параметры для получения случайного числа</div><div class="ttdef"><b>Definition:</b> <a href="MRandom_8ligo_source.html#l00145">MRandom.ligo:145</a></div></div>
+<div class="ttc" id="aclassMRandom_html_a6518736ada3a67ce0659780adc4d08fe"><div class="ttname"><a href="classMRandom.html#a6518736ada3a67ce0659780adc4d08fe">MRandom::t_callback</a></div><div class="ttdeci">contract&lt; t_callback_params &gt; t_callback</div><div class="ttdef"><b>Definition:</b> <a href="MRandom_8ligo_source.html#l00044">MRandom.ligo:44</a></div></div>
+<div class="ttc" id="aclassMRandom_html_a6f8a50fd4599ffed4424d9831c87693a"><div class="ttname"><a href="classMRandom.html#a6f8a50fd4599ffed4424d9831c87693a">MRandom::t_random_source</a></div><div class="ttdeci">address t_random_source</div><div class="ttdoc">Адрес источника случайных чисел</div><div class="ttdef"><b>Definition:</b> <a href="MRandom_8ligo_source.html#l00010">MRandom.ligo:10</a></div></div>
+<div class="ttc" id="aclassMRandom_html_a6fb6b57a6be28013680f04ae9500d1b3"><div class="ttname"><a href="classMRandom.html#a6fb6b57a6be28013680f04ae9500d1b3">MRandom::t_ts</a></div><div class="ttdeci">timestamp t_ts</div><div class="ttdoc">Время события, для которого случайное число</div><div class="ttdef"><b>Definition:</b> <a href="MRandom_8ligo_source.html#l00018">MRandom.ligo:18</a></div></div>
+<div class="ttc" id="aclassMRandom_html_a74542500aa5e34ff20750cf9c5ec5ea5"><div class="ttname"><a href="classMRandom.html#a74542500aa5e34ff20750cf9c5ec5ea5">MRandom::t_create</a></div><div class="ttdeci">RandomCreateFuture of t_ts_iobj t_create</div><div class="ttdoc">Прототип метода createFuture.</div><div class="ttdef"><b>Definition:</b> <a href="MRandom_8ligo_source.html#l00068">MRandom.ligo:68</a></div></div>
+<div class="ttc" id="aclassMRandom_html_a78e493b450d2a843da7740da6c5a25e1"><div class="ttname"><a href="classMRandom.html#a78e493b450d2a843da7740da6c5a25e1">MRandom::t_ts_iobj_callback</a></div><div class="ttdeci">tuple&lt; t_ts, t_iobj, t_callback &gt; t_ts_iobj_callback</div><div class="ttdoc">Время события, ID объекта и колбек для случайного числа</div><div class="ttdef"><b>Definition:</b> <a href="MRandom_8ligo_source.html#l00048">MRandom.ligo:48</a></div></div>
+<div class="ttc" id="aclassMRandom_html_a79b8f211f9dfb906c76ecd0f651bc0ef"><div class="ttname"><a href="classMRandom.html#a79b8f211f9dfb906c76ecd0f651bc0ef">MRandom::cERR_NOT_FOUND_DELETE</a></div><div class="ttdeci">const string cERR_NOT_FOUND_DELETE</div><div class="ttdoc">Ошибка: Не найден метод deleteFuture токена</div><div class="ttdef"><b>Definition:</b> <a href="MRandom_8ligo_source.html#l00060">MRandom.ligo:60</a></div></div>
+<div class="ttc" id="aclassMRandom_html_a81b996594ad5e317e01907af7e9282a6"><div class="ttname"><a href="classMRandom.html#a81b996594ad5e317e01907af7e9282a6">MRandom::getFutureEntrypoint</a></div><div class="ttdeci">t_get_contract getFutureEntrypoint(const address addr)</div><div class="ttdoc">Получить точку входа getFuture.</div><div class="ttdef"><b>Definition:</b> <a href="MRandom_8ligo_source.html#l00137">MRandom.ligo:137</a></div></div>
+<div class="ttc" id="aclassMRandom_html_a906e97ca7982f83b99b10af50a28242d"><div class="ttname"><a href="classMRandom.html#a906e97ca7982f83b99b10af50a28242d">MRandom::cERR_NOT_FOUND_GET</a></div><div class="ttdeci">const string cERR_NOT_FOUND_GET</div><div class="ttdoc">Ошибка: Не найден метод getFuture токена</div><div class="ttdef"><b>Definition:</b> <a href="MRandom_8ligo_source.html#l00064">MRandom.ligo:64</a></div></div>
+<div class="ttc" id="aclassMRandom_html_a9a42d31af80c0f3b5d427474fc254674"><div class="ttname"><a href="classMRandom.html#a9a42d31af80c0f3b5d427474fc254674">MRandom::t_iobj</a></div><div class="ttdeci">t_i t_iobj</div><div class="ttdoc">ID объекта в контракте заказчике</div><div class="ttdef"><b>Definition:</b> <a href="MRandom_8ligo_source.html#l00014">MRandom.ligo:14</a></div></div>
+<div class="ttc" id="aclassMRandom_html_aa45ade42ff33e743dfc08d512bcac558"><div class="ttname"><a href="classMRandom.html#aa45ade42ff33e743dfc08d512bcac558">MRandom::t_ts_iobj</a></div><div class="ttdeci">pair&lt; t_ts, t_iobj &gt; t_ts_iobj</div><div class="ttdoc">Время события и ID объекта</div><div class="ttdef"><b>Definition:</b> <a href="MRandom_8ligo_source.html#l00022">MRandom.ligo:22</a></div></div>
+<div class="ttc" id="aclassMRandom_html_aaa0be59972cf8cb4de86c4f3d1becbeb"><div class="ttname"><a href="classMRandom.html#aaa0be59972cf8cb4de86c4f3d1becbeb">MRandom::t_get_contract</a></div><div class="ttdeci">contract&lt; t_get &gt; t_get_contract</div><div class="ttdoc">Контракт с точкой входа getFuture.</div><div class="ttdef"><b>Definition:</b> <a href="MRandom_8ligo_source.html#l00088">MRandom.ligo:88</a></div></div>
+<div class="ttc" id="aclassMRandom_html_aaabe440c847922fbc7e01c0360d50eb6"><div class="ttname"><a href="classMRandom.html#aaabe440c847922fbc7e01c0360d50eb6">MRandom::t_get</a></div><div class="ttdeci">RandomGetFuture of t_ts_iobj_callback t_get</div><div class="ttdoc">Прототип метода getFuture.</div><div class="ttdef"><b>Definition:</b> <a href="MRandom_8ligo_source.html#l00084">MRandom.ligo:84</a></div></div>
+<div class="ttc" id="aclassMRandom_html_ac8c2b7f39368322fc9f0af3407c5aad3"><div class="ttname"><a href="classMRandom.html#ac8c2b7f39368322fc9f0af3407c5aad3">MRandom::t_iobj_random</a></div><div class="ttdeci">pair&lt; t_iobj, t_random &gt; t_iobj_random</div><div class="ttdoc">Тип колбека для получения случайного числа</div><div class="ttdef"><b>Definition:</b> <a href="MRandom_8ligo_source.html#l00042">MRandom.ligo:42</a></div></div>
+<div class="ttc" id="aclassMRandom_html_aca85ed4eca7ad0f30d23f4ee98d7a289"><div class="ttname"><a href="classMRandom.html#aca85ed4eca7ad0f30d23f4ee98d7a289">MRandom::deleteFutureEntrypoint</a></div><div class="ttdeci">t_delete_contract deleteFutureEntrypoint(const address addr)</div><div class="ttdoc">Получить точку входа deleteFuture.</div><div class="ttdef"><b>Definition:</b> <a href="MRandom_8ligo_source.html#l00114">MRandom.ligo:114</a></div></div>
+<div class="ttc" id="aclassMRandom_html_acafb4abc23d44d7171ae1f0029344ea7"><div class="ttname"><a href="classMRandom.html#acafb4abc23d44d7171ae1f0029344ea7">MRandom::t_callback_params</a></div><div class="ttdeci">OnRandomCallback of t_iobj_random t_callback_params</div><div class="ttdef"><b>Definition:</b> <a href="MRandom_8ligo_source.html#l00043">MRandom.ligo:43</a></div></div>
+<div class="ttc" id="aclassMRandom_html_ad9a131ef4579f85748ec1803a66a5dbc"><div class="ttname"><a href="classMRandom.html#ad9a131ef4579f85748ec1803a66a5dbc">MRandom::create</a></div><div class="ttdeci">operation create(const address addr, const t_ts ts, const t_iobj iobj)</div><div class="ttdoc">Операция создания запроса случайного числа</div><div class="ttdef"><b>Definition:</b> <a href="MRandom_8ligo_source.html#l00105">MRandom.ligo:105</a></div></div>
+<div class="ttc" id="aclassMRandom_html_adf90e600d9e27aceaf06af6c7e33ef6e"><div class="ttname"><a href="classMRandom.html#adf90e600d9e27aceaf06af6c7e33ef6e">MRandom::cERR_NOT_FOUND</a></div><div class="ttdeci">const string cERR_NOT_FOUND</div><div class="ttdoc">Ошибка: Не найден контракт источника</div><div class="ttdef"><b>Definition:</b> <a href="MRandom_8ligo_source.html#l00052">MRandom.ligo:52</a></div></div>
+<div class="ttc" id="aclassMRandom_html_ae291d62798d42b680c45fbc99592b741"><div class="ttname"><a href="classMRandom.html#ae291d62798d42b680c45fbc99592b741">MRandom::check</a></div><div class="ttdeci">unit check(const t_random_source randomSource)</div><div class="ttdoc">Проверка источника случайных чисел на валидность</div><div class="ttdef"><b>Definition:</b> <a href="MRandom_8ligo_source.html#l00159">MRandom.ligo:159</a></div></div>
+<div class="ttc" id="aclassMRandom_html_ae2bbc2e9d31c5ab6ddc5d3d3a028d81d"><div class="ttname"><a href="classMRandom.html#ae2bbc2e9d31c5ab6ddc5d3d3a028d81d">MRandom::t_create_contract</a></div><div class="ttdeci">contract&lt; t_create &gt; t_create_contract</div><div class="ttdoc">Контракт с точкой входа createFuture.</div><div class="ttdef"><b>Definition:</b> <a href="MRandom_8ligo_source.html#l00072">MRandom.ligo:72</a></div></div>
+<div class="ttc" id="aconsts_8ligo_html_a0e6f05ec9d41b082623116792d1d2a09"><div class="ttname"><a href="consts_8ligo.html#a0e6f05ec9d41b082623116792d1d2a09">t_i</a></div><div class="ttdeci">nat t_i</div><div class="ttdoc">Тип для индексов</div><div class="ttdef"><b>Definition:</b> <a href="consts_8ligo_source.html#l00034">consts.ligo:34</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_ae9b15dd87e066e1908bbd90e8f38627.html">contracts</a></li><li class="navelem"><a class="el" href="dir_096bafc1b3c9e8e4179a990f0f323fba.html">module</a></li><li class="navelem"><a class="el" href="MRandom_8ligo.html">MRandom.ligo</a></li>
+    <li class="footer">Создано системой <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+  </ul>
+</div>
+</body>
+</html>

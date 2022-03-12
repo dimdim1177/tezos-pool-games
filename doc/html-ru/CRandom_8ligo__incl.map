@@ -1,0 +1,12 @@
+<map id="CRandom.ligo" name="CRandom.ligo">
+<area shape="rect" id="node1" title=" " alt="" coords="601,5,715,32"/>
+<area shape="rect" id="node2" href="$CRandom_2storage_8ligo.html" title=" " alt="" coords="515,155,681,181"/>
+<area shape="rect" id="node10" href="$CRandom_2access_8ligo.html" title="Функции для проверки доступа с учетом включенных модулей управления доступом" alt="" coords="639,80,800,107"/>
+<area shape="rect" id="node3" href="$CRandom_2types_8ligo.html" title=" " alt="" coords="544,229,631,256"/>
+<area shape="rect" id="node4" href="$CRandom_2config_8ligo.html" title="Конфигурация контракта (ключи компиляции)" alt="" coords="5,304,95,331"/>
+<area shape="rect" id="node5" href="$consts_8ligo.html" title=" " alt="" coords="119,304,274,331"/>
+<area shape="rect" id="node6" href="$MOwner_8ligo.html" title=" " alt="" coords="503,304,671,331"/>
+<area shape="rect" id="node7" href="$MAdmin_8ligo.html" title=" " alt="" coords="696,304,865,331"/>
+<area shape="rect" id="node8" href="$MAdmins_8ligo.html" title=" " alt="" coords="890,304,1066,331"/>
+<area shape="rect" id="node9" href="$MRandom_8ligo.html" title=" " alt="" coords="298,304,479,331"/>
+</map>

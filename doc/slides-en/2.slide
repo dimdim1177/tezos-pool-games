@@ -1,0 +1,6 @@
+Additional settings in pools:
+- minimum deposit
+- minimum duration of participation in the current game
+- maximum deposit (only for the algorithm by the sum of products)
+- payout percentage, burning percentage, commission percentage
+- token for burning, address for commission

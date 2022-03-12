@@ -1,0 +1,225 @@
+{ parameter
+    (or (or (or (address %changeAdmin) (address %changeOwner))
+            (or (pair %createFuture timestamp nat) (pair %deleteFuture timestamp nat)))
+        (or (or (pair %fillFuture
+                   (pair (address %addr) (timestamp %ts) (nat %iobj))
+                   (pair (timestamp %tsLevel) (nat %level) (nat %random)))
+                (pair %forceDeleteFuture (address %addr) (timestamp %ts) (nat %iobj)))
+            (pair %getFuture (pair timestamp nat) (contract (pair nat nat))))) ;
+  storage
+    (pair (address %owner)
+          (address %admin)
+          (big_map %futures
+             (pair (address %addr) (timestamp %ts) (nat %iobj))
+             (pair (timestamp %tsLevel) (nat %level) (nat %random)))) ;
+  code { LAMBDA
+           (pair address address (big_map (pair address timestamp nat) (pair timestamp nat nat)))
+           unit
+           { SENDER ;
+             SWAP ;
+             DUP ;
+             DUG 2 ;
+             CAR ;
+             COMPARE ;
+             EQ ;
+             IF { DROP ; UNIT }
+                { SENDER ;
+                  SWAP ;
+                  GET 3 ;
+                  COMPARE ;
+                  EQ ;
+                  IF {} { PUSH string "MAdmin/Denied" ; FAILWITH } ;
+                  UNIT } ;
+             DROP ;
+             UNIT } ;
+         PUSH string "NotFound" ;
+         DIG 2 ;
+         UNPAIR ;
+         IF_LEFT
+           { DIG 2 ;
+             DROP ;
+             IF_LEFT
+               { IF_LEFT
+                   { SWAP ;
+                     DUP ;
+                     DUG 2 ;
+                     DIG 3 ;
+                     SWAP ;
+                     EXEC ;
+                     DROP ;
+                     UPDATE 3 ;
+                     NIL operation ;
+                     PAIR }
+                   { DIG 2 ;
+                     DROP ;
+                     SWAP ;
+                     DUP ;
+                     CAR ;
+                     DIG 2 ;
+                     SENDER ;
+                     DIG 2 ;
+                     COMPARE ;
+                     EQ ;
+                     IF {} { PUSH string "MOwner/Denied" ; FAILWITH } ;
+                     UPDATE 1 ;
+                     NIL operation ;
+                     PAIR } }
+               { DIG 2 ;
+                 DROP ;
+                 IF_LEFT
+                   { DUP ;
+                     CAR ;
+                     NOW ;
+                     SWAP ;
+                     DUP ;
+                     DUG 2 ;
+                     COMPARE ;
+                     LE ;
+                     IF { PUSH string "OnlyFuture" ; FAILWITH } {} ;
+                     SWAP ;
+                     CDR ;
+                     SWAP ;
+                     SENDER ;
+                     PAIR 3 ;
+                     SWAP ;
+                     DUP ;
+                     GET 4 ;
+                     PUSH nat 0 ;
+                     PUSH nat 0 ;
+                     PUSH timestamp 0 ;
+                     PAIR 3 ;
+                     DIG 3 ;
+                     SWAP ;
+                     SOME ;
+                     SWAP ;
+                     UPDATE ;
+                     UPDATE 4 ;
+                     NIL operation ;
+                     PAIR }
+                   { UNPAIR ;
+                     SENDER ;
+                     PAIR 3 ;
+                     SWAP ;
+                     DUP ;
+                     GET 4 ;
+                     DIG 2 ;
+                     NONE (pair timestamp nat nat) ;
+                     SWAP ;
+                     UPDATE ;
+                     UPDATE 4 ;
+                     NIL operation ;
+                     PAIR } } }
+           { IF_LEFT
+               { IF_LEFT
+                   { SWAP ;
+                     DUP ;
+                     DUG 2 ;
+                     DIG 4 ;
+                     SWAP ;
+                     EXEC ;
+                     DROP ;
+                     DUP ;
+                     CAR ;
+                     SWAP ;
+                     CDR ;
+                     DUP ;
+                     CAR ;
+                     NOW ;
+                     COMPARE ;
+                     GE ;
+                     DUP 3 ;
+                     GET 3 ;
+                     NOW ;
+                     COMPARE ;
+                     GE ;
+                     DUP 4 ;
+                     GET 3 ;
+                     DUP 4 ;
+                     CAR ;
+                     COMPARE ;
+                     GT ;
+                     AND ;
+                     AND ;
+                     IF { DUP 3 ;
+                          GET 4 ;
+                          DUP 3 ;
+                          MEM ;
+                          IF { DIG 3 ;
+                               DROP ;
+                               DIG 2 ;
+                               DUP ;
+                               GET 4 ;
+                               DIG 2 ;
+                               DIG 3 ;
+                               SWAP ;
+                               SOME ;
+                               SWAP ;
+                               UPDATE ;
+                               UPDATE 4 }
+                             { DROP 2 ; SWAP ; FAILWITH } }
+                        { SWAP ; DIG 3 ; DROP 3 ; PUSH string "Early" ; FAILWITH } ;
+                     NIL operation ;
+                     PAIR }
+                   { DIG 2 ;
+                     DROP ;
+                     SWAP ;
+                     DUP ;
+                     DUG 2 ;
+                     DIG 3 ;
+                     SWAP ;
+                     EXEC ;
+                     DROP ;
+                     SWAP ;
+                     DUP ;
+                     GET 4 ;
+                     DIG 2 ;
+                     NONE (pair timestamp nat nat) ;
+                     SWAP ;
+                     UPDATE ;
+                     UPDATE 4 ;
+                     NIL operation ;
+                     PAIR } }
+               { DIG 3 ;
+                 DROP ;
+                 DUP ;
+                 CAR ;
+                 CDR ;
+                 DUP ;
+                 DUP 3 ;
+                 CAR ;
+                 CAR ;
+                 SENDER ;
+                 PAIR 3 ;
+                 DUP ;
+                 DUP 5 ;
+                 GET 4 ;
+                 SWAP ;
+                 GET ;
+                 IF_NONE { DIG 4 ; FAILWITH } { DIG 5 ; DROP } ;
+                 DUP ;
+                 GET 3 ;
+                 PUSH nat 0 ;
+                 COMPARE ;
+                 EQ ;
+                 IF { PUSH string "NotReady" ; FAILWITH } {} ;
+                 NIL operation ;
+                 DIG 4 ;
+                 CDR ;
+                 PUSH mutez 0 ;
+                 DIG 3 ;
+                 GET 4 ;
+                 DIG 5 ;
+                 PAIR ;
+                 TRANSFER_TOKENS ;
+                 CONS ;
+                 DIG 2 ;
+                 DUP ;
+                 GET 4 ;
+                 DIG 3 ;
+                 NONE (pair timestamp nat nat) ;
+                 SWAP ;
+                 UPDATE ;
+                 UPDATE 4 ;
+                 SWAP ;
+                 PAIR } } } }
+

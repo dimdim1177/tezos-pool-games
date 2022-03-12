@@ -1,0 +1,7 @@
+Key features of the random number generation contract:
+- anyone can request a random number in the future
+  and add the object ID to request
+- random number based on hash of nearest Tezos block
+  with time more then request time
+- contract owner / administrators are configurable
+  by compilation keys

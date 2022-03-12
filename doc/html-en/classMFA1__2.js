@@ -1,0 +1,28 @@
+var classMFA1__2 =
+[
+    [ "t_approve_params", "structMFA1__2_1_1t__approve__params.html", "structMFA1__2_1_1t__approve__params" ],
+    [ "t_balance_params", "structMFA1__2_1_1t__balance__params.html", "structMFA1__2_1_1t__balance__params" ],
+    [ "t_transfer_params", "structMFA1__2_1_1t__transfer__params.html", "structMFA1__2_1_1t__transfer__params" ],
+    [ "t_approve_contract", "classMFA1__2.html#a8c75fbc2d3793077254b10a02089fec7", null ],
+    [ "t_approve_method", "classMFA1__2.html#a723aca565cee2be9e1d220b5367ec25b", null ],
+    [ "t_balance_callback", "classMFA1__2.html#a77cc9678cf71099443529815b7293a69", null ],
+    [ "t_balance_callback_params", "classMFA1__2.html#a1dc5f4c0a11f09c5dd962e3e1cf22526", null ],
+    [ "t_balance_contract", "classMFA1__2.html#ae75e29f4d96d20c3c984933127c1790e", null ],
+    [ "t_balance_method", "classMFA1__2.html#afd751f0ed86da8ac1c71e584c3c4a2a0", null ],
+    [ "t_transfer_contract", "classMFA1__2.html#a10148c316366d5970f07a24eee2b9d08", null ],
+    [ "t_transfer_method", "classMFA1__2.html#a17a82035fae6a5f67a3b5f89fee78bb5", null ],
+    [ "approve", "classMFA1__2.html#a8cec3ccdc6b4351ea60c5332b3a248f5", null ],
+    [ "approveEntrypoint", "classMFA1__2.html#aebdb11de465337675086e507fc1688e1", null ],
+    [ "approveParams", "classMFA1__2.html#a76ab7986fd15ad175303642d80f07047", null ],
+    [ "balanceEntrypoint", "classMFA1__2.html#a7439f02892a0503a9a5f9fcffcda4615", null ],
+    [ "balanceOf", "classMFA1__2.html#a6763f351283efc017d6081e056f670a8", null ],
+    [ "balanceParams", "classMFA1__2.html#a7546bed301ab221d4a789b38c88c77d7", null ],
+    [ "check", "classMFA1__2.html#a61d216c925f12e9456410ef51f449ac5", null ],
+    [ "decline", "classMFA1__2.html#ab75f8bcc0224773d18029d59dd937c4e", null ],
+    [ "transfer", "classMFA1__2.html#a5d1ce8f9a2c104414e5d0d430a2e62d0", null ],
+    [ "transferEntrypoint", "classMFA1__2.html#a9f6d3115594a153ae42ced7b2bc2c675", null ],
+    [ "transferParams", "classMFA1__2.html#aca4f744f390dc55171bf1db08feacd11", null ],
+    [ "cERR_NOT_FOUND_APPROVE", "classMFA1__2.html#ad10b4435d4a27b764814022d60fc75f8", null ],
+    [ "cERR_NOT_FOUND_BALANCE", "classMFA1__2.html#a5942e5c9a2f7fcc4ce78bd25be99bc9e", null ],
+    [ "cERR_NOT_FOUND_TRANSFER", "classMFA1__2.html#accf79694d005f90c5bffeecdd88874c7", null ]
+];

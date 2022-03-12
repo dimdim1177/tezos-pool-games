@@ -1,0 +1,7 @@
+<map id="CPoolGames::t_pool" name="CPoolGames::t_pool">
+<area shape="rect" id="node1" title="Пул для периодических розыгрышей вознаграждения" alt="" coords="156,199,309,225"/>
+<area shape="rect" id="node2" href="$structMFarm_1_1t__farm.html" title="Параметры фермы" alt="" coords="10,109,127,136"/>
+<area shape="rect" id="node3" href="$structMToken_1_1t__token.html" title="Токен" alt="" coords="5,5,132,32"/>
+<area shape="rect" id="node4" href="$structCPoolGames_1_1t__game.html" title="Параметры партии розыгрыша" alt="" coords="151,109,314,136"/>
+<area shape="rect" id="node5" href="$structCPoolGames_1_1t__opts.html" title="Настройки пула" alt="" coords="339,109,492,136"/>
+</map>

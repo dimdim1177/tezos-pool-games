@@ -1,0 +1,302 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.1"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Pool Games: Исходный файл MFA1_2.ligo</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Pool Games
+   </div>
+   <div id="projectbrief">Розыгрыши вознаграждения на основе смарт-контрактов Tezos</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Создано системой Doxygen 1.9.1 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+var searchBox = new SearchBox("searchBox", "search",false,'Поиск','.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(function() {
+  initMenu('',true,false,'search.php','Поиск');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(document).ready(function(){initNavTree('MFA1__2_8ligo_source.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="headertitle">
+<div class="title">MFA1_2.ligo</div>  </div>
+</div><!--header-->
+<div class="contents">
+<a href="MFA1__2_8ligo.html">См. документацию.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#if !MFA1_2_INCLUDED</span></div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#define MFA1_2_INCLUDED</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment">///RU Типы и методы для FA1.2</span></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="comment">///EN Types and methods for FA1.2</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno"><a class="line" href="classMFA1__2.html">    6</a></span>&#160;<span class="comment"></span>module <a class="code" href="classMFA1__2.html">MFA1_2</a> is {</div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="comment">    ///RU Входные параметры для метода transfer</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="comment">    ///EN Input parameters for the transfer method</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno"><a class="line" href="structMFA1__2_1_1t__transfer__params.html">   10</a></span>&#160;<span class="comment"></span>    type <a class="code" href="structMFA1__2_1_1t__transfer__params.html">t_transfer_params</a> is [@layout:comb] record [<span class="comment"></span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="comment">        ///RU Откуда переводим</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="comment">        ///EN From where we translate</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno"><a class="line" href="structMFA1__2_1_1t__transfer__params.html#a3b08aca70d09b30666eeb31249ac9272">   13</a></span>&#160;<span class="comment"></span>        <a class="code" href="structMFA1__2_1_1t__transfer__params.html#a3b08aca70d09b30666eeb31249ac9272">src</a>: address;<span class="comment"></span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="comment">        ///RU Куда переводим</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="comment">        ///EN Where are we transferring to</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno"><a class="line" href="structMFA1__2_1_1t__transfer__params.html#a44e8204081055d06163740c4efc7c9fe">   16</a></span>&#160;<span class="comment"></span>        <a class="code" href="structMFA1__2_1_1t__transfer__params.html#a44e8204081055d06163740c4efc7c9fe">dst</a>: address;<span class="comment"></span></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="comment">        ///RU Сколько переводим</span></div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="comment">        ///EN How much are we transferring</span></div>
+<div class="line"><a name="l00019"></a><span class="lineno"><a class="line" href="structMFA1__2_1_1t__transfer__params.html#a000b2009c439ef6060805707b968ca1e">   19</a></span>&#160;<span class="comment"></span>        <a class="code" href="structMFA1__2_1_1t__transfer__params.html#a000b2009c439ef6060805707b968ca1e">tamount</a>: nat;</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    ];</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="comment">    ///RU Прототип метода transfer</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="comment">    ///EN Prototype of the transfer method</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno"><a class="line" href="classMFA1__2.html#a17a82035fae6a5f67a3b5f89fee78bb5">   24</a></span>&#160;<span class="comment"></span>    type <a class="code" href="classMFA1__2.html#a17a82035fae6a5f67a3b5f89fee78bb5">t_transfer_method</a> is FA12Transfer of <a class="code" href="structMFA1__2_1_1t__transfer__params.html">t_transfer_params</a>;</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="comment">    ///RU Контракт с точкой входа transfer</span></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="comment">    ///EN Contract with the transfer entry point</span></div>
+<div class="line"><a name="l00028"></a><span class="lineno"><a class="line" href="classMFA1__2.html#a10148c316366d5970f07a24eee2b9d08">   28</a></span>&#160;<span class="comment"></span>    type <a class="code" href="classMFA1__2.html#a10148c316366d5970f07a24eee2b9d08">t_transfer_contract</a> is contract(<a class="code" href="classMFA1__2.html#a17a82035fae6a5f67a3b5f89fee78bb5">t_transfer_method</a>);</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="comment">    ///RU Параметры колбека баланса</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="comment">    ///EN Balance Callback Parameters</span></div>
+<div class="line"><a name="l00032"></a><span class="lineno"><a class="line" href="classMFA1__2.html#a1dc5f4c0a11f09c5dd962e3e1cf22526">   32</a></span>&#160;<span class="comment"></span>    type <a class="code" href="classMFA1__2.html#a1dc5f4c0a11f09c5dd962e3e1cf22526">t_balance_callback_params</a> is nat;</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="comment">    ///RU Тип колбека для получения баланса</span></div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="comment">    ///EN The type of callback to get the balance</span></div>
+<div class="line"><a name="l00036"></a><span class="lineno"><a class="line" href="classMFA1__2.html#a77cc9678cf71099443529815b7293a69">   36</a></span>&#160;<span class="comment"></span>    type <a class="code" href="classMFA1__2.html#a77cc9678cf71099443529815b7293a69">t_balance_callback</a> is contract(<a class="code" href="classMFA1__2.html#a1dc5f4c0a11f09c5dd962e3e1cf22526">t_balance_callback_params</a>);</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="comment">    ///RU Входные параметры для метода balance</span></div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="comment">    ///EN Input parameters for the balance method</span></div>
+<div class="line"><a name="l00040"></a><span class="lineno"><a class="line" href="structMFA1__2_1_1t__balance__params.html">   40</a></span>&#160;<span class="comment"></span>    type <a class="code" href="structMFA1__2_1_1t__balance__params.html">t_balance_params</a> is [@layout:comb] record [<span class="comment"></span></div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="comment">        ///RU Чей баланс запрашиваем</span></div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="comment">        ///EN Whose balance we are requesting</span></div>
+<div class="line"><a name="l00043"></a><span class="lineno"><a class="line" href="structMFA1__2_1_1t__balance__params.html#a22a286c6e352e1556a820e42d237e95d">   43</a></span>&#160;<span class="comment"></span>        <a class="code" href="structMFA1__2_1_1t__balance__params.html#a22a286c6e352e1556a820e42d237e95d">owner</a>: address;<span class="comment"></span></div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="comment">        ///RU Колбек с балансом</span></div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="comment">        ///EN Colback with balance</span></div>
+<div class="line"><a name="l00046"></a><span class="lineno"><a class="line" href="structMFA1__2_1_1t__balance__params.html#ae6cde3a6f4eeb633a1a3e240e1e14fca">   46</a></span>&#160;<span class="comment"></span>        <a class="code" href="structMFA1__2_1_1t__balance__params.html#ae6cde3a6f4eeb633a1a3e240e1e14fca">callback</a>: <a class="code" href="classMFA1__2.html#a77cc9678cf71099443529815b7293a69">t_balance_callback</a>;</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    ];</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="comment">    ///RU Прототип метода balance</span></div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="comment">    ///EN Prototype of the balance method</span></div>
+<div class="line"><a name="l00051"></a><span class="lineno"><a class="line" href="classMFA1__2.html#afd751f0ed86da8ac1c71e584c3c4a2a0">   51</a></span>&#160;<span class="comment"></span>    type <a class="code" href="classMFA1__2.html#afd751f0ed86da8ac1c71e584c3c4a2a0">t_balance_method</a> is FA12Balance of <a class="code" href="structMFA1__2_1_1t__balance__params.html">t_balance_params</a>;</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="comment">    ///RU Контракт с точкой входа balance</span></div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="comment">    ///EN Contract with the balance entry point</span></div>
+<div class="line"><a name="l00055"></a><span class="lineno"><a class="line" href="classMFA1__2.html#ae75e29f4d96d20c3c984933127c1790e">   55</a></span>&#160;<span class="comment"></span>    type <a class="code" href="classMFA1__2.html#ae75e29f4d96d20c3c984933127c1790e">t_balance_contract</a> is contract(<a class="code" href="classMFA1__2.html#afd751f0ed86da8ac1c71e584c3c4a2a0">t_balance_method</a>);</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="comment">    ///RU Входные параметры для метода approve</span></div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="comment">    ///EN Input parameters for the approve method</span></div>
+<div class="line"><a name="l00059"></a><span class="lineno"><a class="line" href="structMFA1__2_1_1t__approve__params.html">   59</a></span>&#160;<span class="comment"></span>    type <a class="code" href="structMFA1__2_1_1t__approve__params.html">t_approve_params</a> is [@layout:comb] record [</div>
+<div class="line"><a name="l00060"></a><span class="lineno"><a class="line" href="structMFA1__2_1_1t__approve__params.html#a0189a4b2bbfba8d41ff05252ef3e7166">   60</a></span>&#160;        <a class="code" href="structMFA1__2_1_1t__approve__params.html#a0189a4b2bbfba8d41ff05252ef3e7166">spender</a>: address;</div>
+<div class="line"><a name="l00061"></a><span class="lineno"><a class="line" href="structMFA1__2_1_1t__approve__params.html#af3c434e88f855311a42539cb1e20929c">   61</a></span>&#160;        <a class="code" href="structMFA1__2_1_1t__approve__params.html#af3c434e88f855311a42539cb1e20929c">value</a>: nat;</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    ];</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="comment">    ///RU Прототип метода approve</span></div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="comment">    ///EN Prototype of the approve method</span></div>
+<div class="line"><a name="l00066"></a><span class="lineno"><a class="line" href="classMFA1__2.html#a723aca565cee2be9e1d220b5367ec25b">   66</a></span>&#160;<span class="comment"></span>    type <a class="code" href="classMFA1__2.html#a723aca565cee2be9e1d220b5367ec25b">t_approve_method</a> is FA12Approve of <a class="code" href="structMFA1__2_1_1t__approve__params.html">t_approve_params</a>;</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;<span class="comment">    ///RU Контракт с точкой входа approve</span></div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;<span class="comment">    ///EN Contract with the approve entry point</span></div>
+<div class="line"><a name="l00070"></a><span class="lineno"><a class="line" href="classMFA1__2.html#a8c75fbc2d3793077254b10a02089fec7">   70</a></span>&#160;<span class="comment"></span>    type <a class="code" href="classMFA1__2.html#a8c75fbc2d3793077254b10a02089fec7">t_approve_contract</a> is contract(<a class="code" href="classMFA1__2.html#a723aca565cee2be9e1d220b5367ec25b">t_approve_method</a>);</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160; </div>
+<div class="line"><a name="l00072"></a><span class="lineno"><a class="line" href="classMFA1__2.html#accf79694d005f90c5bffeecdd88874c7">   72</a></span>&#160;    <span class="keyword">const</span> <a class="code" href="classMFA1__2.html#accf79694d005f90c5bffeecdd88874c7">cERR_NOT_FOUND_TRANSFER</a>: <span class="keywordtype">string</span> = <span class="stringliteral">&quot;MFA1_2/NotFoundTransfer&quot;</span>;<span class="comment">///RU&lt; Ошибка: Не найден метод transfer токена ///EN&lt; Error: The token transfer method was not found</span></div>
+<div class="line"><a name="l00073"></a><span class="lineno"><a class="line" href="classMFA1__2.html#a5942e5c9a2f7fcc4ce78bd25be99bc9e">   73</a></span>&#160;    <span class="keyword">const</span> <a class="code" href="classMFA1__2.html#a5942e5c9a2f7fcc4ce78bd25be99bc9e">cERR_NOT_FOUND_BALANCE</a>: <span class="keywordtype">string</span> = <span class="stringliteral">&quot;MFA1_2/NotFoundBalance&quot;</span>;<span class="comment">///RU&lt; Ошибка: Не найден метод balance токена ///EN&lt; Error: The balance token method was not found</span></div>
+<div class="line"><a name="l00074"></a><span class="lineno"><a class="line" href="classMFA1__2.html#ad10b4435d4a27b764814022d60fc75f8">   74</a></span>&#160;    <span class="keyword">const</span> <a class="code" href="classMFA1__2.html#ad10b4435d4a27b764814022d60fc75f8">cERR_NOT_FOUND_APPROVE</a>: <span class="keywordtype">string</span> = <span class="stringliteral">&quot;MFA1_2/NotFoundApprove&quot;</span>;<span class="comment">///RU&lt; Ошибка: Не найден метод approve токена ///EN&lt; Error: The approve token method was not found</span></div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;<span class="comment">    ///RU Получить точку входа transfer токена</span></div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;<span class="comment">    ///EN Get the transfer token entry point</span></div>
+<div class="line"><a name="l00078"></a><span class="lineno"><a class="line" href="classMFA1__2.html#a9f6d3115594a153ae42ced7b2bc2c675">   78</a></span>&#160;<span class="comment"></span>    <span class="keyword">function</span> <a class="code" href="classMFA1__2.html#a9f6d3115594a153ae42ced7b2bc2c675">transferEntrypoint</a>(<span class="keyword">const</span> addr: address): <a class="code" href="classMFA1__2.html#a10148c316366d5970f07a24eee2b9d08">t_transfer_contract</a> is</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;        case (Tezos.get_entrypoint_opt(<span class="stringliteral">&quot;%transfer&quot;</span>, addr): option(<a class="code" href="classMFA1__2.html#a10148c316366d5970f07a24eee2b9d08">t_transfer_contract</a>)) of [</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;        | Some(transfer_contract) -&gt; transfer_contract</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;        | None -&gt; (failwith(cERR_NOT_FOUND_TRANSFER): <a class="code" href="classMFA1__2.html#a10148c316366d5970f07a24eee2b9d08">t_transfer_contract</a>)</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;        ];</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;<span class="comment">    ///RU Параметры для перевода токенов</span></div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;<span class="comment">    ///EN Parameters for transferring tokens</span></div>
+<div class="line"><a name="l00086"></a><span class="lineno"><a class="line" href="classMFA1__2.html#aca4f744f390dc55171bf1db08feacd11">   86</a></span>&#160;<span class="comment"></span>    <span class="keyword">function</span> <a class="code" href="classMFA1__2.html#aca4f744f390dc55171bf1db08feacd11">transferParams</a>(<span class="keyword">const</span> src: address; <span class="keyword">const</span> dst: address; <span class="keyword">const</span> tamount: nat): <a class="code" href="classMFA1__2.html#a17a82035fae6a5f67a3b5f89fee78bb5">t_transfer_method</a> is</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;        FA12Transfer(record [</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;            src = src;</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;            dst = dst;</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;            tamount = tamount;</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;        ]);</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;<span class="comment">    ///RU Операция перевода токенов</span></div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;<span class="comment">    ///EN Token Transfer Operation</span></div>
+<div class="line"><a name="l00095"></a><span class="lineno"><a class="line" href="classMFA1__2.html#a5d1ce8f9a2c104414e5d0d430a2e62d0">   95</a></span>&#160;<span class="comment"></span>    <span class="keyword">function</span> <a class="code" href="classMFA1__2.html#a5d1ce8f9a2c104414e5d0d430a2e62d0">transfer</a>(<span class="keyword">const</span> token: address; <span class="keyword">const</span> src: address; <span class="keyword">const</span> dst: address; <span class="keyword">const</span> tamount: nat): operation is</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;        Tezos.transaction(</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;            transferParams(src, dst, tamount),</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;            0mutez,</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;            transferEntrypoint(token)</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;        );</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;<span class="comment">    ///RU Получить точку входа balance токена</span></div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;<span class="comment">    ///EN Get the balance token entry point</span></div>
+<div class="line"><a name="l00104"></a><span class="lineno"><a class="line" href="classMFA1__2.html#a7439f02892a0503a9a5f9fcffcda4615">  104</a></span>&#160;<span class="comment"></span>    <span class="keyword">function</span> <a class="code" href="classMFA1__2.html#a7439f02892a0503a9a5f9fcffcda4615">balanceEntrypoint</a>(<span class="keyword">const</span> addr: address): <a class="code" href="classMFA1__2.html#ae75e29f4d96d20c3c984933127c1790e">t_balance_contract</a> is</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;        case (Tezos.get_entrypoint_opt(<span class="stringliteral">&quot;%getBalance&quot;</span>, addr): option(<a class="code" href="classMFA1__2.html#ae75e29f4d96d20c3c984933127c1790e">t_balance_contract</a>)) of [</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;        | Some(balance_contract) -&gt; balance_contract</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;        | None -&gt; (failwith(cERR_NOT_FOUND_BALANCE): <a class="code" href="classMFA1__2.html#ae75e29f4d96d20c3c984933127c1790e">t_balance_contract</a>)</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;        ];</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;<span class="comment">    ///RU Параметры для запроса баланса</span></div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;<span class="comment">    ///EN Parameters for balance request</span></div>
+<div class="line"><a name="l00112"></a><span class="lineno"><a class="line" href="classMFA1__2.html#a7546bed301ab221d4a789b38c88c77d7">  112</a></span>&#160;<span class="comment"></span>    <span class="keyword">function</span> <a class="code" href="classMFA1__2.html#a7546bed301ab221d4a789b38c88c77d7">balanceParams</a>(<span class="keyword">const</span> owner: address; <span class="keyword">const</span> callback: <a class="code" href="classMFA1__2.html#a77cc9678cf71099443529815b7293a69">t_balance_callback</a>): <a class="code" href="classMFA1__2.html#afd751f0ed86da8ac1c71e584c3c4a2a0">t_balance_method</a> is</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;        FA12Balance(record [</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;            owner = owner;</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;            callback = callback;</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;        ]);</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;<span class="comment">    ///RU Операция перевода токенов</span></div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;<span class="comment">    ///EN Token Transfer Operation</span></div>
+<div class="line"><a name="l00120"></a><span class="lineno"><a class="line" href="classMFA1__2.html#a6763f351283efc017d6081e056f670a8">  120</a></span>&#160;<span class="comment"></span>    <span class="keyword">function</span> <a class="code" href="classMFA1__2.html#a6763f351283efc017d6081e056f670a8">balanceOf</a>(<span class="keyword">const</span> token: address; <span class="keyword">const</span> owner: address; <span class="keyword">const</span> callback: <a class="code" href="classMFA1__2.html#a77cc9678cf71099443529815b7293a69">t_balance_callback</a>): operation is</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;        Tezos.transaction(</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;            balanceParams(owner, callback),</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;            0mutez,</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;            balanceEntrypoint(token)</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;        );</div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;<span class="comment">    ///RU Получить точку входа approve токена</span></div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;<span class="comment">    ///EN Get the approve token entry point</span></div>
+<div class="line"><a name="l00129"></a><span class="lineno"><a class="line" href="classMFA1__2.html#aebdb11de465337675086e507fc1688e1">  129</a></span>&#160;<span class="comment"></span>    <span class="keyword">function</span> <a class="code" href="classMFA1__2.html#aebdb11de465337675086e507fc1688e1">approveEntrypoint</a>(<span class="keyword">const</span> addr: address): <a class="code" href="classMFA1__2.html#a8c75fbc2d3793077254b10a02089fec7">t_approve_contract</a> is</div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;        case (Tezos.get_entrypoint_opt(<span class="stringliteral">&quot;%approve&quot;</span>, addr): option(<a class="code" href="classMFA1__2.html#a8c75fbc2d3793077254b10a02089fec7">t_approve_contract</a>)) of [</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;        | Some(approve_contract) -&gt; approve_contract</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;        | None -&gt; (failwith(cERR_NOT_FOUND_APPROVE): <a class="code" href="classMFA1__2.html#a8c75fbc2d3793077254b10a02089fec7">t_approve_contract</a>)</div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;        ];</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;<span class="comment">    ///RU Параметры для одобрения распоряжения токенами</span></div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;<span class="comment">    ///EN Parameters for approving the disposal of tokens</span></div>
+<div class="line"><a name="l00137"></a><span class="lineno"><a class="line" href="classMFA1__2.html#a76ab7986fd15ad175303642d80f07047">  137</a></span>&#160;<span class="comment"></span>    <span class="keyword">function</span> <a class="code" href="classMFA1__2.html#a76ab7986fd15ad175303642d80f07047">approveParams</a>(<span class="keyword">const</span> <span class="keyword">operator</span>: address; <span class="keyword">const</span> tamount: nat): <a class="code" href="classMFA1__2.html#a723aca565cee2be9e1d220b5367ec25b">t_approve_method</a> is</div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;        FA12Approve(record [</div>
+<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;            spender = <span class="keyword">operator</span>;</div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;            value = tamount;</div>
+<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;        ]);</div>
+<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;<span class="comment">    ///RU Операция одобрения распоряжения токенами</span></div>
+<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;<span class="comment">    ///EN The operation of approving the disposal of tokens</span></div>
+<div class="line"><a name="l00145"></a><span class="lineno"><a class="line" href="classMFA1__2.html#a8cec3ccdc6b4351ea60c5332b3a248f5">  145</a></span>&#160;<span class="comment"></span>    <span class="keyword">function</span> <a class="code" href="classMFA1__2.html#a8cec3ccdc6b4351ea60c5332b3a248f5">approve</a>(<span class="keyword">const</span> token: address; <span class="keyword">const</span> <span class="keyword">operator</span>: address; <span class="keyword">const</span> tamount: nat): operation is</div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;        Tezos.transaction(</div>
+<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;            approveParams(<span class="keyword">operator</span>, tamount),</div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;            0mutez,</div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;            approveEntrypoint(token)</div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;        );</div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;<span class="comment">    ///RU Операция запрета распоряжения токенами</span></div>
+<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;<span class="comment">    ///EN The operation of prohibiting the disposal of tokens</span></div>
+<div class="line"><a name="l00154"></a><span class="lineno"><a class="line" href="classMFA1__2.html#ab75f8bcc0224773d18029d59dd937c4e">  154</a></span>&#160;<span class="comment"></span>    <span class="keyword">function</span> <a class="code" href="classMFA1__2.html#ab75f8bcc0224773d18029d59dd937c4e">decline</a>(<span class="keyword">const</span> token: address; <span class="keyword">const</span> <span class="keyword">operator</span>: address): operation is</div>
+<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;        Tezos.transaction(</div>
+<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;            approveParams(<span class="keyword">operator</span>, 0n),</div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;            0mutez,</div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;            approveEntrypoint(token)</div>
+<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;        );</div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;<span class="comment">    ///RU Проверка на соответствие стандарту FA1.2</span></div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;<span class="comment">    ///EN Checking for compliance with the FA1.2 standard</span></div>
+<div class="line"><a name="l00163"></a><span class="lineno"><a class="line" href="classMFA1__2.html#a61d216c925f12e9456410ef51f449ac5">  163</a></span>&#160;<span class="comment"></span>    <span class="keyword">function</span> <a class="code" href="classMFA1__2.html#a61d216c925f12e9456410ef51f449ac5">check</a>(<span class="keyword">const</span> token: address): unit is block {</div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;        const _ = transferEntrypoint(token);<span class="comment">//RU Проверяем наличие метода transfer для FA1.2 //EN Checking for the transfer method for FA1.2</span></div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;        <span class="keyword">const</span> _ = balanceEntrypoint(token);<span class="comment">//RU Проверяем наличие метода getBalance для FA1.2 //EN Checking for the getBalance method for FA1.2</span></div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;        <span class="keyword">const</span> _ = approveEntrypoint(token);<span class="comment">//RU Проверяем наличие метода approve для FA1.2 //EN Checking for the approve method for FA1.2</span></div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;    } with unit;</div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160; </div>
+<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;}</div>
+<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// !MFA1_2_INCLUDED</span></div>
+<div class="ttc" id="aclassMFA1__2_html"><div class="ttname"><a href="classMFA1__2.html">MFA1_2</a></div><div class="ttdoc">Типы и методы для FA1.2.</div><div class="ttdef"><b>Definition:</b> <a href="MFA1__2_8ligo_source.html#l00006">MFA1_2.ligo:6</a></div></div>
+<div class="ttc" id="aclassMFA1__2_html_a10148c316366d5970f07a24eee2b9d08"><div class="ttname"><a href="classMFA1__2.html#a10148c316366d5970f07a24eee2b9d08">MFA1_2::t_transfer_contract</a></div><div class="ttdeci">contract&lt; t_transfer_method &gt; t_transfer_contract</div><div class="ttdoc">Контракт с точкой входа transfer.</div><div class="ttdef"><b>Definition:</b> <a href="MFA1__2_8ligo_source.html#l00028">MFA1_2.ligo:28</a></div></div>
+<div class="ttc" id="aclassMFA1__2_html_a17a82035fae6a5f67a3b5f89fee78bb5"><div class="ttname"><a href="classMFA1__2.html#a17a82035fae6a5f67a3b5f89fee78bb5">MFA1_2::t_transfer_method</a></div><div class="ttdeci">FA12Transfer of t_transfer_params t_transfer_method</div><div class="ttdoc">Прототип метода transfer.</div><div class="ttdef"><b>Definition:</b> <a href="MFA1__2_8ligo_source.html#l00024">MFA1_2.ligo:24</a></div></div>
+<div class="ttc" id="aclassMFA1__2_html_a1dc5f4c0a11f09c5dd962e3e1cf22526"><div class="ttname"><a href="classMFA1__2.html#a1dc5f4c0a11f09c5dd962e3e1cf22526">MFA1_2::t_balance_callback_params</a></div><div class="ttdeci">nat t_balance_callback_params</div><div class="ttdoc">Параметры колбека баланса</div><div class="ttdef"><b>Definition:</b> <a href="MFA1__2_8ligo_source.html#l00032">MFA1_2.ligo:32</a></div></div>
+<div class="ttc" id="aclassMFA1__2_html_a5942e5c9a2f7fcc4ce78bd25be99bc9e"><div class="ttname"><a href="classMFA1__2.html#a5942e5c9a2f7fcc4ce78bd25be99bc9e">MFA1_2::cERR_NOT_FOUND_BALANCE</a></div><div class="ttdeci">const string cERR_NOT_FOUND_BALANCE</div><div class="ttdoc">Ошибка: Не найден метод balance токена</div><div class="ttdef"><b>Definition:</b> <a href="MFA1__2_8ligo_source.html#l00073">MFA1_2.ligo:73</a></div></div>
+<div class="ttc" id="aclassMFA1__2_html_a5d1ce8f9a2c104414e5d0d430a2e62d0"><div class="ttname"><a href="classMFA1__2.html#a5d1ce8f9a2c104414e5d0d430a2e62d0">MFA1_2::transfer</a></div><div class="ttdeci">operation transfer(const address token, const address src, const address dst, const nat tamount)</div><div class="ttdoc">Операция перевода токенов</div><div class="ttdef"><b>Definition:</b> <a href="MFA1__2_8ligo_source.html#l00095">MFA1_2.ligo:95</a></div></div>
+<div class="ttc" id="aclassMFA1__2_html_a61d216c925f12e9456410ef51f449ac5"><div class="ttname"><a href="classMFA1__2.html#a61d216c925f12e9456410ef51f449ac5">MFA1_2::check</a></div><div class="ttdeci">unit check(const address token)</div><div class="ttdoc">Проверка на соответствие стандарту FA1.2.</div><div class="ttdef"><b>Definition:</b> <a href="MFA1__2_8ligo_source.html#l00163">MFA1_2.ligo:163</a></div></div>
+<div class="ttc" id="aclassMFA1__2_html_a6763f351283efc017d6081e056f670a8"><div class="ttname"><a href="classMFA1__2.html#a6763f351283efc017d6081e056f670a8">MFA1_2::balanceOf</a></div><div class="ttdeci">operation balanceOf(const address token, const address owner, const t_balance_callback callback)</div><div class="ttdoc">Операция перевода токенов</div><div class="ttdef"><b>Definition:</b> <a href="MFA1__2_8ligo_source.html#l00120">MFA1_2.ligo:120</a></div></div>
+<div class="ttc" id="aclassMFA1__2_html_a723aca565cee2be9e1d220b5367ec25b"><div class="ttname"><a href="classMFA1__2.html#a723aca565cee2be9e1d220b5367ec25b">MFA1_2::t_approve_method</a></div><div class="ttdeci">FA12Approve of t_approve_params t_approve_method</div><div class="ttdoc">Прототип метода approve.</div><div class="ttdef"><b>Definition:</b> <a href="MFA1__2_8ligo_source.html#l00066">MFA1_2.ligo:66</a></div></div>
+<div class="ttc" id="aclassMFA1__2_html_a7439f02892a0503a9a5f9fcffcda4615"><div class="ttname"><a href="classMFA1__2.html#a7439f02892a0503a9a5f9fcffcda4615">MFA1_2::balanceEntrypoint</a></div><div class="ttdeci">t_balance_contract balanceEntrypoint(const address addr)</div><div class="ttdoc">Получить точку входа balance токена</div><div class="ttdef"><b>Definition:</b> <a href="MFA1__2_8ligo_source.html#l00104">MFA1_2.ligo:104</a></div></div>
+<div class="ttc" id="aclassMFA1__2_html_a7546bed301ab221d4a789b38c88c77d7"><div class="ttname"><a href="classMFA1__2.html#a7546bed301ab221d4a789b38c88c77d7">MFA1_2::balanceParams</a></div><div class="ttdeci">t_balance_method balanceParams(const address owner, const t_balance_callback callback)</div><div class="ttdoc">Параметры для запроса баланса</div><div class="ttdef"><b>Definition:</b> <a href="MFA1__2_8ligo_source.html#l00112">MFA1_2.ligo:112</a></div></div>
+<div class="ttc" id="aclassMFA1__2_html_a76ab7986fd15ad175303642d80f07047"><div class="ttname"><a href="classMFA1__2.html#a76ab7986fd15ad175303642d80f07047">MFA1_2::approveParams</a></div><div class="ttdeci">t_approve_method approveParams(const address operator,const nat tamount)</div><div class="ttdoc">Параметры для одобрения распоряжения токенами</div><div class="ttdef"><b>Definition:</b> <a href="MFA1__2_8ligo_source.html#l00137">MFA1_2.ligo:137</a></div></div>
+<div class="ttc" id="aclassMFA1__2_html_a77cc9678cf71099443529815b7293a69"><div class="ttname"><a href="classMFA1__2.html#a77cc9678cf71099443529815b7293a69">MFA1_2::t_balance_callback</a></div><div class="ttdeci">contract&lt; t_balance_callback_params &gt; t_balance_callback</div><div class="ttdoc">Тип колбека для получения баланса</div><div class="ttdef"><b>Definition:</b> <a href="MFA1__2_8ligo_source.html#l00036">MFA1_2.ligo:36</a></div></div>
+<div class="ttc" id="aclassMFA1__2_html_a8c75fbc2d3793077254b10a02089fec7"><div class="ttname"><a href="classMFA1__2.html#a8c75fbc2d3793077254b10a02089fec7">MFA1_2::t_approve_contract</a></div><div class="ttdeci">contract&lt; t_approve_method &gt; t_approve_contract</div><div class="ttdoc">Контракт с точкой входа approve.</div><div class="ttdef"><b>Definition:</b> <a href="MFA1__2_8ligo_source.html#l00070">MFA1_2.ligo:70</a></div></div>
+<div class="ttc" id="aclassMFA1__2_html_a8cec3ccdc6b4351ea60c5332b3a248f5"><div class="ttname"><a href="classMFA1__2.html#a8cec3ccdc6b4351ea60c5332b3a248f5">MFA1_2::approve</a></div><div class="ttdeci">operation approve(const address token, const address operator,const nat tamount)</div><div class="ttdoc">Операция одобрения распоряжения токенами</div><div class="ttdef"><b>Definition:</b> <a href="MFA1__2_8ligo_source.html#l00145">MFA1_2.ligo:145</a></div></div>
+<div class="ttc" id="aclassMFA1__2_html_a9f6d3115594a153ae42ced7b2bc2c675"><div class="ttname"><a href="classMFA1__2.html#a9f6d3115594a153ae42ced7b2bc2c675">MFA1_2::transferEntrypoint</a></div><div class="ttdeci">t_transfer_contract transferEntrypoint(const address addr)</div><div class="ttdoc">Получить точку входа transfer токена</div><div class="ttdef"><b>Definition:</b> <a href="MFA1__2_8ligo_source.html#l00078">MFA1_2.ligo:78</a></div></div>
+<div class="ttc" id="aclassMFA1__2_html_ab75f8bcc0224773d18029d59dd937c4e"><div class="ttname"><a href="classMFA1__2.html#ab75f8bcc0224773d18029d59dd937c4e">MFA1_2::decline</a></div><div class="ttdeci">operation decline(const address token, const address operator)</div><div class="ttdoc">Операция запрета распоряжения токенами</div><div class="ttdef"><b>Definition:</b> <a href="MFA1__2_8ligo_source.html#l00154">MFA1_2.ligo:154</a></div></div>
+<div class="ttc" id="aclassMFA1__2_html_aca4f744f390dc55171bf1db08feacd11"><div class="ttname"><a href="classMFA1__2.html#aca4f744f390dc55171bf1db08feacd11">MFA1_2::transferParams</a></div><div class="ttdeci">t_transfer_method transferParams(const address src, const address dst, const nat tamount)</div><div class="ttdoc">Параметры для перевода токенов</div><div class="ttdef"><b>Definition:</b> <a href="MFA1__2_8ligo_source.html#l00086">MFA1_2.ligo:86</a></div></div>
+<div class="ttc" id="aclassMFA1__2_html_accf79694d005f90c5bffeecdd88874c7"><div class="ttname"><a href="classMFA1__2.html#accf79694d005f90c5bffeecdd88874c7">MFA1_2::cERR_NOT_FOUND_TRANSFER</a></div><div class="ttdeci">const string cERR_NOT_FOUND_TRANSFER</div><div class="ttdoc">Ошибка: Не найден метод transfer токена</div><div class="ttdef"><b>Definition:</b> <a href="MFA1__2_8ligo_source.html#l00072">MFA1_2.ligo:72</a></div></div>
+<div class="ttc" id="aclassMFA1__2_html_ad10b4435d4a27b764814022d60fc75f8"><div class="ttname"><a href="classMFA1__2.html#ad10b4435d4a27b764814022d60fc75f8">MFA1_2::cERR_NOT_FOUND_APPROVE</a></div><div class="ttdeci">const string cERR_NOT_FOUND_APPROVE</div><div class="ttdoc">Ошибка: Не найден метод approve токена</div><div class="ttdef"><b>Definition:</b> <a href="MFA1__2_8ligo_source.html#l00074">MFA1_2.ligo:74</a></div></div>
+<div class="ttc" id="aclassMFA1__2_html_ae75e29f4d96d20c3c984933127c1790e"><div class="ttname"><a href="classMFA1__2.html#ae75e29f4d96d20c3c984933127c1790e">MFA1_2::t_balance_contract</a></div><div class="ttdeci">contract&lt; t_balance_method &gt; t_balance_contract</div><div class="ttdoc">Контракт с точкой входа balance.</div><div class="ttdef"><b>Definition:</b> <a href="MFA1__2_8ligo_source.html#l00055">MFA1_2.ligo:55</a></div></div>
+<div class="ttc" id="aclassMFA1__2_html_aebdb11de465337675086e507fc1688e1"><div class="ttname"><a href="classMFA1__2.html#aebdb11de465337675086e507fc1688e1">MFA1_2::approveEntrypoint</a></div><div class="ttdeci">t_approve_contract approveEntrypoint(const address addr)</div><div class="ttdoc">Получить точку входа approve токена</div><div class="ttdef"><b>Definition:</b> <a href="MFA1__2_8ligo_source.html#l00129">MFA1_2.ligo:129</a></div></div>
+<div class="ttc" id="aclassMFA1__2_html_afd751f0ed86da8ac1c71e584c3c4a2a0"><div class="ttname"><a href="classMFA1__2.html#afd751f0ed86da8ac1c71e584c3c4a2a0">MFA1_2::t_balance_method</a></div><div class="ttdeci">FA12Balance of t_balance_params t_balance_method</div><div class="ttdoc">Прототип метода balance.</div><div class="ttdef"><b>Definition:</b> <a href="MFA1__2_8ligo_source.html#l00051">MFA1_2.ligo:51</a></div></div>
+<div class="ttc" id="astructMFA1__2_1_1t__approve__params_html"><div class="ttname"><a href="structMFA1__2_1_1t__approve__params.html">MFA1_2::t_approve_params</a></div><div class="ttdoc">Входные параметры для метода approve.</div><div class="ttdef"><b>Definition:</b> <a href="MFA1__2_8ligo_source.html#l00059">MFA1_2.ligo:59</a></div></div>
+<div class="ttc" id="astructMFA1__2_1_1t__approve__params_html_a0189a4b2bbfba8d41ff05252ef3e7166"><div class="ttname"><a href="structMFA1__2_1_1t__approve__params.html#a0189a4b2bbfba8d41ff05252ef3e7166">MFA1_2::t_approve_params::spender</a></div><div class="ttdeci">address spender</div><div class="ttdef"><b>Definition:</b> <a href="MFA1__2_8ligo_source.html#l00060">MFA1_2.ligo:60</a></div></div>
+<div class="ttc" id="astructMFA1__2_1_1t__approve__params_html_af3c434e88f855311a42539cb1e20929c"><div class="ttname"><a href="structMFA1__2_1_1t__approve__params.html#af3c434e88f855311a42539cb1e20929c">MFA1_2::t_approve_params::value</a></div><div class="ttdeci">nat value</div><div class="ttdef"><b>Definition:</b> <a href="MFA1__2_8ligo_source.html#l00061">MFA1_2.ligo:61</a></div></div>
+<div class="ttc" id="astructMFA1__2_1_1t__balance__params_html"><div class="ttname"><a href="structMFA1__2_1_1t__balance__params.html">MFA1_2::t_balance_params</a></div><div class="ttdoc">Входные параметры для метода balance.</div><div class="ttdef"><b>Definition:</b> <a href="MFA1__2_8ligo_source.html#l00040">MFA1_2.ligo:40</a></div></div>
+<div class="ttc" id="astructMFA1__2_1_1t__balance__params_html_a22a286c6e352e1556a820e42d237e95d"><div class="ttname"><a href="structMFA1__2_1_1t__balance__params.html#a22a286c6e352e1556a820e42d237e95d">MFA1_2::t_balance_params::owner</a></div><div class="ttdeci">address owner</div><div class="ttdoc">Чей баланс запрашиваем</div><div class="ttdef"><b>Definition:</b> <a href="MFA1__2_8ligo_source.html#l00043">MFA1_2.ligo:43</a></div></div>
+<div class="ttc" id="astructMFA1__2_1_1t__balance__params_html_ae6cde3a6f4eeb633a1a3e240e1e14fca"><div class="ttname"><a href="structMFA1__2_1_1t__balance__params.html#ae6cde3a6f4eeb633a1a3e240e1e14fca">MFA1_2::t_balance_params::callback</a></div><div class="ttdeci">t_balance_callback callback</div><div class="ttdoc">Колбек с балансом</div><div class="ttdef"><b>Definition:</b> <a href="MFA1__2_8ligo_source.html#l00046">MFA1_2.ligo:46</a></div></div>
+<div class="ttc" id="astructMFA1__2_1_1t__transfer__params_html"><div class="ttname"><a href="structMFA1__2_1_1t__transfer__params.html">MFA1_2::t_transfer_params</a></div><div class="ttdoc">Входные параметры для метода transfer.</div><div class="ttdef"><b>Definition:</b> <a href="MFA1__2_8ligo_source.html#l00010">MFA1_2.ligo:10</a></div></div>
+<div class="ttc" id="astructMFA1__2_1_1t__transfer__params_html_a000b2009c439ef6060805707b968ca1e"><div class="ttname"><a href="structMFA1__2_1_1t__transfer__params.html#a000b2009c439ef6060805707b968ca1e">MFA1_2::t_transfer_params::tamount</a></div><div class="ttdeci">nat tamount</div><div class="ttdoc">Сколько переводим</div><div class="ttdef"><b>Definition:</b> <a href="MFA1__2_8ligo_source.html#l00019">MFA1_2.ligo:19</a></div></div>
+<div class="ttc" id="astructMFA1__2_1_1t__transfer__params_html_a3b08aca70d09b30666eeb31249ac9272"><div class="ttname"><a href="structMFA1__2_1_1t__transfer__params.html#a3b08aca70d09b30666eeb31249ac9272">MFA1_2::t_transfer_params::src</a></div><div class="ttdeci">address src</div><div class="ttdoc">Откуда переводим</div><div class="ttdef"><b>Definition:</b> <a href="MFA1__2_8ligo_source.html#l00013">MFA1_2.ligo:13</a></div></div>
+<div class="ttc" id="astructMFA1__2_1_1t__transfer__params_html_a44e8204081055d06163740c4efc7c9fe"><div class="ttname"><a href="structMFA1__2_1_1t__transfer__params.html#a44e8204081055d06163740c4efc7c9fe">MFA1_2::t_transfer_params::dst</a></div><div class="ttdeci">address dst</div><div class="ttdoc">Куда переводим</div><div class="ttdef"><b>Definition:</b> <a href="MFA1__2_8ligo_source.html#l00016">MFA1_2.ligo:16</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_ae9b15dd87e066e1908bbd90e8f38627.html">contracts</a></li><li class="navelem"><a class="el" href="dir_096bafc1b3c9e8e4179a990f0f323fba.html">module</a></li><li class="navelem"><a class="el" href="MFA1__2_8ligo.html">MFA1_2.ligo</a></li>
+    <li class="footer">Создано системой <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+  </ul>
+</div>
+</body>
+</html>

@@ -1,0 +1,363 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.1"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Pool Games: Исходный файл CPoolGames.ligo</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Pool Games
+   </div>
+   <div id="projectbrief">Розыгрыши вознаграждения на основе смарт-контрактов Tezos</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Создано системой Doxygen 1.9.1 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+var searchBox = new SearchBox("searchBox", "search",false,'Поиск','.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(function() {
+  initMenu('',true,false,'search.php','Поиск');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(document).ready(function(){initNavTree('CPoolGames_8ligo_source.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="headertitle">
+<div class="title">CPoolGames.ligo</div>  </div>
+</div><!--header-->
+<div class="contents">
+<a href="CPoolGames_8ligo.html">См. документацию.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/// \file</span></div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment"></span><span class="comment">/// \author Dmitrii Dmitriev</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment"></span><span class="comment">/// \date 02.2022</span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment"></span><span class="comment">/// \copyright MIT</span></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="comment"></span><span class="comment">///RU Контракт периодического розыгрышей вознаграждения на пулах депозитов в фермы</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="comment"></span><span class="comment">///RU \todo Подтверждение победителя другими участниками пула (кроме победителя) за небольшое вознаграждение из выигрыша первым N подтвердившим</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="comment"></span><span class="comment">///RU \todo Выбор участниками токена или XTZ, в котором они хотят получить выигрыш и автоконвертация выигрыша в нужный конкретному пользователю токен</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="comment"></span><span class="comment">///RU \todo По флагу, установленному пользователем, автоинвестирование выигранных токенов в тот же пул через автоконвертацию</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="comment"></span><span class="comment">///RU \todo Получение и вывод менеджерами пула вознаграждения с момента приостановки партий и до извлечения пользователями всех депозитов</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="comment"></span><span class="comment">///RU \todo Старт розыгрыша при внесении первого депозита в пул</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="comment"></span><span class="comment">///EN Contract for periodic reward draws on deposit pools in farms</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="comment"></span><span class="comment">///EN \todo Confirmation of the winner by other pool participants (except the winner) for a small reward from the winnings of the first N confirmed</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="comment"></span><span class="comment">///EN \todo The participants&#39; choice of the token or XTZ in which they want to receive the winnings and autoconvert the winnings into the token needed by a particular user</span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="comment"></span><span class="comment">///EN \todo According to the flag set by the user, the auto-investment of the won tokens into the same pool through auto-conversion</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="comment"></span><span class="comment">///EN \todo Receipt and withdrawal of remuneration by pool managers from the moment of suspension of the parties and until the withdrawal of all deposits by users</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="comment"></span><span class="comment">///EN \todo The start of the draw when making the first deposit to the pool</span></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="CPoolGames_2storage_8ligo.html">CPoolGames/storage.ligo</a>&quot;</span></div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="CPoolGames_2access_8ligo.html">CPoolGames/access.ligo</a>&quot;</span></div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="MPools_8ligo.html">CPoolGames/MPools.ligo</a>&quot;</span></div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="comment">///RU Все точки входа контракта</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="comment">///EN All entrypoints of contract</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno"><a class="line" href="classCPoolGames.html#ad7dd8a8d43ba2a0b6f79bed62c25936c">   24</a></span>&#160;<span class="comment"></span>type <a class="code" href="classCPoolGames.html#ad7dd8a8d43ba2a0b6f79bed62c25936c">t_entrypoint</a> is</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160; </div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="comment">//RU --- Управление доступами</span></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="comment">//EN --- Access management</span></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; </div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#if ENABLE_OWNER</span><span class="comment"></span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="comment">///RU Смена владельца контракта</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="comment">///EN Change owner of contract</span></div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="comment">/// \see MOwner, t_storage.owner</span></div>
+<div class="line"><a name="l00033"></a><span class="lineno"><a class="line" href="classCPoolGames.html#ad7dd8a8d43ba2a0b6f79bed62c25936ca8a460cfec1612a5ed62c874e05898f08">   33</a></span>&#160;<span class="comment"></span>| ChangeOwner of <a class="code" href="classMOwner.html">MOwner</a>.<a class="code" href="classMOwner.html#a4502a1c5e9a100188a5030711588a9de">t_owner</a></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// ENABLE_OWNER</span></div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160; </div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="preprocessor">#if ENABLE_ADMIN</span><span class="comment"></span></div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="comment">///RU Смена админа контракта</span></div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="comment">///EN Change admin of contract</span></div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="comment">/// \see MAdmin, t_storage.admin</span></div>
+<div class="line"><a name="l00040"></a><span class="lineno"><a class="line" href="classCPoolGames.html#ad7dd8a8d43ba2a0b6f79bed62c25936ca246d9fbab9195c67c97f668b37d30963">   40</a></span>&#160;<span class="comment"></span>| ChangeAdmin of <a class="code" href="classMAdmins.html">MAdmins</a>.<a class="code" href="classMAdmins.html#a995efdebe8b823be8236f30e98b85d32">t_admin</a></div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// ENABLE_ADMIN</span></div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160; </div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="preprocessor">#if ENABLE_ADMINS</span><span class="comment"></span></div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="comment">///RU Добавление админа контракта</span></div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="comment">///EN Add admin of contract</span></div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="comment">/// \see MAdmins, t_storage.admins</span></div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="comment"></span>| AddAdmin of <a class="code" href="classMAdmins.html">MAdmins</a>.<a class="code" href="classMAdmins.html#a995efdebe8b823be8236f30e98b85d32">t_admin</a></div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="comment">///RU Удаление админа контракта</span></div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="comment">///EN Remove admin of contract</span></div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="comment">/// \see MAdmins, t_storage.admins</span></div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="comment"></span>| RemAdmin of <a class="code" href="classMAdmins.html">MAdmins</a>.<a class="code" href="classMAdmins.html#a995efdebe8b823be8236f30e98b85d32">t_admin</a></div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// ENABLE_ADMINS</span></div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160; </div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="comment">//RU --- Управление пулами</span></div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="comment">//EN --- Pool management</span></div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="comment">///RU Создание нового пула</span></div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="comment">///EN Create new pool</span></div>
+<div class="line"><a name="l00060"></a><span class="lineno"><a class="line" href="classCPoolGames.html#ad7dd8a8d43ba2a0b6f79bed62c25936ca069df2654c6832f1278ba7ca90a3d667">   60</a></span>&#160;<span class="comment"></span>| CreatePool of <a class="code" href="structCPoolGames_1_1t__pool__create.html">t_pool_create</a></div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="comment">///RU Приостановка пула</span></div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="comment">///EN Pause pool</span></div>
+<div class="line"><a name="l00064"></a><span class="lineno"><a class="line" href="classCPoolGames.html#ad7dd8a8d43ba2a0b6f79bed62c25936ca576107164e712d304bc0bcb0aaef2c14">   64</a></span>&#160;<span class="comment"></span>| PausePool of <a class="code" href="classCPoolGames.html#a3fa547698c833485598ec5b52d14ddb6">t_ipool</a></div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<span class="comment">///RU Запуск пула (после паузы)</span></div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="comment">///EN Play pool (after pause)</span></div>
+<div class="line"><a name="l00068"></a><span class="lineno"><a class="line" href="classCPoolGames.html#ad7dd8a8d43ba2a0b6f79bed62c25936ca394a3f3c4a8ada8564418dd6d71912f5">   68</a></span>&#160;<span class="comment"></span>| StartPool of <a class="code" href="classCPoolGames.html#a3fa547698c833485598ec5b52d14ddb6">t_ipool</a></div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<span class="comment">///RU Удаление пула (по окончании партии)</span></div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;<span class="comment">///EN Remove pool (after game)</span></div>
+<div class="line"><a name="l00072"></a><span class="lineno"><a class="line" href="classCPoolGames.html#ad7dd8a8d43ba2a0b6f79bed62c25936ca88225fbe0f34a183be5f883ac57c0d68">   72</a></span>&#160;<span class="comment"></span>| RemovePool of <a class="code" href="classCPoolGames.html#a3fa547698c833485598ec5b52d14ddb6">t_ipool</a></div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;<span class="comment">///RU Редактирование пула (приостановленого)</span></div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;<span class="comment">///EN Edit pool (paused)</span></div>
+<div class="line"><a name="l00076"></a><span class="lineno"><a class="line" href="classCPoolGames.html#ad7dd8a8d43ba2a0b6f79bed62c25936ca757e8a75845b63585ba3d53516aafbec">   76</a></span>&#160;<span class="comment"></span>| EditPool of <a class="code" href="classCPoolGames.html#a3fa547698c833485598ec5b52d14ddb6">t_ipool</a> * <a class="code" href="structCPoolGames_1_1t__pool__edit.html">t_pool_edit</a></div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;<span class="comment">///RU Пометить партию завершившейся по времени</span></div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;<span class="comment">///EN Mark pool game complete by time</span></div>
+<div class="line"><a name="l00080"></a><span class="lineno"><a class="line" href="classCPoolGames.html#ad7dd8a8d43ba2a0b6f79bed62c25936ca18a6f38ad4ec39b6118191980102b52a">   80</a></span>&#160;<span class="comment"></span>| SetPoolGameComplete of <a class="code" href="classCPoolGames.html#a3fa547698c833485598ec5b52d14ddb6">t_ipool</a></div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;<span class="comment">///RU Получить случайное число из источника</span></div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;<span class="comment">///EN&lt; Get random number from source</span></div>
+<div class="line"><a name="l00084"></a><span class="lineno"><a class="line" href="classCPoolGames.html#ad7dd8a8d43ba2a0b6f79bed62c25936cabb829e2f9306b44df18684d098273b8c">   84</a></span>&#160;<span class="comment"></span>| GetPoolRandom of <a class="code" href="classCPoolGames.html#a3fa547698c833485598ec5b52d14ddb6">t_ipool</a></div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;<span class="comment">///RU Установить победителя партии</span></div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;<span class="comment">///EN Set pool game winner</span></div>
+<div class="line"><a name="l00088"></a><span class="lineno"><a class="line" href="classCPoolGames.html#ad7dd8a8d43ba2a0b6f79bed62c25936ca39847a7e3307f2b5f0b0f5c01922f062">   88</a></span>&#160;<span class="comment"></span>| SetPoolWinner of <a class="code" href="classCPoolGames.html#a3fa547698c833485598ec5b52d14ddb6">t_ipool</a> * address</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160; </div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;<span class="preprocessor">#if ENABLE_POOL_MANAGER</span><span class="comment"></span></div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;<span class="comment">///RU Смена менеджера (админа одного пула)</span></div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;<span class="comment">///EN Change pool manager (admin of one pool)</span></div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;<span class="comment"></span>| ChangePoolManager of <a class="code" href="classCPoolGames.html#a3fa547698c833485598ec5b52d14ddb6">t_ipool</a> * address</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// ENABLE_POOL_MANAGER</span></div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160; </div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;<span class="comment">//RU --- Для участников розыгрышей в пулах</span></div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;<span class="comment">//EN --- For participants of sweepstakes in pools</span></div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;<span class="comment">///RU Депозит в пул</span></div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;<span class="comment">///EN Deposit to pool</span></div>
+<div class="line"><a name="l00101"></a><span class="lineno"><a class="line" href="classCPoolGames.html#ad7dd8a8d43ba2a0b6f79bed62c25936ca09e105ef56040de7c9bd06be4055ec4a">  101</a></span>&#160;<span class="comment"></span>| Deposit of <a class="code" href="classCPoolGames.html#a3fa547698c833485598ec5b52d14ddb6">t_ipool</a> * <a class="code" href="classMToken.html">MToken</a>.<a class="code" href="classMToken.html#a6c3208a738cac7cfd34651561ac6e7f6">t_amount</a></div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;<span class="comment">///RU Извлечение из пула</span></div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;<span class="comment">///EN Withdraw from pool</span></div>
+<div class="line"><a name="l00105"></a><span class="lineno"><a class="line" href="classCPoolGames.html#ad7dd8a8d43ba2a0b6f79bed62c25936caf54486dc44d24a344d7152511dfcfa29">  105</a></span>&#160;<span class="comment"></span>| Withdraw of <a class="code" href="classCPoolGames.html#a3fa547698c833485598ec5b52d14ddb6">t_ipool</a> * <a class="code" href="classMToken.html">MToken</a>.<a class="code" href="classMToken.html#a6c3208a738cac7cfd34651561ac6e7f6">t_amount</a></div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;<span class="comment">///RU Извлечение всего из пула</span></div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;<span class="comment">///EN Withdraw all from pool</span></div>
+<div class="line"><a name="l00109"></a><span class="lineno"><a class="line" href="classCPoolGames.html#ad7dd8a8d43ba2a0b6f79bed62c25936ca2932a6e105c909642449c1f27c41da84">  109</a></span>&#160;<span class="comment"></span>| WithdrawAll of <a class="code" href="classCPoolGames.html#a3fa547698c833485598ec5b52d14ddb6">t_ipool</a></div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;<span class="comment">///RU Колбек со случайным числом для определения победителя</span></div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;<span class="comment">///EN Callback with random number for detect winner</span></div>
+<div class="line"><a name="l00113"></a><span class="lineno"><a class="line" href="classCPoolGames.html#ad7dd8a8d43ba2a0b6f79bed62c25936cab22da2a64c9c5df8d053c0d8bb91e4be">  113</a></span>&#160;<span class="comment"></span>| OnRandom of <a class="code" href="classMRandom.html">MRandom</a>.<a class="code" href="classMRandom.html#ac8c2b7f39368322fc9f0af3407c5aad3">t_iobj_random</a></div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;<span class="comment">///RU Колбек с балансом токена FA1.2</span></div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;<span class="comment">///EN Callback with balance of token FA1.2</span></div>
+<div class="line"><a name="l00117"></a><span class="lineno"><a class="line" href="classCPoolGames.html#ad7dd8a8d43ba2a0b6f79bed62c25936ca45b73c0ed9cc28c50bf0cb8caa48c57d">  117</a></span>&#160;<span class="comment"></span>| OnBalanseFA1_2 of <a class="code" href="classMFA1__2.html">MFA1_2</a>.<a class="code" href="classMFA1__2.html#a1dc5f4c0a11f09c5dd962e3e1cf22526">t_balance_callback_params</a></div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;<span class="comment">///RU Колбек с балансом токена FA2</span></div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;<span class="comment">///EN Callback with balance of token FA2</span></div>
+<div class="line"><a name="l00121"></a><span class="lineno"><a class="line" href="classCPoolGames.html#ad7dd8a8d43ba2a0b6f79bed62c25936ca1ef22e7b33a88e48c51bd08fa2346597">  121</a></span>&#160;<span class="comment"></span>| OnBalanseFA2 of <a class="code" href="classMFA2.html">MFA2</a>.<a class="code" href="classMFA2.html#a633966ae917a98fdbee6a6134a658afe">t_balance_callback_params</a></div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;<span class="comment">///RU Колбек самого себя после обмена токенов вознаграждения на токены для сжигания</span></div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;<span class="comment">///EN Colback of himself after exchanging reward tokens for tokens for burning</span></div>
+<div class="line"><a name="l00125"></a><span class="lineno"><a class="line" href="classCPoolGames.html#ad7dd8a8d43ba2a0b6f79bed62c25936cacadaa1123f2e4b46fb3bc0bec822b5b3">  125</a></span>&#160;<span class="comment"></span>| AfterReward2Tez of <a class="code" href="classCPoolGames.html#a3fa547698c833485598ec5b52d14ddb6">t_ipool</a></div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;;</div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;<span class="comment">///RU Ошибка: Метод должен вызываться только самим контрактом</span></div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;<span class="comment">///EN Error: The method should only be called by the contract itself</span></div>
+<div class="line"><a name="l00130"></a><span class="lineno"><a class="line" href="classCPoolGames.html#acb63b0ccae5b376ea10a7dd46c0c9aa7">  130</a></span>&#160;<span class="comment"></span><span class="keyword">const</span> <a class="code" href="classCPoolGames.html#acb63b0ccae5b376ea10a7dd46c0c9aa7">cERR_AFTER_DENIED</a>: <span class="keywordtype">string</span> = <span class="stringliteral">&quot;After/Denied&quot;</span>;</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;<span class="comment">///RU Проверка на самовызов</span></div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;<span class="comment">///EN Checking for self-call</span></div>
+<div class="line"><a name="l00134"></a><span class="lineno"><a class="line" href="classCPoolGames.html#a4b6c118b1c2d113e038e9d4646ea2787">  134</a></span>&#160;<span class="comment"></span><span class="keyword">function</span> <a class="code" href="classCPoolGames.html#a4b6c118b1c2d113e038e9d4646ea2787">mustAfter</a>(<span class="keyword">const</span> _: unit): unit is block {</div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;    if Tezos.sender = Tezos.self_address then skip</div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;    else failwith(cERR_AFTER_DENIED);</div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;} with unit;</div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;<span class="comment">///RU Единая точка входа контракта</span></div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;<span class="comment">///EN Single entry point of the contract</span></div>
+<div class="line"><a name="l00141"></a><span class="lineno"><a class="line" href="classCPoolGames.html#a9283a8c474ca4b9f43e7953d74c2d085">  141</a></span>&#160;<span class="comment"></span><span class="keyword">function</span> <a class="code" href="classCPoolGames.html#a9283a8c474ca4b9f43e7953d74c2d085">main</a>(<span class="keyword">const</span> entrypoint: <a class="code" href="classCPoolGames.html#ad7dd8a8d43ba2a0b6f79bed62c25936c">t_entrypoint</a>; var s: <a class="code" href="structCPoolGames_1_1t__storage.html">t_storage</a>): <a class="code" href="classCPoolGames.html#afac92337bb66d3a7f409c82924ee1e39">t_return</a> is</div>
+<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;<span class="keywordflow">case</span> entrypoint of [</div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160; </div>
+<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;<span class="comment">//RU --- Управление доступами</span></div>
+<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;<span class="comment">//EN --- Access management</span></div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160; </div>
+<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;#<span class="keywordflow">if</span> <a class="code" href="CPoolGames_2config_8ligo.html#a189eb733548ced9b37acef1d41d6681c">ENABLE_OWNER</a></div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;| ChangeOwner(newowner) -&gt; (<a class="code" href="consts_8ligo.html#adbd454f79f13fdebfc922294b83e818f">cNO_OPERATIONS</a>, block { s.owner:= <a class="code" href="classMOwner.html">MOwner</a>.<a class="code" href="classMOwner.html#a4da3472192e52f65d9bcd9499c2d45a9">accessChange</a>(newowner, s.owner); } with s)</div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;#endif <span class="comment">// ENABLE_OWNER</span></div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160; </div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;#<span class="keywordflow">if</span> <a class="code" href="CPoolGames_2config_8ligo.html#aa7583d24f2680fe2bbad032e0c7c597e">ENABLE_ADMIN</a></div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;| ChangeAdmin(newadmin) -&gt; (<a class="code" href="consts_8ligo.html#adbd454f79f13fdebfc922294b83e818f">cNO_OPERATIONS</a>, block { mustAdmin(s); s.admin := newadmin; } with s)</div>
+<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;#endif <span class="comment">// ENABLE_ADMIN</span></div>
+<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160; </div>
+<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;#<span class="keywordflow">if</span> <a class="code" href="CPoolGames_2config_8ligo.html#a390ed52a1516e922f14403714f98aa62">ENABLE_ADMINS</a></div>
+<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;| AddAdmin(addadmin) -&gt; (<a class="code" href="consts_8ligo.html#adbd454f79f13fdebfc922294b83e818f">cNO_OPERATIONS</a>, block { mustAdmin(s); s.admins := <a class="code" href="classMAdmins.html">MAdmins</a>.<a class="code" href="classMAdmins.html#a3e701eaf08f53fbcaa306fac45e87a99">forceAdd</a>(addadmin, s.admins); } with s)</div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;| RemAdmin(remadmin) -&gt; (<a class="code" href="consts_8ligo.html#adbd454f79f13fdebfc922294b83e818f">cNO_OPERATIONS</a>, block { mustAdmin(s); s.admins := <a class="code" href="classMAdmins.html">MAdmins</a>.<a class="code" href="classMAdmins.html#a9cc4a34da708440c2b26e06ac6ba6629">forceRem</a>(remadmin, s.admins); } with s)</div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;#endif <span class="comment">// ENABLE_ADMINS</span></div>
+<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160; </div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;<span class="comment">//RU --- Управление пулами</span></div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;<span class="comment">//EN --- Pool management</span></div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160; </div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;| CreatePool(pool_create) -&gt; (<a class="code" href="consts_8ligo.html#adbd454f79f13fdebfc922294b83e818f">cNO_OPERATIONS</a>, block {</div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;<span class="preprocessor">#if !ENABLE_POOL_AS_SERVICE</span></div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;        mustAdmin(s);</div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// !ENABLE_POOL_AS_SERVICE</span></div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;        s := <a class="code" href="classMPools.html">MPools</a>.<a class="code" href="classMPools.html#a0bf890734288dab804d22cc6838dda81">createPool</a>(s, pool_create);</div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;    } with s)</div>
+<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;| PausePool(ipool) -&gt; (<a class="code" href="consts_8ligo.html#adbd454f79f13fdebfc922294b83e818f">cNO_OPERATIONS</a>, <a class="code" href="classMPools.html">MPools</a>.<a class="code" href="classMPools.html#aa9fe000a5b32d8775d2a15d6de3ad9a5">pausePool</a>(s, ipool) )</div>
+<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;| StartPool(ipool) -&gt; (<a class="code" href="consts_8ligo.html#adbd454f79f13fdebfc922294b83e818f">cNO_OPERATIONS</a>, <a class="code" href="classMPools.html">MPools</a>.<a class="code" href="classMPools.html#a39fc6d49f57274fba60a2e27baf578f6">startPool</a>(s, ipool) )</div>
+<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;| RemovePool(ipool) -&gt; (<a class="code" href="consts_8ligo.html#adbd454f79f13fdebfc922294b83e818f">cNO_OPERATIONS</a>, <a class="code" href="classMPools.html">MPools</a>.<a class="code" href="classMPools.html#a0698a3320168044007fbee6558b1396c">removePool</a>(s, ipool) )</div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;| EditPool(params) -&gt; (<a class="code" href="consts_8ligo.html#adbd454f79f13fdebfc922294b83e818f">cNO_OPERATIONS</a>, <a class="code" href="classMPools.html">MPools</a>.<a class="code" href="classMPools.html#aacf8eb2d1db4ec3ee76c5ba69e8385e2">editPool</a>(s, params.0(*ipool*), params.1(*pool_edit*)) )</div>
+<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;| SetPoolGameComplete(ipool) -&gt; <a class="code" href="classMPools.html">MPools</a>.<a class="code" href="classMPools.html#a3b53cbf2be3d1899951f6563fb3def82">setPoolGameComplete</a>(s, ipool)</div>
+<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;| GetPoolRandom(ipool) -&gt; <a class="code" href="classMPools.html">MPools</a>.<a class="code" href="classMPools.html#ae220d76f0791d04992ffb2b75dedd976">getPoolRandom</a>(s, ipool)</div>
+<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;| SetPoolWinner(params) -&gt; <a class="code" href="classMPools.html">MPools</a>.<a class="code" href="classMPools.html#ab9a0a80d91504b201b638917b915ecba">setPoolWinner</a>(s, params.0(*ipool*), params.1(*winner*))</div>
+<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160; </div>
+<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;<span class="preprocessor">#if ENABLE_POOL_MANAGER</span></div>
+<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;| ChangePoolManager(params) -&gt; (<a class="code" href="consts_8ligo.html#adbd454f79f13fdebfc922294b83e818f">cNO_OPERATIONS</a>, <a class="code" href="classMPools.html">MPools</a>.<a class="code" href="classMPools.html#a8fc346cfc9dc05e58cbb95f8563afe4b">changePoolManager</a>(s, params.0(*ipool*), params.1(*newmanager*)) )</div>
+<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;#endif <span class="comment">// ENABLE_POOL_MANAGER</span></div>
+<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160; </div>
+<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;<span class="comment">//RU --- Для пользователей пулов</span></div>
+<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;<span class="comment">//EN --- For pool users</span></div>
+<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160; </div>
+<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;| Deposit(params) -&gt; <a class="code" href="classMPools.html">MPools</a>.<a class="code" href="classMPools.html#ab0c658277793bd1f78fa7cc2d620f9bd">deposit</a>(s, params.0(*ipool*), params.1(*damount*))</div>
+<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;| Withdraw(params) -&gt; <a class="code" href="classMPools.html">MPools</a>.<a class="code" href="classMPools.html#a5b97481ecfde7cb55525e15ccf7dc970">withdraw</a>(s, params.0(*ipool*), params.1(*wamount*))</div>
+<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;| WithdrawAll(ipool) -&gt; <a class="code" href="classMPools.html">MPools</a>.<a class="code" href="classMPools.html#a5b97481ecfde7cb55525e15ccf7dc970">withdraw</a>(s, ipool, 0n)</div>
+<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160; </div>
+<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;<span class="comment">//RU Колбек со случайным числом для определения победителя</span></div>
+<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;<span class="comment">//EN Callback with random number for detect winner</span></div>
+<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;| OnRandom(params) -&gt; <a class="code" href="classMPools.html">MPools</a>.<a class="code" href="classMPools.html#a7da7043a04eacdfc8b8e365aaa3685d7">onRandom</a>(s, params.0, params.1)</div>
+<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160; </div>
+<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;<span class="comment">//RU Колбек с балансом токена FA1.2 //EN Callback with balance of token FA1.2</span></div>
+<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;| OnBalanseFA1_2(params) -&gt; <a class="code" href="classMPools.html">MPools</a>.<a class="code" href="classMPools.html#a139cbbd4ab9705b2c546d4c1a4af4d42">onBalanceFA1_2</a>(s, params)</div>
+<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160; </div>
+<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;<span class="comment">//RU Колбек с балансом токена FA2 //EN Callback with balance of token FA2</span></div>
+<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;| OnBalanseFA2(params) -&gt; <a class="code" href="classMPools.html">MPools</a>.<a class="code" href="classMPools.html#a08efd85c10d42518af61867acd94b2fd">onBalanceFA2</a>(s, params)</div>
+<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160; </div>
+<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;<span class="comment">//RU Колбек самого себя после обмена токенов вознаграждения на tez</span></div>
+<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;<span class="comment">//EN Callback of himself after exchanging reward tokens for tez</span></div>
+<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;| AfterReward2Tez(ipool) -&gt; block { mustAfter(unit); <span class="keyword">const</span> r: t_return = <a class="code" href="classMPools.html">MPools</a>.<a class="code" href="classMPools.html#ab0f136653a6a0ffc3a11a94cd5137070">afterReward2Tez</a>(s, ipool); } with r</div>
+<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;];</div>
+<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160; </div>
+<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;<span class="preprocessor">#if ENABLE_POOL_VIEW</span><span class="comment"></span></div>
+<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;<span class="comment">///RU Получение основных настроек пула по его ID любым пользователем</span></div>
+<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;<span class="comment">///EN Getting basic pool settings by its ID by any user</span></div>
+<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;<span class="comment">/// \see ENABLE_POOL_VIEW</span></div>
+<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;<span class="comment"></span>[@view] <span class="keyword">function</span> viewPoolInfo(<span class="keyword">const</span> ipool: t_ipool; <span class="keyword">const</span> s: t_storage): t_pool_info is <a class="code" href="classMPools.html">MPools</a>.<a class="code" href="classMPools.html#a084216af325758ee2d5915fca6849632">viewPoolInfo</a>(s, ipool);</div>
+<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// ENABLE_POOL_VIEW</span></div>
+<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160; </div>
+<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;<span class="preprocessor">#if ENABLE_BALANCE_VIEW</span><span class="comment"></span></div>
+<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;<span class="comment">///RU Получение баланса пользователя в пуле</span></div>
+<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;<span class="comment">///EN Getting the user&#39;s balance in the pool</span></div>
+<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;<span class="comment">/// \see ENABLE_BALANCE_VIEW</span></div>
+<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;<span class="comment"></span>[@view] <span class="keyword">function</span> viewBalance(<span class="keyword">const</span> ipool: t_ipool; <span class="keyword">const</span> s: t_storage): nat is <a class="code" href="classMPools.html">MPools</a>.<a class="code" href="classMPools.html#a2f3de0e977a9d7e625ca90513bf12bcf">viewBalance</a>(s, ipool);</div>
+<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// ENABLE_BALANCE_VIEW</span></div>
+<div class="ttc" id="aCPoolGames_2access_8ligo_html"><div class="ttname"><a href="CPoolGames_2access_8ligo.html">access.ligo</a></div><div class="ttdoc">Функции для проверки доступа с учетом включенных модулей управления доступом</div></div>
+<div class="ttc" id="aCPoolGames_2config_8ligo_html_a189eb733548ced9b37acef1d41d6681c"><div class="ttname"><a href="CPoolGames_2config_8ligo.html#a189eb733548ced9b37acef1d41d6681c">ENABLE_OWNER</a></div><div class="ttdeci">#define ENABLE_OWNER</div><div class="ttdoc">У контракта есть владелец</div><div class="ttdef"><b>Definition:</b> <a href="CPoolGames_2config_8ligo_source.html#l00018">CPoolGames/config.ligo:18</a></div></div>
+<div class="ttc" id="aCPoolGames_2config_8ligo_html_a390ed52a1516e922f14403714f98aa62"><div class="ttname"><a href="CPoolGames_2config_8ligo.html#a390ed52a1516e922f14403714f98aa62">ENABLE_ADMINS</a></div><div class="ttdeci">#define ENABLE_ADMINS</div><div class="ttdoc">У контракта есть набор админов</div><div class="ttdef"><b>Definition:</b> <a href="CPoolGames_2config_8ligo_source.html#l00036">CPoolGames/config.ligo:36</a></div></div>
+<div class="ttc" id="aCPoolGames_2config_8ligo_html_aa7583d24f2680fe2bbad032e0c7c597e"><div class="ttname"><a href="CPoolGames_2config_8ligo.html#aa7583d24f2680fe2bbad032e0c7c597e">ENABLE_ADMIN</a></div><div class="ttdeci">#define ENABLE_ADMIN</div><div class="ttdoc">У контракта есть админ</div><div class="ttdef"><b>Definition:</b> <a href="CPoolGames_2config_8ligo_source.html#l00027">CPoolGames/config.ligo:27</a></div></div>
+<div class="ttc" id="aCPoolGames_2storage_8ligo_html"><div class="ttname"><a href="CPoolGames_2storage_8ligo.html">storage.ligo</a></div></div>
+<div class="ttc" id="aMPools_8ligo_html"><div class="ttname"><a href="MPools_8ligo.html">MPools.ligo</a></div></div>
+<div class="ttc" id="aclassCPoolGames_html_a3fa547698c833485598ec5b52d14ddb6"><div class="ttname"><a href="classCPoolGames.html#a3fa547698c833485598ec5b52d14ddb6">CPoolGames::t_ipool</a></div><div class="ttdeci">t_i t_ipool</div><div class="ttdoc">Индекс пула</div><div class="ttdef"><b>Definition:</b> <a href="CPoolGames_2types_8ligo_source.html#l00492">CPoolGames/types.ligo:492</a></div></div>
+<div class="ttc" id="aclassCPoolGames_html_a4b6c118b1c2d113e038e9d4646ea2787"><div class="ttname"><a href="classCPoolGames.html#a4b6c118b1c2d113e038e9d4646ea2787">CPoolGames::mustAfter</a></div><div class="ttdeci">unit mustAfter(const unit _)</div><div class="ttdoc">Проверка на самовызов</div><div class="ttdef"><b>Definition:</b> <a href="CPoolGames_8ligo_source.html#l00134">CPoolGames.ligo:134</a></div></div>
+<div class="ttc" id="aclassCPoolGames_html_a9283a8c474ca4b9f43e7953d74c2d085"><div class="ttname"><a href="classCPoolGames.html#a9283a8c474ca4b9f43e7953d74c2d085">CPoolGames::main</a></div><div class="ttdeci">t_return main(const t_entrypoint entrypoint, t_storage s)</div><div class="ttdoc">Единая точка входа контракта</div><div class="ttdef"><b>Definition:</b> <a href="CPoolGames_8ligo_source.html#l00141">CPoolGames.ligo:141</a></div></div>
+<div class="ttc" id="aclassCPoolGames_html_acb63b0ccae5b376ea10a7dd46c0c9aa7"><div class="ttname"><a href="classCPoolGames.html#acb63b0ccae5b376ea10a7dd46c0c9aa7">CPoolGames::cERR_AFTER_DENIED</a></div><div class="ttdeci">const string cERR_AFTER_DENIED</div><div class="ttdoc">Ошибка: Метод должен вызываться только самим контрактом</div><div class="ttdef"><b>Definition:</b> <a href="CPoolGames_8ligo_source.html#l00130">CPoolGames.ligo:130</a></div></div>
+<div class="ttc" id="aclassCPoolGames_html_ad7dd8a8d43ba2a0b6f79bed62c25936c"><div class="ttname"><a href="classCPoolGames.html#ad7dd8a8d43ba2a0b6f79bed62c25936c">CPoolGames::t_entrypoint</a></div><div class="ttdeci">t_entrypoint</div><div class="ttdoc">Все точки входа контракта</div><div class="ttdef"><b>Definition:</b> <a href="CPoolGames_8ligo_source.html#l00024">CPoolGames.ligo:24</a></div></div>
+<div class="ttc" id="aclassCPoolGames_html_afac92337bb66d3a7f409c82924ee1e39"><div class="ttname"><a href="classCPoolGames.html#afac92337bb66d3a7f409c82924ee1e39">CPoolGames::t_return</a></div><div class="ttdeci">pair&lt; t_operations, t_storage &gt; t_return</div><div class="ttdoc">Возвращаемый результат контракта</div><div class="ttdef"><b>Definition:</b> <a href="CPoolGames_2storage_8ligo_source.html#l00070">CPoolGames/storage.ligo:70</a></div></div>
+<div class="ttc" id="aclassMAdmins_html"><div class="ttname"><a href="classMAdmins.html">MAdmins</a></div><div class="ttdoc">Модуль управления админами контракта</div><div class="ttdef"><b>Definition:</b> <a href="MAdmins_8ligo_source.html#l00032">MAdmins.ligo:32</a></div></div>
+<div class="ttc" id="aclassMAdmins_html_a3e701eaf08f53fbcaa306fac45e87a99"><div class="ttname"><a href="classMAdmins.html#a3e701eaf08f53fbcaa306fac45e87a99">MAdmins::forceAdd</a></div><div class="ttdeci">t_admins forceAdd(const t_admin addadmin, t_admins admins)</div><div class="ttdoc">Добавление админа безусловно</div><div class="ttdef"><b>Definition:</b> <a href="MAdmins_8ligo_source.html#l00063">MAdmins.ligo:63</a></div></div>
+<div class="ttc" id="aclassMAdmins_html_a995efdebe8b823be8236f30e98b85d32"><div class="ttname"><a href="classMAdmins.html#a995efdebe8b823be8236f30e98b85d32">MAdmins::t_admin</a></div><div class="ttdeci">address t_admin</div><div class="ttdoc">Адрес админа</div><div class="ttdef"><b>Definition:</b> <a href="MAdmins_8ligo_source.html#l00034">MAdmins.ligo:34</a></div></div>
+<div class="ttc" id="aclassMAdmins_html_a9cc4a34da708440c2b26e06ac6ba6629"><div class="ttname"><a href="classMAdmins.html#a9cc4a34da708440c2b26e06ac6ba6629">MAdmins::forceRem</a></div><div class="ttdeci">t_admins forceRem(const t_admin remadmin, t_admins admins)</div><div class="ttdoc">Удаление админа безусловно</div><div class="ttdef"><b>Definition:</b> <a href="MAdmins_8ligo_source.html#l00077">MAdmins.ligo:77</a></div></div>
+<div class="ttc" id="aclassMFA1__2_html"><div class="ttname"><a href="classMFA1__2.html">MFA1_2</a></div><div class="ttdoc">Типы и методы для FA1.2.</div><div class="ttdef"><b>Definition:</b> <a href="MFA1__2_8ligo_source.html#l00006">MFA1_2.ligo:6</a></div></div>
+<div class="ttc" id="aclassMFA1__2_html_a1dc5f4c0a11f09c5dd962e3e1cf22526"><div class="ttname"><a href="classMFA1__2.html#a1dc5f4c0a11f09c5dd962e3e1cf22526">MFA1_2::t_balance_callback_params</a></div><div class="ttdeci">nat t_balance_callback_params</div><div class="ttdoc">Параметры колбека баланса</div><div class="ttdef"><b>Definition:</b> <a href="MFA1__2_8ligo_source.html#l00032">MFA1_2.ligo:32</a></div></div>
+<div class="ttc" id="aclassMFA2_html"><div class="ttname"><a href="classMFA2.html">MFA2</a></div><div class="ttdoc">Типы и методы для FA2.</div><div class="ttdef"><b>Definition:</b> <a href="MFA2_8ligo_source.html#l00006">MFA2.ligo:6</a></div></div>
+<div class="ttc" id="aclassMFA2_html_a633966ae917a98fdbee6a6134a658afe"><div class="ttname"><a href="classMFA2.html#a633966ae917a98fdbee6a6134a658afe">MFA2::t_balance_callback_params</a></div><div class="ttdeci">list&lt; t_balance_response &gt; t_balance_callback_params</div><div class="ttdoc">Параметры колбека баланса</div><div class="ttdef"><b>Definition:</b> <a href="MFA2_8ligo_source.html#l00058">MFA2.ligo:58</a></div></div>
+<div class="ttc" id="aclassMOwner_html"><div class="ttname"><a href="classMOwner.html">MOwner</a></div><div class="ttdoc">Модуль управления владельцем контракта</div><div class="ttdef"><b>Definition:</b> <a href="MOwner_8ligo_source.html#l00028">MOwner.ligo:28</a></div></div>
+<div class="ttc" id="aclassMOwner_html_a4502a1c5e9a100188a5030711588a9de"><div class="ttname"><a href="classMOwner.html#a4502a1c5e9a100188a5030711588a9de">MOwner::t_owner</a></div><div class="ttdeci">address t_owner</div><div class="ttdoc">Владелец контракта</div><div class="ttdef"><b>Definition:</b> <a href="MOwner_8ligo_source.html#l00030">MOwner.ligo:30</a></div></div>
+<div class="ttc" id="aclassMOwner_html_a4da3472192e52f65d9bcd9499c2d45a9"><div class="ttname"><a href="classMOwner.html#a4da3472192e52f65d9bcd9499c2d45a9">MOwner::accessChange</a></div><div class="ttdeci">t_owner accessChange(const t_owner newowner, t_owner owner)</div><div class="ttdoc">Смена владельца с проверкой прав владельца</div><div class="ttdef"><b>Definition:</b> <a href="MOwner_8ligo_source.html#l00051">MOwner.ligo:51</a></div></div>
+<div class="ttc" id="aclassMPools_html"><div class="ttname"><a href="classMPools.html">MPools</a></div><div class="ttdoc">Модуль списка пулов ликвидности с периодическими розыгрышами вознаграждений</div><div class="ttdef"><b>Definition:</b> <a href="MPools_8ligo_source.html#l00008">MPools.ligo:8</a></div></div>
+<div class="ttc" id="aclassMPools_html_a0698a3320168044007fbee6558b1396c"><div class="ttname"><a href="classMPools.html#a0698a3320168044007fbee6558b1396c">MPools::removePool</a></div><div class="ttdeci">t_storage removePool(t_storage s, const t_ipool ipool)</div><div class="ttdoc">Удаление пула (по окончании партии)</div><div class="ttdef"><b>Definition:</b> <a href="MPools_8ligo_source.html#l00104">MPools.ligo:104</a></div></div>
+<div class="ttc" id="aclassMPools_html_a084216af325758ee2d5915fca6849632"><div class="ttname"><a href="classMPools.html#a084216af325758ee2d5915fca6849632">MPools::viewPoolInfo</a></div><div class="ttdeci">t_pool_info viewPoolInfo(const t_storage s, const t_ipool ipool)</div><div class="ttdoc">Получение основной информации о пуле</div><div class="ttdef"><b>Definition:</b> <a href="MPools_8ligo_source.html#l00274">MPools.ligo:274</a></div></div>
+<div class="ttc" id="aclassMPools_html_a08efd85c10d42518af61867acd94b2fd"><div class="ttname"><a href="classMPools.html#a08efd85c10d42518af61867acd94b2fd">MPools::onBalanceFA2</a></div><div class="ttdeci">t_return onBalanceFA2(t_storage s, const MFA2::t_balance_callback_params params)</div><div class="ttdoc">Колбек с балансом токена FA2.</div><div class="ttdef"><b>Definition:</b> <a href="MPools_8ligo_source.html#l00247">MPools.ligo:247</a></div></div>
+<div class="ttc" id="aclassMPools_html_a0bf890734288dab804d22cc6838dda81"><div class="ttname"><a href="classMPools.html#a0bf890734288dab804d22cc6838dda81">MPools::createPool</a></div><div class="ttdeci">t_storage createPool(t_storage s, const t_pool_create pool_create)</div><div class="ttdoc">Создание нового пула</div><div class="ttdef"><b>Definition:</b> <a href="MPools_8ligo_source.html#l00087">MPools.ligo:87</a></div></div>
+<div class="ttc" id="aclassMPools_html_a139cbbd4ab9705b2c546d4c1a4af4d42"><div class="ttname"><a href="classMPools.html#a139cbbd4ab9705b2c546d4c1a4af4d42">MPools::onBalanceFA1_2</a></div><div class="ttdeci">t_return onBalanceFA1_2(t_storage s, const MFA1_2::t_balance_callback_params currentBalance)</div><div class="ttdoc">Колбек с балансом токена FA1.2.</div><div class="ttdef"><b>Definition:</b> <a href="MPools_8ligo_source.html#l00242">MPools.ligo:242</a></div></div>
+<div class="ttc" id="aclassMPools_html_a2f3de0e977a9d7e625ca90513bf12bcf"><div class="ttname"><a href="classMPools.html#a2f3de0e977a9d7e625ca90513bf12bcf">MPools::viewBalance</a></div><div class="ttdeci">nat viewBalance(const t_storage s, const t_ipool ipool)</div><div class="ttdoc">Получение баланса пользователя в пуле</div><div class="ttdef"><b>Definition:</b> <a href="MPools_8ligo_source.html#l00288">MPools.ligo:288</a></div></div>
+<div class="ttc" id="aclassMPools_html_a39fc6d49f57274fba60a2e27baf578f6"><div class="ttname"><a href="classMPools.html#a39fc6d49f57274fba60a2e27baf578f6">MPools::startPool</a></div><div class="ttdeci">t_storage startPool(const t_storage s, const t_ipool ipool)</div><div class="ttdoc">Запуск пула (после паузы)</div><div class="ttdef"><b>Definition:</b> <a href="MPools_8ligo_source.html#l00101">MPools.ligo:101</a></div></div>
+<div class="ttc" id="aclassMPools_html_a3b53cbf2be3d1899951f6563fb3def82"><div class="ttname"><a href="classMPools.html#a3b53cbf2be3d1899951f6563fb3def82">MPools::setPoolGameComplete</a></div><div class="ttdeci">t_return setPoolGameComplete(t_storage s, const t_ipool ipool)</div><div class="ttdoc">Пометить партию завершившейся по времени</div><div class="ttdef"><b>Definition:</b> <a href="MPools_8ligo_source.html#l00129">MPools.ligo:129</a></div></div>
+<div class="ttc" id="aclassMPools_html_a5b97481ecfde7cb55525e15ccf7dc970"><div class="ttname"><a href="classMPools.html#a5b97481ecfde7cb55525e15ccf7dc970">MPools::withdraw</a></div><div class="ttdeci">t_return withdraw(t_storage s, const t_ipool ipool, const MToken::t_amount wamount)</div><div class="ttdoc">Извлечение из пула</div><div class="ttdef"><b>Definition:</b> <a href="MPools_8ligo_source.html#l00185">MPools.ligo:185</a></div></div>
+<div class="ttc" id="aclassMPools_html_a7da7043a04eacdfc8b8e365aaa3685d7"><div class="ttname"><a href="classMPools.html#a7da7043a04eacdfc8b8e365aaa3685d7">MPools::onRandom</a></div><div class="ttdeci">t_return onRandom(t_storage s, const t_ipool ipool, const MRandom::t_random random)</div><div class="ttdoc">Колбек со случайным числом для определения победителя</div><div class="ttdef"><b>Definition:</b> <a href="MPools_8ligo_source.html#l00196">MPools.ligo:196</a></div></div>
+<div class="ttc" id="aclassMPools_html_a8fc346cfc9dc05e58cbb95f8563afe4b"><div class="ttname"><a href="classMPools.html#a8fc346cfc9dc05e58cbb95f8563afe4b">MPools::changePoolManager</a></div><div class="ttdeci">t_storage changePoolManager(t_storage s, const t_ipool ipool, const address newmanager)</div><div class="ttdoc">Смена менеджера пула</div><div class="ttdef"><b>Definition:</b> <a href="MPools_8ligo_source.html#l00121">MPools.ligo:121</a></div></div>
+<div class="ttc" id="aclassMPools_html_aa9fe000a5b32d8775d2a15d6de3ad9a5"><div class="ttname"><a href="classMPools.html#aa9fe000a5b32d8775d2a15d6de3ad9a5">MPools::pausePool</a></div><div class="ttdeci">t_storage pausePool(const t_storage s, const t_ipool ipool)</div><div class="ttdoc">Приостановка пула</div><div class="ttdef"><b>Definition:</b> <a href="MPools_8ligo_source.html#l00098">MPools.ligo:98</a></div></div>
+<div class="ttc" id="aclassMPools_html_aacf8eb2d1db4ec3ee76c5ba69e8385e2"><div class="ttname"><a href="classMPools.html#aacf8eb2d1db4ec3ee76c5ba69e8385e2">MPools::editPool</a></div><div class="ttdeci">t_storage editPool(t_storage s, const t_ipool ipool, const t_pool_edit pool_edit)</div><div class="ttdoc">Редактирование пула (приостановленого)</div><div class="ttdef"><b>Definition:</b> <a href="MPools_8ligo_source.html#l00112">MPools.ligo:112</a></div></div>
+<div class="ttc" id="aclassMPools_html_ab0c658277793bd1f78fa7cc2d620f9bd"><div class="ttname"><a href="classMPools.html#ab0c658277793bd1f78fa7cc2d620f9bd">MPools::deposit</a></div><div class="ttdeci">t_return deposit(t_storage s, const t_ipool ipool, const MToken::t_amount damount)</div><div class="ttdoc">Депозит в пул</div><div class="ttdef"><b>Definition:</b> <a href="MPools_8ligo_source.html#l00160">MPools.ligo:160</a></div></div>
+<div class="ttc" id="aclassMPools_html_ab0f136653a6a0ffc3a11a94cd5137070"><div class="ttname"><a href="classMPools.html#ab0f136653a6a0ffc3a11a94cd5137070">MPools::afterReward2Tez</a></div><div class="ttdeci">t_return afterReward2Tez(t_storage s, const t_ipool ipool)</div><div class="ttdoc">Колбек самого себя после обмена токенов вознаграждения на tez.</div><div class="ttdef"><b>Definition:</b> <a href="MPools_8ligo_source.html#l00260">MPools.ligo:260</a></div></div>
+<div class="ttc" id="aclassMPools_html_ab9a0a80d91504b201b638917b915ecba"><div class="ttname"><a href="classMPools.html#ab9a0a80d91504b201b638917b915ecba">MPools::setPoolWinner</a></div><div class="ttdeci">t_return setPoolWinner(t_storage s, const t_ipool ipool, const address winner)</div><div class="ttdoc">Установить победителя партии</div><div class="ttdef"><b>Definition:</b> <a href="MPools_8ligo_source.html#l00145">MPools.ligo:145</a></div></div>
+<div class="ttc" id="aclassMPools_html_ae220d76f0791d04992ffb2b75dedd976"><div class="ttname"><a href="classMPools.html#ae220d76f0791d04992ffb2b75dedd976">MPools::getPoolRandom</a></div><div class="ttdeci">t_return getPoolRandom(t_storage s, const t_ipool ipool)</div><div class="ttdoc">Получить случайное число из источника</div><div class="ttdef"><b>Definition:</b> <a href="MPools_8ligo_source.html#l00137">MPools.ligo:137</a></div></div>
+<div class="ttc" id="aclassMRandom_html"><div class="ttname"><a href="classMRandom.html">MRandom</a></div><div class="ttdoc">Модуль взаимодействия с источником случайных чисел</div><div class="ttdef"><b>Definition:</b> <a href="MRandom_8ligo_source.html#l00006">MRandom.ligo:6</a></div></div>
+<div class="ttc" id="aclassMRandom_html_ac8c2b7f39368322fc9f0af3407c5aad3"><div class="ttname"><a href="classMRandom.html#ac8c2b7f39368322fc9f0af3407c5aad3">MRandom::t_iobj_random</a></div><div class="ttdeci">pair&lt; t_iobj, t_random &gt; t_iobj_random</div><div class="ttdoc">Тип колбека для получения случайного числа</div><div class="ttdef"><b>Definition:</b> <a href="MRandom_8ligo_source.html#l00042">MRandom.ligo:42</a></div></div>
+<div class="ttc" id="aclassMToken_html"><div class="ttname"><a href="classMToken.html">MToken</a></div><div class="ttdoc">Модуль для работы с токенами разных стандартов</div><div class="ttdef"><b>Definition:</b> <a href="MToken_8ligo_source.html#l00009">MToken.ligo:9</a></div></div>
+<div class="ttc" id="aclassMToken_html_a6c3208a738cac7cfd34651561ac6e7f6"><div class="ttname"><a href="classMToken.html#a6c3208a738cac7cfd34651561ac6e7f6">MToken::t_amount</a></div><div class="ttdeci">nat t_amount</div><div class="ttdoc">Кол-во токенов</div><div class="ttdef"><b>Definition:</b> <a href="MToken_8ligo_source.html#l00011">MToken.ligo:11</a></div></div>
+<div class="ttc" id="aconsts_8ligo_html_adbd454f79f13fdebfc922294b83e818f"><div class="ttname"><a href="consts_8ligo.html#adbd454f79f13fdebfc922294b83e818f">cNO_OPERATIONS</a></div><div class="ttdeci">const t_operations cNO_OPERATIONS</div><div class="ttdoc">Пустой список операций</div><div class="ttdef"><b>Definition:</b> <a href="consts_8ligo_source.html#l00030">consts.ligo:30</a></div></div>
+<div class="ttc" id="astructCPoolGames_1_1t__pool__create_html"><div class="ttname"><a href="structCPoolGames_1_1t__pool__create.html">CPoolGames::t_pool_create</a></div><div class="ttdoc">Данные для создания пула</div><div class="ttdef"><b>Definition:</b> <a href="CPoolGames_2types_8ligo_source.html#l00438">CPoolGames/types.ligo:438</a></div></div>
+<div class="ttc" id="astructCPoolGames_1_1t__pool__edit_html"><div class="ttname"><a href="structCPoolGames_1_1t__pool__edit.html">CPoolGames::t_pool_edit</a></div><div class="ttdoc">Данные для редактирования пула</div><div class="ttdef"><b>Definition:</b> <a href="CPoolGames_2types_8ligo_source.html#l00470">CPoolGames/types.ligo:470</a></div></div>
+<div class="ttc" id="astructCPoolGames_1_1t__storage_html"><div class="ttname"><a href="structCPoolGames_1_1t__storage.html">CPoolGames::t_storage</a></div><div class="ttdoc">Хранилище контракта</div><div class="ttdef"><b>Definition:</b> <a href="CPoolGames_2storage_8ligo_source.html#l00008">CPoolGames/storage.ligo:8</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_ae9b15dd87e066e1908bbd90e8f38627.html">contracts</a></li><li class="navelem"><a class="el" href="CPoolGames_8ligo.html">CPoolGames.ligo</a></li>
+    <li class="footer">Создано системой <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+  </ul>
+</div>
+</body>
+</html>
